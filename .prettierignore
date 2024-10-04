@@ -1,0 +1,8 @@
+# Add files here to ignore them from prettier formatting
+/dist
+/coverage
+.angular
+/apps/adapt-admin/src/assets/fontawesome/
+/apps/adapt-admin/src/app/styles/
+/.github/
+/.nx/

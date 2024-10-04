@@ -1,0 +1,49 @@
+name: Weiss ADAPT Admin Deploy
+run-name: ${{ github.actor }} pushed an update.
+on:
+  push:
+    paths:
+      - 'apps/adapt-admin/**'
+      - 'apps/libs/**'
+    branches: ['main']
+
+env:
+  AWS_REGION: us-east-1
+  BUCKET: YOUR_BUCKET_NAME
+  CF_DISTRIBUTION: YOUR_CF_DISTRIBUTION_ID
+
+jobs:
+  deploy-angular:
+    env:
+      NX_NO_CLOUD: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install dependencies (Dev)
+        run: npm i
+      - name: Build Angular Application
+        run: npx nx build adapt-admin --configuration production --skip-cache
+      - name: Upload to S3    
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_S3_BUCKET: "$BUCKET"
+          SOURCE_DIR: ${{ github.workspace }}/dist/apps/adapt-admin
+      - name: Invalidate CloudFront
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: "$CF_DISTRIBUTION"
+          PATHS: "/*"
+          AWS_REGION: "$AWS_REGION"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - run: echo "This job's status is ${{ job.status }}."
+
