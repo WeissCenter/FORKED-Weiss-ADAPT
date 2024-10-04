@@ -124,7 +124,7 @@ To deploy the ADAPT Admin application you will first need to complete the deploy
 - [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) – framework for defining cloud infrastructure in code and provisioning it through AWS CloudFormation
 
 ## Contributing
-Please read [Contributing.md](/Contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
