@@ -1,0 +1,165 @@
+<aside
+  class="display-flex minh-full height-viewport"
+  [ngClass]="{ collapsed: nav_collapsed }"
+  aria-label="App Sidebar Menu">
+  <section class="sidebar-content display-flex gap-1 bg-white flex-column width-full padding-1">
+    <button
+      [attr.aria-expanded]="!nav_collapsed"
+      type="button"
+      class="usa-button gap-0 flex-column usa-button--outline shadow-none"
+      id="expand-menu-button"
+      (click)="toggleNav()"
+      i18n>
+      <ng-container *ngIf="nav_collapsed">
+        <i aria-hidden="true" class="fal fa-bars"></i>
+        <span><span class="display-none tablet:display-flex">Open </span>Menu</span>
+      </ng-container>
+
+      <ng-container *ngIf="!nav_collapsed">
+        <i aria-hidden="true" class="fal fa-arrow-from-right"></i>
+        <span><span class="display-none tablet:display-flex">Collapse </span>Menu</span>
+      </ng-container>
+    </button>
+
+    <div class="sidebar-header">
+      <div class="display-flex width-full padding-1 gap-1 flex-align-center flex-justify-center">
+        <!-- <h1>Some State</h1> -->
+
+        <img *ngIf="logoURL" [src]="logoURL" class="logo" alt="Adapt Instance Logo" />
+
+        <span class="font-md display-none-collapsed">State Name Goes Here</span>
+      </div>
+    </div>
+    <!-- To be replaced with PayPal Skip To component -->
+    <!-- <button id="skip-to-section"
+      class="usa-button usa-button--outline cursor-pointer display-flex gap-1 text-primary padding-105 border border-base-lighter bg-base-lightest radius-md flex-align-center">
+      <i aria-hidden="true" class="fal fa-list-alt"></i>
+      <span i18n>Contents</span>
+      <i aria-hidden="true" class="fas fa-chevron-down margin-left-auto display-none-collapsed" style="--usa-button-icon-size: var(--usa-font-size-sm)"></i>
+    </button> -->
+
+    <nav aria-label="primary" class="margin-top-1">
+      <ul #navList role="menubar" aria-orientation="vertical" class="usa-icon-list display-flex flex-column gap-05">
+        <li role="none">
+          <a
+            aria-describedby="home"
+            role="menuitem"
+            routerLink="/admin"
+            (click)="closeMenuOnNavigation()"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active-nav hover:bg-primary-dark"
+            class="usa-icon-list__item site-nav">
+            <i aria-hidden="true" class="fal fa-home"></i>
+            <span id="home"> Home </span>
+          </a>
+        </li>
+        <li role="none">
+          <a
+            role="menuitem"
+            routerLink="data-management"
+            (click)="closeMenuOnNavigation()"
+            routerLinkActive="active-nav hover:bg-primary-dark "
+            class="usa-icon-list__item site-nav">
+            <i aria-hidden="true" class="fal fa-database"></i>
+            <span> Data </span>
+          </a>
+        </li>
+        <li role="none">
+          <a
+            role="menuitem"
+            routerLink="reports"
+            (click)="closeMenuOnNavigation()"
+            routerLinkActive="active-nav hover:bg-primary-dark "
+            class="usa-icon-list__item site-nav">
+            <i aria-hidden="true" class="fal fa-chart-line"></i>
+            <span> Reports </span>
+          </a>
+        </li>
+        <!-- <li role="none">
+          <a role="menuitem" routerLinkActive="active-nav hover:bg-primary-dark" adaptPreview="true"
+            adaptPreviewVersion="1.0.0" id="glossaryBtn" class="usa-icon-list__item site-nav">
+            <i aria-hidden="true" class="fal fa-book"></i>
+            <span> Glossary </span>
+          </a>
+        </li>
+        <li role="none">
+          <a role="menuitem" routerLinkActive="active-nav hover:bg-primary-dark" adaptPreview="true"
+            adaptPreviewVersion="1.0.0" id="alertBtn" class="usa-icon-list__item site-nav">
+            <i aria-hidden="true" class="fal fa-bell"></i>
+            <span> Alerts </span>
+          </a>
+        </li> -->
+        <li role="none">
+          <a
+            routerLink="settings"
+            role="menuitem"
+            routerLinkActive="active-nav hover:bg-primary-dark"
+            id="settingsBtn"
+            class="usa-icon-list__item site-nav">
+            <i aria-hidden="true" class="fal fa-cog"></i>
+            <span> Settings </span>
+          </a>
+        </li>
+        <li role="none">
+          <button
+            role="menuitem"
+            aemA11yToggle
+            class="usa-icon-list__item site-nav width-full">
+            <i aria-hidden="true" class="fal fa-universal-access"></i>
+
+            <span> Accessibility </span>
+          </button>
+        </li>
+        <li role="none"></li>
+        <li role="none">
+          <a
+            role="menuitem"
+            rel="noopener noreferrer"
+            href="https://forms.office.com/r/Q88TN6zygX"
+            target="_blank"
+            aria-label="Give Feedback (opens in a new tab)"
+            class="usa-icon-list__item site-nav width-full">
+            <i aria-hidden="true" class="fal fa-comment-alt-exclamation"></i>
+            <span aria-hidden="true">
+              Give Feedback <i aria-hidden="true" class="far fa-external-link margin-left-05"></i
+            ></span>
+          </a>
+        </li>
+        <li role="none">
+
+          <a
+            role="menuitem"
+            (keypress)="startSignout($event)"
+            (click)="startSignout($event)"
+            tabindex="0"
+            class="usa-icon-list__item site-nav">
+            <i aria-hidden="true" class="fal fa-sign-out"></i>
+            <span> Sign Out </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <span class="margin-top-auto display-flex width-full flex-justify-center">
+      <adapt-inline-svg
+        *ngIf="!nav_collapsed"
+        alt="ADAPT logo"
+        src="assets/shared/svg/ADAPT_Title_Full.svg"
+        svgClass="display-flex width-15"></adapt-inline-svg>
+      <adapt-inline-svg
+        *ngIf="nav_collapsed"
+        alt="ADAPT logo"
+        src="assets/shared/svg/ADAPT_Mark_Full.svg"
+        svgClass="display-flex width-5"></adapt-inline-svg>
+    </span>
+  </section>
+</aside>
+
+
+<lib-adapt-modal closeText="Close" heading="Are you sure you want to sign out?" #confirmLogOut>
+  <div class="confirm-modal-body display-flex flex-column gap-2 padding-1">
+    <div class="confirm-modal-footer padding-1 display-flex gap-2">
+      <button class="usa-button" (keydown.enter)="signOut($event)" (click)="signOut($event)">Sign out</button>
+      <button class="usa-button usa-button--unstyled" (keydown.enter)="cancelLogout($event)" (click)="cancelLogout($event)" >Cancel</button>
+    </div>
+  </div>
+</lib-adapt-modal>

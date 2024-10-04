@@ -1,0 +1,12 @@
+tr,
+td,
+th {
+  white-space: nowrap;
+}
+
+thead {
+  background-color: var(--usa-white) !important;
+  th {
+    background-color: var(--usa-white) !important;
+  }
+}

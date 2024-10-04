@@ -1,0 +1,60 @@
+{
+  "name": "General IDEA Part C Child Count and Settings Spec Validator",
+  "rules": [
+    {
+      "name": "Header Validate",
+      "validator": {
+        "type": "headerHTML",
+        "schema": [
+          {
+            "name": "state-name",
+            "type": "string",
+            "element": {
+              "tag": "h1",
+              "index": 0
+            },
+            "errorText": "The system has recognized that you have uploaded the wrong file."
+          },
+          {
+            "name": "file-type",
+            "type": "string",
+            "element": {
+              "tag": "h1",
+              "index": 1
+            },
+            "errorText": "The system has recognized that you have uploaded the wrong file.",
+            "regex": "IDEA Part C - Child Count and Settings Release \\d+\\.\\d+"
+          },
+          {
+            "name": "year",
+            "type": "string",
+            "element": {
+              "tag": "h1",
+              "index": 2
+            },
+            "errorText": "The system has recognized that you have uploaded the wrong file.",
+            "regex": "Year: \\d{4}-\\d{2}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Validate Year",
+      "validator": {
+        "type": "typeFieldCheckHTML",
+        "schema": [
+          {
+            "name": "Year Check",
+            "errorText": "The system has recognized that you have uploaded the wrong file for this school year.",
+            "type": "select",
+            "element": {
+              "tag": "h1",
+              "index": 2
+            },
+            "value": "reportingYear"
+          }
+        ]
+      }
+    }
+  ]
+}

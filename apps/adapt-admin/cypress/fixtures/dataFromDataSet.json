@@ -1,0 +1,241 @@
+{
+  "success": true,
+  "data": {
+    "operationResults": [
+      {
+        "id": "sum_StudentCount_ReportLevel-sea_CategorySetCode-TOT_ReportCode-c002",
+        "value": 27511
+      },
+      {
+        "id": "disability_percentage_DB_ReportLevel-sea_ReportCode-c002",
+        "value": [
+          {
+            "StudentCount": 3200
+          }
+        ]
+      },
+      {
+        "id": "disability_percentage_DB_ReportLevel-sea_ReportCode-c002_sum",
+        "value": 27511
+      },
+      {
+        "id": "disability_percentage_AUT_ReportLevel-sea_ReportCode-c002",
+        "value": [
+          {
+            "StudentCount": 2510
+          }
+        ]
+      },
+      {
+        "id": "disability_percentage_AUT_ReportLevel-sea_ReportCode-c002_sum",
+        "value": 27511
+      },
+      {
+        "id": "disability_percentage_MD_ReportLevel-sea_ReportCode-c002",
+        "value": [
+          {
+            "StudentCount": 2255
+          }
+        ]
+      },
+      {
+        "id": "disability_percentage_MD_ReportLevel-sea_ReportCode-c002_sum",
+        "value": 27511
+      },
+      {
+        "id": "countBreakdownRaceEthnicity",
+        "value": [
+          {
+            "StudentCount": 10451,
+            "RACE": "WH7"
+          },
+          {
+            "StudentCount": 8538,
+            "RACE": "HI7"
+          },
+          {
+            "StudentCount": 3788,
+            "RACE": "BL7"
+          },
+          {
+            "StudentCount": 1905,
+            "RACE": "AS7"
+          },
+          {
+            "StudentCount": 1178,
+            "RACE": "AM7"
+          },
+          {
+            "StudentCount": 926,
+            "RACE": "PI7"
+          },
+          {
+            "StudentCount": 726,
+            "RACE": "MU7"
+          }
+        ]
+      },
+      {
+        "id": "childCountBarChart",
+        "value": [
+          {
+            "StudentCount": 3200,
+            "IDEADISABILITYTYPE": "DB"
+          },
+          {
+            "StudentCount": 2510,
+            "IDEADISABILITYTYPE": "AUT"
+          },
+          {
+            "StudentCount": 2255,
+            "IDEADISABILITYTYPE": "MD"
+          },
+          {
+            "StudentCount": 2251,
+            "IDEADISABILITYTYPE": "TBI"
+          },
+          {
+            "StudentCount": 2235,
+            "IDEADISABILITYTYPE": "SLD"
+          },
+          {
+            "StudentCount": 2229,
+            "IDEADISABILITYTYPE": "HI"
+          },
+          {
+            "StudentCount": 2219,
+            "IDEADISABILITYTYPE": "OI"
+          },
+          {
+            "StudentCount": 2183,
+            "IDEADISABILITYTYPE": "ID"
+          },
+          {
+            "StudentCount": 2179,
+            "IDEADISABILITYTYPE": "SLI"
+          },
+          {
+            "StudentCount": 2171,
+            "IDEADISABILITYTYPE": "OHI"
+          },
+          {
+            "StudentCount": 2136,
+            "IDEADISABILITYTYPE": "EMN"
+          },
+          {
+            "StudentCount": 1109,
+            "IDEADISABILITYTYPE": "DD"
+          },
+          {
+            "StudentCount": 834,
+            "IDEADISABILITYTYPE": "VI"
+          }
+        ]
+      },
+      {
+        "id": "top_disabilities_percentages_3_ReportLevel-sea_ReportCode-c002",
+        "value": [
+          {
+            "StudentCount": 3200,
+            "IDEADISABILITYTYPE": "DB"
+          },
+          {
+            "StudentCount": 2510,
+            "IDEADISABILITYTYPE": "AUT"
+          },
+          {
+            "StudentCount": 2255,
+            "IDEADISABILITYTYPE": "MD"
+          }
+        ]
+      },
+      {
+        "id": "top_disabilities_percentages_3_ReportLevel-sea_ReportCode-c002_sum",
+        "value": 27511
+      },
+      {
+        "id": "bottom_disabilities_percentages_3_ReportLevel-sea_ReportCode-c002",
+        "value": [
+          {
+            "StudentCount": 834,
+            "IDEADISABILITYTYPE": "VI"
+          },
+          {
+            "StudentCount": 1109,
+            "IDEADISABILITYTYPE": "DD"
+          },
+          {
+            "StudentCount": 2136,
+            "IDEADISABILITYTYPE": "EMN"
+          }
+        ]
+      },
+      {
+        "id": "bottom_disabilities_percentages_3_ReportLevel-sea_ReportCode-c002_sum",
+        "value": 27511
+      },
+      {
+        "id": "disability_percentage_ID_ReportLevel-sea_ReportCode-c002",
+        "value": [
+          {
+            "StudentCount": 2183
+          }
+        ]
+      },
+      {
+        "id": "disability_percentage_ID_ReportLevel-sea_ReportCode-c002_sum",
+        "value": 27511
+      },
+      {
+        "id": "disability_percentage_EMN_ReportLevel-sea_ReportCode-c002",
+        "value": [
+          {
+            "StudentCount": 2136
+          }
+        ]
+      },
+      {
+        "id": "disability_percentage_EMN_ReportLevel-sea_ReportCode-c002_sum",
+        "value": 27511
+      },
+      {
+        "id": "disability_percentage_DD_ReportLevel-sea_ReportCode-c002",
+        "value": [
+          {
+            "StudentCount": 1109
+          }
+        ]
+      },
+      {
+        "id": "disability_percentage_DD_ReportLevel-sea_ReportCode-c002_sum",
+        "value": 27511
+      },
+      {
+        "id": "countBreakdownLearner",
+        "value": [
+          {
+            "StudentCount": 19709,
+            "ENGLISHLEARNERSTATUS": "NLEP"
+          },
+          {
+            "StudentCount": 5288,
+            "ENGLISHLEARNERSTATUS": "LEP"
+          }
+        ]
+      },
+      {
+        "id": "countBreakdownGender",
+        "value": [
+          {
+            "StudentCount": 13733,
+            "SEX": "F"
+          },
+          {
+            "StudentCount": 13505,
+            "SEX": "M"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+dialog:-internal-dialog-in-top-layer::backdrop {
+  background-color: var(--usa-modal-overlay-background-color);
+}
+
+dialog.usa-modal-wrapper {
+  &:-internal-dialog-in-top-layer::backdrop {
+    background-color: var(--usa-modal-overlay-background-color);
+  }
+  background-color: var(--usa-modal-background-color);
+  color: var(--usa-ink);
+}

@@ -1,0 +1,35 @@
+<nav class="usa-breadcrumb" [attr.aria-label]="breadcrumbsLabel | async" *ngIf="showBreadcrumb">
+  <ol class="usa-breadcrumb__list">
+    <ng-container *ngIf="breadcrumbs | async as crumbs">
+      <ng-container *ngIf="crumbs.length < 5; else escape">
+        <ng-container *ngFor="let crumb of breadcrumbs | async; let isLast = last">
+          <li *ngIf="!isLast; else notLink" class="usa-breadcrumb__list-item">
+            <a [routerLink]="crumb.link" [queryParams]="crumb.queryParams" class="usa-breadcrumb__link"
+              ><span>{{ crumb.label }}</span></a
+            >
+          </li>
+
+          <ng-template #notLink>
+            <li class="usa-breadcrumb__list-item usa-current" aria-current="page">
+              <span>{{ crumb.label }}</span>
+            </li>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+
+      <ng-template #escape>
+        <li class="usa-breadcrumb__list-item">
+          <a
+            [routerLink]="crumbs[0].link"
+            [queryParams]="crumbs[0].queryParams"
+            class="usa-breadcrumb__link display-flex flex-align-center">
+            <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+              <use xlink:href="/assets/sprite.svg#navigate_before"></use>
+            </svg>
+            {{ crumbs[0].label }}
+          </a>
+        </li>
+      </ng-template>
+    </ng-container>
+  </ol>
+</nav>

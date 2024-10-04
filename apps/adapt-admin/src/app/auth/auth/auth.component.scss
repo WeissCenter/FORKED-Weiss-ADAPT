@@ -1,0 +1,74 @@
+// @import "/src/styles/_colors";
+// @import "/src/styles/_fonts";
+
+// .auth-container {
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 1.875rem;
+//   height: 100vh;
+
+//   &-tagline {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 1rem;
+
+//     &-header {
+//       font-family: 'Cabin' !important;
+//       font-style: normal !important;
+//       font-weight: 600 !important;
+//       font-size: 56px !important;
+//       line-height: 100% !important;
+//       color: #4F4F4F;
+//     }
+//   }
+
+//   &-vl {
+//     border-left: 3px solid #BDBDBD;
+//     height: 110px;
+//   }
+
+//   &-login {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 1.125rem;
+
+//     &-description {
+//       font-family: 'Cabin';
+//       font-style: normal;
+//       font-weight: 400;
+//       font-size: 24px;
+//       color: black;
+//     }
+
+//     .p-button {
+//       background: #E2EDF3;
+//       border: none;
+//       width: fit-content;
+//       color: black;
+
+//       .p-button-icon {
+//         color: #1880E7
+//       }
+//     }
+
+//     .p-button:hover {
+//       color: white;
+//       .p-button-icon {
+//         animation-name: color_change;
+//         animation-duration: .8s;
+//         color: white;
+//       }
+//     }
+
+//     @keyframes color_change {
+//       from { color: #1880E7; }
+//       to { color: white; }
+//     }
+//   }
+// }
+
+// .redirect {
+//   margin-left: 16px;
+// }

@@ -1,0 +1,56 @@
+<div class="usa-overlay"></div>
+<header class="usa-header usa-header--basic">
+  <div class="usa-nav-container">
+    <div class="usa-navbar">
+      <div class="usa-logo">
+        <a routerLink="">
+          <adapt-inline-svg
+            media="(min-width: 64em)"
+            alt="ADAPT logo"
+            src="assets/shared/svg/ADAPT_Combined_Full.svg"
+            svgClass="display-flex width-card-lg"></adapt-inline-svg>
+          <adapt-inline-svg
+            media="(max-width: 63.99em)"
+            alt="ADAPT logo"
+            src="assets/shared/svg/ADAPT_Mark_Full.svg"
+            svgClass="display-flex width-6"></adapt-inline-svg>
+          <!-- <picture class="width-card-lg tablet:width-mobile desktop:width-full" >
+              <source media="(max-width: 63.99em)" srcset="assets/weiss-logo@collapsed.svg" />
+              <source media="(min-width: 64em)" srcset="assets/ADAPT_Combined_Full.svg" />
+              <img src="assets/ADAPT_Combined_Full.svg" alt="ADAPT Logo">
+            </picture> -->
+        </a>
+      </div>
+      <button type="button" class="usa-menu-btn" i18n>
+        <i class="fas fa-bars" aria-hidden="true"></i>
+        Menu
+      </button>
+    </div>
+    <nav
+      aria-label="Primary navigation"
+      i18n-aria-label="Primary navigation"
+      class="usa-nav"
+      role="navigation"
+      id="menu-navigation">
+      <button type="button" class="usa-nav__close">
+        <img src="/assets/usa-icons/close.svg" role="img" alt="Close" />
+      </button>
+      <ul class="usa-nav__primary usa-accordion">
+        <!-- <li class="usa-nav__primary-item">
+          <a href="/" i18n class="usa-nav-link"><span>Report Demo</span></a>
+        </li>
+        <li class="usa-nav__primary-item">
+          <a href="/" i18n class="usa-nav-link"><span>Developer</span></a>
+        </li>
+        <li class="usa-nav__primary-item">
+          <a href="/" i18n class="usa-nav-link"><span>Factsheet</span></a>
+        </li> -->
+        <li class="usa-nav__primary-item">
+          <a href="https://www.weissta.org" aria-label="About Weiss Center" target="_blank" i18n class="usa-button"
+            ><span>Weiss TA</span></a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

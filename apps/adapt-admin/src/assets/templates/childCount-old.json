@@ -1,0 +1,820 @@
+{
+  "id": "childCount",
+  "title": "Child Count and Education Environments (FS002)",
+  "description": "State-level data on the Individuals with Disabilities Education Act (IDEA) Part B, including an unduplicated count of children with disabilities receiving special education from ages 3 through 21 served by the Office of Special Education Programs (OSEP).",
+  "filters": {
+    "schoolYear": {
+      "code": "schoolYear",
+      "label": "Select a School Year",
+      "field": "ReportYear",
+      "type": "select",
+      "dataType": "number",
+      "filter": {
+        "default": 2023,
+        "options": [
+          {
+            "value": 2023,
+            "label": "2023"
+          }
+        ]
+      }
+    },
+    "categorySet": {
+      "code": "categorySet",
+      "label": "Select a Category Set",
+      "field": "CategorySetCode",
+      "type": "select",
+      "filter": {
+        "default": "CSA",
+        "options": [
+          {
+            "value": "CSA",
+            "label": "Category Set A"
+          },
+          {
+            "value": "CSB",
+            "label": "Category Set B"
+          },
+          {
+            "value": "CSC",
+            "label": "Category Set C"
+          },
+          {
+            "value": "CSD",
+            "label": "Category Set D"
+          },
+          {
+            "value": "CSE",
+            "label": "Category Set E"
+          }
+        ]
+      },
+      "children": {
+        "race": {
+          "code": "race",
+          "label": "Select a Race",
+          "field": "RACE",
+          "type": "select",
+          "condition": ["CSA", "CSC"],
+          "filter": {
+            "options": [
+              {
+                "value": "",
+                "label": "All"
+              },
+              {
+                "value": "AM7",
+                "label": "American Indian or Alaska Native"
+              },
+              {
+                "value": "AS7",
+                "label": "Asian"
+              },
+              {
+                "value": "BL7",
+                "label": "Black or African American"
+              },
+              {
+                "value": "HI7",
+                "label": "Hispanic/Latino"
+              },
+              {
+                "value": "PI7",
+                "label": "Native Hawaiian or Other Pacific Islander"
+              },
+              {
+                "value": "MU7",
+                "label": "Two or more races"
+              },
+              {
+                "value": "WH7",
+                "label": "White"
+              }
+            ]
+          }
+        },
+        "sex": {
+          "code": "sex",
+          "label": "Select a Sex",
+          "field": "SEX",
+          "type": "select",
+          "condition": ["CSA", "CSD", "CSE"],
+          "filter": {
+            "options": [
+              {
+                "value": "",
+                "label": "All"
+              },
+              {
+                "value": "F",
+                "label": "Female"
+              },
+              {
+                "value": "M",
+                "label": "Male"
+              }
+            ]
+          }
+        },
+        "disability": {
+          "code": "disability",
+          "label": "Select a Disability",
+          "field": "IDEADISABILITYTYPE",
+          "condition": ["CSA", "CSB", "CSD", "CSE"],
+          "tags": {
+            "categoryTag": "ST3"
+          },
+          "type": "select",
+          "filter": {
+            "options": [
+              {
+                "value": "",
+                "label": "All"
+              },
+              {
+                "value": "AUT",
+                "label": "Autism"
+              },
+              {
+                "value": "DB",
+                "label": "Deaf-blindness"
+              },
+              {
+                "value": "DD",
+                "label": "Developmental delay"
+              },
+              {
+                "value": "EMN",
+                "label": "Emotional disturbance"
+              },
+              {
+                "value": "HI",
+                "label": "Hearing impairment"
+              },
+              {
+                "value": "ID",
+                "label": "Intellectual disability"
+              },
+              {
+                "value": "MD",
+                "label": "Multiple disabilities"
+              },
+              {
+                "value": "OI",
+                "label": "Orthopedic impairment"
+              },
+              {
+                "value": "SLD",
+                "label": "Specific learning disability"
+              },
+              {
+                "value": "SLI",
+                "label": "Speech or language impairment"
+              },
+              {
+                "value": "TBI",
+                "label": "Traumatic brain injury"
+              },
+              {
+                "value": "VI",
+                "label": "Visual impairment"
+              },
+              {
+                "value": "OHI",
+                "label": "Other health impairment"
+              }
+            ]
+          }
+        },
+        "age": {
+          "code": "age",
+          "label": "Select an Age",
+          "field": "AGE",
+          "condition": ["CSB"],
+          "tags": {
+            "categoryTag": "ST3"
+          },
+          "type": "select",
+          "filter": {
+            "options": [
+              {
+                "value": "",
+                "label": "All"
+              },
+              {
+                "value": "AGE05K",
+                "label": "Age 5 (Kindergarten)"
+              },
+              {
+                "value": "6",
+                "label": "Age 6"
+              },
+              {
+                "value": "7",
+                "label": "Age 7"
+              },
+              {
+                "value": "8",
+                "label": "Age 8"
+              },
+              {
+                "value": "9",
+                "label": "Age 9"
+              },
+              {
+                "value": "10",
+                "label": "Age 10"
+              },
+              {
+                "value": "11",
+                "label": "Age 11"
+              },
+              {
+                "value": "12",
+                "label": "Age 12"
+              },
+              {
+                "value": "13",
+                "label": "Age 13"
+              },
+              {
+                "value": "14",
+                "label": "Age 14"
+              },
+              {
+                "value": "15",
+                "label": "Age 15"
+              },
+              {
+                "value": "16",
+                "label": "Age 16"
+              },
+              {
+                "value": "17",
+                "label": "Age 17"
+              },
+              {
+                "value": "18",
+                "label": "Age 18"
+              },
+              {
+                "value": "19",
+                "label": "Age 19"
+              },
+              {
+                "value": "20",
+                "label": "Age 20"
+              },
+              {
+                "value": "21",
+                "label": "Age 21"
+              }
+            ]
+          }
+        },
+        "eduEnv": {
+          "code": "eduEnv",
+          "label": "Select an Educational Evironment",
+          "field": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+          "condition": ["CSB", "CSC", "CSD", "CSE"],
+          "tags": {
+            "categoryTag": "ST3"
+          },
+          "type": "select",
+          "filter": {
+            "options": [
+              {
+                "value": "",
+                "label": "All"
+              },
+              {
+                "value": "RC80",
+                "label": "Inside regular class 80% or more of the day"
+              },
+              {
+                "value": "RC79TO40",
+                "label": "Inside regular class 40% through 79% of the day"
+              },
+              {
+                "value": "RC39",
+                "label": "Inside regular class less than 40% of the day"
+              },
+              {
+                "value": "SS",
+                "label": "Separate School"
+              },
+              {
+                "value": "RF",
+                "label": "Residential Facility"
+              },
+              {
+                "value": "HH",
+                "label": "Homebound/Hospital"
+              },
+              {
+                "value": "CF",
+                "label": "Correctional Facilities"
+              },
+              {
+                "value": "PPPS",
+                "label": "Parentally placed in private schools"
+              }
+            ]
+          }
+        },
+        "englishLearner": {
+          "code": "englishLearner",
+          "label": "Select a English Learner Status",
+          "field": "ENGLISHLEARNERSTATUS",
+          "condition": ["CSE"],
+          "tags": {
+            "categoryTag": "ST3"
+          },
+          "type": "select",
+          "filter": {
+            "options": [
+              {
+                "value": "",
+                "label": "All"
+              },
+              {
+                "value": "LEP",
+                "label": "English learners"
+              },
+              {
+                "value": "NLEP",
+                "label": "Non-English learner"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "sections": [
+    {
+      "type": "quickSummary",
+      "content": {
+        "heading": {
+          "template": "There are {{var_1}} children with various disabilities in your state.",
+          "variables": {
+            "var_1": {
+              "function": "sum",
+              "args": [
+                "StudentCount",
+                {
+                  "field": "ReportCode",
+                  "value": "c002"
+                },
+                {
+                  "field": "ReportLevel",
+                  "value": "sea"
+                }
+              ]
+            }
+          }
+        },
+        "sections": [
+          {
+            "title": "Most Common Disabilities",
+            "body": {
+              "template": "{{var_1}} are the most prevalent disabilities among the children.",
+              "variables": {
+                "var_1": {
+                  "function": "top_disabilities_percentages",
+                  "args": [
+                    3,
+                    {
+                      "field": "ReportLevel",
+                      "value": "sea"
+                    },
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "title": "Less Common Disabilities",
+            "body": {
+              "template": "{{var_1}} are some of the least common disabilities.",
+              "variables": {
+                "var_1": {
+                  "function": "bottom_disabilities_percentages",
+                  "args": [
+                    3,
+                    {
+                      "field": "ReportLevel",
+                      "value": "sea"
+                    },
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "title": "Autism and Intellectual Disability",
+            "body": {
+              "template": "Autism affects {{var_1}} of children while Intellectual Disability affects {{var_2}}. These are significant categories that represent many children.",
+              "variables": {
+                "var_1": {
+                  "function": "disability_percentage",
+                  "args": [
+                    "AUT",
+                    {
+                      "field": "ReportLevel",
+                      "value": "sea"
+                    },
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    }
+                  ]
+                },
+                "var_2": {
+                  "function": "disability_percentage",
+                  "args": [
+                    "ID",
+                    {
+                      "field": "ReportLevel",
+                      "value": "sea"
+                    },
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "title": "Emotional and Developmental Aspects",
+            "body": {
+              "template": "Emotional Disturbance ({{var_1}}) and Developmental Delay ({{var_2}}) show that disabilities are not just phyiscal but can also be emotional and developmental",
+              "variables": {
+                "var_1": {
+                  "function": "disability_percentage",
+                  "args": [
+                    "EMN",
+                    {
+                      "field": "ReportLevel",
+                      "value": "sea"
+                    },
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    }
+                  ]
+                },
+                "var_2": {
+                  "function": "disability_percentage",
+                  "args": [
+                    "DD",
+                    {
+                      "field": "ReportLevel",
+                      "value": "sea"
+                    },
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "gridView",
+      "content": {
+        "columns": [
+          {
+            "id": "raceAndEthnicityColumn",
+            "rows": [
+              {
+                "type": "barChart",
+                "content": {
+                  "title": "Disabilities",
+                  "description": {
+                    "template": "There are {{var_1}} children with various disabilities in your state.",
+                    "variables": {
+                      "var_1": {
+                        "function": "sum",
+                        "args": [
+                          "StudentCount",
+                          {
+                            "field": "ReportLevel",
+                            "value": "sea"
+                          },
+                          {
+                            "field": "ReportCode",
+                            "value": "c002"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "chart": {
+                    "filterOn": "x",
+                    "yAxisLabel": "Child Count",
+                    "xAxisLabel": "Disability",
+                    "xAxisValue": "IDEADISABILITYTYPE",
+                    "yAxisValue": "StudentCount",
+                    "dataRetrievalOperations": [
+                      {
+                        "id": "childCountBarChart",
+                        "function": "GROUPBY",
+                        "arguments": [
+                          {
+                            "field": "func",
+                            "type": "string",
+                            "value": "sum"
+                          },
+                          {
+                            "field": "columns",
+                            "value": ["StudentCount"],
+                            "array": true
+                          },
+                          {
+                            "field": "selectColumns",
+                            "value": ["IDEADISABILITYTYPE"],
+                            "array": true
+                          },
+                          {
+                            "field": "limit",
+                            "type": "number"
+                          },
+                          {
+                            "field": "order",
+                            "type": "string",
+                            "array": true,
+                            "value": ["StudentCount desc"]
+                          },
+                          {
+                            "field": "groupby",
+                            "type": "string",
+                            "value": "IDEADISABILITYTYPE"
+                          },
+                          {
+                            "field": "ReportCode",
+                            "type": "string",
+                            "value": "c002"
+                          },
+                          {
+                            "field": "ReportLevel",
+                            "type": "string",
+                            "value": "sea"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "countBreakdown",
+                "content": {
+                  "title": "Race, Ethnicity",
+                  "description": "The following shows the distribution of children with disabilities by race, ages 3-21:",
+                  "labelField": "RACE",
+                  "countField": "StudentCount",
+                  "dataRetrievalOperations": [
+                    {
+                      "id": "countBreakdownRaceEthnicity",
+                      "function": "GROUPBY",
+                      "arguments": [
+                        {
+                          "field": "func",
+                          "type": "string",
+                          "value": "sum"
+                        },
+                        {
+                          "field": "columns",
+                          "value": ["StudentCount"],
+                          "array": true
+                        },
+                        {
+                          "field": "selectColumns",
+                          "type": "string",
+                          "array": true,
+                          "value": ["RACE"]
+                        },
+                        {
+                          "field": "limit",
+                          "type": "number"
+                        },
+                        {
+                          "field": "order",
+                          "type": "string",
+                          "array": true,
+                          "value": ["StudentCount desc"]
+                        },
+                        {
+                          "field": "groupby",
+                          "type": "string",
+                          "value": "RACE"
+                        },
+                        {
+                          "field": "ReportCode",
+                          "type": "string",
+                          "value": "c002"
+                        },
+                        {
+                          "field": "ReportLevel",
+                          "type": "string",
+                          "value": "sea"
+                        }
+                      ]
+                    }
+                  ],
+                  "caption": {
+                    "template": "In the reported data of children with disabilities, {{var_1}}% are White, {{var_2}}% are Black or African American, {{var_3}}% are Hispanic/Latino, {{var_4}}% are of two or more races, {{var_5}}% are Asian, {{var_6}}% are American Indian or Alaskan Native, and {{var_7}}% are Native Hawaiian or Other Pacific Islander.",
+                    "variables": {
+                      "var_1": {
+                        "function": "context",
+                        "args": ["WH7"]
+                      },
+                      "var_2": {
+                        "function": "context",
+                        "args": ["BL7"]
+                      },
+                      "var_3": {
+                        "function": "context",
+                        "args": ["HI7"]
+                      },
+                      "var_4": {
+                        "function": "context",
+                        "args": ["MU7"]
+                      },
+                      "var_5": {
+                        "function": "context",
+                        "args": ["AS7"]
+                      },
+                      "var_6": {
+                        "function": "context",
+                        "args": ["AM7"]
+                      },
+                      "var_7": {
+                        "function": "context",
+                        "args": ["PI7"]
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "learnerStatusAndGender",
+            "rows": [
+              {
+                "type": "countBreakdown",
+                "content": {
+                  "title": "English learner status",
+                  "description": {
+                    "template": "About {{var_1}}% of children with disabilities are English Learners and may not speak English as their first language or live in places where English isn't commonly spoken.",
+                    "variables": {
+                      "var_1": {
+                        "function": "context",
+                        "args": ["LEP"]
+                      }
+                    }
+                  },
+                  "labelField": "ENGLISHLEARNERSTATUS",
+                  "countField": "StudentCount",
+                  "dataRetrievalOperations": [
+                    {
+                      "id": "countBreakdownLearner",
+                      "function": "GROUPBY",
+                      "arguments": [
+                        {
+                          "field": "func",
+                          "type": "string",
+                          "value": "sum"
+                        },
+                        {
+                          "field": "columns",
+                          "value": ["StudentCount"],
+                          "array": true
+                        },
+                        {
+                          "field": "selectColumns",
+                          "value": ["ENGLISHLEARNERSTATUS"],
+                          "array": true
+                        },
+                        {
+                          "field": "limit",
+                          "type": "number"
+                        },
+                        {
+                          "field": "order",
+                          "type": "string",
+                          "array": true,
+                          "value": ["StudentCount desc"]
+                        },
+                        {
+                          "field": "groupby",
+                          "type": "string",
+                          "value": "ENGLISHLEARNERSTATUS"
+                        },
+                        {
+                          "field": "ReportCode",
+                          "type": "string",
+                          "value": "c002"
+                        },
+                        {
+                          "field": "ReportLevel",
+                          "type": "string",
+                          "value": "sea"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "countBreakdown",
+                "content": {
+                  "title": "Gender",
+                  "description": {
+                    "template": "The dataset reveals that among children with disabilities receiving special education, ages 3-21, served by OSEP, {{var_1}}% are male and {{var_2}}% are female.",
+                    "variables": {
+                      "var_1": {
+                        "function": "context",
+                        "args": ["M"]
+                      },
+                      "var_2": {
+                        "function": "context",
+                        "args": ["F"]
+                      }
+                    }
+                  },
+                  "labelField": "SEX",
+                  "countField": "StudentCount",
+                  "dataRetrievalOperations": [
+                    {
+                      "id": "countBreakdownGender",
+                      "function": "GROUPBY",
+                      "arguments": [
+                        {
+                          "field": "func",
+                          "type": "string",
+                          "value": "sum"
+                        },
+                        {
+                          "field": "columns",
+                          "value": ["StudentCount"],
+                          "array": true
+                        },
+                        {
+                          "field": "selectColumns",
+                          "value": ["SEX"],
+                          "array": true
+                        },
+                        {
+                          "field": "limit",
+                          "type": "number"
+                        },
+                        {
+                          "field": "order",
+                          "type": "string",
+                          "array": true,
+                          "value": ["StudentCount desc"]
+                        },
+                        {
+                          "field": "groupby",
+                          "type": "string",
+                          "value": "SEX"
+                        },
+                        {
+                          "field": "ReportCode",
+                          "type": "string",
+                          "value": "c002"
+                        },
+                        {
+                          "field": "ReportLevel",
+                          "type": "string",
+                          "value": "sea"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

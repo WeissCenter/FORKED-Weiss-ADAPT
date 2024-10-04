@@ -1,0 +1,25 @@
+<div class="usa-step-indicator" aria-label="progress">
+  <ol class="usa-step-indicator__segments">
+    <li
+      class="usa-step-indicator__segment usa-step-indicator__segment{{ getClass(i) }}"
+      [attr.aria-current]="step === i"
+      *ngFor="let item of steps; let i = index">
+      <span class="usa-step-indicator__segment-label">
+        {{ item.name }}
+        <span *ngIf="i > step || i < step" class="usa-sr-only">{{ i > step ? 'not complete' : 'complete' }}</span>
+      </span>
+    </li>
+  </ol>
+  <div class="usa-step-indicator__header">
+    <h1 class="usa-step-indicator__heading">
+      <span class="usa-step-indicator__heading-counter"
+        ><span>Step</span>
+        <span class="usa-step-indicator__current-step">{{ step + 1 }}</span>
+        <span class="usa-step-indicator__total-steps">of {{ steps.length }}:</span>
+      </span>
+    </h1>
+  </div>
+  <div class="usa-step-indicator__content">
+    <ng-template [ngTemplateOutlet]="steps.get(step)!.content"></ng-template>
+  </div>
+</div>

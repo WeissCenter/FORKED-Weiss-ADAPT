@@ -1,0 +1,107 @@
+{
+  "Part B": {
+    "name": "Special Education Ages 3-21",
+    "categories": {
+      "618 Data": {
+        "name": "Data Reports",
+        "categories": {
+          "Child Count and Education Environments": {
+            "name": "Student Count & Settings"
+          },
+          "Personnel": {
+            "name": "Special Education Staff"
+          },
+          "Exiting": {
+            "name": "Leaving Reasons"
+          },
+          "Discipline": {
+            "name": "Discipline Actions"
+          },
+          "Assessment": {
+            "name": "State Tests"
+          },
+          "Dispute Resolution": {
+            "name": "Solving Disagreements"
+          },
+          "MOE": {
+            "name": "Consistent Funding"
+          }
+        }
+      },
+      "616 Data": {
+        "name": "Performance Reports",
+        "categories": {
+          "Indicator 1: Graduation": {
+            "name": "Graduation Rates"
+          },
+          "Indicator 2: Drop Out": {
+            "name": "Drop Out Rates"
+          },
+          "Indicator 3A: Participation for Children with IEPs": {
+            "name": "Test Participation"
+          },
+          "Indicator 3B: Proficiency for Children with IEPs (Grade Level Academic Achievement Standards)": {
+            "name": "Grade-Level Scores"
+          },
+          "Indicator 3C: Proficiency for Children with IEPs (Alternate Academic Achievement Standards)": {
+            "name": "Alternate Test Scores"
+          },
+          "Indicator 3D: Gap in Proficiency Rates (Grade Level Academic Achievement Standards)": {
+            "name": "Test Score Gaps"
+          },
+          "Indicator 5: Education Environments (children 5 (Kindergarten) - 21)": {
+            "name": "School Inclusion K-21"
+          },
+          "Indicator 6: Preschool Environments": {
+            "name": "Preschool Inclusion"
+          },
+          "Indicator 15: Resolution Sessions": {
+            "name": "Meeting Outcomes"
+          },
+          "Indicator 16: Mediation": {
+            "name": "Mediation Outcomes"
+          }
+        }
+      }
+    }
+  },
+  "Part C": {
+    "name": "Early Intervention Birth-3",
+    "categories": {
+      "618 Data": {
+        "name": "Data Reports",
+        "categories": {
+          "Child Count and Settings": {
+            "name": "Infant & Toddler Count"
+          },
+          "Exiting": {
+            "name": "Leaving Reasons"
+          },
+          "Dispute Resolution": {
+            "name": "Solving Disagreements"
+          }
+        }
+      },
+      "616 Data": {
+        "name": "Performance Reports",
+        "categories": {
+          "Indicator 2: Services in Natural Environments": {
+            "name": "Services at Natural Environments"
+          },
+          "Indicator 5: Child Find (Birth-1)": {
+            "name": "Identifying Infants (Birth-1)"
+          },
+          "Indicator 6: Child Find (Birth-3)": {
+            "name": "Identifying Toddlers (Birth-3)"
+          },
+          "Indicator 9: Resolution Sessions": {
+            "name": "Disagreement Meeting Outcomes"
+          },
+          "Indicator 10: Mediation": {
+            "name": "Mediation Outcomes"
+          }
+        }
+      }
+    }
+  }
+}

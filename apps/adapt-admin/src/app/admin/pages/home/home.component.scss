@@ -1,0 +1,36 @@
+.user-info-initials {
+  background-color: var(--usa-base-darker);
+  color: var(--usa-base-lightest);
+  font-size: var(--usa-font-size-xl);
+  font-weight: var(--usa-font-weight-thin);
+  border-radius: var(--usa-spacing-5);
+  min-width: var(--usa-spacing-10);
+  min-height: var(--usa-spacing-10);
+  padding: var(--usa-spacing-105);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.decorative-left {
+  min-width: var(--usa-spacing-2);
+}
+
+.decorative-right {
+  min-width: var(--usa-spacing-4);
+}
+
+@media all and (max-width: 39.99em) {
+  .home-hero-container {
+    flex-direction: column;
+    .decorative-left,
+    .decorative-right {
+      display: none;
+    }
+    gap: 0;
+    .welcome-user-info {
+      padding: var(--usa-spacing-3) var(--usa-spacing-3);
+    }
+  }
+}

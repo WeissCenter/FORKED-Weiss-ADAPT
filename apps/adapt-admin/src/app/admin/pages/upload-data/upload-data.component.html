@@ -1,0 +1,323 @@
+<section
+  class="create-report-container position-relative grid-container gap-4 display-flex flex-column padding-bottom-4">
+  <header role="banner" class="create-data-source-banner width-full display-flex usa-prose flex-column">
+    <h1 class="margin-0" i18n>Add a new data source</h1>
+    <p class="margin-bottom-0 usa-prose measure-4" i18n>
+      Collect, organize, and manage data related to the Individuals with Disabilities Education Act (IDEA). Ensure
+      accuracy, consistency, and confidentiality.
+    </p>
+  </header>
+
+  <div class="create-data-source-form maxw-desktop width-full">
+    <p class="margin-bottom-0 text-italic font-xs usa-prose measure-4" i18n>
+      Required fields are marked with an asterisk (<span class="text-red text-heavy">*</span>)
+    </p>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="uploadDataFormGroup">
+      <div class="grid-row accessibility-layout usa-prose grid-gap-2">
+        <div class="grid-col-12 margin-top-3 desktop:grid-col-6">
+          <label class="usa-label margin-top-0" for="name" i18n
+            >Data source name <span class="text-red text-heavy">*</span></label
+          >
+          <input
+            type="text"
+            id="name"
+            [ngClass]="{ 'border-red': name?.invalid && (name?.dirty || name?.touched) }"
+            formControlName="name"
+            class="usa-input" />
+          <div
+          role="alert"
+            *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+            class="form-errors margin-top-1 text-emergency">
+            <p *ngIf="name?.errors?.['required']" i18n>Data source name is required</p>
+
+            <p *ngIf="name?.errors?.['uniqueName']" i18n>Data Source name must be unique</p>
+
+            <p *ngIf="name?.errors?.['pattern']" i18n>Special characters are not allowed</p>
+          </div>
+        </div>
+
+        <div class="grid-col-12 desktop:grid-col-6 margin-top-3">
+          <lib-adapt-combo-box
+            class="grid-col-12 margin-top-3 desktop:grid-col-6"
+            formControlName="type"
+            comboID="type"
+            label="Source type"
+            [required]="true"
+            [items]="[
+              {
+                label: 'SQL Database Connection',
+                value: 'sql'
+              },
+              {
+                label: 'File Upload',
+                value: 'file'
+              }
+            ]"
+            itemLabel="label"
+            itemAccessor="value">
+            <ng-container errors>
+              <div
+    
+                *ngIf="type?.invalid && (type?.dirty || type?.touched)"
+                class="form-errors margin-top-1 text-emergency">
+                <div *ngIf="type?.errors?.['required']">Source type is required.</div>
+              </div>
+            </ng-container>
+          </lib-adapt-combo-box>
+        </div>
+
+        <div class="grid-col-12 margin-top-3">
+          <label class="usa-label margin-top-0" for="description" i18n>Description</label>
+          <textarea type="text" id="description" formControlName="description" class="usa-textarea"></textarea>
+          <div
+          role="alert"
+            *ngIf="connectionInfo_secret?.invalid && (connectionInfo_secret?.dirty || connectionInfo_secret?.touched)"
+            class="form-errors margin-top-1 text-emergency">
+            <div *ngIf="connectionInfo_secret?.errors?.['required']" i18n>Certificate is required.</div>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="type?.value === 'sql'">
+        <div class="grid-row accessibility-layout grid-gap-2">
+          <div class="grid-col-12 margin-top-3" style="--usa-input-max-width: var(--usa-spacing-desktop)">
+            <label class="usa-label margin-top-0" for="path" i18n
+              >Database URL <span class="text-red text-heavy">*</span></label
+            >
+            <input type="text" id="path" formControlName="path" class="usa-input" />
+            <div
+            role="alert"
+              *ngIf="path?.invalid && (path?.dirty || path?.touched)"
+              class="form-errors margin-top-1 text-emergency">
+              <div *ngIf="path?.errors?.['required']" i18n>Database URL is required.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sql-connection-fields" [formGroup]="connectionInfo">
+          <div class="grid-row accessibility-layout grid-gap-2">
+            <div class="usa-combo-box grid-col-12 margin-top-3 desktop:grid-col-4">
+              <lib-adapt-combo-box
+                class="grid-col-12 margin-top-3 desktop:grid-col-6"
+                formControlName="type"
+                comboID="type"
+                label="Database type"
+                [required]="true"
+                [items]="[
+                  {
+                    label: 'Microsoft SQL Server',
+                    value: 'mssql'
+                  }
+                ]"
+                itemLabel="label"
+                itemAccessor="value">
+                <ng-container errors>
+                  <div
+               
+                    *ngIf="connectionInfo_type?.invalid && (connectionInfo_type?.dirty || connectionInfo_type?.touched)"
+                    class="form-errors margin-top-1 text-emergency">
+                    <div *ngIf="connectionInfo_type?.errors?.['required']" i18n>Database type is required.</div>
+                  </div>
+                </ng-container>
+              </lib-adapt-combo-box>
+            </div>
+
+            <div class="grid-col-12 margin-top-3 desktop:grid-col-6">
+              <label class="usa-label margin-top-0" for="name" i18n
+                >Database <span class="text-red text-heavy">*</span></label
+              >
+              <input type="text" id="name" formControlName="database" class="usa-input" />
+              <div
+              role="alert"
+                *ngIf="
+                  connectionInfo_database?.invalid &&
+                  (connectionInfo_database?.dirty || connectionInfo_database?.touched)
+                "
+                class="form-errors margin-top-1 text-emergency">
+                <div *ngIf="connectionInfo_database?.errors?.['required']" i18n>Database is required.</div>
+              </div>
+            </div>
+
+            <div class="grid-col-12 margin-top-3 desktop:grid-col-2">
+              <label class="usa-label margin-top-0" for="port" i18n
+                >Database port <span class="text-red text-heavy">*</span></label
+              >
+              <input type="text" id="port" formControlName="port" class="usa-input" />
+              <div
+              role="alert"
+                *ngIf="connectionInfo_port?.invalid && (connectionInfo_port?.dirty || connectionInfo_port?.touched)"
+                class="form-errors margin-top-1 text-emergency">
+                <div *ngIf="connectionInfo_port?.errors?.['required']" i18n>Port is required.</div>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="!isSecret; else enterSecret">
+            <div class="grid-row accessibility-layout grid-gap-2">
+              <div class="grid-col-12 desktop:grid-col-6 margin-top-3">
+                <label class="usa-label margin-top-0" for="name" i18n
+                  >Username <span class="text-red text-heavy">*</span></label
+                >
+                <input type="text" id="name" formControlName="username" class="usa-input" />
+                <div
+                role="alert"
+                  *ngIf="
+                    connectionInfo_username?.invalid &&
+                    (connectionInfo_username?.dirty || connectionInfo_username?.touched)
+                  "
+                  class="form-errors margin-top-1 text-emergency">
+                  <div *ngIf="connectionInfo_username?.errors?.['required']" i18n>Username is required.</div>
+                </div>
+              </div>
+
+              <div class="grid-col-12 desktop:grid-col-6 margin-top-3">
+                <label class="usa-label margin-top-0" for="name" i18n
+                  >Password <span class="text-red text-heavy">*</span></label
+                >
+                <input #pwd type="password" id="password" formControlName="password" class="usa-input" />
+                <button
+                  (click)="pwd.type === 'password' ? (pwd.type = 'text') : (pwd.type = 'password')"
+                  title="Toggle password"
+                  type="button"
+                  class="usa-show-password"
+                  aria-controls="password">
+                  {{ pwd.type === 'password' ? 'Show password' : 'Hide password' }}
+                </button>
+                <div
+                role="alert"
+                  *ngIf="
+                    connectionInfo_password?.invalid &&
+                    (connectionInfo_password?.dirty || connectionInfo_password?.touched)
+                  "
+                  class="form-errors margin-top-1 text-emergency">
+                  <div *ngIf="connectionInfo_password?.errors?.['required']" i18n>Password is required.</div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #enterSecret>
+            <div class="grid-row accessibility-layout grid-gap-2">
+              <div class="grid-col-12 desktop:grid-col-6 margin-top-3">
+                <label class="usa-label margin-top-0" for="secret" i18n
+                  >Certificate <span class="text-red text-heavy">*</span></label
+                >
+                <p class="usa-hint margin-top-05">(base64 pem format)</p>
+                <textarea type="text" id="secret" formControlName="secret" class="usa-textarea"></textarea>
+                <div
+                role="alert"
+                  *ngIf="
+                    connectionInfo_secret?.invalid && (connectionInfo_secret?.dirty || connectionInfo_secret?.touched)
+                  "
+                  class="form-errors margin-top-1 text-emergency">
+                  <div *ngIf="connectionInfo_secret?.errors?.['required']" i18n>Certificate is required.</div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+
+        <button
+          [disabled]="connectionInfo.invalid || path?.errors?.['required']"
+          (click)="testConnection()"
+          class="usa-button margin-top-2 margin-right-1">
+          Test Connection
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="type?.value === 'file'">
+        <div class="margin-top-1 display-flex flex-column gap-2">
+          <lib-adapt-combo-box
+            class="grid-col-12 margin-top-3 desktop:grid-col-6"
+            formControlName="fileSpec"
+            comboID="type"
+            label="File Specification"
+            [items]="[
+              {
+                label: 'None',
+                value: 'default'
+              },
+              {
+                label: 'FS002',
+                value: 'FS002'
+              }
+            ]"
+            itemLabel="label"
+            itemAccessor="value">
+            <ng-container errors> </ng-container>
+          </lib-adapt-combo-box>
+
+          <adapt-file-input
+            formControlName="path"
+            [required]="true"
+            fieldID="data-source-file"
+            label="Select a data file for upload"
+            hint="Only CSV files are allowed currently (5 gigabyte max)"
+            accept=".csv">
+            <ng-container errors>
+              <div
+              role="alert"
+                *ngIf="path?.invalid && (path?.dirty || path?.touched)"
+                class="form-errors margin-top-1 text-emergency">
+                <div *ngIf="path?.errors?.['required']" i18n>A file is required</div>
+
+                <div *ngIf="path?.errors?.['fileSizeExceeded']" i18n>A file must be smaller than 5GB</div>
+
+                <div *ngIf="path?.errors?.['validateFile']" i18n>
+                  <ul class="usa-list">
+                    <li *ngFor="let error of path?.errors?.['validateFile']">
+                      {{ error.error }} - {{ error.rule }}
+                      <ng-container *ngIf="error.header">- {{ error.header }}</ng-container>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-container>
+          </adapt-file-input>
+        </div>
+
+        <div *ngIf="dataPreview | async as preview" class="data-source-file-preview">
+          <ng-container *ngIf="!preview.error; else errors">
+            <h2>File Preview</h2>
+            <p class="usa-prose">Only the first 10 items per sheet/file will be shown</p>
+
+            <div class="margin-top-1" *ngFor="let sheet of preview | keyvalue">
+              <lib-adapt-accordion [bordered]="true" [header]="$any(sheet.key)">
+                <p class="usa-prose">Total Records: {{ sheet.value.total }}</p>
+
+                <table class="usa-table usa-table--borderless width-full">
+                  <thead>
+                    <tr>
+                      <th scope="col" *ngFor="let header of sheet.value.headers">{{ header }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- [routerLink]="[item.dataSourceID, item.dataSetID]"  -->
+                    <tr *ngFor="let row of sheet.value.data">
+                      <ng-container *ngFor="let item of row; let isFirst = first">
+                        <th *ngIf="isFirst" scope="row">{{ item }}</th>
+
+                        <td *ngIf="!isFirst">{{ item }}</td>
+                      </ng-container>
+                    </tr>
+                  </tbody>
+                </table>
+              </lib-adapt-accordion>
+            </div>
+          </ng-container>
+
+          <ng-template #errors>
+            <h2>File has errors</h2>
+
+            <p class="usa-prose">
+              {{ preview.error }}
+            </p>
+          </ng-template>
+        </div>
+      </ng-container>
+
+      <button [disabled]="uploadDataFormGroup.invalid" class="usa-button margin-top-3">Create data source</button>
+    </form>
+  </div>
+</section>

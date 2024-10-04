@@ -1,0 +1,16 @@
+<div class="usa-accordion" [ngClass]="{ 'usa-accordion--bordered': bordered }">
+  <h4 class="usa-accordion__heading">
+    <button
+      type="button"
+      [ngClass]="ngClass"
+      [ngStyle]="ngStyle"
+      class="usa-accordion__button"
+      aria-expanded="false"
+      [attr.aria-controls]="accordionID">
+      {{ header }}
+    </button>
+  </h4>
+  <div hidden [id]="accordionID" class="usa-accordion__content usa-prose">
+    <ng-content></ng-content>
+  </div>
+</div>

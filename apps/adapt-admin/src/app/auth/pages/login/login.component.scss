@@ -1,0 +1,9 @@
+.usa-prose > h1 {
+  font-size: var(--usa-font-size-xl);
+}
+
+@media (min-width: 30em) {
+  .usa-form {
+    max-width: none;
+  }
+}

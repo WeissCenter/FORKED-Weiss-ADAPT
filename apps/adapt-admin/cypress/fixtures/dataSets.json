@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "data": [
+    {
+      "dataSetID": "00fd38de-69cd-43f9-b2d9-43ea49e53132",
+      "dataSourceID": "05b2e3fe-0141-4538-9d7d-11eb39ff637e",
+      "query": "Select * from table;",
+      "status": "draft",
+      "description": "",
+      "id": "DataSource#05b2e3fe-0141-4538-9d7d-11eb39ff637e#ID#00fd38de-69cd-43f9-b2d9-43ea49e53132",
+      "name": "Cypress Test",
+      "type": "DataSet"
+    }
+  ]
+}

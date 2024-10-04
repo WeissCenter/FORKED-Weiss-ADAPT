@@ -1,0 +1,48 @@
+<div class="grid-container display-flex flex-column gap-2">
+  <ng-container *ngIf="!outlet.isActivated">
+    <section class="settings-banner width-full display-flex usa-prose flex-column">
+      <h1 class="margin-0" i18n>Global Settings Management</h1>
+      <p class="margin-bottom-0 usa-prose measure-4" i18n>
+        This centralized hub allows you to adjust global settings, manage user roles, data sources, and more, ensuring
+        your policies are consistently applied across the board.
+      </p>
+    </section>
+
+    <section class="settings-content display-flex">
+      <adapt-in-page-navigation
+        class="tablet:flex-3"
+        [sections]="listItems"
+        [interactWithParent]="false"
+        headingElements="h3"
+        headingLevel="h2"
+        titleText="Jump To:"
+        selector=".settings-content-body"></adapt-in-page-navigation>
+
+      <div
+        class="settings-content-body flex-12 width-full display-flex flex-column gap-1 border-top-2px border-base-lighter">
+        <div class="settings-content-body-header margin-1">
+          <h2 class="font-xl margin-0">Categories:</h2>
+          <p class="usa-prose measure-4">
+            Select any of these options to change your settings. They cover everything from making the site easier to
+            use to keeping your information safe.
+          </p>
+        </div>
+
+        <ul class="settings-list usa-list usa-list--unstyled display-flex flex-column gap-2">
+          <li [id]="page.path" class="settings-list-item" *ngFor="let page of settingPages">
+            <a
+              class="usa-anchor text-no-underline display-flex bg-white padding-2 border-2px radius-lg border-base-lighter flex-column gap-05"
+              [routerLink]="page.path">
+              <h3 class="margin-0 font-lg">
+                {{ page.title }}
+              </h3>
+              <p class="text-black usa-prose measure-4 text-no-underline">{{ page.description }}</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </ng-container>
+
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>

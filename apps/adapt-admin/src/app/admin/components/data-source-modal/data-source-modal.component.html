@@ -1,0 +1,319 @@
+<adapt-full-page-modal>
+  <div class="display-flex flex-justify" header>
+    <h1 *ngIf="mode === PageMode.CREATE" class="margin-0">{{ createModeModalHeaders[currentStep] }}</h1>
+    <h1 *ngIf="mode === PageMode.EDIT" class="margin-0">{{ editModeModalHeaders[currentStep] }}</h1>
+    <h1 *ngIf="mode === PageMode.VIEW" class="margin-0">Data Source Summary</h1>
+    <div class="data-view-edit-header-controls display-flex gap-2 flex-align-center">
+      <button
+        (click)="confirmCloseModal?.open()"
+        class="save-and-close usa-button text-white flex-align-center border-2px border-white hover:text-white shadow-none usa-button--outline">
+        Close <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid-container-tablet-lg" [ngClass]="{ 'padding-top-2': mode !== PageMode.VIEW }" body>
+    <ng-container *ngIf="mode !== PageMode.VIEW; else view">
+      <adapt-steps-indicator [(step)]="currentStep" #stepsIndicator>
+        <adapt-steps-indicator-step name="Create">
+          <div class="create-step-body display-flex flex-column gap-6">
+            <div class="create-step-header">
+              <h2>Identifying the data source</h2>
+              <p class="usa-prose">Specify the source type, name it, and describe it to enhance search efficiency.</p>
+            </div>
+
+            <form class="display-flex flex-column gap-2" [formGroup]="dataSourceForm">
+              <lib-adapt-combo-box
+                *ngIf="mode === PageMode.CREATE"
+                [comboBoxStyle]="{ 'max-width': '100%' }"
+                [items]="sourceTypeOptions"
+                compareID="label"
+                itemLabel="label"
+                itemAccessor="value"
+                label="Source Type"
+                formControlName="type">
+                <ng-container errors>
+                  <div
+                    *ngIf="type?.invalid && (type?.dirty || type?.touched)"
+                    class="form-errors margin-top-1 text-emergency">
+                    <div *ngIf="type?.errors?.['required']" i18n>Source type is required.</div>
+                  </div>
+                </ng-container>
+              </lib-adapt-combo-box>
+
+              <div *ngIf="mode !== PageMode.CREATE" class="edit-mode-preview display-flex gap-2 flex-column">
+                <label
+                  >Source Type: <strong>{{ type.value | valueLabel : sourceTypeOptions }}</strong></label
+                >
+              </div>
+
+              <lib-adapt-text-input
+                label="Data source name"
+                hint="Create a friendly and unique name that humans can read."
+                formControlName="name">
+                <p required class="usa-prose">Data source name is required.</p>
+              </lib-adapt-text-input>
+
+              <lib-adapt-text-input type="long" label="Description" formControlName="description">
+                <p required class="usa-prose">Data source description is required.</p>
+              </lib-adapt-text-input>
+            </form>
+          </div>
+        </adapt-steps-indicator-step>
+        <adapt-steps-indicator-step name="Connect">
+          <div class="connect-step-body display-flex flex-column gap-6">
+            <div class="create-step-header">
+              <h2>Connecting to SQL server</h2>
+              <p class="usa-prose">
+                Add the server address and details. A successful connection is required to continue.
+              </p>
+            </div>
+
+            <form class="display-flex flex-column gap-2" [formGroup]="dataSourceForm">
+              <lib-adapt-text-input label="Server Address" formControlName="address">
+                <p required class="usa-prose">Data source address is required.</p>
+              </lib-adapt-text-input>
+
+              <lib-adapt-text-input type="number" label="Port number" formControlName="port">
+                <p required class="usa-prose">Data source port number is required.</p>
+              </lib-adapt-text-input>
+
+              <lib-adapt-text-input label="Database name" formControlName="database">
+                <p required class="usa-prose">Data source database name is required.</p>
+              </lib-adapt-text-input>
+
+              <lib-adapt-text-input label="Username" formControlName="username">
+                <p required class="usa-prose">Data source username is required.</p>
+              </lib-adapt-text-input>
+
+              <ng-container *ngIf="(editPassword && mode === PageMode.EDIT) || mode !== PageMode.EDIT">
+                <lib-adapt-text-input autocomplete="password" type="password" label="Password" formControlName="password">
+                  <p required class="usa-prose">Data source password is required.</p>
+                </lib-adapt-text-input>
+              </ng-container>
+
+              <button
+                *ngIf="mode === PageMode.EDIT"
+                (click)="editPasswordToggle()"
+                class="usa-button flex-align-self-start">
+                Edit Password
+              </button>
+            </form>
+
+            <div
+              *ngIf="mode !== PageMode.EDIT || (mode === PageMode.EDIT && editPassword)"
+              class="connect-step-test-container display-flex flex-justify-left">
+              <button (click)="testConnection()" class="usa-button usa-button--outline">Test connection</button>
+            </div>
+          </div>
+        </adapt-steps-indicator-step>
+
+        <adapt-steps-indicator-step *ngIf="mode === PageMode.EDIT" name="Review">
+          <div class="impact-step-body display-flex flex-column gap-6">
+            <div class="create-step-header">
+              <h2>Review dependencies</h2>
+              <p class="usa-prose">Understand how these changes will impact existing views and reports.</p>
+            </div>
+
+            <div class="impact-body padding-3 padding-left-5 border-2px border-base-lighter radius-lg bg-white">
+              <adapt-impact-analysis
+                type="DataSource"
+  
+                [dataViews]="dataViews"
+                [reports]="reports"
+                [id]="$any(currentDataSource!.dataSourceID)"></adapt-impact-analysis>
+            </div>
+          </div>
+        </adapt-steps-indicator-step>
+
+        <adapt-steps-indicator-step name="Save">
+          <div class="review-header">
+            <h2>Data source summary</h2>
+
+            <p class="usa-prose">Review the following information before saving.</p>
+          </div>
+
+          <div
+            class="review-body margin-top-4 padding-3 padding-left-5 border-2px border-base-lighter radius-lg bg-white">
+            <h3 class="margin-0 font-lg">General information:</h3>
+
+            <ul class="usa-list display-flex padding-3 flex-column gap-1">
+              <li>
+                <span>Connection type: </span>
+                <strong>Microsoft SQL Server</strong>
+              </li>
+              <li>
+                <span>Friendly name: </span>
+                <strong>{{ name.value }}</strong>
+              </li>
+              <li>
+                <span>Description: </span>
+                <strong>{{ description.value }}</strong>
+              </li>
+            </ul>
+
+            <h3 class="margin-0 font-lg">Data source details:</h3>
+
+            <ul class="usa-list display-flex padding-3 flex-column gap-1">
+              <li class="maxw-full">
+                <span>Server address: </span>
+                <strong>{{ address.value }}</strong>
+              </li>
+              <li>
+                <span>Port number: </span>
+                <strong>{{ port.value }}</strong>
+              </li>
+              <li>
+                <span>Database name: </span>
+                <strong>{{ database.value }}</strong>
+              </li>
+
+              <li>
+                <span>Username:</span> <strong>{{ username.value }}</strong>
+              </li>
+            </ul>
+          </div>
+        </adapt-steps-indicator-step>
+      </adapt-steps-indicator>
+    </ng-container>
+
+    <ng-template #view>
+      <div class="view-mode-container height-full bg-white">
+        <div class="view-mode-body display-flex padding-3 flex-column gap-2">
+          <section
+            class="view-data-source-heading padding-1 bg-base-lightest border-2px border-base display-flex flex-column gap-1">
+            <h2 class="margin-0">{{ currentDataSource?.name }}</h2>
+            <p class="usa-prose">{{ currentDataSource?.description }}</p>
+            <p class="usa-prose">
+              Author: <span>{{ currentDataSource?.author }}</span>
+            </p>
+
+            <p class="usa-prose">
+              Last updated: {{ currentDataSource?.updated | date : 'MM/dd/YYYY' }} at
+              {{ currentDataSource?.updated | date : 'HH:MM:SS a' }}
+            </p>
+          </section>
+
+          <section class="view-data-source-details">
+            <h2 class="margin-0">Data source details</h2>
+
+            <ul class="usa-list">
+              <li>
+                Server address: <strong>{{ address.value }}</strong>
+              </li>
+              <li>
+                Port number: <strong>{{ port.value }}</strong>
+              </li>
+              <li>
+                Database name: <strong>{{ database.value }}</strong>
+              </li>
+
+              <li>
+                <span>Username:</span> <strong>{{ username.value }}</strong>
+              </li>
+            </ul>
+          </section>
+
+          <adapt-impact-analysis
+            type="DataSource"
+            [dataViews]="dataViews"
+            [reports]="reports"
+            [id]="$any(currentDataSource!.dataSourceID)"></adapt-impact-analysis>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div
+    aria-live="polite"
+    extra
+    [ngClass]="{
+      'bg-primary': connectionTestState === ConnectionTestState.SUCCESS,
+      'bg-red': connectionTestState === ConnectionTestState.FAILED
+    }"
+    class="alert-box width-full display-flex padding-2 text-white gap-2 flex-justify-center">
+    <ng-container [ngSwitch]="connectionTestState">
+      <ng-container *ngSwitchCase="ConnectionTestState.SUCCESS">
+        <i aria-hidden="true" class="fas fa-bell"></i>
+        Connected successfully!
+      </ng-container>
+
+      <ng-container *ngSwitchCase="ConnectionTestState.FAILED">
+        <i aria-hidden="true" class="fas fa-bell"></i>
+        Unable to connect. Review settings and test it again.
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="grid-container display-flex flex-justify-center gap-2" footer>
+    <ng-container *ngIf="stepsIndicator && opened && mode !== PageMode.VIEW; else viewFooter">
+      <button (click)="previous()" *ngIf="currentStep > 0" class="usa-button">Back</button>
+      <button (click)="next()" *ngIf="currentStep + 1 < stepsIndicator.length" class="usa-button">
+        Next: {{ stepsIndicator.getStepName(currentStep + 1) }}
+      </button>
+
+      <button
+        *ngIf="mode === PageMode.CREATE ? currentStep >= 2 : currentStep >= 3"
+        (click)="doSave(mode === PageMode.CREATE ? currentStep === 2 : currentStep === 3)"
+        class="usa-button {{
+          (mode === PageMode.CREATE && currentStep !== 2) || (mode === PageMode.EDIT && currentStep !== 3)
+            ? 'usa-button--unstyled'
+            : ''
+        }}">
+        Save
+      </button>
+      <button (click)="confirmCloseModal.open()" class="usa-button usa-button--unstyled">Cancel</button>
+    </ng-container>
+
+    <ng-template #viewFooter>
+      <button (click)="mode = PageMode.EDIT" class="usa-button">Edit</button>
+      <button (click)="createDataView()" class="usa-button usa-button--unstyled">
+        <i class="fal fa-file" role="img" aria-hidden="true"></i>Add data view
+      </button>
+      <button class="usa-button usa-button--unstyled text-secondary">
+        <i class="fal fa-folder" role="img" aria-hidden="true"></i>Archive
+      </button>
+    </ng-template>
+  </div>
+</adapt-full-page-modal>
+
+<lib-adapt-confirm-modal [heading]="$any(dataSourceForm.dirty ? 'You have unsaved changes.' : 'Are you sure you want to close?')" (confirm)="internalClose()"></lib-adapt-confirm-modal>
+
+
+
+<lib-adapt-modal closeText="Close" heading="Please provide a reason." #confirmModal>
+  <div class="confirm-modal-body width-tablet-lg display-flex flex-column gap-2 padding-1">
+    <p>Here is a list of changes you made to confirm:</p>
+
+    <form class="display-flex flex-column gap-2" [formGroup]="editJustificationForm">
+      <div class="confirm-modal-field">
+        <lib-adapt-combo-box
+          [required]="true"
+          formControlName="reason"
+          placeholder=""
+          [comboBoxStyle]="{ 'max-width': '60%' }"
+          label="Reason:"
+          [items]="refreshReasonOptions"
+          itemAccessor="value"
+          itemLabel="label">
+          <ng-container errors>
+            <div
+              *ngIf="reason?.invalid && (reason?.dirty || reason?.touched)"
+              class="form-errors margin-top-1 text-emergency">
+              <div *ngIf="reason?.errors?.['required']" i18n>Edit reason is required.</div>
+            </div>
+          </ng-container>
+        </lib-adapt-combo-box>
+      </div>
+
+      <lib-adapt-text-input label="Additional comment:" type="long" formControlName="justification">
+        <p required class="usa-prose">Edit justification is required.</p>
+      </lib-adapt-text-input>
+    </form>
+
+    <div class="confirm-modal-footer padding-1 display-flex gap-2">
+      <button class="usa-button" (click)="confirmEdits()">Confirm</button>
+      <button class="usa-button usa-button--unstyled" (click)="internalClose()">Cancel</button>
+    </div>
+  </div>
+</lib-adapt-modal>

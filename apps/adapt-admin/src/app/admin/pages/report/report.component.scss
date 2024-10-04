@@ -1,0 +1,29 @@
+.report-controls {
+  &-container {
+  }
+
+  ul {
+    margin: 0;
+    list-style: none;
+  }
+  li {
+    margin: 0;
+
+    button {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      gap: 15px;
+      border: none;
+    }
+  }
+}
+
+.error-wrapper {
+  div {
+    height: 64vh;
+  }
+}

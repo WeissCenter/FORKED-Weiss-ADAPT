@@ -1,0 +1,922 @@
+{
+  "id": "childCount",
+  "title": "Child Count and Education Environments (FS002)",
+  "metaTags": ["Part B", "618", "Child Count"],
+  "description": "State-level data on the Individuals with Disabilities Education Act (IDEA) Part B, including an unduplicated count of children with disabilities receiving special education from ages 3 through 21 served by the Office of Special Education Programs (OSEP).",
+  "suppression": {
+    "required": true,
+    "sensitiveColumns": [
+      "RACE",
+      "SEX",
+      "IDEADISABILITYTYPE",
+      "ENGLISHLEARNERSTATUS",
+      "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+      "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+      "AGE"
+    ],
+    "frequencyColumns": ["StudentCount"]
+  },
+  "filters": {
+    "level": {
+      "code": "level",
+      "label": "Select a Report Level",
+      "field": "ReportLevel",
+      "type": "select",
+      "dataType": "string",
+      "filter": {
+        "default": "sea",
+        "options": [
+          {
+            "value": "sea",
+            "label": "SEA"
+          },
+          {
+            "value": "lea",
+            "label": "LEA"
+          },
+          {
+            "value": "sch",
+            "label": "SCH"
+          }
+        ]
+      }
+    },
+    "schoolYear": {
+      "code": "schoolYear",
+      "label": "Select a School Year",
+      "field": "ReportYear",
+      "type": "select",
+      "dataType": "number",
+      "filter": {
+        "default": 2023,
+        "options": [
+          {
+            "value": 2023,
+            "label": "2023"
+          }
+        ]
+      }
+    },
+    "categorySet": {
+      "code": "categorySet",
+      "label": "Select a Category Set",
+      "field": "CategorySetCode",
+      "type": "select",
+      "filter": {
+        "default": "CSA",
+        "options": [
+          {
+            "value": "CSA",
+            "label": "Category Set A"
+          },
+          {
+            "value": "CSB",
+            "label": "Category Set B"
+          },
+          {
+            "value": "CSC",
+            "label": "Category Set C"
+          },
+          {
+            "value": "CSD",
+            "label": "Category Set D"
+          },
+          {
+            "value": "CSE",
+            "label": "Category Set E"
+          }
+        ]
+      },
+      "children": {
+        "race": {
+          "code": "race",
+          "label": "Select a Race",
+          "field": "RACE",
+          "type": "multiselect",
+          "condition": ["CSA", "CSC"],
+          "filter": {
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "exclusive": true,
+                "label": "All"
+              },
+              {
+                "value": "AM7",
+                "label": "American Indian or Alaska Native"
+              },
+              {
+                "value": "AS7",
+                "label": "Asian"
+              },
+              {
+                "value": "BL7",
+                "label": "Black or African American"
+              },
+              {
+                "value": "HI7",
+                "label": "Hispanic/Latino"
+              },
+              {
+                "value": "PI7",
+                "label": "Native Hawaiian or Other Pacific Islander"
+              },
+              {
+                "value": "MU7",
+                "label": "Two or more races"
+              },
+              {
+                "value": "WH7",
+                "label": "White"
+              }
+            ]
+          }
+        },
+        "sex": {
+          "code": "sex",
+          "label": "Select a Sex",
+          "field": "SEX",
+          "type": "multiselect",
+          "condition": ["CSA", "CSD", "CSE"],
+          "filter": {
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "exclusive": true,
+                "label": "All"
+              },
+              {
+                "value": "F",
+                "label": "Female"
+              },
+              {
+                "value": "M",
+                "label": "Male"
+              }
+            ]
+          }
+        },
+        "disability": {
+          "code": "disability",
+          "label": "Select a Disability",
+          "field": "IDEADISABILITYTYPE",
+          "condition": ["CSA", "CSB", "CSD", "CSE"],
+          "tags": {
+            "categoryTag": "ST3"
+          },
+          "type": "multiselect",
+          "filter": {
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "exclusive": true,
+                "label": "All"
+              },
+              {
+                "value": "AUT",
+                "label": "Autism"
+              },
+              {
+                "value": "DB",
+                "label": "Deaf-blindness"
+              },
+              {
+                "value": "DD",
+                "label": "Developmental delay"
+              },
+              {
+                "value": "EMN",
+                "label": "Emotional disturbance"
+              },
+              {
+                "value": "HI",
+                "label": "Hearing impairment"
+              },
+              {
+                "value": "ID",
+                "label": "Intellectual disability"
+              },
+              {
+                "value": "MD",
+                "label": "Multiple disabilities"
+              },
+              {
+                "value": "OI",
+                "label": "Orthopedic impairment"
+              },
+              {
+                "value": "SLD",
+                "label": "Specific learning disability"
+              },
+              {
+                "value": "SLI",
+                "label": "Speech or language impairment"
+              },
+              {
+                "value": "TBI",
+                "label": "Traumatic brain injury"
+              },
+              {
+                "value": "VI",
+                "label": "Visual impairment"
+              },
+              {
+                "value": "OHI",
+                "label": "Other health impairment"
+              }
+            ]
+          }
+        },
+        "age": {
+          "code": "age",
+          "label": "Select an Age",
+          "field": "AGE",
+          "condition": ["CSB"],
+          "tags": {
+            "categoryTag": "ST3"
+          },
+          "type": "multiselect",
+          "filter": {
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "exclusive": true,
+                "label": "All"
+              },
+              {
+                "value": "AGE05K",
+                "label": "Age 5 (Kindergarten)"
+              },
+              {
+                "value": "6",
+                "label": "Age 6"
+              },
+              {
+                "value": "7",
+                "label": "Age 7"
+              },
+              {
+                "value": "8",
+                "label": "Age 8"
+              },
+              {
+                "value": "9",
+                "label": "Age 9"
+              },
+              {
+                "value": "10",
+                "label": "Age 10"
+              },
+              {
+                "value": "11",
+                "label": "Age 11"
+              },
+              {
+                "value": "12",
+                "label": "Age 12"
+              },
+              {
+                "value": "13",
+                "label": "Age 13"
+              },
+              {
+                "value": "14",
+                "label": "Age 14"
+              },
+              {
+                "value": "15",
+                "label": "Age 15"
+              },
+              {
+                "value": "16",
+                "label": "Age 16"
+              },
+              {
+                "value": "17",
+                "label": "Age 17"
+              },
+              {
+                "value": "18",
+                "label": "Age 18"
+              },
+              {
+                "value": "19",
+                "label": "Age 19"
+              },
+              {
+                "value": "20",
+                "label": "Age 20"
+              },
+              {
+                "value": "21",
+                "label": "Age 21"
+              }
+            ]
+          }
+        },
+        "eduEnv": {
+          "code": "eduEnv",
+          "label": "Select an Educational Evironment",
+          "field": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+          "condition": ["CSB", "CSC", "CSD", "CSE"],
+          "tags": {
+            "categoryTag": "ST3"
+          },
+          "type": "multiselect",
+          "filter": {
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "exclusive": true,
+                "label": "All"
+              },
+              {
+                "value": "RC80",
+                "label": "Inside regular class 80% or more of the day"
+              },
+              {
+                "value": "RC79TO40",
+                "label": "Inside regular class 40% through 79% of the day"
+              },
+              {
+                "value": "RC39",
+                "label": "Inside regular class less than 40% of the day"
+              },
+              {
+                "value": "SS",
+                "label": "Separate School"
+              },
+              {
+                "value": "RF",
+                "label": "Residential Facility"
+              },
+              {
+                "value": "HH",
+                "label": "Homebound/Hospital"
+              },
+              {
+                "value": "CF",
+                "label": "Correctional Facilities"
+              },
+              {
+                "value": "PPPS",
+                "label": "Parentally placed in private schools"
+              }
+            ]
+          }
+        },
+        "englishLearner": {
+          "code": "englishLearner",
+          "label": "Select a English Learner Status",
+          "field": "ENGLISHLEARNERSTATUS",
+          "condition": ["CSE"],
+          "tags": {
+            "categoryTag": "ST3"
+          },
+          "type": "multiselect",
+          "filter": {
+            "default": "all",
+            "options": [
+              {
+                "value": "all",
+                "exclusive": true,
+                "label": "All"
+              },
+              {
+                "value": "LEP",
+                "label": "English learners"
+              },
+              {
+                "value": "NLEP",
+                "label": "Non-English learner"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "sections": [
+    {
+      "type": "quickSummary",
+      "sectionLabel": "Quick Summary",
+      "content": {
+        "heading": {
+          "template": "There are {{var_1}} children with various disabilities in your state.",
+          "variables": {
+            "var_1": {
+              "function": "sum",
+              "args": [
+                "StudentCount",
+                {
+                  "field": "ReportCode",
+                  "value": "c002"
+                }
+              ]
+            }
+          }
+        },
+        "sections": [
+          {
+            "title": "Most Common Disabilities",
+            "body": {
+              "template": "{{var_1}} are the most prevalent disabilities among the children.",
+              "variables": {
+                "var_1": {
+                  "function": "top_disabilities_percentages",
+                  "args": [
+                    3,
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "title": "Least Common Disabilities",
+            "body": {
+              "template": "{{var_1}} are some of the least common disabilities.",
+              "variables": {
+                "var_1": {
+                  "function": "bottom_disabilities_percentages",
+                  "args": [
+                    3,
+
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "gridView",
+      "content": {
+        "columns": [
+          {
+            "id": "raceAndEthnicityColumn",
+
+            "rows": [
+              {
+                "type": "barChart",
+                "condition": {
+                  "operator": "AND",
+                  "conditions": [
+                    {
+                      "filterCode": "categorySet",
+                      "value": ["CSA", "CSB", "CSD", "CSE"]
+                    }
+                  ]
+                },
+                "sectionLabel": "Disabilities",
+                "content": {
+                  "title": "Disabilities",
+                  "description": {
+                    "template": "There are {{var_1}} children with various disabilities in your state.",
+                    "variables": {
+                      "var_1": {
+                        "function": "sum",
+                        "args": [
+                          "StudentCount",
+
+                          {
+                            "field": "ReportCode",
+                            "value": "c002"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "chart": {
+                    "filterOn": "x",
+                    "yAxisLabel": "Child Count",
+                    "xAxisLabel": "IDEADISABILITYTYPE",
+                    "xAxisValue": "IDEADISABILITYTYPE",
+                    "yAxisValue": "StudentCount",
+                    "total": {
+                      "id": "totalBarChart",
+                      "function": "SUM",
+                      "arguments": [
+                        {
+                          "field": "StudentCount"
+                        },
+                        {
+                          "field": "ReportCode",
+                          "value": "c002"
+                        }
+                      ]
+                    },
+                    "dataRetrievalOperations": [
+                      {
+                        "id": "childCountBarChart",
+                        "function": "GROUPBY",
+                        "arguments": [
+                          {
+                            "field": "func",
+                            "type": "string",
+                            "value": "sum"
+                          },
+                          {
+                            "field": "columns",
+                            "value": ["StudentCount"],
+                            "array": true
+                          },
+                          {
+                            "field": "selectColumns",
+                            "value": ["IDEADISABILITYTYPE"],
+                            "array": true
+                          },
+                          {
+                            "field": "limit",
+                            "type": "number"
+                          },
+                          {
+                            "field": "order",
+                            "type": "string",
+                            "array": true,
+                            "value": ["StudentCount desc"]
+                          },
+                          {
+                            "field": "groupby",
+                            "type": "string",
+                            "array": true,
+                            "value": ["IDEADISABILITYTYPE"]
+                          },
+                          {
+                            "field": "ReportCode",
+                            "type": "string",
+                            "value": "c002"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "barChart",
+                "condition": {
+                  "operator": "AND",
+                  "conditions": [
+                    {
+                      "filterCode": "categorySet",
+                      "value": ["CSE"]
+                    }
+                  ]
+                },
+                "sectionLabel": "English learner status",
+                "content": {
+                  "title": "English learner status",
+                  "description": {
+                    "template": "About {{var_1}}% of children with disabilities are English Learners and may not speak English as their first language or live in places where English isn't commonly spoken.",
+                    "variables": {
+                      "var_1": {
+                        "function": "context",
+                        "args": ["LEP"]
+                      }
+                    }
+                  },
+                  "chart": {
+                    "filterOn": "x",
+                    "yAxisLabel": "Child Count",
+                    "xAxisLabel": "ENGLISHLEARNERSTATUS",
+                    "xAxisValue": "ENGLISHLEARNERSTATUS",
+                    "yAxisValue": "StudentCount",
+                    "total": {
+                      "id": "totalBarChart",
+                      "function": "SUM",
+                      "arguments": [
+                        {
+                          "field": "StudentCount"
+                        },
+                        {
+                          "field": "ReportCode",
+                          "value": "c002"
+                        }
+                      ]
+                    },
+                    "dataRetrievalOperations": [
+                      {
+                        "id": "countBreakdownLearner",
+                        "function": "GROUPBY",
+                        "arguments": [
+                          {
+                            "field": "func",
+                            "type": "string",
+                            "value": "sum"
+                          },
+                          {
+                            "field": "columns",
+                            "value": ["StudentCount"],
+                            "array": true
+                          },
+                          {
+                            "field": "selectColumns",
+                            "value": ["ENGLISHLEARNERSTATUS"],
+                            "array": true
+                          },
+                          {
+                            "field": "limit",
+                            "type": "number"
+                          },
+                          {
+                            "field": "order",
+                            "type": "string",
+                            "array": true,
+                            "value": ["StudentCount desc"]
+                          },
+                          {
+                            "field": "groupby",
+                            "type": "string",
+                            "value": "ENGLISHLEARNERSTATUS"
+                          },
+                          {
+                            "field": "ReportCode",
+                            "type": "string",
+                            "value": "c002"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "barChart",
+                "condition": {
+                  "operator": "AND",
+                  "conditions": [
+                    {
+                      "filterCode": "categorySet",
+                      "value": ["CSA", "CSD", "CSE"]
+                    }
+                  ]
+                },
+                "sectionLabel": "Sex",
+                "content": {
+                  "title": "Sex",
+                  "description": {
+                    "template": "The dataset reveals that among children with disabilities receiving special education, ages 5-21, served by OSEP, {{var_1}}% are male and {{var_2}}% are female.",
+                    "variables": {
+                      "var_1": {
+                        "function": "context",
+                        "args": ["M"]
+                      },
+                      "var_2": {
+                        "function": "context",
+                        "args": ["F"]
+                      }
+                    }
+                  },
+                  "chart": {
+                    "filterOn": "x",
+                    "yAxisLabel": "Child Count",
+                    "xAxisLabel": "SEX",
+                    "xAxisValue": "SEX",
+                    "yAxisValue": "StudentCount",
+                    "total": {
+                      "id": "totalBarChart",
+                      "function": "SUM",
+                      "arguments": [
+                        {
+                          "field": "StudentCount"
+                        },
+                        {
+                          "field": "ReportCode",
+                          "value": "c002"
+                        }
+                      ]
+                    },
+                    "dataRetrievalOperations": [
+                      {
+                        "id": "countBreakdownGender",
+                        "function": "GROUPBY",
+                        "arguments": [
+                          {
+                            "field": "func",
+                            "type": "string",
+                            "value": "sum"
+                          },
+                          {
+                            "field": "columns",
+                            "value": ["StudentCount"],
+                            "array": true
+                          },
+                          {
+                            "field": "selectColumns",
+                            "value": ["SEX"],
+                            "array": true
+                          },
+                          {
+                            "field": "limit",
+                            "type": "number"
+                          },
+                          {
+                            "field": "order",
+                            "type": "string",
+                            "array": true,
+                            "value": ["StudentCount desc"]
+                          },
+                          {
+                            "field": "groupby",
+                            "type": "string",
+                            "value": "SEX"
+                          },
+                          {
+                            "field": "ReportCode",
+                            "type": "string",
+                            "value": "c002"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "learnerStatusAndGender",
+            "rows": [
+              {
+                "type": "barChart",
+                "condition": {
+                  "operator": "AND",
+                  "conditions": [
+                    {
+                      "filterCode": "categorySet",
+                      "value": ["CSA", "CSC"]
+                    }
+                  ]
+                },
+                "sectionLabel": "Race, Ethnicity",
+                "content": {
+                  "title": "Race, Ethnicity",
+                  "description": "The following shows the distribution of children with disabilities by race, ages 5-21:",
+                  "chart": {
+                    "filterOn": "x",
+                    "yAxisLabel": "Child Count",
+                    "xAxisLabel": "RACE",
+                    "xAxisValue": "RACE",
+                    "yAxisValue": "StudentCount",
+                    "total": {
+                      "id": "totalBarChart",
+                      "function": "SUM",
+                      "arguments": [
+                        {
+                          "field": "StudentCount"
+                        },
+                        {
+                          "field": "ReportCode",
+                          "value": "c002"
+                        }
+                      ]
+                    },
+                    "dataRetrievalOperations": [
+                      {
+                        "id": "countBreakdownRaceEthnicity",
+                        "function": "GROUPBY",
+                        "arguments": [
+                          {
+                            "field": "func",
+                            "type": "string",
+                            "value": "sum"
+                          },
+                          {
+                            "field": "columns",
+                            "value": ["StudentCount"],
+                            "array": true
+                          },
+                          {
+                            "field": "selectColumns",
+                            "type": "string",
+                            "array": true,
+                            "value": ["RACE"]
+                          },
+                          {
+                            "field": "limit",
+                            "type": "number"
+                          },
+                          {
+                            "field": "order",
+                            "type": "string",
+                            "array": true,
+                            "value": ["StudentCount desc"]
+                          },
+                          {
+                            "field": "groupby",
+                            "type": "string",
+                            "value": "RACE"
+                          },
+                          {
+                            "field": "ReportCode",
+                            "type": "string",
+                            "value": "c002"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "barChart",
+                "condition": {
+                  "operator": "AND",
+                  "conditions": [
+                    {
+                      "filterCode": "categorySet",
+                      "value": ["CSB", "CSC", "CSD", "CSE"]
+                    }
+                  ]
+                },
+                "sectionLabel": "Education Environments",
+                "content": {
+                  "title": "Education Environments",
+                  "description": "Education environments for students with disabilities vary, from regular classrooms to specialized schools, to meet individual needs.",
+                  "chart": {
+                    "filterOn": "x",
+                    "yAxisLabel": "Child Count",
+                    "xAxisLabel": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+                    "xAxisValue": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+                    "yAxisValue": "StudentCount",
+                    "total": {
+                      "id": "totalBarChart",
+                      "function": "SUM",
+                      "arguments": [
+                        {
+                          "field": "StudentCount"
+                        },
+                        {
+                          "field": "ReportCode",
+                          "value": "c002"
+                        }
+                      ]
+                    },
+                    "dataRetrievalOperations": [
+                      {
+                        "id": "barChartEducationalEnvironments",
+                        "function": "GROUPBY",
+                        "arguments": [
+                          {
+                            "field": "func",
+                            "type": "string",
+                            "value": "sum"
+                          },
+                          {
+                            "field": "columns",
+                            "value": ["StudentCount"],
+                            "array": true
+                          },
+                          {
+                            "field": "selectColumns",
+                            "type": "string",
+                            "array": true,
+                            "value": ["IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"]
+                          },
+                          {
+                            "field": "limit",
+                            "type": "number"
+                          },
+                          {
+                            "field": "order",
+                            "type": "string",
+                            "array": true,
+                            "value": ["StudentCount desc"]
+                          },
+                          {
+                            "field": "groupby",
+                            "type": "string",
+                            "value": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"
+                          },
+                          {
+                            "field": "ReportCode",
+                            "type": "string",
+                            "value": "c002"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

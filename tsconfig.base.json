@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2020",
+    "module": "esnext",
+    "lib": ["es2020", "dom", "ESNext"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@adapt-apps": ["apps/*"],
+      "@adapt/adapt-shared-component-lib": ["libs/adapt-shared-component-lib/src/index.ts"],
+      "@adapt/types": ["libs/types/src/index.ts"],
+      "@adapt/validation": ["libs/validation/src/index.ts"],
+      "@badeball/cypress-cucumber-preprocessor/*": [
+        "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

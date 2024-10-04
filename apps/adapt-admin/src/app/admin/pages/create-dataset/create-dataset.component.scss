@@ -1,0 +1,21 @@
+.loading {
+  &::after {
+    content: '';
+    width: 32px;
+    height: 32px;
+    display: block;
+    border: 0.25rem solid green;
+    border-left-color: transparent;
+    border-radius: 50%;
+    //opacity: 0;
+    transition: opacity 0.1s;
+    pointer-events: none;
+    animation: loading-circle 1s ease-in-out infinite;
+  }
+}
+
+@keyframes loading-circle {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,8 @@
+<div
+  [ngClass]="{ 'bg-base-lighter': content.type === 'standard', 'bg-error-lighter': content.type === 'error' }"
+  class="report-comments-section padding-2 display-flex flex-column gap-1">
+  <lib-adapt-h-element ngClass="margin-0" [level]="content.level">
+    {{ content.label }}
+  </lib-adapt-h-element>
+  <p class="usa-prose">{{ content.body }}</p>
+</div>

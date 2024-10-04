@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es-MX" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="8177873832400820695" datatype="html">
+        <source>Count</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/components/count-breakdown/count-breakdown.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6505243001439171756" datatype="html">
+        <source>Percent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/components/count-breakdown/count-breakdown.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6231447034968798077" datatype="html">
+        <source>Quick Summary</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/components/quick-summary/quick-summary.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8086014285630273983" datatype="html">
+        <source>Skip to a Section</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/components/sidebar/sidebar.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1346779688519935388" datatype="html">
+        <source>Data Set Creation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6925635767450416375" datatype="html">
+        <source>Collect, organize, and manage data related to the Individuals with Disabilities Education Act (IDEA). Ensure accuracy, consistency, and confidentiality.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/data/data.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2288241066521319960" datatype="html">
+        <source>Data Set Fields</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8717739595782461576" datatype="html">
+        <source>Data Set Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3141266672829130420" datatype="html">
+        <source> Data Set Name is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">30,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8299173350868598129" datatype="html">
+        <source>Data Set Description (Optional)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5441237702791866139" datatype="html">
+        <source> A Description is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">53,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4265062482329648539" datatype="html">
+        <source>Data Set Query</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6697916078560855838" datatype="html">
+        <source> A query is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">82,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="488384172015161487" datatype="html">
+        <source>Preview First 5 Records Retrieved</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-dataset/create-dataset.component.html</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4110421558848139919" datatype="html">
+        <source> Report Name is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">29,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2901403409956064422" datatype="html">
+        <source>Select a Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4467454553148041817" datatype="html">
+        <source>Child Count and Education Environments</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8169921068526449323" datatype="html">
+        <source> Report Template is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8163452111222430614" datatype="html">
+        <source>Data set</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1358803387669696103" datatype="html">
+        <source>Select Data Set</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1104509824920325326" datatype="html">
+        <source>Select Report Visibility</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3940597683056966931" datatype="html">
+        <source>LIVE REPORT PREVIEW</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8664805823563162562" datatype="html">
+        <source>Save As Draft</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/create-report/create-report.component.html</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2666660339289996311" datatype="html">
+        <source>Data Management</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/data/data.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8914368314485006158" datatype="html">
+        <source>All files</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/data/data.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5594502506480898669" datatype="html">
+        <source>Recycle Bin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/data/data.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="472423482890684715" datatype="html">
+        <source>Add Data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/data/data.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4355491194995018703" datatype="html">
+        <source>Data Source Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/data/data.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="284876663522831141" datatype="html">
+        <source>Source Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/data/data.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9216117865911519658" datatype="html">
+        <source>Action</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/data/data.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/reports/reports.component.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3957525923593650417" datatype="html">
+        <source>Report Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/reports/reports.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7239750919884229270" datatype="html">
+        <source>Updated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/reports/reports.component.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7071470734400948493" datatype="html">
+        <source>Author</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/reports/reports.component.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5906272961955453157" datatype="html">
+        <source>Approved</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/reports/reports.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5611592591303869712" datatype="html">
+        <source>Status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/reports/reports.component.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4118921520893280945" datatype="html">
+        <source>Add a new Data Source</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7459082151849597594" datatype="html">
+        <source>Data Source Fields</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8207783261061345722" datatype="html">
+        <source> Data Source Name is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">30,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7088149072445647761" datatype="html">
+        <source>Select a Source Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2905162507610785986" datatype="html">
+        <source>SQL Database Connection</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9177264581971758234" datatype="html">
+        <source>File Upload</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3387426866559232756" datatype="html">
+        <source> Source Type is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">48,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6895017852122311501" datatype="html">
+        <source>Database URL</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7723711937053957765" datatype="html">
+        <source> Database URL is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">70,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3789449496768005577" datatype="html">
+        <source>Database Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2370530422325118186" datatype="html">
+        <source>Select a Database Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1034145581374516914" datatype="html">
+        <source>Microsoft SQL Server</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8084626408935074757" datatype="html">
+        <source> Database Type is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">93,95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4198035112366277884" datatype="html">
+        <source>Database</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8226353034991605560" datatype="html">
+        <source> Database is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">107,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5248717555542428023" datatype="html">
+        <source>Username</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9081239727073547463" datatype="html">
+        <source> Username is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">125,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1431416938026210429" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2161528641772974097" datatype="html">
+        <source> Password is required. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/admin/pages/upload-data/upload-data.component.html</context>
+          <context context-type="linenumber">145,147</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2102825898069375693" datatype="html">
+        <source>Menu</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="506413379354724909" datatype="html">
+        <source>Primary Navigation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="description">Primary Navigation</note>
+      </trans-unit>
+      <trans-unit id="3171825072160137400" datatype="html">
+        <source>Report Demo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4513704550431982162" datatype="html">
+        <source>Developer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3188481715706817054" datatype="html">
+        <source>Factsheet</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2896115921551128288" datatype="html">
+        <source>Test Drive</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2668864227584228682" datatype="html">
+        <source>Welcome Back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/login/login.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7974116885135065537" datatype="html">
+        <source>Please log in to continue</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/login/login.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2141908390359508758" datatype="html">
+        <source>Login with Active Directory</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">apps/adapt-admin/src/app/login/login.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

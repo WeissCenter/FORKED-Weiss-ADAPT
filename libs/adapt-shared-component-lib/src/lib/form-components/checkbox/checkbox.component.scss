@@ -1,0 +1,13 @@
+.suppression-checkbox {
+  --usa-checkbox-label-color: var(--usa-link-color);
+
+  border-radius: var(--usa-border-radius-md);
+  &.suppression-active {
+    --usa-checkbox-label-color: var(--usa-white);
+    background-color: var(--usa-error-dark);
+    --usa-checkbox-checked-background-color: var(--usa-white);
+    --usa-checkbox-check-icon-color: var(--usa-error-dark);
+    --usa-checkbox-checked-box-shadow: 0 0 0 var(--usa-checkbox-border-width)
+      var(--usa-checkbox-checked-background-color);
+  }
+}

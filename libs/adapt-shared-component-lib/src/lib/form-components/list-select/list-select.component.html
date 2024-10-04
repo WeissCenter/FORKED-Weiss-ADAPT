@@ -1,0 +1,54 @@
+<fieldset
+  class="usa-fieldset position-relative padding-bottom-1 border-bottom border-base-lighter display-flex flex-column gap-05">
+  <div class="display-flex flex-column gap-05">
+    <label class="font-lg line-height-3 text-bold">
+      {{ title }}
+    </label>
+    <p aria-live="polite" class="usa-prose">({{ selectedCount }} of {{ items.length }} selected)</p>
+  </div>
+
+  <ul class="usa-list--unstyled" id="options-list" role="listbox" aria-multiselectable="true">
+    <li class="display-flex flex-row gap-2 flex-align-center flex-justify">
+      <lib-adapt-checkbox
+        [value]="'all'"
+        [id]="title + '-select-all-checkbox'"
+        [label]="'All'"
+        [checked]="isSelected('all')"
+        (checkedChange)="toggleSelection('all')"></lib-adapt-checkbox>
+      <button
+        class="usa-button usa-button--unstyled"
+        (click)="toggleExpand()"
+        [attr.aria-expanded]="isExpanded"
+        aria-controls="options-list">
+        {{ isExpanded ? 'Collapse' : 'Expand' }}
+      </button>
+    </li>
+    <ng-container *ngIf="isExpanded">
+      <li
+        *ngFor="let item of items"
+        role="option"
+        [attr.aria-selected]="isSelected(item.id)"
+        (mouseenter)="setHoveredItem(item.id)"
+        (mouseleave)="setHoveredItem(null)"
+        class="display-flex flex-row gap-2 flex-align-center flex-justify">
+        <lib-adapt-checkbox
+          [value]="item.id"
+          [id]="item.id + '-checkbox'"
+          [label]="item.label"
+          [checked]="isSelected(item.id)"
+          (checkedChange)="toggleSelection(item.id)"
+          (focused)="setFocusedItem(item.id)"
+          (blurred)="setFocusedItem(null)"></lib-adapt-checkbox>
+
+        <button
+          *ngIf="isOnlyButtonVisible(item.id)"
+          (focus)="setFocusedItem(item.id)"
+          (click)="selectOnly(item.id)"
+          class="usa-button usa-button--unstyled"
+          [attr.aria-label]="'Select only ' + item.label">
+          Only
+        </button>
+      </li>
+    </ng-container>
+  </ul>
+</fieldset>

@@ -1,0 +1,26 @@
+.file-description {
+  max-width: 100% !important;
+}
+
+.success {
+  background-color: red;
+}
+
+.file-accordion-success {
+  background-color: var(--usa-success-light);
+}
+.usa-summary-box__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--usa-spacing-1);
+}
+
+.usa-textarea {
+  max-width: 100% !important;
+}
+
+.confirm-modal-field {
+  textarea {
+    max-width: 60% !important;
+  }
+}

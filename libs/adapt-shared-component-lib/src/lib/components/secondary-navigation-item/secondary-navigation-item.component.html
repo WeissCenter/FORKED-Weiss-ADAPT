@@ -1,0 +1,13 @@
+<div
+      class="tab-item"
+      [attr.aria-selected]="selected">
+      <button
+        routerLink="."
+        [queryParams]="queryParams"
+        role="tab"
+        [attr.aria-controls]="navigation.id"
+        [ngClass]="{ 'border-bottom-05': selected }"
+        class="usa-button usa-button--outline shadow-none">
+        {{name}}
+      </button>
+    </div>

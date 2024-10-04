@@ -1,0 +1,29 @@
+<div #comboBoxContainer class="usa-combo-box-container display-flex flex-column">
+  <label class="combo-box-label usa-label margin-y-0" [ngStyle]="labelStyle" [for]="comboID"
+    >{{ label }}<span class="text-emergency" *ngIf="required"> (Required)</span></label
+  >
+  <ng-content select="[hint]"></ng-content>
+
+  <div #parent [attr.data-placeholder]="placeholder" [ngStyle]="comboBoxStyle" class="usa-combo-box margin-top-1">
+    <select
+      [id]="comboID"
+      [compareWith]="compareFunc"
+      [(ngModel)]="value"
+      (ngModelChange)="onChange(value)"
+      class="usa-select"
+      [name]="comboID">
+      <!-- <option value>{{label}}</option> -->
+      <option
+        #options
+        *ngFor="let item of items; let isFirst = first"
+        [selected]="isFirst"
+        [ngValue]="itemAccessor ? item[itemAccessor] : item">
+        {{ item[itemLabel] || item }}
+      </option>
+    </select>
+  </div>
+
+  <div role="alert" aria-live="polite" class="usa-combo-box-errors">
+    <ng-content select="[errors]"></ng-content>
+  </div>
+</div>

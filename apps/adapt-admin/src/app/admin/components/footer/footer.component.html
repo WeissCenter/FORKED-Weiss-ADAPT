@@ -1,0 +1,34 @@
+<footer
+  class="usa-footer usa-footer--slim flex-column tablet:flex-row bg-white display-flex flex-justify-center gap-6 margin-top-5 padding-x-2 padding-y-6">
+  <div class="display-flex flex-justify-center gap-1 flex-column">
+    <p class="font-2xs text-ink line-height-2 text-center">Technology by</p>
+    <a
+      target="_blank"
+      class="display-flex flex-justify-center"
+      aria-label="External link to AEM's homepage"
+      href="https://www.aemcorp.com/">
+      <adapt-inline-svg
+        alt="ADAEMAPT logo"
+        src="assets/shared/logos/aem-logo.svg"
+        svgClass="display-flex logo height-6"></adapt-inline-svg>
+    </a>
+  </div>
+
+  <ng-container *ngIf="$settings | async as settingsLoaded">
+    <nav class="display-flex flex-column flex-justify-center gap-2 maxw-tablet" aria-label="Footer Links">
+      <ul
+        class="usa-list usa-list--unstyled display-flex gap-4 tablet:flex-row flex-justify-center flex-wrap text-center flex-column flex-wrap tablet:flex-align-center">
+        <li *ngFor="let footerLink of settingsLoaded.footerLinks">
+          <a
+            class="font-xs text-no-underline text-center"
+            [target]="footerLink.target === 'sameTab' ? '' : '_blank'"
+            [href]="footerLink.url"
+            >{{ footerLink.label }}
+            <i *ngIf="footerLink.icon" aria-hidden="true" class="margin-left-05" [ngClass]="footerLink.icon"></i>
+          </a>
+        </li>
+      </ul>
+      <p class="font-xs text-ink text-center">© {{ year }} {{ settingsLoaded.copyright }}</p>
+    </nav>
+  </ng-container>
+</footer>

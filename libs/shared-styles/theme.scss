@@ -1,0 +1,154 @@
+
+:root {
+  //   --usa-body-background: var(--usa-color-gray-3);
+  //   --usa-input-background-color: var(--usa-white);
+  --adapt-standard-transition-duration: 0.2s;
+  --adapt-short-transition-duration: 0.125s;
+  --adapt-standard-transition-easing: ease;
+
+  --adapt-primary-lightest: #cfe1ef;
+  --adapt-primary-lighter: #9fc3df;
+  --adapt-primary-light: #6fa4cf;
+  --adapt-primary-base: #1f577c;
+  --adapt-primary-vivid: #1f577c;
+  --adapt-primary-dark: #1a4c6a;
+  --adapt-primary-darker: #153e57;
+  --adapt-primary-darkest: #102e41;
+
+  --adapt-secondary-lightest: #f0cfe3;
+  --adapt-secondary-lighter: #e19fc7;
+  --adapt-secondary-light: #d26fab;
+  --adapt-secondary-base: #c33f8f;
+  --adapt-secondary-vivid: #690052;
+  --adapt-secondary-dark: #590046;
+  --adapt-secondary-darker: #480039;
+  --adapt-secondary-darkest: #37002c;
+
+  --adapt-logo-secondary: var(--adapt-secondary-base);
+  --adapt-logo-primary: var(--adapt-primary-base);
+
+
+  --usa-step-indicator-text-color: var(--usa-ink);
+}
+
+.usa-combo-box__list:not([hidden]) {
+  z-index: 9999;
+}
+
+.usa-button:visited {
+  color: var(--usa-button-color);
+}
+
+.usa-combo-box__clear-input,
+.usa-combo-box__toggle-list,
+.usa-combo-box__input-button-separator {
+  z-index: 1;
+}
+
+a:-webkit-any-link {
+  color: var(--usa-link-color);
+}
+
+p {
+  margin: 0;
+}
+
+.grid-container {
+  max-width: var(--usa-spacing-widescreen);
+}
+
+.usa-tag {
+  text-transform: none;
+}
+
+.usa-combo-box__input {
+  margin-top: 0;
+}
+
+.usa-icon-list__content {
+  overflow-wrap: anywhere;
+}
+
+.site-nav,
+.usa-button {
+  &.adapt-preview-button:not([disabled]) {
+    background-color: transparent !important;
+    border: var(--usa-button-stroke-width) dashed var(--usa-base) !important;
+    color: var(--usa-base) !important;
+    box-shadow: none;
+  }
+}
+
+// Hides content visually, but remaining available for screen readers (unlike display:none)
+// https://www.a11yproject.com/posts/how-to-hide-content/
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+*[contenteditable='true'] {
+  padding: 5px;
+  background-color: white;
+
+  border: 2px solid black;
+  border-radius: 15px;
+}
+
+router-outlet {
+  position: absolute;
+}
+
+@media all and (min-width: 40em) {
+  .skip-to {
+    display: block !important;
+  }
+}
+
+.skip-to {
+  z-index: 99999;
+  display: none;
+}
+
+.loading-wrapper {
+  &[aria-busy='false'] {
+    display: none;
+  }
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: var(--usa-spacing-4);
+  height: var(--usa-spacing-4);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: var(--usa-spacing-1) solid var(--usa-base-lighter);
+  border-right-color: var(--usa-primary);
+  animation: l2 0.25s infinite linear;
+}
+
+.loader-secondary {
+  width: var(--usa-spacing-4);
+  height: var(--usa-spacing-4);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: var(--usa-spacing-1) solid var(--usa-base-lightest);
+  border-right-color: var(--usa-primary);
+  animation: l2 0.25s infinite linear;
+}
+
+@keyframes l2 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}

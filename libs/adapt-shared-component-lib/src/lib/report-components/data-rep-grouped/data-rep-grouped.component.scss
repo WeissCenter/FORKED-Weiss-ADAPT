@@ -1,0 +1,94 @@
+.data-rep-grouped {
+  background: var(--usa-data-rep-container-background);
+  border: var(--usa-data-rep-container-border-width) solid var(--usa-data-rep-container-border-color);
+  border-radius: var(--usa-data-rep-container-border-radius);
+  color: var(--usa-data-rep-container-ink);
+  display: flex;
+  flex-direction: row;
+  gap: var(--usa-spacing-3);
+  margin: var(--usa-data-rep-container-margin-y) var(--usa-data-rep-container-margin-x);
+  max-width: var(--usa-desktop);
+  padding: var(--usa-spacing-105) var(--usa-spacing-3) var(--usa-spacing-105) var(--usa-spacing-105);
+  .quick-filter-title > * {
+    margin: 0;
+    font-family: var(--usa-data-rep-title-font-family);
+    font-size: var(--usa-font-size-md);
+    font-weight: var(--usa-data-rep-title-font-weight);
+    line-height: var(--usa-data-rep-title-line-height);
+  }
+  article.data-rep-wrapper {
+    background: none;
+    border: none;
+    color: var(--usa-data-rep-container-ink);
+    margin: 0;
+    max-width: 100%;
+    padding: var(--usa-spacing-105) 0;
+    --usa-data-rep-series-group-padding-x: var(--usa-spacing-05);
+    .insight {
+      padding: 0;
+    }
+
+    .title > * {
+      padding: 0;
+    }
+    .action-bar {
+      --usa-data-rep-action-bar-padding-x: 0;
+    }
+
+    .plain-language {
+      border: var(--usa-data-rep-container-border-width) solid var(--usa-data-rep-container-border-color);
+    }
+    ol.series li .bar-wrapper .bar {
+      &.data-bar-2 {
+        background: var(--usa-warning-lighter);
+        background-image: repeating-linear-gradient(
+          -45deg,
+          currentColor,
+          currentColor 2px,
+          transparent 0,
+          transparent 50%
+        );
+        background-image: repeating-linear-gradient(
+          -45deg,
+          currentColor 0,
+          currentColor var(--usa-spacing-2px),
+          transparent 0,
+          transparent 50%
+        );
+        background-size: var(--usa-spacing-2) var(--usa-spacing-2);
+        color: var(--usa-warning-base);
+      }
+      &.data-bar-3 {
+        background: var(--usa-magenta);
+        background-image: repeating-linear-gradient(
+          -45deg,
+          currentColor,
+          currentColor 2px,
+          transparent 0,
+          transparent 50%
+        );
+        background-image: repeating-linear-gradient(
+          -45deg,
+          currentColor 0,
+          currentColor var(--usa-spacing-2px),
+          transparent 0,
+          transparent 50%
+        );
+        background-size: var(--usa-spacing-2) var(--usa-spacing-2);
+        color: #faf3d1;
+        color: var(--usa-warning-lighter);
+      }
+    }
+  }
+}
+
+
+.footer-row{
+  color: var(--usa-white) !important;
+  background-color: var(--usa-black) !important;
+}
+
+.header-row>*{
+  color: var(--usa-white) !important;
+  background-color: var(--usa-black) !important;
+}

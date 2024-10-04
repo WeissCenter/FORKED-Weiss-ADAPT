@@ -1,0 +1,286 @@
+<adapt-full-page-modal>
+  <div class="display-flex flex-justify" header>
+    <h1 class="margin-0">{{ modalHeaders[currentStep] }}</h1>
+
+    <div class="data-view-edit-header-controls display-flex gap-2 flex-align-center">
+      <button
+        (click)="confirmCloseModal?.open()"
+        class="save-and-close usa-button text-white flex-align-center border-2px border-white hover:text-white shadow-none usa-button--outline">
+        Close <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid-container-tablet-lg padding-top-2 padding-bottom-2" body>
+    <adapt-steps-indicator [(step)]="currentStep" #stepsIndicator>
+      <adapt-steps-indicator-step name="Define">
+        <div class="define-step-body display-flex flex-column gap-6">
+          <div class="define-step-header">
+            <h2>Select template and Configure Data.</h2>
+            <p>Choose a report template and set data preferences.</p>
+          </div>
+
+          <div class="define-step-form">
+            <form class="display-flex flex-column gap-2" [formGroup]="reportFormGroup">
+              <lib-adapt-combo-box
+                [required]="true"
+                compareID="dataViewID"
+                formControlName="dataView"
+                placeholder="Select a data view"
+                [comboBoxStyle]="{ 'max-width': '100%' }"
+                label="What data view do you want to use?"
+                [items]="dataViews | async"
+                itemLabel="name">
+                <ng-container errors>
+                  <div
+                    *ngIf="dataView?.invalid && (dataView?.dirty || dataView?.touched)"
+                    class="form-errors margin-top-1 text-emergency">
+                    <div *ngIf="dataView?.errors?.['required']" i18n>Data View is required.</div>
+                  </div>
+                </ng-container>
+              </lib-adapt-combo-box>
+
+              <lib-adapt-combo-box
+                [required]="true"
+                formControlName="template"
+                [comboBoxStyle]="{ 'max-width': '100%' }"
+                label="Select report template"
+                [items]="reportTemplates"
+                itemAccessor="value"
+                itemLabel="label">
+                <ng-container errors>
+                  <div
+                    *ngIf="reportTemplate?.invalid && (reportTemplate?.dirty || reportTemplate?.touched)"
+                    class="form-errors margin-top-1 text-emergency">
+                    <div *ngIf="reportTemplate?.errors?.['required']" i18n>Data View is required.</div>
+                  </div>
+                </ng-container>
+              </lib-adapt-combo-box>
+
+              <lib-adapt-radio-select
+                [required]="true"
+                legend="Who is the audience for the report?"
+                formControlName="visibility"
+                [items]="radioSelectItems"></lib-adapt-radio-select>
+            </form>
+          </div>
+        </div>
+      </adapt-steps-indicator-step>
+      <adapt-steps-indicator-step name="Preview">
+        <div class="preview-step-body display-flex flex-column gap-6">
+          <div class="define-step-header">
+            <h2>Name and Preview Report.</h2>
+            <p>Edit the report title and description, then preview your new report.</p>
+          </div>
+
+          <div class="preview-step-form display-flex gap-2 flex-column">
+            <form class="display-flex flex-column gap-2" [formGroup]="reportFormGroup">
+              <div class="data-view-creation-field display-flex gap-1 flex-column">
+                <label for="name">Title: <span class="text-emergency">(Required)</span></label>
+                <span class="field-hint text-base">We populated this field to get you started, please review. </span>
+                <input class="usa-input maxw-full" id="name" type="text" formControlName="title" />
+
+                <div
+                role="alert"
+                  *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+                  class="form-errors margin-top-1 text-emergency">
+                  <div *ngIf="title?.errors?.['required']" i18n>Report title is required</div>
+
+                  <div *ngIf="title?.errors?.['uniqueName']" i18n>Report title must be unique</div>
+                </div>
+              </div>
+
+              <div class="data-view-creation-field display-flex gap-1 flex-column">
+                <label for="describe">Description: <span class="text-emergency">(Required)</span></label>
+                <span class="field-hint text-base">A good description helps with search results. </span>
+                <textarea
+                  class="usa-textarea maxw-full"
+                  id="describe"
+                  type="text"
+                  formControlName="description"></textarea>
+
+                <div
+                role="alert"
+                  *ngIf="description?.invalid && (description?.dirty || description?.touched)"
+                  class="form-errors margin-top-1 text-emergency">
+                  <div *ngIf="description?.errors?.['required']" i18n>Description is required</div>
+                </div>
+              </div>
+            </form>
+
+            <div *ngIf="currentReportTemplate" class="report-meta-tags display-flex flex-column gap-2">
+              <p>Meta tags:</p>
+              <ul class="usa-list usa-list--unstyled display-flex flex gap-1">
+                <li *ngFor="let tag of currentReportTemplate.metaTags">
+                  <span class="usa-tag">{{ tag }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <p class="usa-prose">You must generate a preview and confirm it loads before saving</p>
+
+            <button (click)="generatePreview()" class="usa-button usa-button--outline flex-align-self-start">
+              Generate preview
+            </button>
+
+            <div
+            role="alert"
+              *ngIf="preview?.invalid && (preview?.dirty || preview?.touched)"
+              class="form-errors margin-top-1 text-emergency">
+              <div *ngIf="preview?.errors?.['invalidPreview']" i18n>
+                Successful report preview is required. Check your data view and template and try again
+              </div>
+
+              <div *ngIf="preview?.errors?.['required']" i18n>Successful report preview is required.</div>
+            </div>
+          </div>
+        </div>
+      </adapt-steps-indicator-step>
+      <adapt-steps-indicator-step name="Save">
+        <div class="review-header">
+          <h2>Here's a summary of your selection</h2>
+
+          <p>Confirm report details and navigate to the draft report.</p>
+        </div>
+
+        <div [attr.aria-busy]="saving" aria-live="polite" class="review-save-status-container padding-top-2">
+          <div *ngIf="saved && !failed" class="report-create-success display-flex gap-2 padding-2">
+            <div class="success-icon">
+              <i class="fal text-green font-xl fa-thumbs-up"></i>
+            </div>
+
+            <div class="success-body">
+              <strong>Report created successfully.</strong>
+              <p>
+                View your report <button (click)="viewReport()" class="usa-button usa-button--unstyled">here</button> or
+                <button (click)="cancel()" class="usa-button usa-button--unstyled">close this window</button>
+              </p>
+            </div>
+          </div>
+
+          <div
+            *ngIf="saving && !saved && !failed"
+            class="save-status-saving usa-summary-box"
+            role="region"
+            aria-labelledby="saved-header">
+            <div class="usa-summary-box__body">
+              <strong class="usa-summary-box__heading" id="saved-header"> Report is being created. </strong>
+              <div class="usa-summary-box__text display-flex flex-column gap-1">
+                <p class="usa-prose">Please wait, you will be notified when it has been created.</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="!saving && !saved && failed"
+            class="save-status-error display-flex gap-2 bg-secondary-lighter padding-2">
+            <div class="errors-icon">
+              <i class="fal text-secondary font-xl fa-exclamation-circle"></i>
+            </div>
+            <div class="errors-body display-flex flex-column">
+              <strong>Something went wrong.</strong>
+
+              <p class="usa-prose">Failed to create report please try again.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-body margin-top-4 padding-3 border-2px border-base-lighter radius-lg bg-white">
+          <h3 class="margin-0">Summary:</h3>
+
+          <ul class="usa-list display-flex flex-column gap-1">
+            <li>
+              <span>Report name:</span>
+              <ul class="usa-list">
+                <li>
+                  <strong>{{ title.value }}</strong>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Report description:</span>
+              <ul class="usa-list">
+                <li>
+                  <strong>{{ description.value }}</strong>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Report template:</span>
+              <ul class="usa-list">
+                <li>
+                  <strong>{{ currentReportTemplate?.title }}</strong>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Data view:</span>
+              <ul class="usa-list">
+                <li>
+                  <strong>{{ dataView?.value?.name }}</strong>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Distribution:</span>
+              <ul class="usa-list">
+                <li>
+                  <strong>{{ audience.value | valueLabel : radioSelectItems }}</strong>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Meta Tags:</span>
+              <ul class="usa-list">
+                <li *ngFor="let tag of currentReportTemplate?.metaTags">
+                  <strong>{{ tag }}</strong>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </adapt-steps-indicator-step>
+    </adapt-steps-indicator>
+  </div>
+
+  <div class="grid-container display-flex flex-justify-center gap-2" footer>
+    <button (click)="previous()" *ngIf="currentStep > 0" class="usa-button">Back</button>
+    <button (click)="next()" *ngIf="currentStep + 1 < stepsIndicator.length" class="usa-button">
+      Next: {{ stepsIndicator.getStepName(currentStep + 1) }}
+    </button>
+
+    <button *ngIf="currentStep === 2" (click)="save(true, true)" class="usa-button">Save and View Draft</button>
+
+    <button (click)="cancel()" class="usa-button usa-button--unstyled">Cancel</button>
+  </div>
+</adapt-full-page-modal>
+
+<lib-adapt-modal
+  (closed)="showPreview = false"
+  closeText="Close Preview"
+  heading="Report preview"
+  classes="bg-base-lighter"
+  #previewModal>
+  <div
+    class="report-preview-container overflow-auto maxh-tablet padding-1 bg-base-lightest border-05 border-base-light">
+    <adapt-report
+      (loaded)="onReportPreviewEvent($event)"
+      *ngIf="showPreview"
+      [preview]="true"
+      [report]="reportFormGroup.getRawValue()"></adapt-report>
+  </div>
+</lib-adapt-modal>
+
+<lib-adapt-modal closeText="Close" heading="Are you sure you want to close?" #confirmCloseModal>
+  <div class="confirm-modal-body display-flex flex-column gap-2 padding-1">
+    <div class="confirm-modal-footer padding-1 display-flex gap-2">
+      <button class="usa-button" (click)="cancel()">Confirm</button>
+      <button class="usa-button usa-button--unstyled" (click)="confirmCloseModal?.close()">Cancel</button>
+    </div>
+  </div>
+</lib-adapt-modal>

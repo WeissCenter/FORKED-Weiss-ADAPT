@@ -1,0 +1,112 @@
+<section class="data-sources-settings-container grid-container gap-4 display-flex flex-column">
+  <section
+    aria-label="Data Source Settings Heading"
+    role="region"
+    class="data-sources-settings-banner width-full display-flex gap-2 flex-column">
+    <div class="usa-prose">
+      <h1 class="margin-0" i18n>Data Sources</h1>
+      <p class="margin-bottom-0 measure-4" i18n>
+        Manage your data origins effectively. Add, configure, and maintain various data sources like databases and file
+        uploads.
+      </p>
+    </div>
+  </section>
+
+  <adapt-list-view
+    [$dataViews]="$dataViews"
+    [$reports]="$reports"
+    [dataSourceModal]="dataSourceModal"
+    recentSortField="updated"
+    currentList="sources"
+    [dataList]="$dataSources"
+    [collapsedRef]="collapsedSourcesRef"
+    [visibleRef]="visibleSourcesRef"
+    [loadingRef]="loadingSourcesRef"
+    [actionRef]="actionSourcesRef"
+    (createButtonClick)="dataSourceModal.open()">
+  </adapt-list-view>
+</section>
+
+<ng-template #visibleSourcesContent let-item>
+  <div class="visible-wrapper display-flex flex-column gap-1">
+    <h3 class="usa-prose margin-0">
+      <a
+        (click)="dataSourceModal.open(item, PageMode.VIEW)"
+        class="text-semibold text-primary cursor-pointer display-inline-flex width-auto"
+        >{{ item.name }}</a
+      >
+    </h3>
+    <p *ngIf="item?.description?.length">{{ item.description }}</p>
+    <div class="display-flex flex-column width-full gap-1">
+      <p class="text-normal font-sm text-ink">
+        <span><strong>Last Updated:</strong> {{ item.updated | date : 'MM/dd/yyyy' }}, </span>
+        <span><strong>Created By:</strong> {{ item.author }}</span>
+      </p>
+
+      <div class="data-source-collapsed-metadata display-flex gap-2">
+        <div class="data-source-collapsed-metadata-item display-flex gap-1 flex-column">
+          <p class="usa-prose">Status:</p>
+
+          <div class="metadata-item-tags display-flex gap-1">
+            <span class="usa-tag bg-base-lightest text-ink bg-success-light">
+              <!-- <i class="fal fa-check" role="img" aria-hidden="true"></i> Available -->
+            </span>
+          </div>
+        </div>
+
+        <div class="data-source-collapsed-metadata-item display-flex gap-1 flex-column">
+          <p class="usa-prose">Categories:</p>
+
+          <div class="metadata-item-tags display-flex gap-1">
+            <span class="usa-tag bg-base-lightest text-ink"> Part B </span>
+            <span class="usa-tag bg-base-lightest text-ink"> Assessment </span>
+            <span class="usa-tag bg-base-lightest text-ink"> 2022-2023 </span>
+            <span class="usa-tag bg-base-lightest text-ink"> State-level </span>
+            <span class="usa-tag bg-base-lightest text-ink"> Data Warehouse </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #collapsedSourcesContent let-item>
+  <div class="collapsed-wrapper display-flex flex-column gap-2">
+    <adapt-impact-analysis
+      [reports]="$reports"
+      [name]="item.name"
+      [dataViews]="$dataViews"
+      type="DataSource"
+      [id]="item.dataSourceID"></adapt-impact-analysis>
+  </div>
+</ng-template>
+
+<ng-template #actionSourcesContent let-item>
+  <div class="display-flex gap-4 flex-wrap width-full">
+    <button
+      (click)="dataSourceModal.open(item, PageMode.EDIT)"
+      type="button"
+      [id]="'edit_' + item.dataSourceID + '_btn'"
+      class="usa-button shadow-none">
+      Edit
+    </button>
+
+    <!-- <button type="button" [routerLink]="['..', 'data-source', item.dataSourceID]" class="usa-button usa-button--outline shadow-none">View</button> -->
+    <button
+      type="button"
+      (click)="dataSourceModal.open(item, PageMode.VIEW)"
+      [id]="'view_' + item.dataSourceID + '_btn'"
+      class="usa-button usa-button--outline shadow-none">
+      <i class="fal fa-copy" role="img" aria-hidden="true"></i> View
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #loadingSourcesContent let-item>
+  <div class="display-flex flex-align-center gap-1">
+    <div class="loader"></div>
+    <p class="usa-prose" i18n>Loading data sources...</p>
+  </div>
+</ng-template>
+
+<adapt-data-source-modal (save)="onSave($event)"></adapt-data-source-modal>

@@ -1,0 +1,32 @@
+{
+  "id": "disputeResolution",
+  "name": "Dispute Resolution",
+  "description": "Part B Description here",
+  "fields": [
+    {
+      "id": "reportingYear",
+      "label": "For what reporting year?",
+      "shortLabel": "School year",
+      "required": true,
+      "type": "select",
+      "options": [
+        {
+          "label": "2023-2024",
+          "value": "2023-24"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "id": "partBDisputeResolutionHTML",
+      "name": "IDEA Part B - Dispute Resolution",
+      "description": "Part B file description here",
+      "database": {
+        "query": ""
+      },
+      "previewHeaders": [],
+      "validation": "disputeResolution"
+    }
+  ]
+}

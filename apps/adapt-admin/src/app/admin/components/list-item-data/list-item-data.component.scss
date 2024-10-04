@@ -1,0 +1,20 @@
+:host {
+  h1.usa-prose {
+    --usa-h1-font-size: var(--usa-h3-font-size);
+  }
+  h2.usa-prose {
+    --usa-h2-font-size: var(--usa-h3-font-size);
+  }
+  h3.usa-prose {
+    // --usa-h3-font-size: var(--usa-h3-font-size);
+  }
+  h4.usa-prose {
+    --usa-h4-font-size: var(--usa-h3-font-size);
+  }
+  h5.usa-prose {
+    --usa-h5-font-size: var(--usa-h3-font-size);
+  }
+  h6.usa-prose {
+    --usa-h6-font-size: var(--usa-h3-font-size);
+  }
+}

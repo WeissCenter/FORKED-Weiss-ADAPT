@@ -1,0 +1,38 @@
+<div
+  role="dialog"
+  [ngClass]="{ 'is-visible': isVisible, 'is-hidden': !isVisible }"
+  class="usa-modal-wrapper"
+  [attr.aria-label]="title + ' Modal'">
+  <div #wrapper tabindex="-1" cdkTrapFocus class="usa-modal-overlay">
+    <div class="usa-modal" [ngClass]="{ 'usa-modal--lg': large }" id="adapt-modal">
+      <div class="usa-modal__content">
+        <div class="usa-modal__main">
+          <div class="display-flex gap-2">
+            <h2 class="usa-modal__heading flex-1">{{ title }}</h2>
+            <button
+              #exit
+              type="button"
+              aria-label="Close this window"
+              (click)="close()"
+              class="usa-button usa-button--unstyled width-auto text-no-underline margin-left-auto">
+              Close <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="display-flex margin-top-2">
+            <ng-container *ngIf="contentTemplate; else textContentBlock">
+              <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+            </ng-container>
+            <ng-template #textContentBlock>
+              <p class="usa-prose">{{ textContent }}</p>
+            </ng-template>
+          </div>
+          <div class="usa-checkbox margin-top-3">
+            <input class="usa-checkbox__input" id="doNotShowCheck" type="checkbox" [(ngModel)]="doNotShow" />
+            <label class="usa-checkbox__label font-xs" for="doNotShowCheck">Don't show this window again</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

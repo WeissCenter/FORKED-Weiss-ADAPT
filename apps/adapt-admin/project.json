@@ -1,0 +1,206 @@
+{
+  "name": "adapt-admin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "adapt",
+  "sourceRoot": "apps/adapt-admin/src",
+  "i18n": {
+    "sourceLocale": "en-US",
+    "locales": {
+      "es-MX": "apps/adapt-admin/src/locale/messages.es.xlf"
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/adapt-admin",
+        "i18nMissingTranslation": "warning",
+        "localize": true,
+        "index": "apps/adapt-admin/src/index.html",
+        "main": "apps/adapt-admin/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/adapt-admin/tsconfig.app.json",
+        "assets": [
+          "apps/adapt-admin/src/assets",
+          {
+            "glob": "**/*",
+            "input": "node_modules/@uswds/uswds/dist/img",
+            "output": "./assets/"
+          },
+          {
+            "glob": "**/*",
+            "input": "node_modules/@uswds/uswds/dist/js",
+            "output": "./assets/"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared-assets",
+            "output": "assets/shared/"
+          }
+        ],
+        "customWebpackConfig": {
+          "path": "apps/adapt-admin/webpack.config.js"
+        },
+        "styles": [
+          "apps/adapt-admin/src/styles.scss",
+          "libs/shared-assets/fontawesome/css/all.css",
+          "node_modules/@angular/cdk/_index.scss",
+          "node_modules/@angular/cdk/a11y-prebuilt.css",
+          "node_modules/aem-accessibility-center/src/lib/index.scss"
+        ],
+        "scripts": [],
+        "serviceWorker": true,
+        "ngswConfigPath": "apps/adapt-admin/ngsw-config.json"
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "200kb",
+              "maximumError": "400kb"
+            }
+          ],
+          "localize": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-admin/src/environments/environment.ts",
+              "with": "apps/adapt-admin/src/environments/environment.production.ts"
+            }
+          ]
+        },
+        "qa": {
+          "localize": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-admin/src/environments/environment.ts",
+              "with": "apps/adapt-admin/src/environments/environment.qa.ts"
+            }
+          ]
+        },
+        "uat": {
+          "localize": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-admin/src/environments/environment.ts",
+              "with": "apps/adapt-admin/src/environments/environment.uat.ts"
+            }
+          ]
+        },
+        "development": {
+          "localize": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-admin/src/environments/environment.ts",
+              "with": "apps/adapt-admin/src/environments/environment.development.ts"
+            }
+          ]
+        },
+        "local": {
+          "localize": false,
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-admin/src/environments/environment.ts",
+              "with": "apps/adapt-admin/src/environments/environment.ts"
+            }
+          ]
+        }
+      },
+      "defaultConfiguration": "local"
+    },
+    "serve": {
+      "executor": "@nx/angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "adapt-admin:build:production"
+        },
+        "qa": {
+          "browserTarget": "adapt-admin:build:qa"
+        },
+        "en": {
+          "browserTarget": "adapt-admin:build:en"
+        },
+        "development": {
+          "browserTarget": "adapt-admin:build:development"
+        },
+        "local": {
+          "browserTarget": "adapt-admin:build:local"
+        }
+      },
+      "defaultConfiguration": "local"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "adapt-admin:build",
+        "outputPath": "apps/adapt-admin/src/locale"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/adapt-admin/**/*.ts", "apps/adapt-admin/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/adapt-admin/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "adapt-admin:build"
+      }
+    },
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/adapt-admin/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "adapt-admin:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "adapt-admin:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "adapt-admin:serve-static"
+        }
+      }
+    },
+    "component-test": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/adapt-admin/cypress.config.ts",
+        "testingType": "component",
+        "skipServe": true,
+        "devServerTarget": "adapt-admin:build"
+      }
+    }
+  }
+}

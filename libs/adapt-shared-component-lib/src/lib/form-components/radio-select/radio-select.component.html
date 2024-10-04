@@ -1,0 +1,26 @@
+<label [for]="inputId"></label>
+<fieldset [id]="inputId" class="usa-fieldset display-flex flex-{{ display }} gap-2">
+  <legend class="usa-legend">
+    {{ legend }} 
+    <span class="text-emergency" *ngIf="required">(Required)</span>
+  
+    <div *ngIf="hint.length" class="usa-legend-hint font-2xs">{{hint}}</div>
+  </legend>
+
+  
+  <div *ngFor="let item of items; let i = index" class="usa-radio">
+    <input
+      [checked]="value === item[itemAccessor]"
+      class="usa-radio__input usa-radio__input--tile"
+      id="radio-select-{{ inputId }}-{{ i }}"
+      type="radio"
+      [value]="item[itemAccessor]"
+      (change)="radioSelect($event)" />
+    <label class="usa-radio__label" for="radio-select-{{ inputId }}-{{ i }}"
+      >{{ item[labelAccessor] }}
+      <span *ngIf="item[descriptionAccessor]" class="usa-checkbox__label-description margin-top-1">{{
+        item[descriptionAccessor]
+      }}</span></label
+    >
+  </div>
+</fieldset>

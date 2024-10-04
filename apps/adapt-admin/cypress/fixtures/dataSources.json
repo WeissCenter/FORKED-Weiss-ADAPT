@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "data": [
+    {
+      "sourceType": "sql",
+      "path": "database-1.ct4ml7kxrlg4.us-east-1.rds.amazonaws.com",
+      "dataSourceID": "05b2e3fe-0141-4538-9d7d-11eb39ff637e",
+      "id": "ID#05b2e3fe-0141-4538-9d7d-11eb39ff637e",
+      "name": "DataSource Test",
+      "type": "DataSource"
+    }
+  ]
+}

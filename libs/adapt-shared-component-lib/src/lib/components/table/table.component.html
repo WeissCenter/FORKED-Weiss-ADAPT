@@ -1,0 +1,22 @@
+<table class="usa-table">
+  <caption>
+    {{
+      caption
+    }}
+  </caption>
+  <div class="table-wrapper maxw-desktop-lg overflow-auto">
+    <thead>
+      <tr>
+        <th class="bg-white" *ngFor="let header of headers" scope="col">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr height="25px" *ngFor="let item of data">
+        <ng-container *ngFor="let keyValue of item | keyvalue : originalOrder; let isFirst = first">
+          <th *ngIf="isFirst" scope="row">{{ keyValue.value }}</th>
+          <td *ngIf="!isFirst">{{ keyValue.value }}</td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </div>
+</table>

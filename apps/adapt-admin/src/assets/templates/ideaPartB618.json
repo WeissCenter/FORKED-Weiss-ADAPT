@@ -1,0 +1,338 @@
+{
+  "id": "ideaPartB618",
+  "title": "IDEA Data Part B 618",
+  "description": "",
+  "infoFields": [
+    {
+      "label": "IDEA Section",
+      "value": "Section 618"
+    },
+    {
+      "label": "Part",
+      "value": "Part B"
+    }
+  ],
+  "dataSummary": [
+    {
+      "label": "SEA Collection Level",
+      "sections": [
+        {
+          "label": "Total by age",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "Ages 5 - 21 in school",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        },
+        {
+          "label": "Total by disability type",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "Autism",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'AUT'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Dead-blindess",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'DB'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Development Delay",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'DD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Emotional Disturbance",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'AUT'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Hearing Impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'HI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Intellectual disability",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'ID'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Multiple disabilities",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'MD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Orthopedic impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'OI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Specific learning disability",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'SLD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Speech or language impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'SLI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Traumatic brain injury",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'TBI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Visual impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'VI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Other health impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'OHI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        },
+        {
+          "label": "Total by racial/ethnic",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "American Indian or Alaska native",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'RACE', 'value': 'AM7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Asian",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'RACE', 'value': 'AS7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Black or African American",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'RACE', 'value': 'BL7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Hispanic/Latino",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'RACE', 'value': 'HI7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Native Hawaiian or Other Pacific Islander",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'RACE', 'value': 'PI7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Two or more races",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'RACE', 'value': 'MU7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "White",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sea'}, {'field': 'RACE', 'value': 'WH7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "LEA Collection Level",
+      "sections": [
+        {
+          "label": "Total by age",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "Ages 5 - 21 in school",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        },
+        {
+          "label": "Total by disability type",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "Autism",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'AUT'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Dead-blindess",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'DB'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Development Delay",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'DD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Emotional Disturbance",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'AUT'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Hearing Impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'HI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Intellectual disability",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'ID'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Multiple disabilities",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'MD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Orthopedic impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'OI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Specific learning disability",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'SLD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Speech or language impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'SLI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Traumatic brain injury",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'TBI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Visual impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'VI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Other health impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'IDEADISABILITYTYPE', 'value': 'OHI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        },
+        {
+          "label": "Total by racial/ethnic",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "American Indian or Alaska native",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'RACE', 'value': 'AM7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Asian",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'RACE', 'value': 'AS7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Black or African American",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'RACE', 'value': 'BL7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Hispanic/Latino",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'RACE', 'value': 'HI7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Native Hawaiian or Other Pacific Islander",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'RACE', 'value': 'PI7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Two or more races",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'RACE', 'value': 'MU7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "White",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'lea'}, {'field': 'RACE', 'value': 'WH7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "SCH Collection Level",
+      "sections": [
+        {
+          "label": "Total by age",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "Ages 5 - 21 in school",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        },
+        {
+          "label": "Total by disability type",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "Autism",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'AUT'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Dead-blindess",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'DB'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Development Delay",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'DD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Emotional Disturbance",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'AUT'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Hearing Impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'HI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Intellectual disability",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'ID'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Multiple disabilities",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'MD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Orthopedic impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'OI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Specific learning disability",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'SLD'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Speech or language impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'SLI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Traumatic brain injury",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'TBI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Visual impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'VI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Other health impairment",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'IDEADISABILITYTYPE', 'value': 'OHI'}, {'field': 'CategorySetCode', 'value': 'ST3'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        },
+        {
+          "label": "Total by racial/ethnic",
+          "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'CategorySetCode', 'value': 'TOT'}, {'field': 'ReportCode', 'value': 'c002'})}}",
+          "sections": [
+            {
+              "label": "American Indian or Alaska native",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'RACE', 'value': 'AM7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Asian",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'RACE', 'value': 'AS7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Black or African American",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'RACE', 'value': 'BL7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Hispanic/Latino",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'RACE', 'value': 'HI7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Native Hawaiian or Other Pacific Islander",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'RACE', 'value': 'PI7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "Two or more races",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'RACE', 'value': 'MU7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            },
+            {
+              "label": "White",
+              "value": "{{sum('StudentCount', {'field': 'ReportLevel', 'value': 'sch'}, {'field': 'RACE', 'value': 'WH7'}, {'field': 'CategorySetCode', 'value': 'ST4'}, {'field': 'ReportCode', 'value': 'c002'})}}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

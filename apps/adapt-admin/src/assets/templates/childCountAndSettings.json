@@ -1,0 +1,2768 @@
+{
+  "id": "childCountAndSettings",
+  "title": "IDEA Child Count and Settings",
+  "metaTags": ["Part C", "Child Count And Settings"],
+  "suppression": {
+    "required": true,
+    "parentOrganization": "section",
+    "sensitiveColumns": ["setting", "race", "gender", "age"],
+    "frequencyColumns": ["value"]
+  },
+  "multiFile": false,
+  "description": "This report represents the unduplicated number of children with an active Individualized Family Service Plan (IFSP) in place based on the State’s child count date, according to the child’s age and primary settings.",
+  "pages": [
+    {
+      "id": "allAges",
+      "combined": true,
+      "name": "All ages",
+      "title": "All ages total count",
+      "description": "as of December 01, 2022:",
+      "sections": [
+        {
+          "type": "quickSummary",
+          "sectionLabel": "Quick Summary",
+          "content": {
+            "heading": {
+              "template": "There are {{var_1}} children receiving early intervention services in your state.",
+              "variables": {
+                "var_1": {
+                  "function": "sum",
+                  "args": [
+                    "value",
+                    {
+                      "field": "section",
+                      "array": true,
+                      "value": ["A.1", "A.2"]
+                    },
+                    {
+                      "field": "setting",
+                      "array": true,
+                      "value": ["total"]
+                    },
+                    {
+                      "field": "setting",
+                      "value": "total"
+                    }
+                  ]
+                }
+              }
+            },
+            "sections": [
+              {
+                "title": "Distribution of Settings",
+                "body": {
+                  "template": "In the reported data, the Setting categories in your State are distributed as, {{setting}} ({{setting.percentage}}),  {{setting-two}} ({{setting-two.percentage}}), and {{setting-three}} ({{setting-three.percentage}}).",
+                  "variables": {
+                    "setting": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.1", "A.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.2", "A.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "setting-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.1", "A.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.1", "A.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "setting-three": {
+                      "function": "max",
+                      "args": [
+                        2,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.1", "A.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.1", "A.2"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Distribution of Most Common Race/Ethnicity",
+                "body": {
+                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}})",
+                  "variables": {
+                    "ethnicity": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.1", "B.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.1", "B.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "ethnicity-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.1", "B.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.1", "B.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "ethnicity-three": {
+                      "function": "max",
+                      "args": [
+                        2,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.1", "B.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.1", "B.2"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Distribution of Gender",
+                "body": {
+                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}) ",
+                  "variables": {
+                    "gender": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "gender"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["C.1", "C.2"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "gender",
+                              "parent": true
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["C.1", "C.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "gender-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "gender"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["C.1", "C.2"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "gender",
+                              "parent": true
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["C.1", "C.2"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section A heading",
+          "content": {
+            "level": "h2",
+            "text": "Child Count and Settings by Age",
+            "body": "This section represents the number of children, ages birth through 3 or older, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s age and primary settings."
+          }
+        },
+        {
+          "type": "barChartGrouped",
+          "sectionLabel": "Section A",
+          "content": {
+            "title": "All ages",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "dataLabel": "Setting",
+            "explainTemplate": "In the reported data, the Setting categories in your State are distributed as, {{first}}, {{second}}, and {{third}}.",
+            "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
+            "allMap": "birth through 3 or older",
+            "prefix": "ages",
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "setting",
+              "groupBy": "setting",
+              "filterBy": "age",
+              "xAxisValue": "setting",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionAChart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["setting", "age"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["setting", "age"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["A.1", "A.2"]
+                    },
+                    {
+                      "field": "setting",
+                      "type": "string",
+                      "array": true,
+                      "value": ["home", "community", "other"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section B heading",
+          "content": {
+            "level": "h2",
+            "text": "Child Count and Settings by Race/Ethnicity",
+            "body": "This section represents the number of children, ages birth through 3 or older, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s race/ethnicity and primary settings."
+          }
+        },      
+        {
+          "type": "barChartGrouped",
+          "sectionLabel": "Section B",
+          "content": {
+            "title": "All Race/Ethnicity",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "dataLabel": "Setting",
+            "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
+            "explainTemplate": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{first}}, {{second}}, and {{third}}.",
+            "allMap": "of all race/ethnicity",
+            "prefix": "that are",
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "setting",
+              "groupBy": "setting",
+              "filterBy": "race",
+              "xAxisValue": "race",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionBChart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["race", "setting"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["setting", "race"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["B.1", "B.2"]
+                    },
+                    {
+                      "field": "setting",
+                      "type": "string",
+                      "array": true,
+                      "value": ["home", "community", "other"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section C",
+          "content": {
+            "level": "h2",
+            "text": "Child Count by Gender",
+            "body": "This section represents the number of children, ages birth through 3 or older, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s gender."
+          }
+        },
+        {
+          "type": "barChart",
+          "sectionLabel": "Section C",
+          "content": {
+            "title": "Child Count by Gender",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "dataLabel": "Sex",
+            "explainTemplate": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{first}}, {{second}}.",
+            "description": {
+              "template": "There are {{total}} children, male or female, who received early intervention services.",
+              "variables":{
+                  "total":{
+                      "function": "sum",
+                      "args": [
+                        "value",
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["C.1", "C.2"]
+                        }
+                      ]
+                    }
+              }
+            },
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "gender",
+              "xAxisValue": "gender",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionCGenderChart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["gender"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["gender"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["C.1", "C.2"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Additional notes heading",
+          "content": {
+            "level": "h2",
+            "text": "Additional notes:",
+            "body": ""
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Error comments:",
+          "content": {
+            "level": "h3",
+            "type": "error",
+            "label": "Error comments:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "error-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Disclosure",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Disclosure:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "disclosure"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "birthThroughTwo",
+      "combined": true,
+      "name": "Ages birth through 2",
+      "title": "Ages birth through 2",
+      "description": "as of December 01, 2022",
+      "sections": [
+        {
+          "type": "quickSummary",
+          "sectionLabel": "Quick Summary",
+          "content": {
+            "heading": {
+              "template": "There are {{var_1}} children receiving early intervention services in your state.",
+              "variables": {
+                "var_1": {
+                  "function": "sum",
+                  "args": [
+                    "value",
+                    {
+                      "field": "section",
+                      "array": true,
+                      "value": ["A.1"]
+                    },
+                    {
+                      "field": "setting",
+                      "array": true,
+                      "value": ["total"]
+                    },
+                    {
+                      "field": "setting",
+                      "value": "total"
+                    }
+                  ]
+                }
+              }
+            },
+            "sections": [
+              {
+                "title": "Distribution of Settings",
+                "body": {
+                  "template": "In the reported data, the Setting categories in your State are distributed as, {{setting}} ({{setting.percentage}}),  {{setting-two}} ({{setting-two.percentage}}), and {{setting-three}} ({{setting-three.percentage}}).",
+                  "variables": {
+                    "setting": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.1"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "setting-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.1"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.1"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "setting-three": {
+                      "function": "max",
+                      "args": [
+                        2,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.1"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.1"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Distribution of Most Common Race/Ethnicity",
+                "body": {
+                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}})",
+                  "variables": {
+                    "ethnicity": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.1"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.1"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "ethnicity-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.1"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.1"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "ethnicity-three": {
+                      "function": "max",
+                      "args": [
+                        2,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.1"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.1"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Distribution of Gender",
+                "body": {
+                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}) ",
+                  "variables": {
+                    "gender": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "gender"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["C.1"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "gender",
+                              "parent": true
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["C.1"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "gender-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "gender"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["C.1"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "gender",
+                              "parent": true
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["C.1"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section A heading",
+          "content": {
+            "level": "h2",
+            "text": "Child Count and Settings by Age",
+            "body": "This section represents the number of children, ages birth through 2, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s age and primary settings."
+          }
+        },
+        {
+          "type": "barChartGrouped",
+          "sectionLabel": "Section A",
+          "content": {
+            "title": "All Ages",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
+            "explainTemplate": "In the reported data, the Setting categories in your State are distributed as, {{first}}, {{second}}, and {{third}}.",
+            "allMap": "ages birth through 2",
+            "dataLabel": "Setting",
+            "prefix": "ages",
+            "filterDescription": "Choose an age range to see specific data and insights.",
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "setting",
+              "groupBy": "setting",
+              "filterBy": "age",
+              "xAxisValue": "setting",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionA.1Chart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["setting", "age"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["age", "setting"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["A.1"]
+                    },
+                    {
+                      "field": "setting",
+                      "type": "string",
+                      "array": true,
+                      "value": ["home", "community", "other"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Section A comment",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Comment:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "A-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section B heading",
+          "content": {
+            "level": "h2",
+            "text": "Child Count and Settings by Race/Ethnicity",
+            "body": "This section represents the number of children, ages birth through 2, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s race/ethnicity and primary settings."
+          }
+        },
+        {
+          "type": "barChartGrouped",
+          "sectionLabel": "Section B",
+          "content": {
+            "title": "All Race/Ethnicity",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
+            "explainTemplate": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are, {{first}}, {{second}}, and {{third}}.",
+            "allMap": "of all race/ethnicity",
+            "dataLabel": "Setting",
+            "prefix": "that are",
+            "filterDescription": "Choose race/ethnicity to see specific data and insights.",
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "setting",
+              "groupBy": "setting",
+              "filterBy": "race",
+              "xAxisValue": "race",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionB.1Chart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["race", "setting"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["race", "setting"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["B.1"]
+                    },
+                    {
+                      "field": "setting",
+                      "type": "string",
+                      "array": true,
+                      "value": ["home", "community", "other"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Section B comment",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Comment:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "B-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section C",
+          "content": {
+            "level": "h2",
+            "text": "Child Count by Gender",
+            "body": "This section represents the number of children, ages birth through 2, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s gender."
+          }
+        },
+        {
+          "type": "barChart",
+          "sectionLabel": "Section C",
+          "content": {
+            "title": "Gender Of Infants and Toddlers, Ages Birth through 2, Receiving Early Intervention Services",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "dataLabel": "Sex",
+            "explainTemplate": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{first}}, and {{second}}.",
+            "description": {
+              "template": "There are {{gender}} children, that are male or female, receiving early intervention services.",
+              "variables": {
+                "gender": {
+                    "function": "sum",
+                    "args": [
+                      "value",
+                      {
+                        "field": "section",
+                        "array": true,
+                        "value": ["C.1"]
+                      },
+                      {
+                        "field": "gender",
+                        "array": true,
+                        "value": ["Male", "Female"]
+                      }
+                    ]
+                  }
+              }
+            },
+            "filterDescription": "Choose setting to see specific data and insights.",
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "gender",
+              "xAxisValue": "gender",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionC.1Chart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["gender"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["gender"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["C.1"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Section C comment",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Comment:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "C-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section D Heading",
+          "content": {
+            "level": "h2",
+            "text": "At Risk Child Count",
+            "body": "This section represents the number of children under the age of three at risk of having substantial delays without early intervention services and having an active Individualized Family Service Plan (IFSP) in place on the count date, according to the child’s race/ethnicity and age."
+          }
+        },
+        {
+          "type": "gridView",
+          "sectionLabel": "Grid View",
+          "content": {
+            "columns": [
+              {
+                "id": "sectionDRace",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "sectionLabel": "Total By Race/Ethnicity",
+                    "content": {
+                      "title": "Total By Race/Ethnicity",
+                      "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+                      "dataLabel": "Race / Ethnicity",
+                      "explainTemplate": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are, {{first}}, {{second}}, and {{third}}.",
+                      "description": {
+                        "template": "There are {{total}} children, of all race/ethnicity, who are receiving services and considered at risk of having substantial delays if they didn’t receive early intervention services.",
+                        "variables": {
+                            "total": {
+                                "function": "sum",
+                                "args": [
+                                  "value",
+                                  {
+                                    "field": "section",
+                                    "array": true,
+                                    "value": ["D.1"]
+                                  }
+                                ]
+                              }
+                          }
+                      },
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "race",
+                        "xAxisValue": "race",
+                        "yAxisValue": "value",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "sectionD.1RaceChart",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["value"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["race"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["value desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "array": true,
+                                "value": ["race"]
+                              },
+                              {
+                                "field": "section",
+                                "type": "string",
+                                "array": true,
+                                "value": ["D.1"]
+                              },
+                              {
+                                "field": "setting",
+                                "type": "string",
+                                "array": true,
+                                "value": ["total"]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "sectionDAge",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "sectionLabel": "Section D Total By Age Group",
+                    "content": {
+                      "title": "Total By Age Group",
+                      "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+                      "dataLabel": "Age Group",
+                      "explainTemplate": "In the reported data, the Age group categories receiving Early Intervention services in your State are distributed as, {{first}}, {{second}}, and {{third}}.",
+                      "description": {
+                        "template": "There are {{total}} children, ages birth through 2, who are receiving services and considered at risk of having substantial delays if they didn’t receive early intervention services.",
+                        "variables": {
+                            "total": {
+                                "function": "sum",
+                                "args": [
+                                  "value",
+                                  {
+                                    "field": "section",
+                                    "array": true,
+                                    "value": ["D.1"]
+                                  }
+                                ]
+                              }
+                          }
+                      },
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "age",
+                        "xAxisValue": "age",
+                        "yAxisValue": "value",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "sectionDChartAge",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["value"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["age"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["value desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "array": true,
+                                "value": ["age"]
+                              },
+                              {
+                                "field": "section",
+                                "type": "string",
+                                "array": true,
+                                "value": ["D.1"]
+                              },
+                              {
+                                "field": "age",
+                                "operator": "NOT",
+                                "type": "string",
+                                "array": true,
+                                "value": ["total"]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Section D comment",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Comment:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "D-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section E Heading",
+          "content": {
+            "level": "h2",
+            "text": "Cumulative Child Count by Race/Ethnicity and Gender",
+            "body": {
+                "template": "This section represents the number of infants and toddlers with disabilities, ages birth through 2, who received early intervention services from {{date-left}} to {{date-right}}.",
+                "variables":{
+                    "date-left":{
+                        "function": "select",
+                        "args": [
+                          "comment",
+                          1,
+                          "section desc",
+                          {
+                            "field": "section",
+                            "value": "section-e-date-left"
+                          }
+                        ]
+                    },
+                    "date-right":{
+                        "function": "select",
+                        "args": [
+                          "comment",
+                          1,
+                          "section desc",
+                          {
+                            "field": "section",
+                            "value": "section-e-date-right"
+                          }
+                        ]
+                    }
+                }
+            }
+          }
+        },
+        {
+          "type": "gridView",
+          "sectionLabel": "Grid View",
+          "content": {
+            "columns": [
+              {
+                "id": "sectionERace",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "sectionLabel": "By Race/Ethnicity",
+                    "content": {
+                      "title": "By Race/Ethnicity",
+                      "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+                      "dataLabel": "Race / Ethnicity",
+                      "explainTemplate": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{first}}, {{second}}, and {{third}}.",
+                      "description": {
+                        "template": "There are {{total}} children, of all race/ethnicity, who received early intervention services from {{date-left}} to {{date-right}}.",
+                        "variables":{
+                            "total":{
+                                "function": "sum",
+                                "args": [
+                                  "value",
+                                  {
+                                    "field": "section",
+                                    "array": true,
+                                    "value": ["E.1"]
+                                  }
+                                ]
+                              },
+                            "date-left":{
+                                "function": "select",
+                                "args": [
+                                  "comment",
+                                  1,
+                                  "section desc",
+                                  {
+                                    "field": "section",
+                                    "value": "section-e-date-left"
+                                  }
+                                ]
+                            },
+                            "date-right":{
+                                "function": "select",
+                                "args": [
+                                  "comment",
+                                  1,
+                                  "section desc",
+                                  {
+                                    "field": "section",
+                                    "value": "section-e-date-right"
+                                  }
+                                ]
+                            }
+                        }
+                      },
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "race",
+                        "xAxisValue": "race",
+                        "yAxisValue": "value",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "sectionE.1RaceChart",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["value"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["race"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["value desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "array": true,
+                                "value": ["race"]
+                              },
+                              {
+                                "field": "section",
+                                "type": "string",
+                                "array": true,
+                                "value": ["E.1"]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "sectionEGender",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "sectionLabel": "By Gender",
+                    "content": {
+                      "title": "By Gender",
+                      "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+                      "dataLabel": "Sex",
+                      "explainTemplate": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{first}}, and {{second}}.",
+                      "description": {
+                        "template": "There are {{total}} children, male or female, who received early intervention services from {{date-left}} to {{date-right}}.",
+                        "variables":{
+                            "total":{
+                                "function": "sum",
+                                "args": [
+                                  "value",
+                                  {
+                                    "field": "section",
+                                    "array": true,
+                                    "value": ["E.2"]
+                                  }
+                                ]
+                              },
+                            "date-left":{
+                                "function": "select",
+                                "args": [
+                                  "comment",
+                                  1,
+                                  "section desc",
+                                  {
+                                    "field": "section",
+                                    "value": "section-e-date-left"
+                                  }
+                                ]
+                            },
+                            "date-right":{
+                                "function": "select",
+                                "args": [
+                                  "comment",
+                                  1,
+                                  "section desc",
+                                  {
+                                    "field": "section",
+                                    "value": "section-e-date-right"
+                                  }
+                                ]
+                            }
+                        }
+                      },
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "race",
+                        "xAxisValue": "race",
+                        "yAxisValue": "value",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "sectionE.2ChartGender",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["value"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["race"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["value desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "array": true,
+                                "value": ["race"]
+                              },
+                              {
+                                "field": "section",
+                                "type": "string",
+                                "array": true,
+                                "value": ["E.2"]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Section E comment",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Comment:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "E-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Additional notes heading",
+          "content": {
+            "level": "h2",
+            "text": "Additional notes:",
+            "body": ""
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Error comments:",
+          "content": {
+            "level": "h3",
+            "type": "error",
+            "label": "Error comments:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "error-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Disclosure",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Disclosure:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "disclosure"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "agesThreeOrOlder",
+      "combined": true,
+      "name": "Ages 3 or older",
+      "title": "Ages 3 or older",
+      "description": "as of December 01, 2022",
+      "sections": [
+        {
+          "type": "quickSummary",
+          "sectionLabel": "Quick Summary",
+          "content": {
+            "heading": {
+              "template": "There are {{var_1}} children receiving early intervention services in your state.",
+              "variables": {
+                "var_1": {
+                  "function": "sum",
+                  "args": [
+                    "value",
+                    {
+                      "field": "section",
+                      "array": true,
+                      "value": ["A.2"]
+                    },
+                    {
+                      "field": "setting",
+                      "array": true,
+                      "value": ["total"]
+                    },
+                    {
+                      "field": "setting",
+                      "value": "total"
+                    }
+                  ]
+                }
+              }
+            },
+            "sections": [
+              {
+                "title": "Distribution of Settings",
+                "body": {
+                  "template": "In the reported data, the Setting categories in your State are distributed as, {{setting}} ({{setting.percentage}}),  {{setting-two}} ({{setting-two.percentage}}), and {{setting-three}} ({{setting-three.percentage}}).",
+                  "variables": {
+                    "setting": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "setting-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "setting-three": {
+                      "function": "max",
+                      "args": [
+                        2,
+                        {
+                          "field": "maxSelect",
+                          "value": "setting"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["A.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "setting",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["A.2"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Distribution of Most Common Race/Ethnicity",
+                "body": {
+                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}})",
+                  "variables": {
+                    "ethnicity": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "ethnicity-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "ethnicity-three": {
+                      "function": "max",
+                      "args": [
+                        2,
+                        {
+                          "field": "maxSelect",
+                          "value": "race"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["B.2"]
+                        },
+                        {
+                          "field": "setting",
+                          "array": true,
+                          "value": ["home", "community", "other"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "race",
+                              "parent": true
+                            },
+                            {
+                              "field": "setting",
+                              "array": true,
+                              "value": ["home", "other", "community"]
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["B.2"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Distribution of Gender",
+                "body": {
+                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}) ",
+                  "variables": {
+                    "gender": {
+                      "function": "max",
+                      "args": [
+                        0,
+                        {
+                          "field": "maxSelect",
+                          "value": "gender"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["C.2"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "gender",
+                              "parent": true
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["C.2"]
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "gender-two": {
+                      "function": "max",
+                      "args": [
+                        1,
+                        {
+                          "field": "maxSelect",
+                          "value": "gender"
+                        },
+                        {
+                          "field": "section",
+                          "array": true,
+                          "value": ["C.2"]
+                        }
+                      ],
+                      "dependents": {
+                        "percentage": {
+                          "function": "percentage",
+                          "args": [
+                            "value",
+                            {
+                              "field": "gender",
+                              "parent": true
+                            },
+                            {
+                              "field": "section",
+                              "array": true,
+                              "value": ["C.2"]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section A",
+          "content": {
+            "level": "h2",
+            "text": "Child Count and Settings by Age",
+            "body": "This section represents the number of children, ages 3 or older, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s age and primary settings."
+          }
+        },
+        {
+          "type": "barChartGrouped",
+          "sectionLabel": "Section A",
+          "content": {
+            "title": "All ages",
+            "filterDescription": "Choose an age range to see specific data and insights.",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
+            "dataLabel": "Setting",
+            "explainTemplate": "In the reported data, the Setting categories in your State are distributed as, {{first}}, {{second}}, and {{third}}.",
+            "allMap": "ages 3 or older",
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "setting",
+              "groupBy": "setting",
+              "filterBy": "age",
+              "xAxisValue": "setting",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionA.2Chart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["setting", "age"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["setting", "age"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["A.2"]
+                    },
+                    {
+                      "field": "setting",
+                      "type": "string",
+                      "array": true,
+                      "value": ["home", "community", "other"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Section A comment",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Comment:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "A-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section B",
+          "content": {
+            "level": "h2",
+            "text": "Child Count and Settings by Race/Ethnicity",
+            "body": "This section represents the number of children, ages 3 or older, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s race/ethnicity and primary settings."
+          }
+        },
+        {
+          "type": "barChartGrouped",
+          "sectionLabel": "Section B",
+          "content": {
+            "title": "All Race/Ethnicities",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
+            "allMap": "ages 3 or older",
+            "dataLabel": "Setting",
+            "explainTemplate": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{first}}, {{second}}, and {{third}}.",
+            "filterDescription": "Choose race/ethnicity to see specific data and insights.",
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "setting",
+              "groupBy": "setting",
+              "filterBy": "race",
+              "xAxisValue": "race",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionB.2Chart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["race", "setting"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["race", "setting"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["B.2"]
+                    },
+                    {
+                      "field": "setting",
+                      "type": "string",
+                      "array": true,
+                      "value": ["home", "community", "other"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Section B comment",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Comment:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "B-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Section C",
+          "content": {
+            "level": "h2",
+            "text": "Child Count by Gender",
+            "body": "This section represents the number of children, ages 3 or older, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s gender."
+          }
+        },
+        {
+          "type": "barChart",
+          "sectionLabel": "Section C",
+          "content": {
+            "title": "Gender of children, Ages three or older, Receiving Early Intervention Services",
+            "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "dataLabel": "Sex",
+            "explainTemplate": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{first}}, and {{second}}.",
+            "description": {
+              "template": "There are {{gender}} children, that are male or female, receiving early intervention services.",
+              "variables": {
+                "gender": {
+                    "function": "sum",
+                    "args": [
+                      "value",
+                      {
+                        "field": "section",
+                        "array": true,
+                        "value": ["C.2"]
+                      }
+                    ]
+                }
+              }
+            },
+            "chart": {
+              "filterOn": "x",
+              "yAxisLabel": "Child Count",
+              "xAxisLabel": "gender",
+              "xAxisValue": "gender",
+              "yAxisValue": "value",
+              "dataRetrievalOperations": [
+                {
+                  "id": "sectionC.2Chart",
+                  "function": "GROUPBY",
+                  "arguments": [
+                    {
+                      "field": "func",
+                      "type": "string",
+                      "value": "sum"
+                    },
+                    {
+                      "field": "columns",
+                      "value": ["value"],
+                      "array": true
+                    },
+                    {
+                      "field": "selectColumns",
+                      "value": ["gender"],
+                      "array": true
+                    },
+                    {
+                      "field": "limit",
+                      "type": "number"
+                    },
+                    {
+                      "field": "order",
+                      "type": "string",
+                      "array": true,
+                      "value": ["value desc"]
+                    },
+                    {
+                      "field": "groupby",
+                      "type": "string",
+                      "array": true,
+                      "value": ["gender"]
+                    },
+                    {
+                      "field": "section",
+                      "type": "string",
+                      "array": true,
+                      "value": ["C.2"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Section C comment",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Comment:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "C-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "header",
+          "sectionLabel": "Additional notes heading",
+          "content": {
+            "level": "h2",
+            "text": "Additional notes:",
+            "body": ""
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Error comments:",
+          "content": {
+            "level": "h3",
+            "type": "error",
+            "label": "Error comments:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "error-comment"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "sectionLabel": "Disclosure",
+          "content": {
+            "level": "h3",
+            "type": "standard",
+            "label": "Disclosure:",
+            "body": {
+              "template": "{{comment}}",
+              "variables": {
+                "comment": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "disclosure"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<div
+  (click)="toggle()"
+  (keydown.enter)="toggle()"
+  role="button"
+  [attr.aria-describedby]="describedByID"
+  [attr.aria-labelledby]="id + 'toggle-label'"
+  [attr.aria-pressed]="value"
+  tabindex="0"
+  class="toggle-switch-container cursor-pointer display-flex flex-align-center gap-1">
+  <div
+    [ngClass]="{ 'border-red': !value, 'border-primary': value, 'bg-primary': value, 'flex-justify-end': value }"
+    class="toggle-switch height-3 width-5 border-red border-2px radius-pill display-flex flex-align-center padding-05">
+    <div
+      [ngClass]="{ 'border-red': !value, 'border-none': value, 'border-white': value }"
+      class="toggle-switch-knob bg-white height-2 width-2 radius-pill border-2px border-red"></div>
+  </div>
+  <p
+    aria-live="polite"
+    [ngClass]="{ 'text-red': !value, 'texr-primary': value }"
+    [id]="id + 'toggle-label'"
+    class="usa-prose text-red">
+    {{ !value ? unToggledLabel : toggledLabel }}
+  </p>
+</div>

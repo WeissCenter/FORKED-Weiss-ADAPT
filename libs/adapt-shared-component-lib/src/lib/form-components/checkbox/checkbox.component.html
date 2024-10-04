@@ -1,0 +1,17 @@
+<div class="usa-checkbox padding-1 {{ classes }}">
+  <input
+    #input
+    (click)="toggleCheck()"
+    (keydown.enter)="toggleCheck()"
+    (blur)="blurred.emit($event)"
+    (focus)="focused.emit($event)"
+    class="usa-checkbox__input"
+    [id]="id + '-' + idSafeLabel"
+    type="checkbox"
+    [checked]="isChecked()"
+    [name]="id + '-' + idSafeLabel + '-checkbox'"
+    [value]="value" />
+  <label class="usa-checkbox__label" [for]="id + '-' + idSafeLabel">
+    {{ label }}
+  </label>
+</div>

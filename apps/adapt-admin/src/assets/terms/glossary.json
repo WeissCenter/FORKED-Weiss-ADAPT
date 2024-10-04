@@ -1,0 +1,280 @@
+{
+  "6": {
+    "definition": "Represents an individual who is 6 years old.",
+    "label": "Age 6"
+  },
+  "7": {
+    "definition": "Represents an individual who is 7 years old.",
+    "label": "Age 7"
+  },
+  "8": {
+    "definition": "Represents an individual who is 8 years old.",
+    "label": "Age 8"
+  },
+  "9": {
+    "definition": "Represents an individual who is 9 years old.",
+    "label": "Age 9"
+  },
+  "10": {
+    "definition": "Represents an individual who is 10 years old.",
+    "label": "Age 10"
+  },
+  "11": {
+    "definition": "Represents an individual who is 11 years old.",
+    "label": "Age 11"
+  },
+  "12": {
+    "definition": "Represents an individual who is 12 years old.",
+    "label": "Age 12"
+  },
+  "13": {
+    "definition": "Represents an individual who is 13 years old.",
+    "label": "Age 13"
+  },
+  "14": {
+    "definition": "Represents an individual who is 14 years old.",
+    "label": "Age 14"
+  },
+  "15": {
+    "definition": "Represents an individual who is 15 years old.",
+    "label": "Age 15"
+  },
+  "16": {
+    "definition": "Represents an individual who is 16 years old.",
+    "label": "Age 16"
+  },
+  "17": {
+    "definition": "Represents an individual who is 17 years old.",
+    "label": "Age 17"
+  },
+  "18": {
+    "definition": "Represents an individual who is 18 years old.",
+    "label": "Age 18"
+  },
+  "19": {
+    "definition": "Represents an individual who is 19 years old.",
+    "label": "Age 19"
+  },
+  "20": {
+    "definition": "Represents an individual who is 20 years old.",
+    "label": "Age 20"
+  },
+  "21": {
+    "definition": "Represents an individual who is 21 years old.",
+    "label": "Age 21"
+  },
+  "AUT": {
+    "definition": "Autism is a developmental disability that affects how a person communicates and interacts with others. It usually shows up before a child turns three and can make learning in school harder.",
+    "label": "Autism"
+  },
+  "DB": {
+    "definition": "Deaf-blindness means having both hearing and vision impairments.",
+    "label": "Deaf-blindness"
+  },
+  "DD": {
+    "definition": "Developmental delays happen when a child is slower to develop in one or more areas like physical growth, thinking skills, communication, social or emotional skills, or daily life skills.",
+    "label": "Developmental delay"
+  },
+  "EMN": {
+    "definition": "Emotional disturbance is a condition that affects a child's ability to learn and interact with others. It shows up in one or more of these ways over a long time and in a noticeable way. Some examples include, the child has trouble learning, and it’s not because of thinking, senses, or health problems, the child has difficulty making and keeping friends or getting along with teachers, or the child behaves or feels in ways that are not appropriate for the situation.",
+    "label": "Emotional disturbance"
+  },
+  "HI": {
+    "definition": "Hearing impairment means a problem with hearing that can be either permanent or come and go. It affects a child's ability to do well in school, but it’s not the same as being completely deaf.",
+    "label": "Hearing impairment"
+  },
+  "ID": {
+    "definition": "Intellectual disability means having below-average intellectual abilities along with difficulties in everyday life skills. This condition starts during a child’s development and makes it harder for them to succeed in school.",
+    "label": "Intellectual disability"
+  },
+  "MD": {
+    "definition": "Multiple disabilities mean having more than one significant impairment, like both intellectual disability and blindness or an intellectual disability along with a physical disability.",
+    "label": "Multiple disabilities"
+  },
+  "OI": {
+    "definition": "Orthopedic impairment means a serious physical disability that affects a child's ability to do well in school.",
+    "label": "Orthopedic impairment"
+  },
+  "SLD": {
+    "definition": "Specific learning disability means having a disorder that affects one or more of the basic mental processes needed to understand or use language, whether spoken or written. This can make it hard to listen, think, speak, read, write, spell, or do math. It includes conditions like dyslexia, brain injuries, and other challenges that affect learning.",
+    "label": "Specific learning disability"
+  },
+  "SLI": {
+    "definition": "Speech or language impairment means a communication disorder, such as stuttering, impaired articulation, a language impairment, or a voice impairment, that adversely affects a child's educational performance.",
+    "label": "Speech or language impairment"
+  },
+  "TBI": {
+    "definition": " Traumatic brain injury means a brain injury caused by an outside physical force, which can lead to full or partial disabilities, or problems with social behavior, and can make it harder for a child to succeed in school. This type of injury can affect thinking, memory, language, attention, problem-solving, senses, movement, behavior, physical abilities, and speech. It doesn’t include brain injuries present at birth, those that get worse over time, or those caused by birth trauma.",
+    "label": "Traumatic brain injury"
+  },
+  "VI": {
+    "definition": "Visual impairment, including blindness, means having vision problems that, even with glasses or other help, make it hard for a child to do well in school. This includes both partial sight and complete blindness.",
+    "label": "Visual impairment"
+  },
+  "OHI": {
+    "definition": "Other health impairment means having less strength, energy, or alertness, including being overly sensitive to things around them. This can be caused by long-term or short-term health problems like asthma, ADHD, diabetes, epilepsy, heart conditions, and others.",
+    "label": "Other health impairment"
+  },
+  "F": {
+    "definition": "This means a person who identifes as female.",
+    "label": "Female"
+  },
+  "M": {
+    "definition": "This means a person who identifes as male.",
+    "label": "Male"
+  },
+  "AM7": {
+    "definition": "This means a person who comes from the groups of people who first lived in North and South America (including Central America). This person also keeps a strong connection to their culture through being part of a tribe or being closely involved with their community.",
+    "label": "American Indian or Alaska Native"
+  },
+  "AS7": {
+    "definition": "This means a person whose ancestors were the first people of the Far East, Southeast Asia. This includes countries like Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippines, Thailand, and Vietnam. The person also continues to have a strong cultural connection with these regions.",
+    "label": "Asian"
+  },
+  "BL7": {
+    "definition": "This means a person whose family comes from any of the groups of people originally from Africa.",
+    "label": "Black or African American"
+  },
+  "HI7": {
+    "definition": "This means that the person’s family background or ancestry is connected to Spanish-speaking countries like Mexico, Puerto Rico, Cuba, as well as Central and South American regions, among others. This connection is not dependent on their race.",
+    "label": "Hispanic/Latino"
+  },
+  "PI7": {
+    "definition": "This means a person whose ancestors were the first people to live in places like Hawaii, Guam, Samoa, or other islands in the Pacific Ocean. They have a heritage connected to these islands.",
+    "label": "Native Hawaiian or Other Pacific Islander"
+  },
+  "MU7": {
+    "definition": "This means a person whose family background includes ancestors from two or more different racial groups.",
+    "label": "Two or more races"
+  },
+  "WH7": {
+    "definition": "This means a person whose family comes from the first groups of people who lived in Europe, the Middle East, or North Africa.",
+    "label": "White"
+  },
+  "AGE05K": {
+    "definition": "Represents an individual who is 5 years old and in Kindergarten.",
+    "label": "Age 5 (Kindergarten)"
+  },
+  "RC80": {
+    "definition": "Inside regular class for 80% or more of the day is a setting where children ages 5 to 21 receive special education and related services.",
+    "label": "Inside regular class 80% or more of the day"
+  },
+  "RC79TO40": {
+    "definition": "Inside regular class for 40% to 79% of the day is a setting where children ages 5 to 21 receive special education and related services.",
+    "label": "Inside regular class 40% through 79% of the day"
+  },
+  "RC39": {
+    "definition": "Inside regular class less than 40% of the day is a setting where children ages 5 to 21 receive special education and related services.",
+    "label": "Inside regular class less than 40% of the day"
+  },
+  "SS": {
+    "definition": "A separate school is a place where children receive special education and related services.",
+    "label": "Separate School"
+  },
+  "RF": {
+    "definition": "A residential facility is a place where children receive special education and related services.",
+    "label": "Residential Facility"
+  },
+  "HH": {
+    "definition": "Homebound or hospital is a place where children ages 5 to 21 receive special education and related services.",
+    "label": "Homebound/Hospital"
+  },
+  "CF": {
+    "definition": "A correctional facility is a place where children ages 5 to 21 receive special education and related services.",
+    "label": "Correctional Facilities"
+  },
+  "PPPS": {
+    "definition": "Parentally placed in private school is a setting where children ages 5 to 21 receive special education and related services.",
+    "label": "Parentally placed in private schools"
+  },
+  "LEP": {
+    "definition": "Someone whose primary language is not English.",
+    "label": "English learners"
+  },
+  "NLEP": {
+    "definition": "Someone whose primary language is English.",
+    "label": "Non-English learner"
+  },
+  "REC10YSVCS": {
+    "label": "Services in Regular Early Childhood Program (at least 10 hours)",
+    "definition": "Services in a regular early childhood program (at least 10 hours) is where children ages 3 to 5 go to get special education and related services."
+  },
+  "REC10YOTHLOC": {
+    "label": "Other Location Regular Early Childhood Program (at least 10 hours)",
+    "definition": "Other location, regular early childhood program (at least 10 hours) is where children ages 3 to 5 go to get special education and related services."
+  },
+  "REC09YSVCS": {
+    "label": "Services in Regular Early Childhood Program (less than 10 hours)",
+    "definition": "Services in a regular early childhood program (less than 10 hours) is where children ages 3 to 5 go to get special education and related services."
+  },
+  "REC09YOTHLOC": {
+    "label": "Other Location Regular Early Childhood Program (less than 10 hours)",
+    "definition": "Other location, regular early childhood program (less than 10 hours) is where children ages 3 to 5 go to get special education and related services."
+  },
+  "SC": {
+    "label": "Separate Class",
+    "description": "Are not in regular early childhood programs",
+    "definition": "A separate school is a place where children ages 3 to 5 go to receive special education and related services."
+  },
+  "H": {
+    "label": "Home",
+    "description": "Are not in regular early childhood programs",
+    "definition": "Home is the place where children ages 3 to 5 receive special education and related services."
+  },
+  "SPL": {
+    "label": "Service Provider Location",
+    "description": "Are not in regular early childhood programs",
+    "definition": "A location other than a pre-school classroom, seperate school, or residential facility where children ages 3 to 5 receive special education and related services."
+  },
+  "home": {
+    "label": "Home",
+    "description": "Home setting",
+    "definition": "The one-day count of infants and toddlers who get their services in their home or where their caregiver lives."
+  },
+  "community": {
+    "label": "Community-Based Setting",
+    "description": "Community-based setting",
+    "definition": "The one-day count of infants and toddlers who get their services in a setting where children without disabilities usually go. These places include child care centers, Early Head Start Programs, preschools, early childhood centers, and community centers like the YMCA or Boys and Girls Clubs. "
+  },
+  "other": {
+    "label": "Other Setting",
+    "description": "Other setting",
+    "definition": "The one-day count of infants and toddlers who get their services neither home or community-based places for example, hospitals, therapist office, doctor's office or clinic."
+  },
+  "Female": {
+    "label": "Female",
+    "definition": "A child considered female on their birth certificate."
+  },
+  "Male": {
+    "label": "Male",
+    "definition": "A child considered male on their birth certificate."
+  },
+  "Black or African American": {
+    "label": "Black or African American",
+    "definition": "This means a person whose family comes from any of the groups of people originally from Africa."
+  },
+  "American Indian or Alaska Native": {
+    "label": "American Indian or Alaska Native",
+    "definition": "This means a person who comes from the groups of people who first lived in North and South America (including Central America). This person also keeps a strong connection to their culture through being part of a tribe or being closely involved with their community."
+  },
+  "Asian": {
+    "label": "Asian",
+    "definition": "This refers to a person whose ancestors were the first people of the Far East, Southeast Asia. This includes countries like Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippines, Thailand, and Vietnam. The person also continues to have a strong cultural connection with these regions. "
+  },
+  "Hispanic/Latino": {
+    "label": "Hispanic/Latino",
+    "definition": "This means that the person’s family background or ancestry is connected to Spanish-speaking countries like Mexico, Puerto Rico, Cuba, as well as Central and South American regions, among others. This connection is not dependent on their race."
+  },
+  "Two or more races": {
+    "label": "Two or more races",
+    "definition": "This means a person whose family background includes ancestors from two or more different racial groups."
+  },
+  "Native Hawaiian or Other Pacific Islander": {
+    "label": "Native Hawaiian or Other Pacific Islander",
+    "definition": "This describes a person whose ancestors were the first people to live in places like Hawaii, Guam, Samoa, or other islands in the Pacific Ocean. They have a heritage connected to these islands."
+  },
+  "White": {
+    "label": "White",
+    "definition": "This means a person whose family comes from the first groups of people who lived in Europe, the Middle East, or North Africa"
+  }
+}

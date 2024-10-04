@@ -1,0 +1,244 @@
+<adapt-session-reload-banner></adapt-session-reload-banner>
+<adapt-hero-banner [name]="user.displayName$ | async"></adapt-hero-banner>
+
+<section aria-label="Recent activities and common actions" class="padding-top-3 tablet:padding-top-5">
+  <div class="grid-container padding-x-0 tablet:padding-x-5">
+    <div class="display-flex margin-top-4 width-full padding-x-2 tablet:padding-x-0 flex-column">
+      <div class="usa-prose">
+        <h2>What can you do here?</h2>
+        <p class="measure-4">
+          The following are most common actions, quick views, and recent activities you can select and act on.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="display-flex flex-align-start flex-column desktop:flex-row accessibility-layout gap-2 margin-top-2 desktop:margin-top-4">
+      <div
+        class="bg-white padding-2 tablet:padding-3 border-2px display-flex flex-column flex-1 border-base-lighter tablet:radius-lg"
+        [hidden]="!recentActivity.length">
+        <div class="usa-prose">
+          <h3>Your recent activity</h3>
+          <p>Check out your most recent activities to stay updated on what you've done lately.</p>
+        </div>
+
+        <ul class="usa-icon-list margin-top-2">
+          <ng-container *ngFor="let activity of recentActivity">
+            <li class="usa-icon-list__item text-no-underline">
+              <ng-container [ngSwitch]="activity.type">
+                <a
+                  *ngSwitchCase="'DataView'"
+                  class="usa-link text-no-underline flex-align-center display-flex gap-05"
+                  [routerLink]="['data-view', activity.id]">
+                  <div class="usa-icon-list__icon text-primary">
+                    <i class="fal fa-chart-pie" aria-hidden="true"></i>
+                  </div>
+                  <div class="usa-icon-list__content text-no-underline">
+                    {{ activity.item.name }}
+                  </div>
+                </a>
+
+                <a
+                  *ngSwitchCase="'DataSource'"
+                  class="usa-link text-no-underline flex-align-center display-flex gap-05"
+                  [routerLink]="['data-source', activity.id]">
+                  <div class="usa-icon-list__icon text-primary">
+                    <i class="fal fa-database" aria-hidden="true"></i>
+                  </div>
+                  <div class="usa-icon-list__content">
+                    {{ activity.item.name }}
+                  </div>
+                </a>
+
+                <a
+                  *ngSwitchCase="'Report'"
+                  class="usa-link text-no-underline flex-align-center display-flex gap-05"
+                  [routerLink]="['reports', activity.id]">
+                  <div class="usa-icon-list__icon text-primary">
+                    <i class="fal fa-chart-line" aria-hidden="true"></i>
+                  </div>
+                  <div class="usa-icon-list__content">
+                    {{ activity.item.name }}
+                  </div>
+                </a>
+              </ng-container>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+      <div
+        class="bg-white padding-2 tablet:padding-3 border-2px display-flex flex-column flex-1 border-base-lighter tablet:radius-lg">
+        <div class="usa-prose">
+          <h3>Common actions</h3>
+          <p>
+            Here is a list of common actions you can perform, making it easy to quickly access and manage your routine
+            tasks.
+          </p>
+        </div>
+        <ul class="usa-icon-list margin-top-2">
+          <li class="usa-icon-list__item">
+            <button
+              class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
+              (click)="reportModal && reportModal.open()">
+              <i class="fal fa-plus" role="img" aria-hidden="true"></i>
+              Create a new report
+            </button>
+          </li>
+          <li class="usa-icon-list__item">
+            <button
+              class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
+              (click)="dataViewModal && dataViewModal.open()">
+              <i class="fal fa-plus" role="img" aria-hidden="true"></i>
+              Create a new data view
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-label="Data Collection" class="padding-y-4 desktop:padding-y-6">
+  <div class="grid-container padding-x-0 tablet:padding-x-5">
+    <div class="display-flex width-full padding-x-2 tablet:padding-x-0 flex-column">
+      <div class="usa-prose">
+        <h2>Reports and Data Views</h2>
+        <p class="measure-4">
+          This section allows you to access and manage a variety of reports and data views you have access. The list
+          items in each section can be expanded to provide you with additional information and actions.
+        </p>
+      </div>
+    </div>
+    <div
+      class="display-flex flex-column flex-align-start desktop:flex-row accessibility-layout gap-2 margin-top-2 desktop:margin-top-4">
+      <div
+        aria-label="Reports list"
+        role="region"
+        class="bg-white padding-2 desktop:padding-3 gap-1 border-2px grid-col display-flex flex-column width-full border-base-lighter tablet:radius-lg">
+        <div class="usa-prose">
+          <h3>View reports</h3>
+          <p>
+            View reports that are still being drafted and not ready for sharing. At the end of the list, you may select
+            <a class="usa-link" [routerLink]="['reports']" aria-label="View all reports">View all</a> for a full list
+            with filtering options or simply
+            <button class="usa-button usa-button--unstyled" (click)="reportModal && reportModal.open()">
+              Create new report</button
+            >.
+          </p>
+        </div>
+        <!-- <div class="display-flex flex-column margin-top-1 gap-1 width-full">
+          <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="loadingReports">
+            <div class="display-flex flex-align-center gap-1">
+              <div class="loader"></div>
+              <p class="usa-prose" i18n>Loading reports...</p>
+            </div>
+          </div> -->
+        <ng-container *ngIf="reports | loading : 'Reports have loaded' | async as reportsLoaded">
+          <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="reportsLoaded.loading">
+            <div class="display-flex flex-align-center gap-1">
+              <div class="loader"></div>
+              <p class="usa-prose" i18n>Loading reports...</p>
+            </div>
+          </div>
+
+          <ng-container *ngIf="reportsLoaded.value">
+            <ng-container *ngIf="reportsLoaded.value.length; else noReports">
+              <span class="visually-hidden" aria-live="polite" id="report-load-notifier">Reports have loaded</span>
+              <adapt-list-item-report
+                *ngFor="let report of reportsLoaded.value | limitTo : 5"
+                [report]="report"
+                headingLvl="h4"></adapt-list-item-report>
+              <div class="display-flex gap-2 flex-wrap margin-top-2 width-full">
+                <a class="usa-button usa-button--outline" [routerLink]="['reports']" aria-label="View all reports">
+                  <i class="fal fa-folder-open"></i>
+                  View all
+                </a>
+                <a class="usa-button usa-button--outline" (click)="reportModal && reportModal.open()">
+                  <i class="fal fa-plus"></i>
+                  Create new report
+                </a>
+              </div>
+            </ng-container>
+
+            <ng-template #noReports>
+              <p class="usa-prose" *ngIf="!loadingReports" aria-live="polite">No Reports have been created</p>
+              <div class="display-flex gap-2 flex-wrap margin-top-2 width-full">
+                <a class="usa-button usa-button--outline" [routerLink]="['reports']">
+                  <i class="fal fa-plus"></i>
+                  Create new report
+                </a>
+              </div>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div
+        aria-label="Data views list"
+        role="region"
+        class="bg-white padding-2 desktop:padding-3 gap-1 border-2px grid-col display-flex flex-column width-full border-base-lighter tablet:radius-lg">
+        <div class="usa-prose">
+          <h3>Data views</h3>
+          <p>
+            Most recent data views records created or updated. At the end of the list, you may select
+            <a class="usa-link" [routerLink]="['data-management']" aria-label="View all data views">View all</a> for a
+            full list with filtering options or simply
+            <button class="usa-button usa-button--unstyled" (click)="dataViewModal && dataViewModal.open()">
+              Create new data view</button
+            >.
+          </p>
+        </div>
+
+        <div class="display-flex flex-column margin-top-1 gap-1 width-full">
+          <ng-container *ngIf="dataViews | loading : 'Data views have loaded' | async as viewsLoaded">
+            <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="viewsLoaded.loading">
+              <div class="display-flex flex-align-center gap-1">
+                <div class="loader"></div>
+                <p class="usa-prose" i18n>Loading data views...</p>
+              </div>
+            </div>
+
+            <ng-container *ngIf="viewsLoaded.value">
+              <ng-container *ngIf="viewsLoaded.value.length; else noViews">
+                <span class="visually-hidden" aria-live="polite" id="report-load-notifier">Data views have loaded</span>
+                <adapt-list-item-data
+                  [$reports]="reports"
+                  [dataViewModal]="dataViewModal"
+                  [reportModal]="reportModal"
+                  *ngFor="let view of viewsLoaded.value | limitTo : 5"
+                  [view]="view"
+                  [headingLvl]="'h4'"></adapt-list-item-data>
+                <div class="display-flex gap-2 flex-wrap margin-top-2 width-full">
+                  <a
+                    class="usa-button usa-button--outline"
+                    [routerLink]="['data-management']"
+                    aria-label="View all data views">
+                    <i class="fal fa-folder-open"></i>
+                    View all
+                  </a>
+                  <button
+                    class="usa-button usa-button--outline"
+                    (click)="dataViewModal && dataViewModal.open()"
+                    aria-label="View all reports">
+                    Create new data view
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-template #noViews>
+                <p class="usa-prose" aria-live="polite" *ngIf="!loadingDataViews">No data views have been created</p>
+                <div class="display-flex gap-2 flex-wrap margin-top-2 width-full">
+                  <button class="usa-button usa-button--outline" (click)="dataViewModal && dataViewModal.open()">
+                    Create new data view
+                  </button>
+                </div>
+              </ng-template>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<adapt-data-view-modal #dataViewModal></adapt-data-view-modal>
+<adapt-report-modal #reportModal></adapt-report-modal>

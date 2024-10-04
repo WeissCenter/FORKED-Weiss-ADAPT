@@ -1,0 +1,62 @@
+<div class="branding-settings-content-wrapper display-flex flex-column gap-2">
+  <section
+    class="branding-settings-banner border-top-2px border-base-lighter width-full display-flex gap-1 usa-prose flex-column">
+    <h1 class="margin-0" i18n>Footer Links</h1>
+    <p class="margin-0 usa-prose measure-4" i18n>Customize your adapt footer links with additional information.</p>
+  </section>
+
+  <section class="branding-settings-options display-flex flex-column gap-2">
+    <div
+      class="branding-settings-option text-no-underline display-flex flex-column gap-2 bg-white padding-2 border-2px radius-lg border-base-lighter">
+      <div class="branding-settings-option-wrapper display-flex flex-justify gap-05">
+        <div class="branding-settings-option-information display-flex flex-column gap-2">
+          <h2 class="margin-0 font-xl text-no-underline">Links</h2>
+          <p class="text-black usa-prose measure-4 text-no-underline">Configure you footer links.</p>
+        </div>
+
+        <div class="branding-settings-option-controls">
+          <button (click)="editLinks = !editLinks" class="usa-button usa-button--outline">
+            {{ editLinks ? 'Close' : 'Edit' }}
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="editLinks" class="branding-settings-option-edit border-top-2px padding-top-2 border-base-light">
+        <form
+          (ngSubmit)="onSave()"
+          [formGroup]="footerLinksForm"
+          class="branding-settings-logo-form display-flex flex-column gap-2">
+          <ul formArrayName="links" class="usa-list usa-list--unstyled display-flex flex-column gap-2">
+            <li *ngFor="let item of links.controls; let i = index">
+              <div class="footer-link-controls display-flex flex-column gap-2" [formGroup]="$any(item)">
+                <div class="footer-links-control-row display-flex width-full gap-2">
+                  <lib-adapt-text-input class="flex-1" formControlName="label" [label]="'Link Label'"></lib-adapt-text-input>
+                  <lib-adapt-text-input class="flex-1" formControlName="url" [label]="'Link URL'"></lib-adapt-text-input>
+                </div>
+                <div class="footer-links-control-row flex-align-center display-flex gap-2">
+                  <lib-adapt-checkbox formControlName="external" label="External Link"></lib-adapt-checkbox>
+
+                  <lib-adapt-combo-box
+                    class="flex-1"
+                    formControlName="target"
+                    label="Action"
+                    itemAccessor="value"
+                    itemLabel="label"
+                    [items]="targetOptions"></lib-adapt-combo-box>
+                  <lib-adapt-text-input class="flex-1" formControlName="icon" [label]="'Link Icon'"></lib-adapt-text-input>
+                </div>
+              </div>
+            </li>
+            <button (click)="addLink()" class="usa-button usa-button--outline flex-align-self-start">
+              Add Footer Link
+            </button>
+          </ul>
+
+          <button class="usa-button flex-align-self-start">Save</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<adapt-confirm-modal (confirm)="confirmed = true"></adapt-confirm-modal>

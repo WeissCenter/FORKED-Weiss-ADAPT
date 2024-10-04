@@ -1,0 +1,69 @@
+<fieldset
+  class="usa-fieldset position-relative padding-bottom-1 border-bottom border-base-lighter display-flex flex-column gap-05">
+  <legend class="display-flex flex-column gap-05">
+    <label class="font-lg line-height-3 text-bold" id="multi-select-label">
+      {{ label }}
+    </label>
+    <ng-content select="[hint]"></ng-content>
+
+    <p aria-live="polite" class="usa-prose">({{ _model.length }} of {{ items.length }} selected)</p>
+  </legend>
+
+  <ul class="usa-list--unstyled" id="options-list" role="group" aria-labelledby="multi-select-label">
+    <li class="display-flex flex-row gap-2 flex-align-center flex-justify">
+      <div class="usa-checkbox padding-1">
+        <input
+          #input
+          (change)="selectAll(!getSelectAllState())"
+          class="usa-checkbox__input"
+          [id]="label + '-select-all-checkbox'"
+          type="checkbox"
+          [checked]="getSelectAllState()"
+          [name]="label + '-select-all-checkbox'"
+          [attr.aria-label]="'Select all ' + items.length + ' items'" />
+        <label class="usa-checkbox__label" [for]="label + '-select-all-checkbox'"> Select All </label>
+      </div>
+      <button
+        class="usa-button usa-button--unstyled"
+        (click)="toggleExpand()"
+        [attr.aria-expanded]="showOptions"
+        aria-controls="options-list">
+        {{ showOptions ? 'Collapse' : 'Expand' }}
+      </button>
+    </li>
+    <ng-container *ngIf="showOptions">
+      <li
+        *ngFor="let item of filteredItems; let isFirst = first; let isLast = last"
+        role="option"
+        [attr.aria-selected]="isSelected(item)"
+        (mouseenter)="setHoveredItem(item[itemAccessor] || item)"
+        (mouseleave)="setHoveredItem(null)"
+        (focusin)="onFocusIn($event, item[itemAccessor] || item)"
+        class="display-flex flex-row gap-2 flex-align-center flex-justify">
+        <lib-adapt-checkbox
+          [value]="itemAccessor ? item[itemAccessor] : item"
+          [id]="selectID + '-' + (item[itemAccessor] || item)"
+          [label]="item[itemLabel] || item"
+          [checked]="isSelected(itemAccessor ? item[itemAccessor] : item)"
+          (checkedChange)="onCheckboxChange($any($event), itemAccessor ? item[itemAccessor] : item)"
+          [attr.aria-label]="'Select ' + (item[itemLabel] || item)"></lib-adapt-checkbox>
+        <button
+          [ngStyle]="{ visibility: isOnlyButtonVisible(item[itemAccessor] || item) ? 'visible' : 'hidden' }"
+          (click)="selectOnly(item[itemAccessor] || item)"
+          class="usa-button usa-button--unstyled"
+          [attr.aria-label]="'Select only ' + (item[itemLabel] || item)">
+          Only
+        </button>
+      </li>
+    </ng-container>
+  </ul>
+  <div class="display-flex flex-align-center flex-justify gap-2" *ngIf="changeCount > 0">
+    <p aria-live="polite" class="usa-prose">{{ changeCount + (changeCount === 1 ? ' item' : ' items') }} changed</p>
+    <button class="usa-button usa-button--unstyled" (click)="onApplyFn()" aria-label="Apply changes and close">
+      Apply
+    </button>
+  </div>
+  <div aria-live="polite" class="usa-combo-box-errors visually-hidden">
+    <ng-content select="[errors]"></ng-content>
+  </div>
+</fieldset>

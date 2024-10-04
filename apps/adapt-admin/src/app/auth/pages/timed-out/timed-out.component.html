@@ -1,0 +1,16 @@
+<adapt-banner></adapt-banner>
+<adapt-auth-banner label="Session Ended: Time Out" message="Session Ended" messageSubTitle="You've been away for {{sinceExpiry}}"></adapt-auth-banner>
+
+<section aria-label="Timed out information and relogin" class="timed-out-container display-flex flex-justify-center flex-align-center">
+
+    <div class="timed-out-body display-flex flex-column maxw-desktop gap-3 padding-top-6">
+        <h2 class="margin-0 font-xl">Your session has timed out due to inactivity.</h2>
+
+        <p class="usa-prose maxw-tablet">
+            We took the liberty to end your session to protect your personal information, ensure your privacy on shared devices, and safeguard your account from unauthorized access.
+        </p>
+    
+        <button [routerLink]="['/auth', 'login']" class="usa-button flex-align-self-start">Sign back in</button>
+    </div>
+
+</section>

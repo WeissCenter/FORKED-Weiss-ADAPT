@@ -1,0 +1,20 @@
+{
+  "pages": {
+    "login": {
+      "metaTitle": "ADAPT - Login",
+      "metaDescription": "A free tool for reporting IDEA data, fully accessible to individuals with disabilities.",
+      "title": "Welcome to ADAPT, the Accessible Data Analysis and Publishing Tool.",
+      "subtitle": "<p class=\"font-sm\" i18n>Developed by the <a class=\"usa-link\" href=\"https://www.weissta.org\" target=\"_blank\">Rhonda Weiss Center for Accessible IDEA Data</a>, ADAPT is a collaborative, web-based solution that allows users to develop data products accessible to all, including people with disabilities. By increasing data accessibility, ADAPT promotes broader data use by more diverse individuals, leading to improved decision-making and educational outcomes.</p>",
+      "emailLabel": "Email address",
+      "emailHint": "For example, samantha@example.edu",
+      "emailPlaceholder": "Email...",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Password...",
+      "passwordHint": "It must be a combination of minimum 8 letters, numbers, and symbols",
+      "rememberMeLabel": "Remember me",
+      "loginButtonLabel": "Login",
+      "ssoLabel": "Or, login in with:",
+      "microsoftLabel": "Microsoft"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+.usa-header {
+  --usa-navigation-link-color: var(--usa-base);
+  --usa-size-touch-target: var(--usa-spacing-7);
+  --usa-navigation-border-radius: var(--usa-border-radius-lg);
+  --usa-heading-margin-top: var(--usa-spacing-2);
+
+  padding: var(--usa-spacing-05) 0;
+  // background-color: var(--usa-white);
+  border-bottom: var(--usa-spacing-1px) solid var(--usa-base-lighter);
+
+  &.usa-header--basic .usa-nav-container {
+    @media (min-width: 64em) {
+      align-items: center;
+      justify-content: space-between;
+      display: flex;
+    }
+  }
+
+  .usa-nav__primary {
+    > .usa-nav__primary-item {
+      > a {
+        &.usa-button {
+          color: var(--usa-reverse-white-black);
+        }
+
+        @media (min-width: 64em) {
+          display: flex;
+          font-weight: var(--usa-font-weight-medium);
+        }
+      }
+    }
+  }
+
+  .usa-navbar {
+    @media (max-width: 63.99em) {
+      border-bottom: none;
+    }
+  }
+
+  .usa-logo {
+    --usa-focus-offset: var(--usa-spacing-1);
+
+    @media (min-width: 64em) {
+      margin-top: var(--usa-spacing-2);
+      margin-bottom: var(--usa-spacing-2);
+      font-size: var(--usa-font-size-lg);
+      line-height: 1;
+
+      > a {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 63.99em) {
+      img {
+        height: var(--usa-spacing-3);
+      }
+    }
+  }
+
+  .usa-menu-btn {
+    background-color: var(--usa-transparent);
+    color: var(--usa-base-dark);
+    font-size: var(--usa-font-size-3xs);
+    text-transform: none;
+    display: flex;
+    align-items: center;
+    gap: var(--usa-spacing-1);
+    margin-right: var(--usa-site-margins-mobile-width);
+    padding-left: var(--usa-spacing-1);
+    padding-right: var(--usa-spacing-1);
+    height: calc(var(--usa-size-touch-target) - var(--usa-spacing-2));
+
+    > i {
+      font-size: var(--usa-font-size-xs);
+    }
+
+    @media all and (min-width: 64em) {
+      display: none;
+    }
+  }
+}
+
+html[data-a11y-color-theme='dark'] {
+  .usa-header {
+    --usa-reverse-white-black: var(--usa-black);
+  }
+}

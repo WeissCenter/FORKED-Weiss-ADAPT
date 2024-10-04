@@ -1,0 +1,830 @@
+<adapt-full-page-modal>
+  <div class="display-flex flex-justify" header>
+    <h1 class="margin-0">{{ modalHeaders[currentStep] }}</h1>
+
+    <div class="data-view-edit-header-controls display-flex gap-2 flex-align-center">
+      <button
+        (click)="mode !== PageMode.VIEW ? confirmCloseModal?.open() : modal.close()"
+        class="save-and-close usa-button text-white flex-align-center border-2px border-white hover:text-white shadow-none usa-button--outline">
+        Close <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid-container-tablet-lg padding-top-2" body>
+    <ng-container *ngIf="mode !== PageMode.VIEW; else view">
+    <adapt-steps-indicator [(step)]="currentStep" #stepsIndicator>
+      <adapt-steps-indicator-step name="Define">
+        <div *ngIf="opened" class="define-step-body display-flex flex-column gap-6">
+          <div class="define-step-header">
+            <h2>Getting started with data collection.</h2>
+            <p>Specify the source type, name it, and describe it to enhance search efficiency.</p>
+          </div>
+
+          <div class="define-step-form">
+            <form class="display-flex flex-column gap-2" [formGroup]="baseDataViewForm">
+              <lib-adapt-combo-box
+                *ngIf="mode === PageMode.CREATE"
+                formControlName="type"
+                placeholder="Select a data collection"
+                [comboBoxStyle]="{ 'max-width': '100%' }"
+                label="What data do you want to load?"
+                comboID="type"
+                [items]="typeOptions"
+                itemAccessor="value"
+                itemLabel="label">
+                <ng-container errors>
+                  <div
+                    *ngIf="type?.invalid && (type?.dirty || type?.touched)"
+                    class="form-errors margin-top-1 text-emergency">
+                    <div *ngIf="type?.errors?.['required']" i18n>Data Type is required.</div>
+                  </div>
+                </ng-container>
+              </lib-adapt-combo-box>
+
+              <div *ngIf="mode !== PageMode.CREATE" class="edit-mode-preview display-flex gap-2 flex-column">
+                <label>What data do you want to load?</label>
+                <strong>{{ type.value | valueLabel : typeOptions }}</strong>
+              </div>
+
+              <ng-container [formGroup]="typeFields" *ngIf="currentTemplate">
+                <ng-container *ngFor="let field of currentTemplate.fields">
+                  <ng-container *ngIf="mode === PageMode.CREATE; else viewOnly">
+                    <ng-container [ngSwitch]="field.type">
+                      <lib-adapt-combo-box
+                        [formControlName]="field.id"
+                        [comboBoxStyle]="{ 'max-width': '100%' }"
+                        [label]="field.label"
+                        [items]="field.options"
+                        itemAccessor="value"
+                        [comboID]="field.id"
+                        itemLabel="label">
+                        <ng-container errors>
+                          <ng-container *ngIf="typeFields.get(field.id) as formField">
+                            <div
+                              *ngIf="formField?.invalid && (formField?.dirty || formField?.touched)"
+                              class="form-errors margin-top-1 text-emergency">
+                              <div *ngIf="formField?.errors?.['required']" i18n>{{ field.label }} is required.</div>
+                            </div>
+                          </ng-container>
+                        </ng-container>
+                      </lib-adapt-combo-box>
+                    </ng-container>
+                  </ng-container>
+
+                  <ng-template #viewOnly>
+                    <div class="view-only-preview display-flex gap-2 flex-column">
+                      <label>{{ field.label }}</label>
+                      <strong> {{ typeFields.get(field.id)?.value }}</strong>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </ng-container>
+
+              <lib-adapt-combo-box
+                *ngIf="mode === PageMode.CREATE"
+                formControlName="source"
+                [comboBoxStyle]="{ 'max-width': '100%' }"
+                comboID="source"
+                label="Where is the data coming from?"
+                [items]="sourceOptions"
+                itemAccessor="value"
+                itemLabel="label"></lib-adapt-combo-box>
+
+              <div *ngIf="mode !== PageMode.CREATE" class="edit-mode-preview display-flex gap-2 flex-column">
+                <label>Where is the data coming from?</label>
+                <strong>{{ source.value | valueLabel : sourceOptions }}</strong>
+              </div>
+
+              <lib-adapt-combo-box
+                *ngIf="source.value === 'database'"
+                formControlName="database"
+                [comboBoxStyle]="{ 'max-width': '100%' }"
+                comboID="database"
+                label="Which Database?"
+                [items]="dataSources | async"
+                itemAccessor="dataSourceID"
+                itemLabel="name">
+                <ng-container errors>
+                  <div
+                    *ngIf="database?.invalid && (database?.dirty || database?.touched)"
+                    class="form-errors margin-top-1 text-emergency">
+                    <div *ngIf="database?.errors?.['required']" i18n>Database is required.</div>
+                  </div>
+                </ng-container>
+              </lib-adapt-combo-box>
+
+              <div
+                *ngIf="duplicate"
+                class="usa-summary-box"
+                role="region"
+                aria-labelledby="duplicate-data-collection-header">
+                <div class="usa-summary-box__body">
+                  <strong class="usa-summary-box__heading" id="duplicate-data-collection-header">
+                    This data collection already exists.
+                  </strong>
+                  <div class="usa-summary-box__text display-flex flex-column gap-1">
+                    <p class="usa-prose">
+                      Please check the collection
+                      <button
+                        (click)="openDuplicatePreview()"
+                        aria-label="Duplicate collection preview"
+                        class="usa-button usa-button--unstyled">
+                        "{{ duplicate.name }}"
+                      </button>
+                      before continuing.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </adapt-steps-indicator-step>
+
+      <adapt-steps-indicator-step name="Load">
+        <div class="load-step-body display-flex flex-column gap-2">
+          <div class="load-step-header">
+            <h2>Load data</h2>
+            <p class="usa-prose">{{ currentTemplate?.description }}</p>
+          </div>
+
+          <div class="load-step-upload-elements">
+            <h3>{{ currentTemplate?.name }} comes from {{ currentTemplate?.files?.length }} separate files:</h3>
+
+            <form [formGroup]="baseDataViewForm">
+              <div formArrayName="files" class="load-step-upload-accordians display-flex flex-column gap-2">
+                <ng-container *ngFor="let file of currentTemplate?.files; let i = index">
+                  <ng-container *ngIf="files.controls[i] as fileControl">
+                    <lib-adapt-accordion
+                      [ngStyle]="{
+                        'background-color':
+                          fileControlStates[i] === FileControlState.VALID ? 'var(--usa-success-light)' : ''
+                      }"
+                      [ngClass]="{
+                        'bg-secondary-lighter':
+                          (currentDataView?.dataViewType === 'collection' &&
+                            mode !== PageMode.CREATE &&
+                            fileControlStates[i] === FileControlState.EMPTY) ||
+                          (fileControl.invalid && fileControl?.dirty && fileControl?.touched),
+                        'text-black': true,
+                        'bg-primary-lighter':
+                          fileControlStates[i] === FileControlState.UPLOADING ||
+                          fileControlStates[i] === FileControlState.VALIDATION
+                      }"
+                      *ngIf="showFileAccordion(i)"
+                      [header]="file.name">
+                      <div
+                        aria-live="polite"
+                        *ngIf="fileControl.invalid && fileControl?.dirty && fileControl?.touched"
+                        class="file-accordion-errors display-flex gap-2 bg-secondary-lighter padding-2">
+                        <div class="errors-icon">
+                          <i class="fal text-secondary font-xl fa-exclamation-circle"></i>
+                        </div>
+                        <div class="errors-body">
+                          <strong>Something went wrong.</strong>
+
+                          <ng-container *ngIf="fileControl.errors?.['validateFiles'] as filesErrors">
+                            <ul class="usa-list">
+                              <li *ngFor="let error of filesErrors">
+                                {{ error.error }}
+                              </li>
+                            </ul>
+
+                            <p>Please review the file and re-upload.</p>
+                          </ng-container>
+
+                          <ng-container *ngIf="fileControl.errors?.['required']">
+                            <p>This file is required for upload.</p>
+                          </ng-container>
+                        </div>
+                      </div>
+
+                      <div
+                        aria-live="polite"
+                        *ngIf="
+                          mode !== PageMode.CREATE &&
+                          !fileControl.touched &&
+                          fileControlStates[i] === FileControlState.EMPTY
+                        "
+                        class="file-accordion-errors display-flex gap-2 bg-secondary-lighter padding-2">
+                        <div class="errors-icon">
+                          <i class="fal text-secondary font-xl fa-exclamation-circle"></i>
+                        </div>
+                        <div class="errors-body">
+                          <strong>Missing Data.</strong>
+
+                          <p>This file is required for upload.</p>
+                        </div>
+                      </div>
+
+                      <div
+                        aria-live="polite"
+                        *ngIf="fileControlStates[i] === FileControlState.VALID"
+                        class="file-accordion-success display-flex gap-2 padding-2">
+                        <div class="success-icon">
+                          <i class="fal text-green font-xl fa-thumbs-up"></i>
+                        </div>
+
+                        <div class="success-body">
+                          <strong>File uploaded successfully.</strong>
+                          <p>
+                            You may
+                            <button (click)="showPreview(i)" class="usa-button usa-button--unstyled">
+                              preview the first 10 records
+                            </button>
+                            of the uploaded data to confirm
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="file-accordion-wrapper display-flex flex-column gap-2">
+                        <p class="file-description usa-prose">
+                          {{ file.description }}
+                        </p>
+
+                        <div
+                          *ngIf="
+                            mode !== PageMode.CREATE &&
+                            fileControlStates[i] === FileControlState.VALID &&
+                            !fileControl.dirty
+                          "
+                          class="edit-mode-file-information bg-white border-1px padding-1 display-flex flex-column gap-2">
+                          <h4 class="margin-0">Uploaded File:</h4>
+
+                          <p><strong>File Name:</strong> {{ files.controls[i].value?.name }}</p>
+                        </div>
+
+                        <adapt-file-input
+                          *ngIf="source.value === 'collection'"
+                          accept=".csv,.html"
+                          [formControlName]="i"
+                          label="Select corresponding file to upload or drag-and-drop the file over the area below."
+                          hint="Only CSV and HTML files are accepted.">
+                        </adapt-file-input>
+
+                        <ng-container *ngIf="source.value === 'database'">
+                          <button (click)="showPreview(i)" class="usa-button usa-button--outline">Preview Data</button>
+                        </ng-container>
+
+                        <div
+                          *ngIf="
+                            fileControlStates[i] === FileControlState.UPLOADING ||
+                            fileControlStates[i] === FileControlState.UPLOAD_PREP ||
+                            fileControlStates[i] === FileControlState.VALIDATION
+                          "
+                          class="file-upload-progress">
+                          <div
+                            class="usa-summary-box"
+                            *ngIf="fileControl.valid"
+                            role="region"
+                            [attr.aria-labelledby]="'summary-box-key-information' + '-' + i">
+                            <div class="usa-summary-box__body" aria-live="polite">
+                              <ng-container [ngSwitch]="fileControlStates[i]">
+                                <ng-container *ngSwitchCase="FileControlState.UPLOADING">
+                                  <strong class="usa-summary-box__heading" id="summary-box-key-information-{{ i }}">
+                                    Uploading file
+                                  </strong>
+                                  <div class="usa-summary-box__text display-flex flex-column gap-1">
+                                    <p aria-live="polite">Progress status: {{ fileUploadPercentage[i] }}%</p>
+                                    <p>Please don't close this window while the upload processes.</p>
+                                  </div>
+                                </ng-container>
+
+                                <ng-container *ngSwitchCase="FileControlState.UPLOAD_PREP">
+                                  <strong class="usa-summary-box__heading" id="summary-box-key-information-{{ i }}">
+                                    Getting ready to upload.
+                                  </strong>
+                                  <div class="usa-summary-box__text display-flex flex-column gap-1">
+                                    <p>Please don't close this window while the upload gets ready.</p>
+                                  </div>
+                                </ng-container>
+
+                                <ng-container *ngSwitchCase="FileControlState.VALIDATION">
+                                  <strong class="usa-summary-box__heading" id="summary-box-key-information-{{ i }}">
+                                    Validating File
+                                  </strong>
+                                  <div class="usa-summary-box__text display-flex flex-column gap-1">
+                                    <p>
+                                      Please don't close this window while your file is validated against the
+                                      collection's criteria ready.
+                                    </p>
+                                  </div>
+                                </ng-container>
+                              </ng-container>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          *ngIf="fileControlStates[i] === FileControlState.VALID"
+                          class="preview-button display-flex">
+                          <button (click)="showPreview(i)" class="usa-button width-full usa-button--outline">
+                            Preview Data
+                          </button>
+                        </div>
+                      </div>
+                    </lib-adapt-accordion>
+                  </ng-container>
+                </ng-container>
+
+                <div class="load-step-upload-footer">
+                  <p class="usa-prose">
+                    Proceed to the next step, save, or close this window at any time. File uploads will keep running in
+                    the background, but be aware that closing the window will stop any ongoing uploads.
+                  </p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </adapt-steps-indicator-step>
+
+      <adapt-steps-indicator-step name="Review">
+        <div class="review-header">
+          <h2>Here's a summary of your selection</h2>
+
+          <p>{{ currentTemplate?.description }}</p>
+        </div>
+
+        <div class="review-body margin-top-4 padding-3 border-2px border-base-lighter radius-lg bg-white">
+          <h3 class="margin-0">Summary:</h3>
+
+          <ul class="usa-list display-flex flex-column gap-1">
+            <li>
+              <span>Data collection</span>
+              <ul class="usa-list">
+                <li>
+                  <strong>{{ name.value }}</strong>
+                </li>
+              </ul>
+            </li>
+
+            <li *ngFor="let field of currentTemplate?.fields">
+              <span>{{ field.shortLabel }}</span>
+              <ul class="usa-list">
+                <li>
+                  <strong>{{ this.typeFields.get(field.id)?.value }}</strong>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Data collection method</span>
+              <ul class="usa-list">
+                <li>
+                  <ng-container [ngSwitch]="this.source.value">
+                    <strong *ngSwitchCase="'collection'">File upload</strong>
+                    <strong *ngSwitchCase="'database'">Database Connection</strong>
+                  </ng-container>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <span>Expected data</span>
+              <ul class="usa-list">
+                <li *ngFor="let data of this.currentTemplate?.files">
+                  {{ data?.name }}
+                </li>
+              </ul>
+            </li>
+
+            <li *ngIf="source.value === 'collection'">
+              <span>File upload status</span>
+              <ul class="usa-list">
+                <li *ngFor="let data of this.currentTemplate?.files; let i = index">
+                  <ng-container *ngIf="files.controls?.[i] as fileControl">
+                    {{ data.id }}:
+
+                    <ng-container *ngIf="fileControl.valid">
+                      <strong>{{ fileControl.value?.name }}</strong> -
+                    </ng-container>
+
+                    <button
+                      (click)="showPreview(i)"
+                      *ngIf="fileControlStates[i] === FileControlState.VALID"
+                      class="usa-button usa-button--unstyled">
+                      Preview data
+                    </button>
+
+                    <span *ngIf="fileControlStates[i] === FileControlState.EMPTY">Missing Data</span>
+                  </ng-container>
+                </li>
+              </ul>
+            </li>
+
+            <li *ngIf="source.value === 'database'">
+              <span>Load status</span>
+              <ul class="usa-list">
+                <li *ngFor="let data of this.currentTemplate?.files; let i = index">
+                  {{ data.id }}:
+                  <button (click)="showPreview(i)" class="usa-button usa-button--unstyled">Preview data</button>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <!-- <ng-container *ngIf="mode !== PageMode.CREATE"> -->
+            <adapt-impact-analysis
+              headingLevel="h4"
+              type="DataView"
+
+              [dataViews]="dataViews"
+              [reports]="reports"
+              [id]="$any(currentDataView?.dataViewID)"></adapt-impact-analysis>
+          <!-- </ng-container> -->
+        </div>
+      </adapt-steps-indicator-step>
+
+      <adapt-steps-indicator-step name="Save">
+        <h2>Name your data collection</h2>
+
+        <p>Before proceeding, make sure to name this collection with a good description.</p>
+
+        <form [formGroup]="baseDataViewForm" class="display-flex flex-column gap-2 margin-top-4">
+          <div  class="data-view-creation-field display-flex gap-1 flex-column">
+            <label for="name">Name this data collection: <span class="text-emergency">(Required)</span></label>
+            <span class="field-hint text-base">Create a friendly and unique name. </span>
+
+            <input class="usa-input maxw-full" id="name" type="text" formControlName="name" />
+
+            <div
+            role="alert"
+              *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+              class="form-errors margin-top-1 text-emergency">
+              <div *ngIf="name?.errors?.['required']" i18n>Data View name is required</div>
+
+              <div *ngIf="name?.errors?.['uniqueName']" i18n>Data View name must be unique</div>
+            </div>
+          </div>
+
+          <!-- <div *ngIf="mode === PageMode.VIEW" class="edit-mode-preview display-flex gap-2 flex-column">
+            <label>Name this data collection: </label>
+            <span class="field-hint text-base">Create a friendly and unique name. </span>
+
+            <p tabindex="0" class="bg-white padding-1 border-1px">{{ name.value }}</p>
+          </div> -->
+
+          <div  class="data-view-creation-field display-flex gap-1 flex-column">
+            <label for="describe">Add a description: <span class="text-emergency">(Required)</span></label>
+            <span class="field-hint text-base">Good descriptions help with search results. </span>
+            <textarea class="usa-textarea maxw-full" id="describe" type="text" formControlName="description"></textarea>
+
+            <div
+            role="alert"
+              *ngIf="description?.invalid && (description?.dirty || description?.touched)"
+              class="form-errors margin-top-1 text-emergency">
+              <div *ngIf="description?.errors?.['required']" i18n>Description is required</div>
+            </div>
+          </div>
+
+          <!-- <div *ngIf="mode === PageMode.VIEW" class="edit-mode-preview display-flex gap-2 flex-column">
+            <label>Add a description:</label>
+            <span class="field-hint text-base">Good descriptions help with search results. </span>
+
+            <p tabindex="0" class="bg-white padding-1 border-1px">{{ description.value }}</p>
+          </div> -->
+        </form>
+      </adapt-steps-indicator-step>
+    </adapt-steps-indicator>
+  </ng-container>
+
+    <ng-template #view>
+      <div class="view-mode-container height-full bg-white">
+        <div class="view-mode-body display-flex padding-3 flex-column gap-2">
+          <section
+            class="view-data-source-heading padding-1 bg-base-lightest border-2px border-base display-flex flex-column gap-1">
+            <h2 class="margin-0">{{ currentDataView?.name }}</h2>
+            <p class="usa-prose">{{ currentDataView?.description }}</p>
+            <p class="usa-prose">
+              Author: <span>{{ currentDataView?.author }}</span>
+            </p>
+
+            <p class="usa-prose">
+              Last updated: {{ currentDataView?.updated | date : 'MM/dd/YYYY' }} at
+              {{ currentDataView?.updated | date : 'HH:MM:SS a' }}
+            </p>
+          </section>
+
+          <section class="view-data-source-details">
+            <h2 class="margin-0">Data view details</h2>
+
+            <ul class="usa-list">
+              <li>
+                Data collection
+                 <ul class="usa-list">
+                  <li><strong>{{ type.value | valueLabel : typeOptions }}</strong></li>
+                 </ul>
+              </li>
+
+              <li>
+                <span>Data collection method</span>
+                <ul class="usa-list">
+                  <li>
+                    <ng-container [ngSwitch]="source.value">
+                      <strong *ngSwitchCase="'collection'">File upload</strong>
+                      <strong *ngSwitchCase="'database'">Database Connection</strong>
+                    </ng-container>
+                  </li>
+                </ul>
+              </li>
+
+            <ng-container *ngIf="currentTemplate">
+              <li>Data collection metadata
+              <ul class="usa-list">
+                <li *ngFor="let field of currentTemplate?.fields">
+                  {{field.shortLabel}}
+                  <ul class="usa-list"><li><strong>{{ typeFields.get(field.id)?.value }}</strong></li></ul>
+                </li>
+              </ul>
+            </li>
+            </ng-container>
+
+
+
+            <li *ngIf="source.value === 'collection'">
+              <span>Data Previews</span>
+              <ul class="usa-list">
+                <li *ngFor="let data of this.currentTemplate?.files; let i = index">
+                  <ng-container *ngIf="files.controls?.[i] as fileControl">
+                    <strong>{{ data.id }}</strong>:
+
+                    <ng-container *ngIf="fileControl.valid">
+                      <strong>{{ fileControl.value?.name }}</strong> -
+                    </ng-container>
+
+                    <button
+                      (click)="showPreview(i)"
+                      *ngIf="fileControlStates[i] === FileControlState.VALID"
+                      class="usa-button usa-button--unstyled">
+                      Preview data
+                    </button>
+
+                    <span *ngIf="fileControlStates[i] === FileControlState.EMPTY">Missing Data</span>
+                  </ng-container>
+                </li>
+              </ul>
+            </li>
+
+            <li *ngIf="source.value === 'database'">
+              <span>Load status</span>
+              <ul class="usa-list">
+                <li *ngFor="let data of this.currentTemplate?.files; let i = index">
+                  {{ data.id }}:
+                  <button (click)="showPreview(i)" class="usa-button usa-button--unstyled">Preview data</button>
+                </li>
+              </ul>
+            </li>
+
+
+            </ul>
+          </section>
+
+          <adapt-impact-analysis
+            type="DataView"
+            [dataViews]="dataViews"
+            [reports]="reports"
+            [id]="$any(currentDataView!.dataViewID)"></adapt-impact-analysis>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="grid-container display-flex flex-justify-center gap-2" footer>
+
+    <ng-container *ngIf="mode !== PageMode.VIEW; else footerViewMode">
+      <button (click)="previous()" *ngIf="currentStep > 0" class="usa-button">Back</button>
+      <button (click)="next()" *ngIf="stepsIndicator && currentStep + 1 < stepsIndicator.length" class="usa-button">
+        Next: {{ stepsIndicator.getStepName(currentStep + 1) }}
+      </button>
+
+      <button
+        (click)="doSave(currentStep >= 3, mode === PageMode.CREATE, mode === PageMode.CREATE && currentStep >= 3)"
+        *ngIf="currentStep >= 3"
+        class="usa-button">
+        Save
+      </button>
+
+      <button (click)="internalClose(mode === PageMode.CREATE)"  class="usa-button usa-button--unstyled">
+       Cancel
+      </button>
+  </ng-container>
+
+  <ng-template #footerViewMode>
+    <button class="usa-button" (click)="mode = PageMode.EDIT">Edit</button>
+  </ng-template>
+  </div>
+</adapt-full-page-modal>
+
+<lib-adapt-modal #previewModal [hideClose]="true">
+  <div class="preview-modal-heading display-flex flex-justify">
+    <div class="preview-modal-heading-body text-left display-flex flex-column gap-2">
+      <h1 class="margin-0">Data collection preview</h1>
+
+      <strong class="">{{currentTemplate?.files?.[currentPreviewIndex]?.name}}</strong>
+    </div>
+
+    <div class="preview-modal-heading-controls">
+      <button (click)="previewModal.close()" class="usa-button">Close Preview</button>
+    </div>
+  </div>
+
+  <div *ngIf="currentPreview | loading : 'Data view preview has loaded' | async as previewData" class="preview-modal-table">
+    <adapt-table
+      *ngIf="previewData.value"
+      [data]="previewData.value?.[currentPreviewIndex].records"
+      caption="The first 10 rows of records retrieved for your review. You may need to scroll horizontally to review all columns. "
+      [headers]="source.value === 'database' ? [] : this.currentTemplate?.files?.[currentPreviewIndex]?.previewHeaders || []"></adapt-table>
+
+    <ng-template [ngIf]="previewData.loading">
+      <p class="usa-prose padding-4" i18n>Retrieving Data, please wait a moment</p>
+    </ng-template>
+  </div>
+</lib-adapt-modal>
+
+<!-- <lib-adapt-modal closeText="Close" heading="Proceed with caution" #refreshModal>
+
+    <div class="confirm-modal-body display-flex flex-column gap-2 padding-1">
+
+        <p>Refreshing this data may impact existing reports. Please provide a justification for this action.</p>
+
+
+        <form (ngSubmit)="confirmRefresh()" class=" display-flex flex-column gap-2" [formGroup]="refreshDataJustificationForm">
+
+            <div class="refresh-modal-field">
+                <lib-adapt-combo-box [required]="true" *ngIf="mode === PageMode.CREATE" formControlName="reason" placeholder=""
+                    [comboBoxStyle]="{'max-width': '60%'}" label="Reason:" [items]="refreshReasonOptions"
+                    itemAccessor="value" itemLabel="label">
+
+                    <ng-container errors>
+
+
+                        <div *ngIf="refreshReason?.invalid && (refreshReason?.dirty || refreshReason?.touched)"
+                            class="form-errors margin-top-1 text-emergency">
+
+                            <div *ngIf="refreshReason?.errors?.['required']" i18n>
+                                Refresh reason is required.
+                            </div>
+
+                        </div>
+
+
+                    </ng-container>
+
+                </lib-adapt-combo-box>
+            </div>
+
+            <div class="refresh-modal-field">
+                <label for="noteBox">Note: <span *ngIf="refreshNote?.hasValidator(Validators.required)" class="text-emergency">(Required)</span></label>
+                <textarea formControlName="note" id="noteBox" rows="10" class="usa-textarea"></textarea>
+
+
+                <div *ngIf="refreshNote?.invalid && (refreshNote?.dirty || refreshNote?.touched)"
+                    class="form-errors margin-top-1 text-emergency">
+
+                    <div *ngIf="refreshNote?.errors?.['required']" i18n>
+                        Refresh Note is required.
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="refresh-modal-controls display-flex gap-3">
+                <button type="submit" class="usa-button">Refresh Data</button>
+                <button type="button" class="usa-button usa-button--unstyled">Cancel</button>
+            </div>
+
+
+        </form>
+
+
+    
+
+
+    </div>
+
+</lib-adapt-modal> -->
+
+<lib-adapt-modal closeText="Close" heading="Please provide a reason." #confirmModal>
+  <div class="confirm-modal-body width-tablet-lg display-flex flex-column gap-2 padding-1">
+    <p>Here is a list of changes you made to confirm:</p>
+
+    <form class="display-flex flex-column gap-2" [formGroup]="editJustificationForm">
+      <div class="confirm-modal-field">
+        <lib-adapt-combo-box
+          [required]="true"
+          formControlName="reason"
+          placeholder=""
+          [comboBoxStyle]="{ 'max-width': '60%' }"
+          label="Reason:"
+          [items]="refreshReasonOptions"
+          itemAccessor="value"
+          itemLabel="label">
+          <ng-container errors>
+            <div
+              *ngIf="reason?.invalid && (reason?.dirty || reason?.touched)"
+              class="form-errors margin-top-1 text-emergency">
+              <div *ngIf="reason?.errors?.['required']" i18n>Edit reason is required.</div>
+            </div>
+          </ng-container>
+        </lib-adapt-combo-box>
+      </div>
+
+      <div class="confirm-modal-field">
+        <label for="justificationBox"
+          >Additional comment:
+          <span *ngIf="justification.hasValidator(Validators.required)" class="text-emergency">(Required)</span></label
+        >
+        <textarea
+          formControlName="justification"
+          id="justificationBox"
+          rows="10"
+          class="usa-textarea width-full"></textarea>
+
+        <div
+        role="alert"
+          *ngIf="justification?.invalid && (justification?.dirty || justification?.touched)"
+          class="form-errors margin-top-1 text-emergency">
+          <div *ngIf="justification?.errors?.['required']" i18n>Edit justification is required.</div>
+        </div>
+      </div>
+    </form>
+
+    <div class="confirm-modal-footer padding-1 display-flex gap-2 flex-justify-center">
+      <button class="usa-button" (click)="confirmEdits()">Confirm</button>
+      <button class="usa-button usa-button--unstyled" (click)="confirmModal.close()">Cancel</button>
+    </div>
+  </div>
+</lib-adapt-modal>
+
+<lib-adapt-modal [heading]="duplicate?.name || ''" #duplicateModal>
+  <div class="duplicate-preview-modal-body padding-1">
+    <p>Here is a list of changes you made to confirm:</p>
+
+    <div class="review-body margin-top-4 padding-3 border-2px border-base-lighter radius-lg bg-white">
+      <h3 class="margin-0">Summary:</h3>
+
+      <ul class="usa-list display-flex flex-column gap-1">
+        <li>
+          <span>Data collection</span>
+          <ul class="usa-list">
+            <li>
+              <strong>{{ duplicateTemplate?.name }}</strong>
+            </li>
+          </ul>
+        </li>
+
+        <li *ngFor="let field of duplicateTemplate?.fields; let i = index">
+          <span>{{ field.shortLabel }}</span>
+          <ul class="usa-list">
+            <li>
+              <strong>{{duplicate?.data?.fields?.[i]?.value}}</strong>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <span>Data collection method</span>
+          <ul class="usa-list">
+            <li>
+              <ng-container [ngSwitch]="duplicate?.dataViewType">
+                <strong *ngSwitchCase="'collection'">File upload</strong>
+                <strong *ngSwitchCase="'database'">Database Connection</strong>
+              </ng-container>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <span>Expected data</span>
+          <ul class="usa-list">
+            <li *ngFor="let data of duplicateTemplate?.files">
+              {{ data?.name }}
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <span>File upload status</span>
+          <ul class="usa-list">
+            <li *ngFor="let data of duplicateTemplate?.files; let i = index">
+              <ng-container *ngIf="duplicate?.data?.files?.[i] as file">
+                {{ data.id }}: <strong>{{ file.location }}</strong>
+              </ng-container>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="duplicate-preview-footer padding-1 display-flex gap-2 flex-justify-end">
+    <button class="usa-button usa-button--outline" (click)="viewCollection()">Cancel and go to data view</button>
+    <button class="usa-button" (click)="closeDuplicatePreview()">Close Preview</button>
+  </div>
+</lib-adapt-modal>
+
+<adapt-confirm-modal  [heading]="$any(baseDataViewForm.dirty ? 'You have unsaved changes.' : 'Are you sure you want to close?')" (confirm)="internalClose(false, true)"></adapt-confirm-modal>
+
