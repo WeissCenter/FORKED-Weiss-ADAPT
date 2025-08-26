@@ -4,13 +4,16 @@ on:
   push:
     paths:
       - 'apps/adapt-admin/**'
-      - 'apps/libs/**'
+      - 'libs/adapt-shared-component-lib/**'
+      - 'libs/shared-assets/**'
+      - 'libs/shared-styles/**'
     branches: ['main']
 
 env:
   AWS_REGION: us-east-1
   BUCKET: YOUR_BUCKET_NAME
   CF_DISTRIBUTION: YOUR_CF_DISTRIBUTION_ID
+  CONFIGURATION: production
 
 jobs:
   deploy-angular:
@@ -24,26 +27,26 @@ jobs:
           node-version: "20"
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Install dependencies (Dev)
-        run: npm i
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: Install dependencies (Prod)
+        run: npm i --force
       - name: Build Angular Application
-        run: npx nx build adapt-admin --configuration production --skip-cache
-      - name: Upload to S3    
+        run: npx nx build adapt-admin --configuration ${{ env.CONFIGURATION }}
+      - name: Upload S3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          AWS_S3_BUCKET: "$BUCKET"
+          AWS_S3_BUCKET: ${{ env.BUCKET }}
           SOURCE_DIR: ${{ github.workspace }}/dist/apps/adapt-admin
       - name: Invalidate CloudFront
         uses: chetan/invalidate-cloudfront-action@v2
         env:
-          DISTRIBUTION: "$CF_DISTRIBUTION"
+          DISTRIBUTION: ${{ env.CF_DISTRIBUTION }}
           PATHS: "/*"
-          AWS_REGION: "$AWS_REGION"
+          AWS_REGION: ${{ env.AWS_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - run: echo "This job's status is ${{ job.status }}."
-

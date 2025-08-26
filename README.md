@@ -86,13 +86,17 @@ Once you have completed step #7, obtain the following properties from your AWS e
 - VAPID_KEY
 - cognitoRegion (The AWS region in which your back-end services are deployed)
 - cognitoDomainName
+- callbackUrl
+- userPoolId
+- userPoolClientId
 - s3PublicAssetsDomainName
 - clientId
+- appDomain
 
 ### Installation
 Begin by cloning or downloading the code from this repository to your local development environment.
 
-Open the local environment file `apps/adapt-admin/src/environments/environment.ts` and enter the values from step #7 in the prior section in their respective fields.
+Open the local environment files `apps/adapt-admin/src/environments/environment.ts` and `apps/adapt-viewer/src/environments/environment.ts` and enter the values from step #7 in the prior section in their respective fields.
 
 To run the ADAPT Admin application locally, follow these steps.
 
@@ -107,6 +111,22 @@ npm i
 3. Run ADAPT Admin locally by running:
 ```sh
 npx nx serve adapt-admin
+```
+4. Confirm the application is running in your browser at: `http://localhost:4200`
+
+To run the ADAPT Viewer application locally, follow these steps.
+
+1. If you have not done so already, setup your Nx workspace by running:
+```sh
+npx nx connect
+```
+2. Install all Node dependencies:
+```sh
+npm i
+```
+3. Run ADAPT Admin locally by running:
+```sh
+npx nx serve adapt-viewer
 ```
 4. Confirm the application is running in your browser at: `http://localhost:4200`
 
