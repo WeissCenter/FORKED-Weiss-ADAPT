@@ -66,7 +66,7 @@ export class AdaptPreviewDirective implements OnInit {
     }
     const triggerId = this.el.nativeElement.id;
     if (!triggerId) {
-      console.log('Adapt preview directive requires an ID:');
+      console.log('ADAPT preview directive requires an ID:');
       console.log(this.el.nativeElement);
     }
     this.modalService.openOptOutModal(

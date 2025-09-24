@@ -1,11 +1,17 @@
 import { DataSet, DataSource } from '@adapt/types';
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../auth/services/user/user.service';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { RecentActivityService } from '../../../services/recent-activity.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
+import {
+  PageSectionContentText,
+  PageContentText,
+} from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { RoleService } from '../../../auth/services/role/role.service';
 
 @Component({
   selector: 'adapt-home',
@@ -27,19 +33,27 @@ export class HomeComponent implements OnInit {
 
   public recentActivity = this.recent.history;
 
+  $pageSections = computed<PageSectionContentText[]>(
+    () => this.pagesContentService.getPageContentSignal('home')()?.sections || []
+  );
+
   constructor(
     public user: UserService,
+    public role: RoleService,
     public route: ActivatedRoute,
     private router: Router,
     public data: AdaptDataService,
     public recent: RecentActivityService,
-    private metaService: Meta
+    private metaService: Meta,
+    public pagesContentService: PagesContentService
   ) {
     this.reportSubscription = this.reports.subscribe((reports) => {
       this.loadingReports = false;
       // sort by updated field, latest at top
       this.$reports = reports.sort((a, b) => {
-        return new Date(a.updated).getTime() - new Date(b.updated).getTime();
+        const updatedA = parseInt(a.updated, 10); // Convert the string to an integer
+        const updatedB = parseInt(b.updated, 10);
+        return updatedB - updatedA;
       });
     });
     this.dataViewSubscription = this.dataViews.subscribe((views) => {

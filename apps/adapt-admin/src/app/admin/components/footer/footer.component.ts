@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SettingsService } from '../../services/settings.service';
+import { SettingsService } from '@adapt/adapt-shared-component-lib';
 
 @Component({
   selector: 'adapt-footer',
@@ -9,7 +9,7 @@ import { SettingsService } from '../../services/settings.service';
 export class FooterComponent {
   public year = new Date().getFullYear();
 
-  public $settings = this.settings.getSettingsObservable();
+  public $settings = this.settings.getSettingsSignal();
 
   constructor(public settings: SettingsService) {}
 }

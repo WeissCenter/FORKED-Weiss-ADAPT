@@ -1,0 +1,1833 @@
+{
+  "id": "childCountMultiple",
+  "title": "IDEA Recuento de Niños y Entornos Educativos",
+  "metaTags": ["Parte B", "618", "Recuento de niños"],
+  "suppression": {
+    "required": true,
+    "parentOrganization": "file",
+    "childOrganization": "CategorySetCode",
+    "sensitiveColumns": [
+      "RACE",
+      "SEX",
+      "IDEADISABILITYTYPE",
+      "ENGLISHLEARNERSTATUS",
+      "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+      "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+      "AGE"
+    ],
+    "frequencyColumns": ["StudentCount"]
+  },
+  "description": "Datos a nivel estatal sobre la Ley de Educación de Individuos con Discapacidades (IDEA) Parte B, incluyendo un conteo no duplicado de niños con discapacidad que reciben educación especial de 3 a 21 años atendidos por la Oficina de Programas de Educación Especial (OSEP).",
+  "filters": {
+    "schoolAgeSection": {
+      "order": 0,
+      "code": "schoolAgeSection",
+      "label": "Edad escolar Filtros aplicados",
+      "field": "CategorySetCode",
+      "type": "select",
+      "dataType": "string",
+      "condition": {
+        "operator": "AND",
+        "pages": ["schoolAge"]
+      },
+      "filter": {
+        "default": "CSA",
+        "options": [
+          {
+            "value": "CSA",
+            "label": "Raza/Etnicidad, Discapacidad y Sexo."
+          },
+          {
+            "value": "CSB",
+            "label": "Entorno educativo, Discapacidad, y Edad escolar."
+          },
+          {
+            "value": "CSC",
+            "label": "Raza/Etnicidad, y Entorno educativo."
+          },
+          {
+            "value": "CSD",
+            "label": "Sexo, Discapacidad, y Entorno Educativo."
+          },
+          {
+            "value": "CSE",
+            "label": "Estado de aprendiz de inglés, Sexo, Discapacidad, y Entorno Educativo."
+          }
+        ]
+      }
+    },
+    "earlyChildhoodSection": {
+      "order": 0,
+      "code": "earlyChildhoodSection",
+      "label": "Primera Infancia Filtros Aplicados",
+      "field": "CategorySetCode",
+      "type": "select",
+      "dataType": "string",
+      "condition": {
+        "operator": "AND",
+        "pages": ["earlyChildhood"]
+      },
+      "filter": {
+        "default": "CSA",
+        "options": [
+          {
+            "value": "CSA",
+            "label": "Entorno educativo, Discapacidad, y Edad Preescolar."
+          },
+          {
+            "value": "CSB",
+            "label": "Entorno educativo, Discapacidad, Raza/Etnicidad."
+          },
+          {
+            "value": "CSC",
+            "label": "Entorno educativo, y Sexo."
+          },
+          {
+            "value": "CSD",
+            "label": "Entorno educativo, y estatus de aprendiz de inglés."
+          }
+        ]
+      }
+    },
+    "preSchoolEducationalEnvironment": {
+      "order": 1,
+      "code": "preSchoolEducationalEnvironment",
+      "label": "Entorno Educativo Preescolar",
+      "field": "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+      "type": "multiselect",
+      "dataType": "string",
+      "condition": {
+        "operator": "AND",
+        "pages": ["earlyChildhood"],
+        "conditions": [
+          {
+            "parent": "earlyChildhoodSection",
+            "value": ["CSA", "CSB", "CSC", "CSD"]
+          }
+        ]
+      },
+      "filter": {
+        "options": [
+          {
+            "value": "todos",
+            "label": "Todos",
+            "exclusive": true
+          },
+          {
+            "value": "REC10YSVCS",
+            "label": "Servicios en el Programa Regular de la Primera Infancia (al menos 10 horas)"
+          },
+          {
+            "value": "REC10YOTHLOC",
+            "label": "Otra Ubicación Programa regular de primera infancia (al menos 10 horas)"
+          },
+          {
+            "value": "REC09YSVCS",
+            "label": "Servicios en el Programa Regular de la Primera Infancia (menos de 10 horas)"
+          },
+          {
+            "value": "REC09YOTHLOC",
+            "label": "Otra Ubicación Programa regular de la primera infancia (menos de 10 horas)"
+          },
+          {
+            "value": "SC",
+            "label": "Clase separada"
+          },
+          {
+            "value": "SS",
+            "label": "Escuela separada"
+          },
+          {
+            "value": "RF",
+            "label": "Instalaciones residenciales"
+          },
+          {
+            "value": "H",
+            "label": "Inicio"
+          },
+          {
+            "value": "SPL",
+            "label": "Ubicación del proveedor de servicios"
+          }
+        ]
+      }
+    },
+    "schoolAgeEducationalEnvironment": {
+      "order": 1,
+      "code": "schoolAgeEducationalEnvironment",
+      "label": "Edad Escolar Entorno Educativo",
+      "field": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+      "type": "multiselect",
+      "condition": {
+        "operator": "OR",
+        "pages": ["schoolAge"],
+        "conditions": [
+          {
+            "parent": "schoolAgeSection",
+            "value": ["CSB", "CSC", "CSD", "CSE"]
+          }
+        ]
+      },
+      "dataType": "string",
+      "filter": {
+        "options": [
+          {
+            "value": "todos",
+            "label": "Todos",
+            "exclusive": true
+          },
+          {
+            "value": "RC80",
+            "label": "Dentro de la clase regular 80% o más del día"
+          },
+          {
+            "value": "RC79 A 40",
+            "label": "Dentro de la clase regular 40% a 79% del día"
+          },
+          {
+            "value": "RC39",
+            "label": "Dentro de la clase regular menos del 40% del día"
+          },
+          {
+            "value": "SS",
+            "label": "Escuela separada"
+          },
+          {
+            "value": "RF",
+            "label": "Instalaciones residenciales"
+          },
+          {
+            "value": "HH",
+            "label": "Hogar/Hospital"
+          },
+          {
+            "value": "CF",
+            "label": "Instalaciones Correccionales"
+          },
+          {
+            "value": "PPPS",
+            "label": "Parentalmente colocados en escuelas privadas"
+          }
+        ]
+      }
+    },
+    "preschoolAge": {
+      "order": 2,
+      "code": "preschoolAge",
+      "label": "Edad Preescolar",
+      "field": "AGE",
+      "type": "multiselect",
+      "dataType": "string",
+      "condition": {
+        "operator": "AND",
+        "pages": ["allAges", "earlyChildhood"],
+        "conditions": [
+          {
+            "parent": "earlyChildhoodSection",
+            "value": ["CSA"]
+          }
+        ]
+      },
+      "filter": {
+        "options": [
+          {
+            "value": "todos",
+            "label": "Todos",
+            "exclusive": true
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5 (no en el jardín de infantes)"
+          }
+        ]
+      }
+    },
+    "schoolAge": {
+      "order": 2,
+      "code": "schoolAge",
+      "label": "Edad escolar",
+      "field": "AGE",
+      "type": "multiselect",
+      "dataType": "string",
+      "condition": {
+        "operator": "AND",
+        "pages": ["allAges", "schoolAge"],
+        "conditions": [
+          {
+            "parent": "schoolAgeSection",
+            "value": ["CSB"]
+          }
+        ]
+      },
+      "filter": {
+        "options": [
+          {
+            "value": "todos",
+            "label": "Todos",
+            "exclusive": true
+          },
+          {
+            "value": "5",
+            "label": "Edad 5 (Jardín de Infantes)"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          },
+          {
+            "value": "7",
+            "label": "7"
+          },
+          {
+            "value": "8",
+            "label": "8"
+          },
+          {
+            "value": "9",
+            "label": "9"
+          },
+          {
+            "value": "10",
+            "label": "10"
+          },
+          {
+            "value": "11",
+            "label": "11"
+          },
+          {
+            "value": "12",
+            "label": "12"
+          },
+          {
+            "value": "13",
+            "label": "13"
+          },
+          {
+            "value": "14",
+            "label": "14"
+          },
+          {
+            "value": "15",
+            "label": "15"
+          },
+          {
+            "value": "16",
+            "label": "16"
+          },
+          {
+            "value": "17",
+            "label": "17"
+          },
+          {
+            "value": "18",
+            "label": "18"
+          },
+          {
+            "value": "19",
+            "label": "19"
+          },
+          {
+            "value": "20",
+            "label": "20"
+          },
+          {
+            "value": "21",
+            "label": "21"
+          }
+        ]
+      }
+    },
+    "disability": {
+      "order": 3,
+      "code": "disability",
+      "label": "Discapacidad",
+      "field": "IDEADISABILITYTYPE",
+      "type": "multiselect",
+      "condition": {
+        "operator": "OR",
+        "conditions": [
+          {
+            "parent": "schoolAgeSection",
+            "value": ["CSA", "CSB", "CSD", "CSE"]
+          },
+          {
+            "parent": "earlyChildhoodSection",
+            "value": ["CSA", "CSB"]
+          }
+        ]
+      },
+      "dataType": "string",
+      "filter": {
+        "options": [
+          {
+            "value": "todos",
+            "label": "Todos",
+            "exclusive": true
+          },
+          {
+            "value": "AUT",
+            "label": "Autismo"
+          },
+          {
+            "value": "DB",
+            "label": "Ssorceguera"
+          },
+          {
+            "value": "DD",
+            "label": "Retraso en el desarrollo"
+          },
+          {
+            "value": "HOMBRES",
+            "label": "Perturbación emocional"
+          },
+          {
+            "value": "HOLA",
+            "label": "Deterioro auditivo"
+          },
+          {
+            "value": "ID",
+            "label": "Discapacidad intelectual"
+          },
+          {
+            "value": "MD",
+            "label": "Discapacidades múltiples"
+          },
+          {
+            "value": "OI",
+            "label": "Deterioro ortopédico"
+          },
+          {
+            "value": "SLD",
+            "label": "Discapacidad específica de aprendizaje"
+          },
+          {
+            "value": "SLI",
+            "label": "Discapacidad del habla o del lenguaje"
+          },
+          {
+            "value": "TBI",
+            "label": "Lesión cerebral traumática"
+          },
+          {
+            "value": "VI",
+            "label": "Discapacidad visual"
+          },
+          {
+            "value": "OHI",
+            "label": "Otros problemas de salud"
+          }
+        ]
+      }
+    },
+    "race": {
+      "order": 4,
+      "code": "race",
+      "label": "Raza/Etnia",
+      "field": "RACE",
+      "type": "multiselect",
+      "dataType": "string",
+      "condition": {
+        "operator": "OR",
+        "conditions": [
+          {
+            "parent": "schoolAgeSection",
+            "value": ["CSA", "CSC"]
+          },
+          {
+            "parent": "earlyChildhoodSection",
+            "value": ["CSB"]
+          }
+        ]
+      },
+      "filter": {
+        "options": [
+          {
+            "value": "todos",
+            "label": "Todos",
+            "exclusive": true
+          },
+          {
+            "value": "AM7",
+            "label": "Indio americano o nativo de Alaska"
+          },
+          {
+            "value": "AS7",
+            "label": "Asiático"
+          },
+          {
+            "value": "BL7",
+            "label": "Negro o afroamericano"
+          },
+          {
+            "value": "HI7",
+            "label": "Hispano/Latino"
+          },
+          {
+            "value": "PI7",
+            "label": "Nativo hawaiano u otro isleño del Pacífico"
+          },
+          {
+            "value": "MU7",
+            "label": "Dos o más razas"
+          },
+          {
+            "value": "WH7",
+            "label": "Blanco"
+          }
+        ]
+      }
+    },
+    "sex": {
+      "order": 5,
+      "code": "sex",
+      "label": "Sexo",
+      "field": "SEX",
+      "type": "multiselect",
+      "dataType": "string",
+      "condition": {
+        "operator": "OR",
+        "conditions": [
+          {
+            "parent": "schoolAgeSection",
+            "value": ["CSA", "CSD", "CSE"]
+          },
+          {
+            "parent": "earlyChildhoodSection",
+            "value": ["CSC"]
+          }
+        ]
+      },
+      "filter": {
+        "options": [
+          {
+            "value": "todos",
+            "label": "Todos",
+            "exclusive": true
+          },
+          {
+            "value": "M",
+            "label": "Masculino"
+          },
+          {
+            "value": "F",
+            "label": "Femenino"
+          }
+        ]
+      }
+    },
+    "englishLearnerStatus": {
+      "order": 6,
+      "code": "englishLearnerStatus",
+      "label": "Estado de aprendiz de inglés",
+      "field": "ENGLISHLEARNERSTATUS",
+      "type": "multiselect",
+      "dataType": "string",
+      "condition": {
+        "operator": "OR",
+        "pages": ["schoolAge", "earlyChildhood"],
+        "conditions": [
+          {
+            "parent": "schoolAgeSection",
+            "value": ["CSE"]
+          },
+          {
+            "parent": "earlyChildhoodSection",
+            "value": ["CSD"]
+          }
+        ]
+      },
+      "filter": {
+        "options": [
+          {
+            "value": "todos",
+            "label": "Todos",
+            "exclusive": true
+          },
+          {
+            "value": "LEP",
+            "label": "Aprendices de inglés "
+          },
+          {
+            "value": "NLEP",
+            "label": "No estudiantes de inglés"
+          }
+        ]
+      }
+    }
+  },
+  "sortableCategories": {
+    "categoryField": "CategorySetCode",
+    "categories": {
+      "FS002": {
+        "CSA": ["RACE", "SEX", "IDEADISABILITYTYPE"],
+        "CSB": ["IDEADISABILITYTYPE", "AGE", "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"],
+        "CSC": ["RACE", "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"],
+        "CSD": ["SEX", "IDEADISABILITYTYPE", "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"],
+        "CSE": ["SEX", "IDEADISABILITYTYPE", "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE", "ENGLISHLEARNERSTATUS"]
+      },
+      "FS089": {
+        "CSA": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD", "IDEADISABILITYTYPE", "AGE"],
+        "CSB": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD", "IDEADISABILITYTYPE", "RACE"],
+        "CSC": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD", "SEX"],
+        "CSD": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD", "ENGLISHLEARNERSTATUS"]
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "allAges",
+      "combined": true,
+      "name": "Todos (3-21)",
+      "title": "Todos (3-21 años)",
+      "description": "A continuación, se presenta un resumen simplificado sobre los datos representados en este informe:",
+      "sections": [
+        {
+          "type": "quickSummary",
+          "sectionLabel": "Resumen rápido",
+          "content": {
+            "heading": {
+              "template": "Hay {{var_1}} niños con diversas discapacidades en tu estado.",
+              "variables": {
+                "var_1": {
+                  "function": "sum",
+                  "args": [
+                    "StudentCount",
+                    {
+                      "field": "ReportCode",
+                      "array": true,
+                      "value": ["c089", "c002"]
+                    },
+                    {
+                      "field": "CategorySetCode",
+                      "type": "string",
+                      "value": "ST3"
+                    }
+                  ]
+                }
+              }
+            },
+            "sections": [
+              {
+                "title": "Discapacidades más comunes",
+                "body": {
+                  "template": "{{var_1}} son las discapacidades más prevalentes entre los niños.",
+                  "variables": {
+                    "var_1": {
+                      "function": "top_disabilities_percentages",
+                      "args": [
+                        3,
+                        {
+                          "field": "ReportCode",
+                          "array": true,
+                          "value": ["c089", "c002"]
+                        },
+                        {
+                          "field": "CategorySetCode",
+                          "type": "string",
+                          "value": "ST3"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Discapacidades menos comunes",
+                "body": {
+                  "template": "{{var_1}} son algunas de las discapacidades menos comunes.",
+                  "variables": {
+                    "var_1": {
+                      "function": "bottom_disabilities_percentages",
+                      "args": [
+                        3,
+                        {
+                          "field": "ReportCode",
+                          "array": true,
+                          "value": ["c089", "c002"]
+                        },
+                        {
+                          "field": "CategorySetCode",
+                          "type": "string",
+                          "value": "ST3"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "gridView",
+          "content": {
+            "columns": [
+              {
+                "id": "raceAndEthnicityColumn",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "sectionLabel": "Discapacidades",
+                    "content": {
+                      "title": "Discapacidades",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "description": "A continuación se muestra la distribución de niños, de 3 a 21 años de edad, con diversas discapacidades en su Estado.",
+                      "explainTemplate": "En los datos reportados, las tres principales categorías de discapacidad en tu Estado son, {{first}}, {{second}} y {{third}}.",
+                      "dataLabel": "Tipo de discapacidad",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "IDEADISABILITYTYPE",
+                        "xAxisValue": "IDEADISABILITYTYPE",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "childCountBarChart",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["IDEADISABILITYTYPE"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "array": true,
+                                "value": ["IDEADISABILITYTYPE"]
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "array": true,
+                                "value": ["c002", "c089"]
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "type": "string",
+                                "value": "ST3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "learnerStatusAndGender",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "sectionLabel": "Raza, Etnicidad",
+                    "content": {
+                      "title": "Raza, Etnicidad",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "description": "A continuación se muestra la distribución de niños, de 3 a 21 años, con discapacidad por Raza/Etnicidad en su Estado.",
+                      "explainTemplate": "En los datos reportados, las tres principales categorías de raza/etnia con discapacidad en tu Estado son {{first}}, {{second}}, y {{third}}.",
+                      "dataLabel": "Raza/Etnicidad",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "RACE",
+                        "xAxisValue": "RACE",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "countBreakdownRaceEthnicity",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "type": "string",
+                                "array": true,
+                                "value": ["RACE"]
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "RACE"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "array": true,
+                                "value": ["c002", "c089"]
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "type": "string",
+                                "value": "ST4"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "barChart",
+                    "sectionLabel": "Sexo",
+                    "content": {
+                      "title": "Sexo",
+                      "description": {
+                        "template": "El conjunto de datos revela que entre los niños con discapacidad que reciben educación especial, de 3 a 21 años, atendidos por OSEP, {{var_1}}% son varones y {{var_2}}% son mujeres.",
+                        "variables": {
+                          "var_1": {
+                            "function": "context",
+                            "args": ["M"]
+                          },
+                          "var_2": {
+                            "function": "context",
+                            "args": ["F"]
+                          }
+                        }
+                      },
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "dataLabel": "Sexo",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "SEX",
+                        "xAxisValue": "SEX",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "countBreakdownGender",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["SEX"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "SEX"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "array": true,
+                                "value": ["c002", "c089"]
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "type": "string",
+                                "value": "ST1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "earlyChildhood",
+      "name": "Preescolar (3-5)",
+      "title": "Niños en edad preescolar (3-5 años)",
+      "description": "A continuación, se presenta un resumen simplificado sobre los datos representados en este informe:",
+      "sections": [
+        {
+          "type": "quickSummary",
+          "sectionLabel": "Resumen rápido",
+          "content": {
+            "heading": {
+              "template": "Hay {{var_1}} niños con diversas discapacidades en tu estado.",
+              "variables": {
+                "var_1": {
+                  "function": "sum",
+                  "args": [
+                    "StudentCount",
+                    {
+                      "field": "ReportCode",
+                      "value": "c089"
+                    },
+                    {
+                      "field": "CategorySetCode",
+                      "value": "ST3"
+                    }
+                  ]
+                }
+              }
+            },
+            "sections": [
+              {
+                "title": "Discapacidades más comunes",
+                "body": {
+                  "template": "En los datos reportados, las tres principales categorías de discapacidad en tu Estado son {{var_1}}.",
+                  "variables": {
+                    "var_1": {
+                      "function": "top_disabilities_percentages",
+                      "args": [
+                        3,
+                        {
+                          "field": "ReportCode",
+                          "value": "c089"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Discapacidades menos comunes",
+                "body": {
+                  "template": "En los datos reportados, las tres incapacidades menos comunes en tu Estado son {{var_1}}.",
+                  "variables": {
+                    "var_1": {
+                      "function": "bottom_disabilities_percentages",
+                      "args": [
+                        3,
+                        {
+                          "field": "ReportCode",
+                          "value": "c089"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "gridView",
+          "content": {
+            "columns": [
+              {
+                "id": "raceAndEthnicityColumn",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "earlyChildhoodSection",
+                          "value": ["CSA", "CSB"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Discapacidades",
+                    "content": {
+                      "title": "Discapacidades",
+                      "description": "A continuación se muestra la distribución de niños, de 3 a 5 años (No en jardín de infantes), con diversas discapacidades en su Estado.",
+                      "explainTemplate": "En los datos reportados, las tres principales categorías de discapacidad en tu Estado son {{first}}, {{second}} y {{third}}.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "dataLabel": "Tipo de discapacidad",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "IDEADISABILITYTYPE",
+                        "xAxisValue": "IDEADISABILITYTYPE",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "childCountBarChart",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["IDEADISABILITYTYPE"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "array": true,
+                                "value": ["IDEADISABILITYTYPE"]
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c089"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "earlyChildhoodSection",
+                          "value": ["CSD"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Estado de aprendiz de inglés",
+                    "content": {
+                      "title": "Estado de aprendiz de inglés",
+                      "description": "A continuación se muestra la distribución de niños, de 3 a 5 años (No en jardín de infantes), con discapacidades que o bien son aprendientes de inglés o que no aprenden inglés en su estado.",
+                      "explainTemplate": "En los datos reportados, las categorías de estatus de aprendiz de inglés con discapacidad en su Estado se distribuyen como, {{first}} y {{second}}.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "dataLabel": "Estado",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "ENGLISHLEARNERSTATUS",
+                        "xAxisValue": "ENGLISHLEARNERSTATUS",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "countBreakdownLearner",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["ENGLISHLEARNERSTATUS"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "ENGLISHLEARNERSTATUS"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c089"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST5"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "earlyChildhoodSection",
+                          "value": ["CSC"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Sexo",
+                    "content": {
+                      "title": "Sexo",
+                      "description": "A continuación se muestra la distribución de niños, de 3 a 5 años (No en jardín de infantes), con discapacidades que sean de sexo masculino o femenino en su Estado.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "explainTemplate": "En los datos reportados, las categorías de Sexo con discapacidad en tu Estado se distribuyen como, {{primero}} y {{segundo}}.",
+                      "dataLabel": "Sexo",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "SEX",
+                        "xAxisValue": "SEX",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "countBreakdownGender",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["SEX"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "SEX"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c089"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "learnerStatusAndGender",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "earlyChildhoodSection",
+                          "value": ["CSB"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Raza/Etnia ",
+                    "content": {
+                      "title": "Raza/Etnia",
+                      "description": "A continuación se muestra la distribución de niños, de 3 a 5 años (No en jardín de infantes), con discapacidad por Raza/Etnicidad en su Estado.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "explainTemplate": "En los datos reportados, las tres principales categorías de raza/etnia con discapacidad en tu Estado son {{first}}, {{second}}, y {{third}}.",
+                      "dataLabel": "Raza/Etnicidad",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "RACE",
+                        "xAxisValue": "RACE",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "countBreakdownRaceEthnicity",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "type": "string",
+                                "array": true,
+                                "value": ["RACE"]
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "RACE"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c089"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST4"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "schoolAgeSection",
+                          "value": ["CSA", "CSB", "CSC", "CSD"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Entornos Educativos",
+                    "content": {
+                      "title": "Entornos Educativos",
+                      "description": "A continuación se muestra la distribución de niños, de 3 a 5 años (No en jardín de infantes), con discapacidad en diversos Ambientes Educativos de su Estado.",
+                      "explainTemplate": "En los datos reportados, las tres principales categorías de Entornos Educativos en las que se encuentran los estudiantes con discapacidad en tu Estado son {{first}}, {{second}} y {{third}}.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "dataLabel": "Entorno Educativo",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+                        "xAxisValue": "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "barChartEducationalEnvironmentsEC",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "type": "string",
+                                "array": true,
+                                "value": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD"]
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c089"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST6"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "schoolAge",
+      "name": "Edad escolar (5-21)",
+      "title": "Niños en edad escolar (5-21 años)",
+      "description": "A continuación, se presenta un resumen simplificado sobre los datos representados en este informe:",
+      "sections": [
+        {
+          "type": "quickSummary",
+          "sectionLabel": "Resumen rápido",
+          "content": {
+            "heading": {
+              "template": "Hay {{var_1}} niños con diversas discapacidades en tu estado.",
+              "variables": {
+                "var_1": {
+                  "function": "sum",
+                  "args": [
+                    "StudentCount",
+                    {
+                      "field": "ReportCode",
+                      "value": "c002"
+                    },
+                    {
+                      "field": "CategorySetCode",
+                      "value": "ST3"
+                    }
+                  ]
+                }
+              }
+            },
+            "sections": [
+              {
+                "title": "Discapacidades más comunes",
+                "body": {
+                  "template": "En los datos reportados, las tres principales categorías de discapacidad en tu Estado son {{var_1}}.",
+                  "variables": {
+                    "var_1": {
+                      "function": "top_disabilities_percentages",
+                      "args": [
+                        3,
+                        {
+                          "field": "ReportCode",
+                          "value": "c002"
+                        },
+                        {
+                          "field": "CategorySetCode",
+                          "value": "ST3"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "title": "Discapacidades menos comunes",
+                "body": {
+                  "template": "En los datos reportados, las tres incapacidades menos comunes en tu Estado son {{var_1}}.",
+                  "variables": {
+                    "var_1": {
+                      "function": "bottom_disabilities_percentages",
+                      "args": [
+                        3,
+                        {
+                          "field": "ReportCode",
+                          "value": "c002"
+                        },
+                        {
+                          "field": "CategorySetCode",
+                          "value": "ST3"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "gridView",
+          "content": {
+            "columns": [
+              {
+                "id": "raceAndEthnicityColumn",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "schoolAgeSection",
+                          "value": ["CSA", "CSB", "CSD", "CSE"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Discapacidades",
+                    "content": {
+                      "title": "Discapacidades",
+                      "description": "A continuación se muestra la distribución de niños, de 5 a 21 años de edad, con diversas discapacidades en su Estado.",
+                      "explainTemplate": "En los datos reportados, las tres principales categorías de discapacidad en tu Estado son {{first}}, {{second}} y {{third}}.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "dataLabel": "Tipo de discapacidad",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "IDEADISABILITYTYPE",
+                        "xAxisValue": "IDEADISABILITYTYPE",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "childCountBarChart",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["IDEADISABILITYTYPE"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "array": true,
+                                "value": ["IDEADISABILITYTYPE"]
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c002"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "schoolAgeSection",
+                          "value": ["CSE"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Estado de aprendiz de inglés",
+                    "content": {
+                      "title": "Estado de aprendiz de inglés",
+                      "description": "A continuación se muestra la distribución de niños, de 5 a 21 años de edad, con discapacidades que o bien son aprendientes de inglés o que no aprenden inglés en su estado.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "explainTemplate": "En los datos reportados, las categorías de estatus de aprendiz de inglés con discapacidad en su Estado se distribuyen como, {{first}} y {{second}}.",
+                      "dataLabel": "Estado",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "ENGLISHLEARNERSTATUS",
+                        "xAxisValue": "ENGLISHLEARNERSTATUS",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "countBreakdownLearner",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["ENGLISHLEARNERSTATUS"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "ENGLISHLEARNERSTATUS"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c002"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST5"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "schoolAgeSection",
+                          "value": ["CSA", "CSD", "CSE"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Sexo",
+                    "content": {
+                      "title": "Sexo",
+                      "description": "A continuación se muestra la distribución de niños, 5-21, con discapacidad que sean de sexo masculino o femenino en su Estado.",
+                      "explainTemplate": "En los datos reportados, las categorías de Sexo con discapacidad en tu Estado se distribuyen como, {{primero}} y {{segundo}}.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "dataLabel": "Sexo",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "SEX",
+                        "xAxisValue": "SEX",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "countBreakdownGender",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "value": ["SEX"],
+                                "array": true
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "SEX"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c002"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "learnerStatusAndGender",
+                "rows": [
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "schoolAgeSection",
+                          "value": ["CSA", "CSC"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Raza/Etnia ",
+                    "content": {
+                      "title": "Raza/Etnia ",
+                      "description": "A continuación se muestra la distribución de niños, de 5 a 21 años, con discapacidad por Raza/Etnicidad en su Estado.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "explainTemplate": "En los datos reportados, las tres principales categorías de raza/etnia con discapacidad en tu Estado son {{first}}, {{second}}, y {{third}}.",
+                      "dataLabel": "Raza/Etnicidad",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "RACE",
+                        "xAxisValue": "RACE",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "countBreakdownRaceEthnicity",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "type": "string",
+                                "array": true,
+                                "value": ["RACE"]
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "RACE"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c002"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST4"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "barChart",
+                    "condition": {
+                      "operator": "AND",
+                      "conditions": [
+                        {
+                          "filterCode": "schoolAgeSection",
+                          "value": ["CSB", "CSC", "CSD", "CSE"]
+                        }
+                      ]
+                    },
+                    "sectionLabel": "Entornos Educativos",
+                    "content": {
+                      "title": "Entornos Educativos",
+                      "description": "A continuación se muestra la distribución de niños, 5-21, con discapacidad en diversos Entornos Educativos de su Estado.",
+                      "noDataDescription": "Desafortunadamente, no hay datos que mostrar para esta sección. Esto debido a cómo la Oficina de Programas de Educación Especial (OSEP) requiere que se organicen los datos del Estado.",
+                      "explainTemplate": "En los datos reportados, las tres principales categorías de Ambientes Educativos en las que se encuentran los estudiantes con discapacidad en tu Estado son, {{first}}, {{second}}, y {{third}}.",
+                      "dataLabel": "Entorno Educativo",
+                      "chart": {
+                        "filterOn": "x",
+                        "yAxisLabel": "Child Count",
+                        "xAxisLabel": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+                        "xAxisValue": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+                        "yAxisValue": "StudentCount",
+                        "dataRetrievalOperations": [
+                          {
+                            "id": "barChartEducationalEnvironmentsSC",
+                            "function": "GROUPBY",
+                            "arguments": [
+                              {
+                                "field": "func",
+                                "type": "string",
+                                "value": "sum"
+                              },
+                              {
+                                "field": "columns",
+                                "value": ["StudentCount"],
+                                "array": true
+                              },
+                              {
+                                "field": "selectColumns",
+                                "type": "string",
+                                "array": true,
+                                "value": ["IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"]
+                              },
+                              {
+                                "field": "limit",
+                                "type": "number"
+                              },
+                              {
+                                "field": "order",
+                                "type": "string",
+                                "array": true,
+                                "value": ["StudentCount desc"]
+                              },
+                              {
+                                "field": "groupby",
+                                "type": "string",
+                                "value": "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"
+                              },
+                              {
+                                "field": "ReportCode",
+                                "type": "string",
+                                "value": "c002"
+                              },
+                              {
+                                "field": "CategorySetCode",
+                                "value": "ST6"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

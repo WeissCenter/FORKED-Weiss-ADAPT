@@ -1,13 +1,13 @@
+@let pageContent = $pageContent();
 <section class="data-sources-settings-container grid-container gap-4 display-flex flex-column">
   <section
     aria-label="Data Source Settings Heading"
     role="region"
     class="data-sources-settings-banner width-full display-flex gap-2 flex-column">
     <div class="usa-prose">
-      <h1 class="margin-0" i18n>Data Sources</h1>
+      <h1 class="margin-0" i18n>{{ pageContent?.title ? pageContent!.title : 'Data Sources' }}</h1>
       <p class="margin-bottom-0 measure-4" i18n>
-        Manage your data origins effectively. Add, configure, and maintain various data sources like databases and file
-        uploads.
+        {{ pageContent?.description ? pageContent!.description : 'Manage data sources' }}
       </p>
     </div>
   </section>
@@ -97,7 +97,7 @@
       (click)="dataSourceModal.open(item, PageMode.VIEW)"
       [id]="'view_' + item.dataSourceID + '_btn'"
       class="usa-button usa-button--outline shadow-none">
-      <i class="fal fa-copy" role="img" aria-hidden="true"></i> View
+      View
     </button>
   </div>
 </ng-template>

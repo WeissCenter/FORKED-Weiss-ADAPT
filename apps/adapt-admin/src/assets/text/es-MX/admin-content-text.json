@@ -1,0 +1,771 @@
+{
+  "pages": [
+    {
+      "name": "login",
+      "title": "Bienvenido a ADAPT, la herramienta de análisis y publicación de datos accesibles.",
+      "loginContent": {
+        "metaTitle": "ADAPT - Iniciar sesión",
+        "metaDescription": "Una herramienta de libre acceso para reportar datos de IDEA, totalmente accesible para las personas con discapacidad.",
+        "subtitle": "<p class=\"font-sm\" i18n>Desarrollado por el <a class=\"usa-link\" aria-label=\"Rhonda Weiss Center for Accessible IDEA Data Website (opens in a new window)\" href=\"https://www.weissta.org\" target=\"_blank\">Centro Rhonda Weiss para Datos IDEA Accesibles</a>, ADAPT es una solución colaborativa basada en la web que permite a los usuarios desarrollar productos de datos accesibles para todos, incluidas las personas con discapacidades. Al aumentar la accesibilidad de los datos, ADAPT promueve un uso más amplio de los datos por parte de personas más diversas, lo que conduce a una mejor toma de decisiones y resultados educativos.</p>",
+        "emailLabel": "Dirección de correo electrónico",
+        "emailHint": "Por ejemplo, samantha@example.edu",
+        "emailPlaceholder": "Correo electrónico...",
+        "passwordLabel": "Contraseña",
+        "passwordPlaceholder": "Contraseña...",
+        "passwordHint": "Debe ser una combinación de un mínimo de 8 letras, números y símbolos.",
+        "rememberMeLabel": "Recuérdame",
+        "loginButtonLabel": "Iniciar sesión",
+        "ssoLabel": "Iniciar sesión con:",
+        "microsoftLabel": "Microsoft"
+      }
+    },
+    {
+      "name": "home",
+      "title": "Página de inicio",
+      "description": "Descripción de la página de inicio",
+      "sections": [
+        {
+          "title": "¿Qué puedes hacer aquí?",
+          "description": "Estas son las acciones más comunes, las vistas rápidas y las actividades recientes que puede seleccionar y sobre las que puede actuar.",
+          "sub_sections": [
+            {
+              "title": "Tu actividad reciente",
+              "description": "Echa un vistazo a tus actividades más recientes para mantenerte al día sobre lo que has hecho últimamente."
+            },
+            {
+              "title": "Acciones comunes",
+              "description": "Aquí hay una lista de las acciones comunes que puede realizar, lo que facilita el acceso rápido y la administración de sus tareas rutinarias.",
+              "items": ["Crear nuevo informe", "Crear nueva vista de datos"]
+            }
+          ]
+        },
+        {
+          "title": "Informes y Vistas de Datos",
+          "description": "Esta sección le permite acceder y administrar una variedad de informes y vistas de datos. La lista de elementos de cada sección a continuación se puede ampliar para proporcionarle información y acciones adicionales.",
+          "sub_sections": [
+            {
+              "title": "Ver informes",
+              "description": "Vea los informes actualizados más recientemente aquí. Para ver la lista completa de informes con opciones de filtrado, puede seleccionar el botón Ver todo a continuación. Si desea crear un nuevo informe, puede seleccionar el botón Crear nuevo informe a continuación.",
+              "items": ["Crear nuevo informe"]
+            },
+            {
+              "title": "Vistas de datos",
+              "description": "Vea las vistas de datos actualizadas más recientemente aquí. Para ver la lista completa de vistas de datos con opciones de filtrado, puede seleccionar el botón Ver todo a continuación. Si desea crear una nueva vista de datos, puede seleccionar el botón Crear nueva vista de datos a continuación.",
+              "items": ["Crear nueva vista de datos"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "data",
+      "title": "Vistas de datos",
+      "description": "Administre sus vistas de datos aquí para la creación de informes. Puede crear nuevas vistas de datos a partir de sus orígenes de datos conectados o cargando un archivo. También puede editar las vistas de datos existentes expandiendo una vista de datos o seleccionando el título de una vista de datos.",
+      "sections": [
+        {
+          "name": "Define",
+          "title": "Definir datos",
+          "header": "Primeros pasos con sus datos.",
+          "description": "Especifique los datos que desea cargar, el año de reporte y de dónde provienen los datos.",
+          "questions": [
+            {
+              "label": "¿Qué datos desea cargar?",
+              "type": "dropdown",
+              "required": true,
+              "selected_option": "IDEA Recuento de Niños y Entornos Educativos"
+            },
+            {
+              "label": "¿De dónde provienen los datos?",
+              "type": "dropdown",
+              "required": true,
+              "selected_option": "Al cargar archivos de datos",
+              "options": [
+                {
+                  "value": "collection",
+                  "label": "Al cargar archivos de datos"
+                },
+                {
+                  "value": "database",
+                  "label": "Conectando a una base de datos"
+                }
+              ]
+            },
+            {
+              "label": "¿Qué base de datos?",
+              "type": "dropdown",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere base de datos."
+              }
+            }
+          ],
+          "messages": {
+            "warning": {
+              "type": "warning",
+              "message": "Esta vista de datos ya existe.",
+              "details": "Compruebe la siguiente vista de datos antes de continuar:"
+            }
+          }
+        },
+        {
+          "name": "Load",
+          "title": "Cargar datos",
+          "header": "Cargar datos",
+          "description": "Para crear informes precisos, cargue los datos necesarios que se enumeran a continuación. Continúe con el siguiente paso o cierre esta ventana en cualquier momento. Las cargas de archivos seguirán ejecutándose en segundo plano, pero tenga en cuenta que cerrar la ventana detendrá cualquier carga en curso.",
+          "instructions": "Seleccione el archivo correspondiente para cargar o arrastre y suelte el archivo sobre el área de abajo.",
+          "additional_info": "Continúe con el siguiente paso, guarde o cierre esta ventana en cualquier momento. Las cargas de archivos seguirán ejecutándose en segundo plano, pero tenga en cuenta que cerrar la ventana detendrá cualquier carga en curso.",
+          "questions": [
+            {
+              "label": "Vista de datos"
+            },
+            {
+              "label": "Año de presentación de informes"
+            },
+            {
+              "label": "Método de recopilación de datos"
+            },
+            {
+              "label": "Datos esperados y estado de carga"
+            }
+          ],
+          "messages": {
+            "success": {
+              "message": "Los datos se cargaron correctamente",
+              "details": "Puede obtener una vista previa de los primeros 10 registros de los datos cargados para confirmar: "
+            },
+            "error": {
+              "message": "Algo salió mal",
+              "details": "Estos datos son necesarios para cargar."
+            },
+            "required": {
+              "message": "Este archivo es necesario para la carga."
+            },
+            "please_wait": {
+              "message": "Recuperando datos, espere un momento."
+            }
+          },
+          "sub_sections": [
+            {
+              "title": "Vista previa de datos",
+              "description": "Aquí hay una vista previa de las primeras 10 filas recuperadas de sus datos. Es posible que deba desplazarse horizontalmente para revisar todas las columnas.",
+              "actions": {
+                "close_button": "Cerrar vista previa"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Review",
+          "title": "Resumen de la vista de datos",
+          "header": "Resumen de la reseña",
+          "description": "Revise el resumen de su vista de datos a continuación. Después de verificar los detalles, continúe con el siguiente paso para guardar su vista de datos.",
+          "questions": [
+            {
+              "label": "Vista de datos"
+            },
+            {
+              "label": "Año de presentación de informes"
+            },
+            {
+              "label": "Método de recopilación de datos"
+            },
+            {
+              "label": "Datos esperados y estado de carga"
+            }
+          ]
+        },
+        {
+          "name": "Save",
+          "title": "Nombre de la vista de datos",
+          "header": "Ponle un nombre a la vista de datos",
+          "description": "Antes de guardar, asegúrese de darle a su vista de datos un nombre único y una buena descripción.",
+          "questions": [
+            {
+              "label": "Nombra esta vista de datos: ",
+              "placeholder": "Crea un nombre amigable y único.",
+              "validation_messages": {
+                "required": "Se requiere el nombre de Data View.",
+                "unique": "El nombre de Data View debe ser único."
+              }
+            },
+            {
+              "label": "Agregar una descripción",
+              "placeholder": "Cree una descripción clara y detallada sobre su vista de datos.",
+              "validation_messages": {
+                "required": "Se requiere descripción."
+              }
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "next_button": "Siguiente: ",
+        "cancel_button": "Cancelar",
+        "save_button": "Guardar",
+        "back_button": "Atrás",
+        "database": "por conexión de base de datos",
+        "collection": "por File Upload"
+      }
+    },
+    {
+      "name": "reports",
+      "title": "Lista de informes",
+      "description": "Cree informes utilizando las vistas de datos y plantillas de informe seleccionadas o edite los informes existentes. Al crear un informe, puede optar por crear informes internos para uso privado o informes externos que se puedan finalizar y publicar para acceso público.",
+      "tabs": ["Todos los informes", "Borradores de informes", "Informes Finalizados", "Informes archivados"],
+      "sections": [
+        {
+          "name": "Define",
+          "title": "Plantilla de informe y selección de datos",
+          "header": "Seleccione una plantilla de informe y una vista de datos.",
+          "description": "A continuación, deberá elegir una vista de datos disponible que haya creado, seleccionar una plantilla de informe, así como seleccionar la audiencia para su informe.",
+          "questions": [
+            {
+              "label": "¿Qué vista de datos desea utilizar?",
+              "type": "dropdown",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere la vista de datos."
+              },
+              "selected_option": "Recuento de niños y configuraciones - 2023-24 - por carga de archivo - 27/08/2024, 09:40 a.m."
+            },
+            {
+              "label": "Seleccionar plantilla de informe",
+              "type": "dropdown",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere una plantilla de informe."
+              },
+              "selected_option": "Recuento de niños y entornos educativos"
+            },
+            {
+              "label": "¿Quién es el público para el reporte?",
+              "type": "radio_buttons",
+              "required": true,
+              "options": [
+                {
+                  "label": "Solo para uso interno",
+                  "value": "internal",
+                  "selected": true
+                },
+                {
+                  "label": "Vista pública externa",
+                  "value": "external",
+                  "selected": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Preview",
+          "title": "Nombre y vista previa del informe",
+          "header": "Nombre y vista previa del informe",
+          "description": "Antes de obtener una vista previa de su informe, asegúrese de darle a su informe un nombre único y una buena descripción.",
+          "questions": [
+            {
+              "label": "Título:",
+              "comment": "Hemos rellenado este campo para que puedas comenzar, o puedes crear tu propio nombre amigable y único.",
+              "required": true
+            },
+            {
+              "label": "Identificador de informe público:",
+              "comment": "Hemos rellenado este campo con un identificador de informe basado en la plantilla de informe que seleccionó, que se mostrará en el sitio de Public Viewer. También puede crear su propio identificador de informe único y amigable antes de publicarlo.",
+              "required": true
+            },
+            {
+              "label": "Descripción:",
+              "comment": "Cree una descripción clara y detallada sobre su informe.",
+              "required": true
+            }
+          ],
+          "messages": {
+            "preview": {
+              "type": "preview",
+              "message": "Debe generar una vista previa del informe y confirmar que se carga antes de continuar con el siguiente paso para guardar el informe."
+            },
+            "status": {
+              "type": "status",
+              "message": "Se requiere una previsualización correcta del informe. Compruebe la vista de datos y la plantilla e inténtelo de nuevo."
+            }
+          }
+        },
+        {
+          "name": "Save",
+          "title": "Resumen del informe",
+          "header": "Resumen de la reseña",
+          "description": "Revise el resumen de su informe a continuación. Después de verificar los detalles, continúe con el siguiente paso para guardar y ver el borrador del informe.",
+          "questions": [
+            {
+              "label": "Nombre del informe:"
+            },
+            {
+              "label": "Descripción del informe:"
+            },
+            {
+              "label": "Plantilla de informe:"
+            },
+            {
+              "label": "Vista de datos:"
+            },
+            {
+              "label": "Distribución:"
+            },
+            {
+              "label": "Metaetiquetas:"
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "next_button": "Siguiente: ",
+        "cancel_button": "Cancelar",
+        "save_button": "Guardar y Ver Borrador",
+        "back_button": "Atrás",
+        "preview_button": "Generar Vista Previa"
+      }
+    },
+    {
+      "name": "settings",
+      "title": "Configuración",
+      "description": "Adapte aspectos clave de su aplicación para satisfacer sus necesidades específicas. Puede crear y administrar fácilmente sus orígenes de datos, configurar sus reglas de supresión de datos, controlar la administración de usuarios y mucho más.",
+      "sections": [
+        {
+          "title": "Categorías",
+          "description": "Seleccione cualquiera de las siguientes opciones para configurar ADAPT.",
+          "sub_sections": [
+            {
+              "title": "Orígenes de datos",
+              "description": "Conéctese a una base de datos para crear un nuevo origen de datos o administre y configure sus orígenes de datos existentes para asegurarse de que estén actualizados y listos para la visualización de datos y la creación de informes.",
+              "path": "data-sources"
+            },
+            {
+              "title": "Supresión de datos",
+              "description": "Proteja los datos confidenciales con reglas de supresión configurables, manteniendo la privacidad del usuario y cumpliendo con los estándares de cumplimiento de normas.",
+              "path": "data-suppression"
+            },
+            {
+              "title": "Enlaces de pie de página",
+              "description": "Edite y administre contenido esencial del pie de página, como políticas de privacidad y términos de servicio, proporcionando transparencia y orientación al usuario.",
+              "path": "footer-links"
+            },
+            {
+              "title": "Seguridad",
+              "description": "Asegure su aplicación con configuraciones de seguridad configurables, como tiempos de espera de sesión y alertas, para proteger los datos del usuario y la integridad del sistema.",
+              "path": "security"
+            },
+            {
+              "title": "Administración de usuarios",
+              "description": "Administre usuarios y roles dentro de la aplicación, asegurando un control de acceso seguro y una supervisión eficiente del usuario.",
+              "path": "user-management"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "data-sources",
+      "title": "Orígenes de datos",
+      "description": "Conéctese a una base de datos para crear un origen de datos, que luego puede usar para crear una vista de datos para prepararse para la creación de informes. También puede editar y administrar sus orígenes de datos existentes para asegurarse de que estén actualizados.",
+      "sections": [
+        {
+          "name": "Create",
+          "title": "Definir origen de datos",
+          "header": "Defina su origen de datos",
+          "description": "Comience definiendo su origen de datos. Especifique el tipo de origen, otorgue un nombre único al origen de datos y describa su origen de datos.",
+          "questions": [
+            {
+              "label": "Tipo de fuente",
+              "type": "dropdown",
+              "required": true,
+              "options": [
+                {
+                  "label": "Microsoft SQL Server",
+                  "value": "mssql"
+                }
+              ],
+              "validation_messages": {
+                "required": "Se requiere el tipo de origen."
+              }
+            },
+            {
+              "label": "Nombre del origen de datos",
+              "placeholder": "Crea un nombre amigable y único que los humanos puedan leer.",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere el nombre del origen de datos."
+              }
+            },
+            {
+              "label": "Descripción",
+              "type": "textarea",
+              "required": true,
+              "selected_option": "Al cargar archivos de datos",
+              "validation_messages": {
+                "required": "Se requiere una descripción del origen de datos."
+              }
+            }
+          ]
+        },
+        {
+          "name": "Connect",
+          "title": "Definir la conexión de origen",
+          "header": "Conéctese a su base de datos",
+          "description": "Agregue la dirección del servidor y los detalles a continuación. Se requiere una conexión correcta para continuar.",
+          "questions": [
+            {
+              "label": "Detalles del origen de datos"
+            },
+            {
+              "label": "Dirección del servidor",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere la dirección de origen de datos."
+              }
+            },
+            {
+              "label": "Número de puerto",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere el número de puerto de origen de datos."
+              }
+            },
+            {
+              "label": "Nombre de la base de datos",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere el nombre de la base de datos de origen de datos."
+              }
+            },
+            {
+              "label": "Nombre de usuario",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere el nombre de usuario del origen de datos."
+              }
+            },
+            {
+              "label": "Contraseña",
+              "type": "password",
+              "required": true,
+              "validation_messages": {
+                "required": "Se requiere una contraseña de origen de datos."
+              }
+            }
+          ],
+          "messages": {
+            "test_fail": {
+              "type": "test",
+              "message": "Se requiere una conexión correcta para continuar."
+            },
+            "unable_to_connect": {
+              "type": "fail",
+              "message": "No se puede conectar. Revisa los detalles de tu conexión y pruébalo de nuevo."
+            },
+            "success_connect": {
+              "type": "success",
+              "message": "¡Conectado con éxito."
+            }
+          }
+        },
+        {
+          "name": "Review",
+          "title": "Análisis de impacto",
+          "header": "Análisis de impacto de revisión",
+          "description": "Revise el siguiente análisis de impacto para comprender cómo estos cambios pueden afectar las vistas de datos y los informes existentes."
+        },
+        {
+          "name": "Save",
+          "title": "Resumen del origen de datos",
+          "header": "Resumen del origen de datos",
+          "description": "Revise la siguiente información antes de guardar.",
+          "questions": [
+            {
+              "label": "Información General"
+            },
+            {
+              "label": "Tipo de Conexión"
+            },
+            {
+              "label": "Nombre Amistoso"
+            },
+            {
+              "label": "Descripción"
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "add_button": "Agregar Vista de Datos",
+        "next_button": "Siguiente: ",
+        "cancel_button": "Cancelar",
+        "save_button": "Guardar",
+        "edit_button": "Editar",
+        "back_button": "Atrás",
+        "archive_button": "Archivo",
+        "test_connection_button": "Conexión de Prueba",
+        "edit_pw_button": "Editar Contraseña"
+      }
+    },
+    {
+      "name": "footer-links",
+      "title": "Enlaces de pie de página",
+      "description": "Para personalizar qué enlaces aparecen en tu pie de página, haz clic en el botón Editar y podrás crear y actualizar los enlaces de pie de página. Puede asignar un nombre al vínculo con el campo Etiqueta de enlace y agregar una dirección URL en el campo URL del vínculo. También puede seleccionar si se trata de un enlace externo seleccionando la casilla y luego puede especificar cómo se debe abrir el enlace (por ejemplo, una nueva pestaña o la misma pestaña). También puede asignar un icono al enlace copiando un icono de https://fontawesome.com/v5/search y pegándolo en el campo Icono de enlace. Si necesita agregar campos adicionales, puede seleccionar el botón Agregar vínculos de pie de página o puede guardar los cambios seleccionando el botón Guardar.",
+      "sections": [
+        {
+          "name": "links",
+          "header": "Enlaces",
+          "description": "Configure los enlaces de pie de página.",
+          "questions": [
+            {
+              "label": "Etiqueta de enlace"
+            },
+            {
+              "label": "URL del enlace"
+            },
+            {
+              "label": "Enlace externo"
+            },
+            {
+              "label": "Acción"
+            },
+            {
+              "label": "Icono de enlace"
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "add_button": "Agregar enlace de pie de página",
+        "save_button": "Guardar",
+        "close_button": "Cerrar",
+        "edit_button": "Editar"
+      }
+    },
+    {
+      "name": "security",
+      "title": "Seguridad",
+      "description": "Administre la configuración de tiempo de espera de inactividad de la sesión y otras configuraciones de seguridad.",
+      "sections": [
+        {
+          "name": "Session Timeout",
+          "header": "Tiempo de espera de la sesión",
+          "description": "Configure los ajustes de tiempo de espera de la sesión.",
+          "questions": [
+            {
+              "label": "Tiempo de inactividad",
+              "comment": "El número de minutos sin ninguna actividad antes de que se le considere inactivo. (predeterminado 30 minutos)",
+              "validation_messages": {
+                "required": "Se requiere tiempo de inactividad."
+              }
+            },
+            {
+              "label": "Tiempo de Advertencia",
+              "comment": "Número de minutos antes de que se haya cerrado la sesión para mostrar una advertencia. (predeterminado 2 minutos)",
+              "validation_messages": {
+                "required": "Se requiere tiempo de advertencia."
+              }
+            },
+            {
+              "label": "Tiempo de espera",
+              "comment": "El número de minutos después de ser marcado como inactivo antes de que el sistema se desconecta automáticamente debido a la inactividad. (predeterminado 5 minutos)",
+              "validation_messages": {
+                "required": "Se requiere tiempo de espera."
+              }
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "save_button": "Guardar",
+        "close_button": "Cerrar",
+        "edit_button": "Editar"
+      }
+    },
+    {
+      "name": "error",
+      "title": "Página de error",
+      "sections": [
+        {
+          "name": "404",
+          "header": "404: No se encontró la página",
+          "subHeader": "Se ha encontrado un error",
+          "sub_sections": [
+            {
+              "title": "Lo sentimos, pero la página que buscas no parece existir. Verifique la dirección URL e inténtelo de nuevo.",
+              "description": "Pulse el botón de abajo para volver a la página principal de administración de ADAPT."
+            }
+          ]
+        },
+        {
+          "name": "unauthorized",
+          "header": "Protegido",
+          "subHeader": "El acceso a esta página es",
+          "sub_sections": [
+            {
+              "title": "Por favor, compruebe sus permisos para acceder a esta página.",
+              "description": "No tiene los permisos adecuados para completar esta solicitud. Póngase en contacto con su administrador de TI."
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "return": "Volver a la página de inicio"
+      }
+    },
+    {
+      "name": "data-suppression",
+      "title": "Supresión de datos",
+      "description": "Personalice sus reglas de supresión de datos.",
+      "sections": [
+        {
+          "name": "N-Size",
+          "header": "Tamaño N",
+          "description": "  Configure la supresión de tamaño N de su organización.",
+          "questions": [
+            {
+              "label": "¿Cuál es el umbral de tamaño N de su organización?",
+              "comment": "Tenga en cuenta: Cambiar el tamaño N no actualizará automáticamente sus informes publicados. Para aplicar el nuevo tamaño N a esos informes, primero deberá despublicarlos y luego volver a publicarlos. Esto asegura que los cambios se reflejen correctamente.",
+              "validation_messages": {
+                "required": "Se requiere base de datos."
+              }
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "close_button": "Cerrar",
+        "edit_button": "Editar",
+        "save_button": "Guardar"
+      }
+    },
+    {
+      "name": "report-page",
+      "title": "Página del informe",
+      "sections": [
+        {
+          "name": "Edit Report Fields",
+          "header": "Idioma",
+          "description": "Configure la audiencia.",
+          "questions": [
+            {
+              "label": "¿Quién es el público del informe?",
+              "options": [
+                {
+                  "label": "Solo para uso interno",
+                  "value": "internal"
+                },
+                {
+                  "label": "Solo para uso externo",
+                  "value": "external"
+                }
+              ]
+            },
+            {
+              "label": "Selección de idioma",
+              "options": [
+                {
+                  "label": "Inglés",
+                  "localizedLabel": "English",
+                  "value": "en"
+                },
+                {
+                  "label": "Español",
+                  "localizedLabel": "Spanish",
+                  "value": "es-MX"
+                }
+              ]
+            },
+            {
+              "label": "Enlace externo"
+            },
+            {
+              "label": "Acción"
+            },
+            {
+              "label": "Icono de enlace"
+            }
+          ]
+        },
+        {
+          "name": "Data Suppression Warning",
+          "header": "La supresión de datos está activa.",
+          "description": "Se han suprimido datos específicos para proteger la privacidad de las personas de acuerdo con las directrices de la FERPA. No se dan a conocer detalles que podrían conducir a la identificación de individuos en pequeños grupos poblacionales. Para ver todos los datos disponibles"
+        },
+        {
+          "name": "Quick Summary",
+          "header": "Resumen rápido"
+        },
+        {
+          "name": "filter-popup",
+          "header": "Filtros aplicados",
+          "description": "Hay {{filter_count}} filtros aplicados en {{category_count}} categorías."
+        },
+        {
+          "name": "data-rep-data-modal",
+          "description": "Se han suprimido datos específicos para proteger la privacidad de las personas de acuerdo con las directrices de la FERPA. No se dan a conocer detalles que podrían conducir a la identificación de individuos en pequeños grupos poblacionales."
+        }
+      ],
+      "actions": {
+        "add_button": "Agregar enlace de pie de página",
+        "save_button": "Guardar",
+        "close_button": "Cerrar",
+        "edit_button": "Editar",
+        "suppress_data": "Suprimir datos",
+        "un_suppress_data": "dessuprimir datos.",
+        "explain": "Explicar",
+        "glossary": "Glosario",
+        "success": "Éxito",
+        "percent": "Porcentaje (%)",
+        "download_csv": "Descargar CSV",
+        "download_excel": "Descargar Excel (XLSX)",
+        "value_label": "Valor",
+        "filter": "Filtro",
+        "note": "Nota:",
+        "section_unavailable": "Esta sección no está disponible.",
+        "of": "de",
+        "verified": "Verificado",
+        "verify_translations": "Verificar traducciones",
+        "generate_translations": "Generar traducciones",
+        "selected": "seleccionado",
+        "filter_description": "Haz tus selecciones de filtrado y pulsa Aplicar.",
+        "filter_controls_description": "Pulse Aplicar para guardar los cambios.",
+        "apply_and_close": "Aplicar y cerrar",
+        "reset": "Restablecer",
+        "cancel": "Cancelar",
+        "open_filter_panel": "Abrir panel de filtro",
+        "reset_all_filters": "Restablecer todos los filtros",
+        "plain_language_summary": "Resumen en lenguaje sencillo",
+        "translation_successful": "Se generaron traducciones, por favor verifíquelas antes de guardar sus ediciones.",
+        "translation_error": "Las traducciones deben generarse y verificarse antes de que pueda guardar cualquier edición.",
+        "data": "Datos",
+        "preset_hint": "Tenga en cuenta: Debido a la forma en que se organizan los datos, el filtrado personalizado se limita a las opciones preestablecidas que se proporcionan a continuación.",
+        "filter_groups": "Elija uno de los grupos de filtros preestablecidos a continuación para personalizar su informe.",
+        "suppressed": "Suprimido",
+        "filtered": "Filtrado",
+        "close": "Cerrar",
+        "total_label": "Total",
+        "report-filter-no-data": "En su estado no se recopilan datos para esta categoría."
+      }
+    }
+  ],
+  "shared": {
+    "multiSelect": {
+      "select_all": "Seleccionar todo",
+      "expand": "Expandir",
+      "collapse": "Colapso",
+      "selected_template": "({{selectedCount}} de {{total}} seleccionado)"
+    },
+    "createUpdate": {
+      "lastUpdated": "Última actualización",
+      "createdBy": "Creado por"
+    }
+  },
+  "adaptListView": {
+    "actions": ["Ordenar", "Filtro", "Crear"]
+  }
+}

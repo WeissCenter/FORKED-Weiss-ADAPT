@@ -1,6 +1,4 @@
 import {
-  AfterContentInit,
-  AfterViewInit,
   Component,
   HostListener,
   OnDestroy,
@@ -8,7 +6,9 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ElementRef,
+  computed,
+  effect,
+  Signal,
 } from '@angular/core';
 import { FullPageModalComponent } from '../full-page-modal/full-page-modal.component';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -16,18 +16,14 @@ import {
   catchError,
   combineLatest,
   debounceTime,
-  delay,
-  distinctUntilChanged,
   filter,
   firstValueFrom,
-  from,
   last,
   map,
   Observable,
   of,
   pairwise,
   repeat,
-  skipUntil,
   skipWhile,
   startWith,
   Subscription,
@@ -36,6 +32,7 @@ import {
   tap,
 } from 'rxjs';
 import {
+  DataSetQueueStatus,
   DataSource,
   DataView,
   IDataCollectionTemplate,
@@ -45,27 +42,35 @@ import {
   sleep,
 } from '@adapt/types';
 import { StepsIndicatorComponent } from '../steps-indicator/steps-indicator.component';
-import { getFormErrors, uniqueNameValidator } from '../../../util';
+import { uniqueNameValidator } from '../../../util';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { FileValidation, validate } from '@adapt/validation';
 import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
+import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 
 import * as xlsx from 'xlsx';
-import { ModalComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/modal/modal.component';
-import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
+import { ModalComponent, AlertService } from '@adapt/adapt-shared-component-lib';
 import { Idle } from '@ng-idle/core';
 import { UserService } from '../../../auth/services/user/user.service';
 import { ConfirmModalComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/confirm-modal/confirm-modal.component';
+import { LocationStrategy } from '@angular/common';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
+import {
+  PageSectionContentText,
+  PageContentText,
+  SectionQuestionContentText,
+} from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'adapt-data-view-modal',
   templateUrl: './data-view-modal.component.html',
   styleUrls: ['./data-view-modal.component.scss'],
 })
-export class DataViewModalComponent implements OnDestroy {
+export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentChecked {
   PageMode = PageMode;
   FileControlState = FileControlState;
-  getFormErrors = getFormErrors;
+  //getFormErrors = getFormErrors;
   Validators = Validators;
 
   @ViewChild(FullPageModalComponent) modal!: FullPageModalComponent;
@@ -101,12 +106,12 @@ export class DataViewModalComponent implements OnDestroy {
   public fileControlStates: FileControlState[] = [];
   public fileUploadPercentage: number[] = [];
 
-  public modalHeaders = [
-    'Step 1: Define data collection',
-    'Step 2: Load data',
-    'Step 3: Data collection summary',
-    'Step 4: Name your data collection',
-  ];
+  // public modalHeaders = [
+  //   'Step 1: Define data collection',
+  //   'Step 2: Load data',
+  //   'Step 3: Data collection summary',
+  //   'Step 4: Name your data collection',
+  // ];
 
   public refreshReasonOptions = [
     { value: 'quality', label: 'Data Quality' },
@@ -116,12 +121,18 @@ export class DataViewModalComponent implements OnDestroy {
     { value: 'other', label: 'Other' },
   ];
 
-  public typeOptions = [
-    // {value: '', label: 'Select'},
-    { value: 'childCount', label: 'IDEA Child Count and Educational Environments' },
-    { value: 'childCountAndSettings', label: 'IDEA Child Count and Settings' },
-    // { value: 'disputeResolution', label: 'IDEA Dispute Resolution Part B' },
-  ];
+  public typeOptions: Observable<{ label: any; value: any }[]>; //  = this.data.getTemplates('DataCollection').pipe(map((result => result.map((temp: any) => ({label: temp.name,  value: temp.id.replace("ID#", "")})))))
+
+  //
+  // [
+  //   // {value: '', label: 'Select'},
+  //   { value: 'childCount', label: 'IDEA Child Count and Educational Environments' },
+  //   { value: 'childCountAndSettings', label: 'IDEA Child Count and Settings' },
+  //   { value: 'assessment', label: 'IDEA Assessment' },
+  //   { value: 'exiting', label: 'Children with Disabilities (IDEA) Exiting' },
+  //   { value: 'exitingPartC', label: 'Infants and Toddlers with Disabilities (IDEA Part C) Exiting' },\
+  //   // { value: 'disputeResolution', label: 'IDEA Dispute Resolution Part B' },
+  // ];
 
   public sourceOptions = [
     { value: 'collection', label: 'By uploading data files' },
@@ -130,7 +141,7 @@ export class DataViewModalComponent implements OnDestroy {
 
   public sourceValueNameMap: Record<string, string> = {
     collection: 'by File Upload',
-    database: 'by Warehouse',
+    database: 'by Database connection',
   };
 
   public changes: Record<string, { label: string; previousValue: string; changedValue: string }> = {};
@@ -151,6 +162,13 @@ export class DataViewModalComponent implements OnDestroy {
 
   public reloadData = false;
 
+  // Input signal
+  $pageContentSignal: Signal<PageContentText | null>; // = this.pagesContentService.getPageContentSignal('data', 'en');
+  //$pageSectionsSignal: Signal<PageSectionContentText[]|undefined>;  //  = computed(() => this.$pageContentSignal()?.sections);
+  pageContent: PageContentText | null;
+  pageSections: PageSectionContentText[] | undefined;
+  pageContentLoaded: boolean = false;
+
   @HostListener('window:beforeunload')
   beforeUnload(event: any) {
     if (this.baseDataViewForm.dirty) {
@@ -159,13 +177,45 @@ export class DataViewModalComponent implements OnDestroy {
   }
 
   constructor(
+    private logger: NGXLogger,
     private fb: FormBuilder,
     private data: AdaptDataService,
+    private location: LocationStrategy,
     private alert: AlertService,
     private idle: Idle,
-    private user: UserService
+    private user: UserService,
+    public pagesContentService: PagesContentService,
+    private cdRef: ChangeDetectorRef
   ) {
-    this.baseDataViewForm = fb.group({
+    this.logger.debug('Inside data-view-modal component constructor');
+
+    this.initializeComponentSignals();
+  }
+
+  ngOnInit() {
+    this.logger.debug('Inside data-view-modal component ngOnInit');
+
+    this.typeOptions = this.data
+      .getTemplates('DataCollection')
+      .pipe(map((result) => result.map((temp: any) => ({ label: temp.name, value: temp.id.replace('ID#', '') }))));
+
+    this.createDataViewForm();
+
+    this.location.onPopState((event) => {
+      if (event.type === 'popstate') this.internalClose();
+    });
+
+    this.dataSources = this.data.getDataSources();
+    this.dataViews = this.data.getDataViews();
+    this.reports = this.data.getReports();
+
+    this.initializeFormValueChangeListeners();
+  }
+
+  private createDataViewForm() {
+    this.logger.debug('Inside data-view-modal component createDataViewForm');
+
+    this.baseDataViewForm = this.fb.group({
       type: this.fb.control('', [Validators.required]),
       source: this.fb.control('collection', [Validators.required]),
       database: this.fb.control('', [Validators.required]),
@@ -176,15 +226,18 @@ export class DataViewModalComponent implements OnDestroy {
     });
 
     this.name.setAsyncValidators([uniqueNameValidator('DataView', this.data, this.mode)]);
+    this.name.disable({ emitEvent: false });
+    this.description.disable({ emitEvent: false });
+    this.database.disable({ emitEvent: false });
 
     this.editJustificationForm = this.fb.group({
       reason: this.fb.control('', [Validators.required]),
       justification: this.fb.control(''),
     });
+  }
 
-    this.name.disable({ emitEvent: false });
-    this.description.disable({ emitEvent: false });
-    this.database.disable({ emitEvent: false });
+  private initializeFormValueChangeListeners() {
+    this.logger.debug('Inside data-view-modal initializeFormValueChangeListeners');
 
     const typeChanges = this.type.valueChanges
       .pipe(startWith(this.type.value), pairwise())
@@ -196,14 +249,23 @@ export class DataViewModalComponent implements OnDestroy {
         this.files.disable();
         return;
       }
+
       this.database.disable();
       // this.files.enable();
     });
 
-    this.dataSources = this.data.getDataSources();
-    this.dataViews = this.data.getDataViews();
-    this.reports = this.data.getReports();
+    /*
+    The switchMap operator in Angular, part of the RxJS library, is a powerful higher-order observable operator used for transforming a stream of values from one observable into a stream from another, with a key feature: cancellation of previous inner observables.
 
+    How it Works:
+      - Source Observable Emission: When the source observable (the one switchMap is piped to) emits a value, switchMap takes that value and uses it to create a new "inner" observable.
+      - Subscription and Emission: switchMap then subscribes to this newly created inner observable and starts emitting its values.
+      - Cancellation on New Emission: If the source observable emits another value before the current inner observable completes, switchMap automatically unsubscribes from the previous inner observable and subscribes to a new inner observable created from the latest source value. This effectively cancels any ongoing operations from the previous inner observable.
+
+    Key Characteristics and Use Cases:
+      - Cancellation Effect: This is the defining characteristic of switchMap. It prioritizes the latest emission from the source observable, abandoning any ongoing work from previous inner observables. This is crucial for scenarios where only the most recent operation matters.
+
+     */
     const duplicateCheckSub = this.typeFields.valueChanges
       .pipe(
         switchMap((value) =>
@@ -236,7 +298,6 @@ export class DataViewModalComponent implements OnDestroy {
           )
         )
       )
-
       .subscribe(([dataView, template]: any[]) => {
         this.duplicate = dataView;
         this.duplicateTemplate = template;
@@ -274,6 +335,51 @@ export class DataViewModalComponent implements OnDestroy {
     this.subscriptions.push(typeChanges, sourceSub, duplicateCheckSub, justificationReasonSub, timeOutSub);
   }
 
+  private initializeComponentSignals() {
+    this.logger.debug('Inside data-view-modal initializeComponentSignals');
+
+    this.$pageContentSignal = this.pagesContentService.getPageContentSignal('data', 'en');
+    //this.$pageSectionsSignal = computed(() => this.$pageContentSignal()?.sections);
+
+    // after we got a signal that the pageContent was updated
+    effect(() => {
+      this.logger.debug('$pageContentSignal retrieved');
+      this.pageContent = this.$pageContentSignal();
+
+      this.logger.debug('pageContent: ', this.pageContent);
+
+      if (this.pageContent) {
+        this.logger.debug('Have page content');
+
+        this.pageSections = this.pageContent.sections;
+
+        if (!this.pageContent.title) {
+          this.logger.error('Invalid page title');
+        }
+
+        if (!(this.pageContent.sections && this.pageContent?.sections?.length > 0)) {
+          this.logger.error('Invalid page sections');
+        } else {
+          this.logger.debug('Have page sections');
+          this.pageContentLoaded = true;
+        }
+      } else {
+        this.logger.debug('NO page content');
+        this.pageContentLoaded = false;
+      }
+    });
+
+    // after we got a signal that the pageSections was updated
+    // effect(() => {
+    //
+    //   this.logger.debug('$pageSectionsSignal retrieved');
+    //
+    //   this.pageSections = this.$pageSectionsSignal();
+    //   //this.pageContentLoaded = true;
+    //
+    //   this.logger.debug('pageSections: ', this.pageSections);
+    // });
+  }
   public async onFileChange(index: number, file: File | null) {
     this.fileUploadPercentage[index] = 0;
 
@@ -295,6 +401,7 @@ export class DataViewModalComponent implements OnDestroy {
     if (!this.currentDataView) {
       await this.initDataView();
     }
+    console.log('currentDataView: ', this.currentDataView);
 
     this.currentDataView!.data.files[index].location = file?.name ?? '';
 
@@ -348,6 +455,7 @@ export class DataViewModalComponent implements OnDestroy {
     const defaultInput: NewDataViewInput = this.getSaveInput();
 
     this.currentDataView = await firstValueFrom(this.data.createDataView(defaultInput));
+    console.log('currentDataView: ', this.currentDataView);
     this.saving = false;
     this.saved = true;
   }
@@ -355,7 +463,7 @@ export class DataViewModalComponent implements OnDestroy {
   private getSaveInput() {
     const defaultInput: NewDataViewInput = {
       name: this.name.value || (this.currentTemplate?.name ?? ''),
-      description: this.description.value || (this.currentTemplate?.description ?? ''),
+      description: this.description.value || (this.currentTemplate?.dataViewDescription ?? ''),
       dataViewType: this.source.value || 'collection',
       data: {
         id: crypto.randomUUID(),
@@ -366,15 +474,21 @@ export class DataViewModalComponent implements OnDestroy {
     };
 
     if (this.currentTemplate) {
-      for (const field of Object.keys(this.typeFields.controls)) {
-        defaultInput.data.fields.push({ id: field, value: this.typeFields.get(field)?.value });
+      for (const [index, field] of Object.keys(this.typeFields.controls).entries()) {
+        const typeField = this.typeFields.get(field);
+
+        const templateField = this.currentTemplate.fields[index].options.find(
+          (option) => option.value === typeField?.value
+        );
+
+        defaultInput.data.fields.push({ id: field, label: templateField.label ?? '', value: typeField?.value });
       }
 
       for (const [index, file] of this.currentTemplate.files.entries()) {
         defaultInput.data.files.push({ id: file.id, database: file.database, dataParse: file.dataParse, location: '' });
       }
 
-      defaultInput.data.id = this.currentTemplate.id;
+      defaultInput.data.id = this.currentTemplate.id.split('#')[1];
     }
     return defaultInput;
   }
@@ -394,8 +508,6 @@ export class DataViewModalComponent implements OnDestroy {
           this.fileControlStates[index] = FileControlState.VALID;
         },
         error: ({ error: { err } }: HttpErrorResponse) => {
-          this.fileControlStates[index] = FileControlState.VALDATION_FAILED;
-
           this.files.controls[index].setErrors({ validateFiles: err });
         },
       });
@@ -410,23 +522,31 @@ export class DataViewModalComponent implements OnDestroy {
   }
 
   public async onTypeChange([prev, next]: [string, string]) {
+    this.logger.debug('Inside data-view-modal component onTypeChange, prev: ', prev, ', next: ', next);
     const { value } = this.type;
 
     if (prev !== next) {
+      this.logger.debug('remove all type fields controls');
       Object.keys(this.typeFields.controls).forEach((key) => this.typeFields.removeControl(key));
 
       this.files.clear({ emitEvent: false });
     }
 
-    this.currentTemplate = await this.data.getDataCollectionTemplatePromise(value);
+    //dev-AdaptTemplates
+    this.currentTemplate = await firstValueFrom(this.data.getTemplate('DataCollection', value));
 
-    for (const [index, file] of this.currentTemplate.files.entries()) {
+    this.logger.debug('currentTemplate: ', this.currentTemplate);
+
+    // need to remove the reporting level field from the template to support ticket WEISS-1343
+    this.currentTemplate!.fields = this.currentTemplate!.fields.filter((field) => field.id !== 'reportingLevel');
+
+    for (const [index, file] of this.currentTemplate!.files.entries()) {
       if (this.fileControlStates[index] >= 0) continue;
       this.fileControlStates[index] = FileControlState.EMPTY;
     }
 
     this.setName();
-    this.description.setValue(this.currentTemplate?.description);
+    this.description.setValue(this.currentTemplate?.dataViewDescription);
 
     for (const field of this.currentTemplate!.fields) {
       const control = this.fb.control(field.default);
@@ -435,6 +555,7 @@ export class DataViewModalComponent implements OnDestroy {
         control.addValidators(Validators.required);
       }
 
+      this.logger.debug('add type field control: ', field.id);
       this.typeFields.addControl(field.id, control, { emitEvent: false });
     }
 
@@ -462,7 +583,13 @@ export class DataViewModalComponent implements OnDestroy {
     this.instanceSubscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  ngAfterContentChecked() {
+    this.cdRef.detectChanges();
+  }
+
   public next() {
+    this.logger.debug('Inside data-view-modal component next');
+
     this.baseDataViewForm.markAllAsTouched();
 
     // based on the current step do something
@@ -506,17 +633,20 @@ export class DataViewModalComponent implements OnDestroy {
 
     this.name.setValue(
       this.name.value +
-        ` - ${this.sourceValueNameMap[this.source.value]} - ${new Date().toLocaleDateString(undefined, {
-          month: '2-digit',
-          day: '2-digit',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        })}`
+        ` - ${this.pageContent?.actions?.[this.source.value] ?? this.sourceValueNameMap[this.source.value]} - ${new Date().toLocaleDateString(
+          undefined,
+          {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric',
+          }
+        )}`
     );
   }
 
   public previous() {
+    this.logger.debug('Inside data-view-modal component previous');
+
     this.stepsIndicator.prev();
 
     // based on the step manage the form controls
@@ -608,31 +738,33 @@ export class DataViewModalComponent implements OnDestroy {
     this.saving = false;
     this.saved = true;
 
-    //if(startDataPull && !this.baseDataViewForm.invalid){
+    if (
+      startDataPull &&
+      this.currentDataView?.status !== DataSetQueueStatus.MISSING_DATA &&
+      !this.baseDataViewForm.invalid
+    ) {
+      const name = this.name.value;
 
-    const name = this.name.value;
-
-    this.data
-      .doDataPull(this.currentDataView!.dataViewID)
-      .pipe(
-        catchError((err) => {
+      this.data
+        .doDataPull(this.currentDataView!.dataViewID)
+        .pipe(
+          catchError((err) => {
+            this.alert.add({
+              type: 'error',
+              title: 'Data View Save Failed',
+              body: `Data View Save for ${name} failed: ${err}`,
+            });
+            return err;
+          })
+        )
+        .subscribe(() => {
           this.alert.add({
-            type: 'error',
-            title: 'Data View Save Failed',
-            body: `Data View Save for ${name} failed: ${err}`,
+            type: 'success',
+            title: 'Data View Save Complete',
+            body: `Data View ${name} has been saved successfully. You will receive a notification when data view is ready for use.`,
           });
-          return err;
-        })
-      )
-      .subscribe(() => {
-        this.alert.add({
-          type: 'success',
-          title: 'Data View Save Complete',
-          body: `Data View ${name} has been saved successfully. You will receive a notification when data view is ready for use.`,
         });
-      });
-
-    //}
+    }
 
     if (close) {
       this.closed.emit(this.currentDataView);
@@ -643,8 +775,9 @@ export class DataViewModalComponent implements OnDestroy {
   }
 
   public async internalClose(cancel = false, globalClose = false) {
+    this.logger.debug('Inside data-view-modal component internalClose');
     if (this.baseDataViewForm.dirty && !globalClose) {
-      confirm('You have unsaved changes are you sure?') ? this.modal.close() : '';
+      return this.confirmCloseModal.open();
     } else {
       this.modal.close();
     }
@@ -694,10 +827,11 @@ export class DataViewModalComponent implements OnDestroy {
     this.doSave(true, true, hasFileChanges || this.reloadData);
   }
 
-  public async open(dataView?: DataView, viewMode = false, pageIndex = 0, dataSource = '') {
-    if (!this.modal) return;
+  reportingYear: string;
 
-    this.database.setValue(dataSource);
+  public async open(dataView?: DataView, viewMode = false, pageIndex = 0, dataSource = '') {
+    this.logger.debug('Inside data-view-modal component open');
+    if (!this.modal) return;
 
     this.opened = true;
 
@@ -707,6 +841,15 @@ export class DataViewModalComponent implements OnDestroy {
       this.name.setAsyncValidators([uniqueNameValidator('DataView', this.data, this.mode)]);
 
       this.currentDataView = dataView;
+
+      // Set reporting year as bespoke value to fit properly in expected template
+      if (this.currentDataView.data.fields) {
+        this.currentDataView.data.fields.forEach((field) => {
+          if (field.id === 'reportingYear') {
+            this.reportingYear = field.value;
+          }
+        });
+      }
 
       if (this.currentDataView.dataViewType === 'collection') {
         for (const [index, file] of this.currentDataView.data.files.entries()) {
@@ -722,7 +865,10 @@ export class DataViewModalComponent implements OnDestroy {
         source: dataView.dataViewType,
         database: dataView.data.dataSource,
         files: dataView.data.files.map((file) => new File([], file.location)),
-        typeFields: dataView.data.fields.reduce((accum, val) => Object.assign(accum, { [val.id]: val.value }), {}),
+        typeFields: dataView.data.fields.reduce(
+          (accum, val) => Object.assign(accum, { [val.id]: val.value, label: val.label }),
+          {}
+        ),
         name: dataView.name,
         description: dataView.description,
       };
@@ -743,15 +889,22 @@ export class DataViewModalComponent implements OnDestroy {
     this.reloadData = pageIndex === 1;
 
     this.handleCurrentStepNext(1);
+
+    requestAnimationFrame(() => {
+      this.source.setValue(dataView?.dataViewType || 'database');
+    });
   }
 
   public close() {
+    this.logger.debug('Inside data-view-modal component close');
     if (!this.modal) return;
     this.modal.close();
     this.opened = false;
   }
 
   public async showPreview(index: number) {
+    this.logger.debug('Inside data-view-modal component showPreview, index: ', index);
+
     if (!this.currentDataView) {
       await this.initDataView();
     }
@@ -799,6 +952,10 @@ export class DataViewModalComponent implements OnDestroy {
 
       return null;
     };
+  }
+
+  public getDetailLabel(content: SectionQuestionContentText[] = [], id?: string) {
+    return content.find((question) => question.id === id)?.label;
   }
 
   private getEventMessage(event: HttpEvent<any>) {
@@ -853,11 +1010,13 @@ export class DataViewModalComponent implements OnDestroy {
     return this.currentTemplate?.files?.[index]?.previewHeaders || [];
   }
 
-  public getTypeLabel(value: string) {
-    return this.typeOptions.find((opt) => opt.value === value)?.label || value;
-  }
+  // public getTypeLabel(value: string) {
+  //   return this.typeOptions.find((opt) => opt.value === value)?.label || value;
+  // }
 
   public onEditModeChanges([prev, current]: any) {
+    this.logger.debug('Inside data-view-modal component onEditModeChanges');
+
     if (this.mode !== PageMode.EDIT) return;
 
     // type: this.fb.control('', [Validators.required]),
@@ -937,6 +1096,8 @@ export class DataViewModalComponent implements OnDestroy {
   }
 
   public openDuplicatePreview() {
+    this.logger.debug('Inside data-view-modal component openDuplicatePreview');
+
     if (!this.duplicateModal) return;
 
     this.duplicateModal.open();

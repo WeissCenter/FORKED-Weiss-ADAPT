@@ -18,18 +18,27 @@
     </p>
   </div>
 
-  <div class="list-item-user-controls display-flex gap-1 flex-column">
+  <div class="list-item-user-controls flex-justify-center display-flex gap-2 flex-column">
     <lib-adapt-toggle-switch
       [describedByID]="user.attributes.email + '-name'"
-      [ngModel]="!user.active"
-      toggledLabel="Activate User"
-      unToggledLabel="Deactivate User"></lib-adapt-toggle-switch>
+      [ngModel]="user.active"
+      *adaptAccessControl="'Users'; behavior: 'hide'; action: 'Write'"
+      (ngModelChange)="onChangeState($event)"
+      toggledLabel="Deactivate User"
+      unToggledLabel="Activate User"></lib-adapt-toggle-switch>
 
-    <lib-adapt-combo-box
-      label="Role:"
+    <p class="usa-label" [id]="user.attributes.email + '-role'">Role:</p>
+    <select
+      #roleSelect
+      *adaptAccessControl="'Users'; behavior: 'hide'; action: 'Write'"
+      (ngModelChange)="onChangeRole($event)"
       [ngModel]="user.role"
-      itemLabel="label"
-      itemAccessor="value"
-      [items]="roles"></lib-adapt-combo-box>
+      [attr.aria-labelledby]="user.attributes.email + '-role'"
+      class="usa-select width-auto display-inline"
+      name="role">
+      <option *ngFor="let role of roles" [value]="role.value">
+        {{ role.label }}
+      </option>
+    </select>
   </div>
 </div>

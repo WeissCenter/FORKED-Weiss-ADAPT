@@ -3,7 +3,6 @@ import { DataViewModalComponent } from '../../components/data-view-modal/data-vi
 import { DataSource, DataView, PageMode } from '@adapt/types';
 import { DataSourceModalComponent } from '../data-source-modal/data-source-modal.component';
 import { ReportModalComponent } from '../report-modal/report-modal.component';
-import { CognitoGroups, Roles } from '../../../auth/services/role/role.service';
 
 @Component({
   selector: 'adapt-list-item-data',

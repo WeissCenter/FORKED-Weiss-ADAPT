@@ -14,6 +14,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { inPageNavigation } from '@uswds/uswds/js';
 import { fromEvent, skip, Subscription, take, throttle, throttleTime } from 'rxjs';
+import { NGXLogger } from 'ngx-logger';
 @Component({
   selector: 'adapt-in-page-navigation',
   templateUrl: './in-page-navigation.component.html',
@@ -36,8 +37,9 @@ export class InPageNavigationComponent implements AfterViewInit {
   private currentItem: HTMLElement | null = null;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
+    //private router: Router,
+    //private route: ActivatedRoute,
+    private logger: NGXLogger,
     private elementRef: ElementRef,
     private renderer: Renderer2,
     private ngZone: NgZone
@@ -72,6 +74,8 @@ export class InPageNavigationComponent implements AfterViewInit {
   // };
 
   private setupClickListeners() {
+    this.logger.debug('Inside setupClickListeners', this.elementRef);
+
     const navLinks = this.elementRef.nativeElement.querySelectorAll('.usa-in-page-nav__link');
     navLinks.forEach((link: HTMLAnchorElement) => {
       this.renderer.listen(link, 'click', (event: Event) => this.handleClick(event));
@@ -153,6 +157,7 @@ export class InPageNavigationComponent implements AfterViewInit {
   // };
 
   ngAfterViewInit(): void {
+    this.logger.debug('Inside ngAfterViewInit', this.elementRef);
     // document
     // .querySelector(this.selector)
     // ?.querySelectorAll(this.headingElements)

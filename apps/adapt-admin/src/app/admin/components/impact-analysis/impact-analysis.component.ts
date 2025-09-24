@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, combineLatest, concat, map, of, switchMap, tap, zip } from 'rxjs';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { DataSet, DataSource, DataView, IReport } from '@adapt/types';
+import { PagesContentService } from '../../../auth/services/content/pages-content.service';
+import { ImpactAnalysisContentText } from '../../models/admin-content-text.model';
 
 @Component({
   selector: 'adapt-impact-analysis',
@@ -18,6 +20,10 @@ export class ImpactAnalysisComponent implements OnInit {
 
   @Input() headingLevel: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h3';
 
+  public $content = computed(() => {
+    return this.contentService.getSharedContentSignal()()?.impactAnalysis;
+  });
+
   public dataViewCount = 0;
   public reportCount = 0;
   public pageSize = 5;
@@ -31,7 +37,10 @@ export class ImpactAnalysisComponent implements OnInit {
 
   public items?: Observable<any[]>;
 
-  constructor(private data: AdaptDataService) {}
+  constructor(
+    private data: AdaptDataService,
+    private contentService: PagesContentService
+  ) {}
 
   ngOnInit(): void {
     switch (this.type) {
@@ -40,7 +49,7 @@ export class ImpactAnalysisComponent implements OnInit {
 
         this.items = this.dataViews.pipe(
           switchMap((views) => {
-            const dataViews = views.filter((view) => view.data.dataSource === this.id);
+            const dataViews = views.filter((view) => view?.data?.dataSource === this.id);
 
             return zip(dataViews.map((vt) => this.getImpactAnalysisForView(vt))).pipe(
               map((val) => {
@@ -71,6 +80,10 @@ export class ImpactAnalysisComponent implements OnInit {
         break;
       }
     }
+  }
+
+  public onPageChange(page: number) {
+    this.page = page;
   }
 
   public onPageSizeChange($event: any) {

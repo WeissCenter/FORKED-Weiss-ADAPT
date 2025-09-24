@@ -4,6 +4,8 @@
   "metaTags": ["Part B", "618", "Child Count"],
   "suppression": {
     "required": true,
+    "parentOrganization": "file",
+    "childOrganization": "CategorySetCode",
     "sensitiveColumns": [
       "RACE",
       "SEX",
@@ -645,7 +647,7 @@
               {
                 "title": "Most Common Disabilities",
                 "body": {
-                  "template": "In the reported data, the top three disability categories in your State are {{var_1}}",
+                  "template": "In the reported data, the top three disability categories in your State are {{var_1}}.",
                   "variables": {
                     "var_1": {
                       "function": "top_disabilities_percentages",
@@ -654,6 +656,11 @@
                         {
                           "field": "ReportCode",
                           "value": "c089"
+                        },
+                        {
+                          "field": "CategorySetCode",
+                          "type": "string",
+                          "value": "ST3"
                         }
                       ]
                     }
@@ -663,7 +670,7 @@
               {
                 "title": "Least Common Disabilities",
                 "body": {
-                  "template": "In the reported data, the three least common disabilities in your State are {{var_1}}",
+                  "template": "In the reported data, the three least common disabilities in your State are {{var_1}}.",
                   "variables": {
                     "var_1": {
                       "function": "bottom_disabilities_percentages",
@@ -672,6 +679,11 @@
                         {
                           "field": "ReportCode",
                           "value": "c089"
+                        },
+                        {
+                          "field": "CategorySetCode",
+                          "type": "string",
+                          "value": "ST3"
                         }
                       ]
                     }

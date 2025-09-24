@@ -4,9 +4,9 @@
       <ng-container *ngSwitchCase="'views'">
         <lib-adapt-h-element [ngClass]="'usa-prose margin-0'" [level]="headingLvl">
           <a
-            class="text-primary hover:primary-dark text-semibold text-no-underline cursor-pointer display-inline-flex width-auto"
-            (click)="dataViewModal.open(view)"
-            (keydown.enter)="dataViewModal.open(view)"
+            class="text-primary hover:primary-dark flex-align-center text-semibold text-no-underline cursor-pointer display-inline-flex width-auto"
+            (click)="dataViewModal.open(view, true)"
+            (keydown.enter)="dataViewModal.open(view, true)"
             (keydown.space)="handleSpaceInput($event)"
             >{{ view.name }}</a
           >
@@ -31,7 +31,7 @@
             </h4>
         </ng-container> -->
         <p class="text-normal font-sm line-height-5 text-ink" *ngIf="view.description">{{ view.description }}</p>
-        <p class="text-normal font-sm line-height-4 text-ink">
+        <p class="text-normal font-sm line-height-5 text-ink">
           Last updated on {{ view.created | date: 'MM/dd/yyyy' }} at {{ view.created | date: 'hh:mm a' }}, Created by
           {{ view.author }}
         </p>
@@ -111,8 +111,15 @@
         <div class="display-flex flex-wrap gap-1 width-full">
           <button type="button" class="usa-button" (click)="dataViewModal.open(view, true)">View</button>
 
-          <button type="button" class="usa-button" (click)="dataViewModal.open(view, false)">Edit</button>
           <button
+            *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'"
+            type="button"
+            class="usa-button"
+            (click)="dataViewModal.open(view, false)">
+            Edit
+          </button>
+          <button
+            *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'"
             [hidden]="view.status !== 'AVAILABLE'"
             type="button"
             class="usa-button usa-button--outline shadow-none"
@@ -120,8 +127,9 @@
             Create Report
           </button>
           <button
+            *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'"
             type="button"
-            [disabled]="view.status !== 'AVAILABLE'"
+            [hidden]="view.status !== 'AVAILABLE'"
             [id]="'reload_data_' + view.dataViewID + '_btn'"
             class="usa-button usa-button--outline shadow-none"
             (click)="dataViewModal.open(view, false, 1)">
@@ -137,6 +145,10 @@
       <ng-container *ngSwitchCase="'sources'">
         <div class="display-flex gap-4 flex-wrap width-full">
           <button
+            *adaptAccessControl="'Data Sources'"
+            permissionObject="Data Sources"
+            noPermissionsBehavior="disable"
+            permissionAction="Write"
             (click)="dataSourceModal.open(view, PageMode.EDIT)"
             type="button"
             [id]="'edit_' + view.dataSourceID + '_btn'"
@@ -149,7 +161,7 @@
             (click)="dataSourceModal.open(view, PageMode.VIEW)"
             [id]="'view_' + view.dataSourceID + '_btn'"
             class="usa-button usa-button--outline shadow-none">
-            <i class="fal fa-copy" role="img" aria-hidden="true"></i> View
+            View
           </button>
         </div>
       </ng-container>

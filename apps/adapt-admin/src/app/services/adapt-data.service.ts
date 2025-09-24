@@ -23,6 +23,8 @@ import {
   TemplateType,
   EventType,
   ShareReport,
+  AppRolePermissions,
+  LanguageCode,
 } from '@adapt/types';
 import { FileValidation } from '@adapt/validation';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
@@ -40,11 +42,12 @@ import {
   filter,
   take,
   ReplaySubject,
+  tap,
 } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Response as APIResponse } from '@adapt/types';
 import { UserService } from '../auth/services/user/user.service';
-import { SettingsService } from '../admin/services/settings.service';
+import { SettingsService } from '@adapt/adapt-shared-component-lib';
 @Injectable({
   providedIn: 'root',
 })
@@ -93,7 +96,12 @@ export class AdaptDataService {
 
         this.http
           .get<APIResponse<DataSource[]>>(`${environment.API_URL}data`)
-          .pipe(map((result) => result.data))
+          .pipe(
+            map((result) => {
+              // console.log(result.data)
+              return result.data;
+            })
+          )
           .subscribe((dataSources) => this._dataSources.next(dataSources));
 
         this.http
@@ -164,9 +172,9 @@ export class AdaptDataService {
     return this.http.request(req);
   }
 
-  public isUnique(type: string, name: string) {
+  public isUnique(type: string, name: string, field = 'name') {
     return this.http
-      .post<APIResponse<boolean>>(`${environment.API_URL}unique`, { type, name })
+      .post<APIResponse<boolean>>(`${environment.API_URL}unique`, { type, name, field })
       .pipe(map((result) => result.data));
   }
 
@@ -218,9 +226,23 @@ export class AdaptDataService {
       .pipe(map((result) => result.data));
   }
 
-  public editReport(report: IReport) {
+  public editReport(report: { reportID: string; languages: { [lang: string]: IReport } }) {
     return this.http
       .put<APIResponse<IReport>>(`${environment.API_URL}report/${report.reportID}`, report)
+      .pipe(map((result) => result.data));
+  }
+
+  public translateReportText(report: string, body: { title: string; description: string }, lang?: string) {
+    let params = new HttpParams();
+
+    if (lang) {
+      params = params.append('lang', lang);
+    }
+
+    return this.http
+      .post<
+        APIResponse<Record<LanguageCode, any>>
+      >(`${environment.API_URL}report/${report}/translate`, body, { params })
       .pipe(map((result) => result.data));
   }
 
@@ -304,6 +326,21 @@ export class AdaptDataService {
   public getDataSet(dataSetID: string) {
     return this.http
       .get<APIResponse<DataSet>>(`${environment.API_URL}dataset/${dataSetID}`)
+      .pipe(map((result) => result.data));
+  }
+
+  public getReportData(id: string, version = 'draft', filters = {}, suppressed = false, lang = 'en', pageId?: string) {
+    let params = new HttpParams();
+
+    params = params.append('version', version);
+
+    params = params.append('suppressed', suppressed);
+    params = params.append('lang', lang);
+    if (pageId !== undefined) {
+      params = params.append('pageId', pageId);
+    }
+    return this.http
+      .post<APIResponse<any>>(`${environment.API_URL}report/${id}/data`, filters, { params })
       .pipe(map((result) => result.data));
   }
 
@@ -428,9 +465,15 @@ export class AdaptDataService {
       .pipe(map((res) => res.data));
   }
 
-  public getReport(id: string, version = 'draft'): Observable<IReport | undefined> {
+  public getReport(id: string, version = 'draft', lang?: string): Observable<IReport | IReport[] | undefined> {
+    let params = new HttpParams().append('version', version);
+
+    if (lang) {
+      params = params.append('lang', lang);
+    }
+
     return this.http
-      .get<APIResponse<IReport>>(`${environment.API_URL}report/${id}`, { params: { version } })
+      .get<APIResponse<IReport>>(`${environment.API_URL}report/${id}`, { params })
       .pipe(map((result) => result.data));
   }
 
@@ -454,9 +497,10 @@ export class AdaptDataService {
   }
 
   public updateSettings(settings: UpdateAdaptSettingsInput) {
-    return this.http
-      .post<APIResponse<AdaptSettings>>(`${environment.API_URL}settings`, settings)
-      .pipe(map((result) => result.data));
+    return this.http.post<APIResponse<AdaptSettings>>(`${environment.API_URL}settings`, settings).pipe(
+      map((result) => result.data),
+      tap((settings) => this.settings.next(settings))
+    );
   }
 
   public getSettingsLogoUploadURL(filename: string) {
@@ -496,6 +540,12 @@ export class AdaptDataService {
 
   public getUsers() {
     return this.http.get<APIResponse<any>>(`${environment.API_URL}users`).pipe(map((result) => result.data));
+  }
+
+  public editUser(username: string, role: keyof AppRolePermissions, active = true) {
+    return this.http
+      .put<APIResponse<any>>(`${environment.API_URL}users`, { username, active, role })
+      .pipe(map((result) => result.data));
   }
 
   public shareReport(reportID: string, filters: Record<string, any>) {

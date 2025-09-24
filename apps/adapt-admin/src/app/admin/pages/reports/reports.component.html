@@ -1,17 +1,28 @@
+@let pageContent = $pageContent();
 <section *ngIf="!outlet.isActivated" class="reports-container grid-container gap-4 display-flex flex-column">
-  <header role="banner" class="reports-banner width-full display-flex usa-prose flex-column">
-    <!-- TODO: This heading/description needs to dynamically change when the view is updated. Options are Draft Reports/Finalized Reports -->
-    <h1 class="margin-0">Reports List</h1>
-    <p class="measure-4 usa-prose margin-bottom-0">
-      Find your most recent working drafts here, easily accessible for further editing.
-    </p>
+  <header *ngIf="pageContent" role="banner" class="reports-banner width-full display-flex usa-prose flex-column">
+    <!-- Reports List -->
+    <h1 class="margin-0">{{ pageContent.title }}</h1>
+    <p class="measure-4 usa-prose margin-bottom-0">{{ pageContent.description }}</p>
+
+    <a
+      href="https://weisscenter.gitbook.io/weisscenter/user-guide/reports"
+      target="_blank"
+      aria-label="Learn More (opens in a new tab)"
+      style="font-size: 0.8rem; margin-top: 8px">
+      <span aria-hidden="true">Learn More <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
+    </a>
   </header>
 
   <!-- <div class="reports-filtering bg-white width-full padding-3 margin-top-4 border-base-lighter border">
         <h2 class="margin-0">Filters</h2>
     </div> -->
 
-  <div role="tablist" aria-label="Reporting Controls" class="reports-controls display-flex gap-4">
+  <div
+    *ngIf="pageContent?.tabs"
+    role="tablist"
+    aria-label="Reporting Controls"
+    class="reports-controls display-flex gap-4">
     <!-- TODO: Hardcoding the tabs for the demo on 11/13/23; needs to be updated to switch between "draft reports" and "finalized reports" with a corresponding active class for the tab that is active -->
 
     <div
@@ -21,12 +32,13 @@
       <button
         routerLink="."
         role="tab"
-        [queryParams]="{ status: '' }"
-        role="tab"
         aria-controls="reports"
-        [ngClass]="{ 'border-bottom-05': data.isAll }"
-        class="usa-button usa-button--outline shadow-none">
-        All<span class="display-none tablet:display-inline"> reports</span>
+        class="usa-button usa-button--outline shadow-none"
+        [queryParams]="{ status: '' }"
+        [ngClass]="{ 'border-bottom-05': data.isAll }">
+        <!-- All Reports -->
+        {{ (pageContent?.tabs)![0] }}
+        <!--        All<span class="display-none tablet:display-inline"> reports</span>-->
       </button>
     </div>
 
@@ -37,46 +49,51 @@
       <button
         routerLink="."
         role="tab"
-        [queryParams]="{ status: 'draft' }"
-        role="tab"
         aria-controls="reports"
-        [ngClass]="{ 'border-bottom-05': data.isDraft }"
-        class="usa-button usa-button--outline shadow-none">
-        Draft<span class="display-none tablet:display-inline"> reports</span>
+        class="usa-button usa-button--outline shadow-none"
+        [queryParams]="{ status: 'draft' }"
+        [ngClass]="{ 'border-bottom-05': data.isDraft }">
+        <!-- Draft Reports -->
+        {{ (pageContent?.tabs)![1] }}
+        <!--        Draft<span class="display-none tablet:display-inline"> reports</span>-->
       </button>
     </div>
 
     <div
       class="tab-item"
-      [attr.aria-selected]="data.isFinalized"
-      *ngIf="{ isFinalized: status.value.length === 1 && status.value.includes('finalized') } as data">
+      *ngIf="{ isFinalized: status.value.length === 1 && status.value.includes('finalized') } as data"
+      [attr.aria-selected]="data.isFinalized">
       <button
         routerLink="."
-        [queryParams]="{ status: 'finalized' }"
-        class="usa-button usa-button--outline shadow-none"
         aria-controls="reports"
+        class="usa-button usa-button--outline shadow-none"
+        [queryParams]="{ status: 'finalized' }"
         [attr.aria-selected]="data.isFinalized"
         [ngClass]="{ 'border-bottom-05': data.isFinalized }"
         [id]="'view_finalized_reports_btn'">
-        Finalized<span class="display-none tablet:display-inline"> reports</span>
+        <!-- Finalized Reports -->
+        {{ (pageContent?.tabs)![2] }}
+        <!--        Finalized<span class="display-none tablet:display-inline"> reports</span>-->
       </button>
     </div>
 
-    <div
+    <!-- <div
       class="tab-item"
       *ngIf="{ isArchived: status.value.length === 1 && status.value.includes('archived') } as data"
       [attr.aria-selected]="data.isArchived">
       <button
         routerLink="."
-        [queryParams]="{ status: 'archived' }"
-        class="usa-button usa-button--outline shadow-none"
         aria-controls="reports"
+        class="usa-button usa-button--outline shadow-none"
+        [queryParams]="{ status: 'archived' }"
         [attr.aria-selected]="data.isArchived"
         [ngClass]="{ 'border-bottom-05': data.isArchived }"
         [id]="'view_archived_reports_btn'">
-        Archived<span class="display-none tablet:display-inline"> reports</span>
-      </button>
-    </div>
+
+     {{ (pageContent?.tabs)![3] }}
+         Archived<span class="display-none tablet:display-inline"> reports</span>
+  </button>
+    </div> -->
 
     <!-- <button routerLink="." class="usa-button usa-button--unstyled font-sans-lg">All reports</button>
 
@@ -184,7 +201,7 @@
           <button
             class="usa-button width-auto align-self-start"
             (click)="openModal()"
-            [disabled]="!role.hasPermission(Permission.WRITE)">
+            *adaptAccessControl="'Reports'; behavior: 'hide'; action: 'Write'">
             Create
           </button>
         </div>
@@ -202,7 +219,7 @@
           >Reports have loaded</span
         >
         <adapt-list-item-report
-          (publish)="publishConfirmationModal.open()"
+          (publish)="selectedReport = $event; publishConfirmationModal.open()"
           (unPublish)="startUnPublish(report)"
           *ngFor="let report of reports"
           [report]="report"

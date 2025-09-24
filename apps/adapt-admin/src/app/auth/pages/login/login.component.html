@@ -1,15 +1,18 @@
+@let pageContent = $pageContent();
+@let loginContent = $loginContent();
 <adapt-header></adapt-header>
-<ng-container *ngIf="pagesContent?.login as content">
+<ng-container *ngIf="pageContent && loginContent">
   <section class="usa-container width-full display-flex flex-justify-center tablet:flex-align-center padding-x-1">
     <div
       class="login-content margin-top-2 tablet:margin-top-5 display-flex flex-column bg-white padding-x-2 tablet:padding-x-8 padding-y-4 tablet:padding-y-8 width-full maxw-tablet border border-base-lighter margin-bottom-6 usa-prose">
       <h1 class="margin-top-0 margin-bottom-2 font-lg text-medium line-height-3" i18n>
-        {{ content.title }}
+        {{ pageContent.title }}
       </h1>
-      <div [innerHtml]="content.subtitle"></div>
+
       <form (ngSubmit)="performLogin($event)" class="usa-form margin-top-1">
-        <fieldset class="usa-fieldset" role="group">
-          <label class="usa-label" for="email">{{ content.emailLabel }}</label>
+        <fieldset class="usa-fieldset">
+          <legend [innerHtml]="loginContent.subtitle"></legend>
+          <label class="usa-label" for="email">{{ loginContent.emailLabel }}</label>
           <input
             class="usa-input"
             id="email"
@@ -19,12 +22,12 @@
             autocapitalize="off"
             autocorrect="off"
             required
-            [placeholder]="content.emailPlaceholder"
+            [placeholder]="loginContent.emailPlaceholder"
             aria-describedby="emailHint" />
           <div class="usa-hint margin-top-1 font-2xs" id="emailHint">
-            {{ content.emailHint }}
+            {{ loginContent.emailHint }}
           </div>
-          <label class="usa-label" for="password-sign-in">{{ content.passwordLabel }}</label>
+          <label class="usa-label" for="password-sign-in">{{ loginContent.passwordLabel }}</label>
           <input
             class="usa-input"
             id="password-sign-in"
@@ -32,10 +35,10 @@
             type="password"
             [(ngModel)]="password.value"
             required
-            [placeholder]="content.passwordPlaceholder"
+            [placeholder]="loginContent.passwordPlaceholder"
             aria-describedby="passwordHint" />
           <div class="usa-hint margin-top-1 font-2xs" id="passwordHint">
-            {{ content.passwordHint }}
+            {{ loginContent.passwordHint }}
           </div>
           <div class="display-flex margin-top-2 flex-align-center flex-justify">
             <div class="usa-checkbox">
@@ -44,12 +47,9 @@
                 class="usa-checkbox__label font-sans-2xs margin-top-0"
                 style="line-height: var(--usa-line-height-3)"
                 for="check-remember-me"
-                >{{ content.rememberMeLabel }}</label
+                >{{ loginContent.rememberMeLabel }}</label
               >
             </div>
-            <!-- <p>
-                    <a href="" title="Forgot password" class="font-sans-2xs">Forgot password?</a>
-                  </p> -->
           </div>
           <div class="display-flex mobile-lg:margin-top-1 margin-top-3 flex-column">
             <button
@@ -58,29 +58,29 @@
               type="submit"
               i18n
               (click)="performLogin($event)">
-              {{ content.loginButtonLabel }}
+              {{ loginContent.loginButtonLabel }}
             </button>
           </div>
         </fieldset>
       </form>
-      <div class="display-flex flex-column margin-top-4 padding-y-2 border-y border-base-lighter">
-        <p class="full-width font-sans-2xs text-center">{{ content.ssoLabel }}</p>
-        <div class="display-flex flex-column mobile-lg:flex-row gap-1 margin-top-2 margin-bottom-1">
-          <!-- <button class="usa-button gap-2 flex-1 usa-button--outline" i18n>
+      <!-- <div class="display-flex flex-column margin-top-4 padding-y-2 border-y border-base-lighter">
+        <p class="full-width font-sans-2xs text-center">{{ loginContent.ssoLabel }}</p>
+        <div class="display-flex flex-column mobile-lg:flex-row gap-1 margin-top-2 margin-bottom-1"> -->
+      <!-- <button class="usa-button gap-2 flex-1 usa-button--outline" i18n>
                     <i class="fab fa-google" aria-hidden="true"></i>
                     Google
                 </button> -->
-          <button
-            class="usa-button gap-2 flex-1 usa-button--outline"
-            (click)="goToSSO()"
-            (keydown.enter)="goToSSO()"
-            aria-label="Login using your Microsoft credentials."
-            i18n>
-            <i class="fab fa-windows" aria-hidden="true"></i>
-            {{ content.microsoftLabel }}
-          </button>
-        </div>
-      </div>
+      <button
+        class="usa-button gap-2 flex-1 usa-button--outline"
+        (click)="goToSSO()"
+        (keydown.enter)="goToSSO()"
+        aria-label="Login using your Microsoft credentials."
+        i18n>
+        <i class="fab fa-windows" aria-hidden="true"></i>
+        {{ loginContent.microsoftLabel }}
+      </button>
+      <!-- </div> -->
+      <!-- </div> -->
       <!-- <p class="full-width font-sans-2xs text-center margin-top-4">No account yet? <a href="">Sign Up</a></p> -->
     </div>
   </section>

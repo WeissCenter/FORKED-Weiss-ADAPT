@@ -25,7 +25,7 @@ export class SessionReloadBannerComponent {
     private data: AdaptDataService
   ) {
     this.user.userActivity$.subscribe(async (activity) => {
-      if (!activity.cache || Object.keys(activity.cache).length <= 0) return;
+      if (!activity || !activity.cache || Object.keys(activity.cache).length <= 0) return;
 
       const cache = activity.cache;
 

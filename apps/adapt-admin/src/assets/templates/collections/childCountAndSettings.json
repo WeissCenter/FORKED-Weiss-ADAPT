@@ -1,7 +1,10 @@
 {
   "id": "childCountAndSettings",
-  "name": "Child Count and Settings",
-  "description": "Part C Description here",
+  "name": "IDEA Child Count and Settings",
+  "dataViewDescription": "IDEA Part C Child Count and Settings provides the unduplicated number of infants and toddlers, who are ages birth through 2 or older who received early intervention services.",
+  "step2Description": "IDEA Part C Child Count and Settings provides the unduplicated number of infants and toddlers, who are ages birth through 2 or older who received early intervention services.",
+  "step3Description": "Review the summary of your data view below. After checking the details, proceed to the next step to save your data view.",
+  "step4Description": "Before saving, please be sure to give your data view a unique name and a good description.",
   "fields": [
     {
       "id": "reportingYear",
@@ -13,15 +16,40 @@
         {
           "label": "2023-2024",
           "value": "2023-24"
+        },
+        {
+          "label": "2024-2025",
+          "value": "2024-25"
         }
       ]
+    },
+    {
+      "type": "select",
+      "id": "reportingLevel",
+      "label": "For what reporting level?",
+      "options": [
+        {
+          "label": "SEA (State Education Agency)",
+          "value": "SEA (State Education Agency)"
+        },
+        {
+          "label": "LEA (Local Education Agency)",
+          "value": "LEA (Local Education Agency)"
+        }
+      ],
+      "required": true,
+      "shortLabel": "Reporting level"
     }
   ],
   "files": [
     {
       "id": "partCHTML",
       "name": "IDEA Part C - Child Count and Settings",
-      "description": "Part C file description here",
+      "description": "The unduplicated number of infants and toddlers who are ages birth through 2 or older, who received early intervention services.",
+      "acceptedFileFormats": {
+        "fileInputHint": "Only HTML files are accepted.",
+        "fieldAccept": ".html"
+      },
       "database": {
         "query": ""
       },

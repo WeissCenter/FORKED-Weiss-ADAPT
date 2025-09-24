@@ -1,23 +1,30 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../../..//environments/environment';
+import {
+  AppPermissions,
+  AppRolePermission,
+  appRolePermissions,
+  PermissionAction,
+  PermissionObject,
+} from '@adapt/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleService {
-  private _role: Set<Permission> | undefined;
+  private _role: AppRolePermission | undefined;
   private _helper: JwtHelperService;
 
   constructor() {
     this._helper = new JwtHelperService();
   }
 
-  public get role(): Set<Permission> | undefined {
+  public get role(): AppRolePermission | undefined {
     return this._role;
   }
 
-  public set role(value: Set<Permission> | undefined) {
+  public set role(value: AppRolePermission | undefined) {
     if (!environment.enforceRole) {
       this._role = value;
     }
@@ -28,41 +35,21 @@ export class RoleService {
     if (cognitoGroups) {
       // only get cognito groups that indicate roles
       // take the first role group - user should not be in more than one role group
-      const roleNames = Object.keys(CognitoGroups);
+      const roleNames = Object.keys(appRolePermissions);
       const group = (cognitoGroups as string[]).filter((group) => roleNames.includes(group))[0];
-      this._role = CognitoGroups[group];
+      this._role = appRolePermissions[group];
     }
     if (!this._role) {
-      this._role = Roles.VIEWER; // default role if user isn't in a cognito group
+      // this._role = Roles.VIEWER; // default role if user isn't in a cognito group
       this.displayRoleErrorToast();
     }
   }
 
-  public hasPermission(permission: Permission): boolean {
-    return !!this._role && this._role.has(permission);
+  public hasPermission(item: PermissionObject, action: PermissionAction): boolean {
+    return !!this._role && !!this._role.permissions?.[item]?.includes(action);
   }
 
   public displayRoleErrorToast(): void {
     console.error(`User is not in a role cognito group or role is otherwise undefined. this._role: `, this._role);
   }
-
-  public checkPermissions(permissions: Permission[]): boolean {
-    // used to enable/disable buttons/actions that require certain permissions
-    return !permissions.every((perm: Permission) => this.hasPermission(perm));
-  }
 }
-
-export enum Permission {
-  READ,
-  WRITE,
-}
-
-export const Roles = {
-  VIEWER: new Set([Permission.READ]),
-  EDITOR: new Set([Permission.READ, Permission.WRITE]),
-};
-
-export const CognitoGroups: { [group: string]: Set<Permission> } = {
-  reader: Roles.VIEWER,
-  editor: Roles.EDITOR,
-};

@@ -3,12 +3,12 @@ import { RouterModule } from '@angular/router';
 import { ComponentsModule } from './components/components.module';
 import { TemplateService } from './services/template.service';
 import { UserService } from './auth/services/user/user.service';
-import { AemAccessibilityCenterService, AemAccessibilityCenterModule } from 'aem-accessibility-center';
+import { WeissAccessibilityCenterService, WeissAccessibilityCenterModule } from 'weiss-accessibility-center';
 import { GlossaryService } from '@adapt/adapt-shared-component-lib';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, ComponentsModule, AemAccessibilityCenterModule],
+  imports: [RouterModule, ComponentsModule, WeissAccessibilityCenterModule],
   selector: 'adapt-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private template: TemplateService,
     private user: UserService,
     private gl: GlossaryService,
-    private aemA11yService: AemAccessibilityCenterService
+    private WeissA11yService: WeissAccessibilityCenterService
   ) {}
 
   ngOnInit(): void {

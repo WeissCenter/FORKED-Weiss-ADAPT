@@ -143,6 +143,34 @@
     "definition": "This means a person whose ancestors were the first people to live in places like Hawaii, Guam, Samoa, or other islands in the Pacific Ocean. They have a heritage connected to these islands.",
     "label": "Native Hawaiian or Other Pacific Islander"
   },
+  "GHS": {
+    "definition": "These students exited an educational program through receipt of a high school diploma identical to that for which students without disabilities are eligible. They met the same standards for graduation as those for students without disabilities.",
+    "label": "Graduated with regular high school diploma"
+  },
+  "GRADALTDPL": {
+    "definition": "Students who graduated with an alternate diploma, which is not fully aligned with State standards.",
+    "label": "Graduated with an alternate diploma"
+  },
+  "RC": {
+    "definition": "Students exited an educational program and received a certificate of completion, modified diploma, GED (in some states), or some similar document not meeting the same standards for graduation as those without disabilities.",
+    "label": "Received a certificate"
+  },
+  "RMA": {
+    "definition": "Students exited special education because of reaching the maximum age for receipt of special education services. This includes students who did not receive a diploma.",
+    "label": "Reached maximum age"
+  },
+  "MKC": {
+    "definition": "Students moved out of the district but are known to be continuing in an educational program elsewhere (not necessarily special education).",
+    "label": "Moved, known to be continuing"
+  },
+  "TRAN": {
+    "definition": "Students who returned to general (regular) education and no longer receive any special education services. This includes students whose parents revoked consent for services or who are homeschooled without services.",
+    "label": "Transferred to regular education"
+  },
+  "DROPOUT": {
+    "definition": "Students who were enrolled at the start of the reporting period but were not enrolled at the end and did not exit by any other means. This includes dropouts, runaways, some GED recipients, expulsions, and students whose status is unknown.",
+    "label": "Dropped out"
+  },
   "MU7": {
     "definition": "This means a person whose family background includes ancestors from two or more different racial groups.",
     "label": "Two or more races"
@@ -276,5 +304,385 @@
   "White": {
     "label": "White",
     "definition": "This means a person whose family comes from the first groups of people who lived in Europe, the Middle East, or North Africa"
+  },
+  "ADVASMTWOACC": {
+    "label": "Advanced assessment without accommodations",
+    "definition": "Advanced assessments taken without accommodations, used by certain states."
+  },
+  "ADVASMTWACC": {
+    "label": "Advanced assessment with accommodations",
+    "definition": "Advanced assessments taken with accommodations, used by certain states."
+  },
+  "IADAPLASMTWOACC": {
+    "label": "IADA pilot assessment without accommodations",
+    "definition": "Innovative Assessment Demonstration Authority (IADA) pilot assessment without accommodations, used by certain states."
+  },
+  "IADAPLASMTWACC": {
+    "label": "IADA pilot assessment with accommodations",
+    "definition": "Innovative Assessment Demonstration Authority (IADA) pilot assessment with accommodations, used by certain states."
+  },
+  "HSREGASMTIWOACC": {
+    "label": "High school regular assessment I, without accommodations",
+    "definition": "First high school-level regular assessment taken without accommodations."
+  },
+  "HSREGASMTIWACC": {
+    "label": "High school regular assessment I, with accommodations",
+    "definition": "First high school-level regular assessment taken with accommodations."
+  },
+  "HSREGASMT2WOACC": {
+    "label": "High school regular assessment II, without accommodations",
+    "definition": "Second high school-level regular assessment taken without accommodations, if used by the state."
+  },
+  "HSREGASMT2WACC": {
+    "label": "High school regular assessment II, with accommodations",
+    "definition": "Second high school-level regular assessment taken with accommodations, if used by the state."
+  },
+  "HSREGASMT3WOACC": {
+    "label": "High school regular assessment III, without accommodations",
+    "definition": "Third high school-level regular assessment taken without accommodations, if used by the state."
+  },
+  "HSREGASMT3WACC": {
+    "label": "High school regular assessment III, with accommodations",
+    "definition": "Third high school-level regular assessment taken with accommodations, if used by the state."
+  },
+  "LSNRHSASMTWOACC": {
+    "label": "Locally-selected high school assessment without accommodations",
+    "definition": "Locally-selected, nationally recognized high school assessment taken without accommodations."
+  },
+  "LSNRHSASMTWACC": {
+    "label": "Locally-selected high school assessment with accommodations",
+    "definition": "Locally-selected, nationally recognized high school assessment taken with accommodations."
+  },
+  "byAssessmentType": {
+    "label": "By Assessment Type",
+    "definition": ""
+  },
+  "byRaceEthnicity": {
+    "label": "By Race/Ethnicity",
+    "definition": ""
+  },
+  "byGradeLevel": {
+    "label": "By Grade Level",
+    "definition": ""
+  },
+  "03": {
+    "label": "Grade 3",
+    "definition": "The grade level assigned by the school system in which the student is enrolled."
+  },
+  "04": {
+    "label": "Grade 4",
+    "definition": "The grade level assigned by the school system in which the student is enrolled."
+  },
+  "05": {
+    "label": "Grade 5",
+    "definition": "The grade level assigned by the school system in which the student is enrolled."
+  },
+  "06": {
+    "label": "Grade 6",
+    "definition": "The grade level assigned by the school system in which the student is enrolled."
+  },
+  "07": {
+    "label": "Grade 7",
+    "definition": "The grade level assigned by the school system in which the student is enrolled."
+  },
+  "08": {
+    "label": "Grade 8",
+    "definition": "The grade level assigned by the school system in which the student is enrolled."
+  },
+  "09": {
+    "label": "Grade 9",
+    "definition": "The grade level assigned by the school system in which the student is enrolled."
+  },
+  "HS": {
+    "label": "High School",
+    "definition": "Represents a high school level student without specifying a grade."
+  },
+  "PADVASMWOACC": {
+    "label": "Participated - Advanced Assessment Without Accommodations",
+    "definition": "The student participated in an advanced assessment without accommodations, if used by the state."
+  },
+  "PADVASMWACC": {
+    "label": "Participated - Advanced Assessment With Accommodations",
+    "definition": "The student participated in an advanced assessment with accommodations, if used by the state."
+  },
+  "PIADAPLASMWOACC": {
+    "label": "Participated - IADA Pilot Assessment Without Accommodations",
+    "definition": "The student participated in an Innovative Assessment Demonstration Authority (IADA) pilot assessment without accommodations, if used by the state."
+  },
+  "PIADAPLASMWACC": {
+    "label": "Participated - IADA Pilot Assessment With Accommodations",
+    "definition": "The student participated in an Innovative Assessment Demonstration Authority (IADA) pilot assessment with accommodations, if used by the state."
+  },
+  "PHSRGASMIWOACC": {
+    "label": "Participated - High School Regular Assessment I Without Accommodations",
+    "definition": "The student participated in a high school regular assessment I without accommodations."
+  },
+  "PHSRGASMIWACC": {
+    "label": "Participated - High School Regular Assessment I With Accommodations",
+    "definition": "The student participated in a high school regular assessment I with accommodations."
+  },
+  "PHSRGASM2WOACC": {
+    "label": "Participated - High School Regular Assessment II Without Accommodations",
+    "definition": "The student participated in a high school regular assessment II without accommodations, if used by the state."
+  },
+  "PHSRGASM2WACC": {
+    "label": "Participated - High School Regular Assessment II With Accommodations",
+    "definition": "The student participated in a high school regular assessment II with accommodations, if used by the state."
+  },
+  "PHSRGASM3WOACC": {
+    "label": "Participated - High School Regular Assessment III Without Accommodations",
+    "definition": "The student participated in a high school regular assessment III without accommodations, if used by the state."
+  },
+  "PHSRGASM3WACC": {
+    "label": "Participated - High School Regular Assessment III With Accommodations",
+    "definition": "The student participated in a high school regular assessment III with accommodations, if used by the state."
+  },
+  "PLSNRHSASMWOACC": {
+    "label": "Participated - Locally-Selected High School Assessment Without Accommodations",
+    "definition": "The student participated in a locally-selected nationally recognized high school assessment without accommodations, if used by the state."
+  },
+  "PLSNRHSASMWACC": {
+    "label": "Participated - Locally-Selected High School Assessment With Accommodations",
+    "definition": "The student participated in a locally-selected nationally recognized high school assessment with accommodations, if used by the state."
+  },
+  "ATMTCNTCTUNSCFL": {
+    "label": "Attempts to contact unsuccessful",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in special education at the end of the period because attempts to contact the parent and/or child were unsuccessful."
+  },
+  "WTHDRWLBYPRNT": {
+    "label": "Withdrawal",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because the parent (or guardian) withdrew them."
+  },
+  "MVDOUTOFSTE": {
+    "label": "Moved",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because they moved to another state."
+  },
+  "PTBELIGNTDETOTH": {
+    "label": "Not determined",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because their eligibility for Part B has not been determined."
+  },
+  "NTELIGPTBEXTNRF": {
+    "label": "Not Part B eligible, exiting with no referrals",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because they were not eligible for Part B and were not referred to any other services."
+  },
+  "NTELIGPTBEXTRF": {
+    "label": "Not Part B eligible, exiting with referrals",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because they were not eligible for Part B and were referred to other programs instead."
+  },
+  "PTBELIGCONTPTC": {
+    "label": "Part B eligible, continuing in Part C",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in special education at the end of the period because they became eligible for Part B services but are still continuing in Part C."
+  },
+  "PTBELIGEXTPTC": {
+    "label": "Part B eligible, exiting Part C",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because they became eligible for Part B special education services and exited Part C."
+  },
+  "NOLGRELGPTC": {
+    "label": "No longer eligible",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because they are no longer eligible for Part C services before turning three."
+  },
+  "REGASSWOACC": {
+    "label": "Regular assessments without accommodations",
+    "definition": "This means that the student participated in the regular state assessment that is based on what students are expected to know for their grade, and took the test without any special help or adjustments, such as extended time or an audio format."
+  },
+  "REGASSWACC": {
+    "label": "Regular assessments with accommodations",
+    "definition": "This means that the student participated in the regular state assessment that is based on what students are expected to know for their grade, and took the test with special help or adjustments, such as extended time or an audio format."
+  },
+  "ALTASSALTACH": {
+    "label": "Alternate assessments ",
+    "definition": "This means the student took an alternate state assessment that measures their knowledge and skills using different standards than the regular state assessment. Only students who qualify can take this test."
+  },
+  "PROFICIENT": {
+    "label": "Proficient",
+    "definition": "The student's scores indicate a strong level of understanding."
+  },
+  "NOTPROFICIENT": {
+    "label": "Not proficient",
+    "definition": "The student's scores indicate that there is room for improvement."
+  },
+  "MAN": {
+    "label": "American Indian \\ Alaska Native \\ Native American",
+    "definition": "This means a person who comes from the groups of people who first lived in North and South America (including Central America). This person also keeps a strong connection to their culture through being part of a tribe or being closely involved with their community."
+  },
+  "MA": {
+    "label": "Asian",
+    "definition": "This means a person whose ancestors were the first people of the Far East, Southeast Asia. This includes countries like Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippines, Thailand, and Vietnam. The person also continues to have a strong cultural connection with these regions"
+  },
+  "MAP": {
+    "label": "Asian \\ Pacific Islander",
+    "definition": "This refers to a person with heritage from Asia and the Pacific Islands. This includes people from countries like China, India, Japan, and the Philippines, as well as those from places like Hawaii, Samoa, and Tonga."
+  },
+  "MB": {
+    "label": "Black (not Hispanic) African American",
+    "definition": "\nThis means a person whose family comes from any of the groups of people originally from Africa.\n "
+  },
+  "MF": {
+    "label": "Filipino",
+    "definition": "This refers to a person from the Philippines or of Filipino descent. The Philippines is made up of a group of islands, which is called an archipelago."
+  },
+  "MHN": {
+    "label": "Hispanic (not Puerto Rican)",
+    "definition": "Hispanic refers to people who come from or have roots in Spanish-speaking countries, mainly in Latin America and Spain. This includes countries like Mexico, Colombia, and Argentina."
+  },
+  "MHL": {
+    "label": "Hispanic \\ Latino",
+    "definition": "This refers to people who come from or have roots in Spanish-speaking countries, mainly in Latin America and Spain. Hispanic is often used for those from Spanish-speaking backgrounds, while Latino typically refers to people from Latin America, regardless of their language. "
+  },
+  "MM": {
+    "label": "Multicultural \\ Multiethnic \\ Multiracial \\ other",
+    "definition": "This means a person whose family background includes ancestors from two or more different racial groups."
+  },
+  "MNP": {
+    "label": "Native Hawaiian \\ other Pacific Islander \\ Pacific Islander",
+    "definition": "This means a person whose ancestors were the first people to live in places like Hawaii, Guam, Samoa, or other islands in the Pacific Ocean. They have a heritage connected to these islands."
+  },
+  "MPR": {
+    "label": "Puerto Rican",
+    "definition": "This refers to a person from Puerto Rico or of Puerto Rican descent. Puerto Rico is an island in the Caribbean that is a territory of the United States. "
+  },
+  "MW": {
+    "label": "White (not Hispanic) \\ Caucasian",
+    "definition": "This means a person whose family comes from the first groups of people who lived in Europe, the Middle East, or North Africa."
+  },
+  "REGPARTWOACC": {
+    "label": "Participated without accommodations",
+    "definition": "Participated without any extra help."
+  },
+  "REGPARTWACC": {
+    "label": "Participated with accommodations",
+    "definition": "Participated with extra support."
+  },
+  "ALTPARTALTACH": {
+    "label": "Participated with alternate assessment ",
+    "definition": "Took a different type of assessment."
+  },
+  "NPART": {
+    "label": "Did not participate",
+    "definition": "Did not take any assessments. "
+  },
+  "PARTELP": {
+    "label": "Participated \u2013 English language proficiency assessment",
+    "definition": "The student is a recently-arrived English learner who took the English language proficiency assessment in lieu of the reading/language arts assessment."
+  },
+  "MEDEXEMPT": {
+    "label": "Medical exemption",
+    "definition": "The student did not participate in the state assessments due to significant medical emergencies."
+  },
+  "REMDW": {
+    "label": "Removed to an IAES by school personnel",
+    "definition": "A student with disabilities is moved to a temporary educational setting away from the student's current placement by school staff because they have drugs, weapons, or have caused serious injury to someone else."
+  },
+  "REMHO": {
+    "label": "Removed to an IAES by a hearing officer",
+    "definition": "A student with disabilities is moved to a temporary educational setting away from the student's current placement by school staff because they have drugs, weapons, or have caused serious injury to someone else."
+  },
+  "INSCHOOL": {
+    "label": "In-School Suspensions",
+    "definition": "A student with disabilities is temporarily taken out of their classroom for discipline but is still supervised by school staff."
+  },
+  "OUTOFSCHOOL": {
+    "label": "Out-of-School Suspensions/Expulsions",
+    "definition": "A student with disabilities is removed from regular school for discipline temporarily, for the rest of the school year, or longer depending on school district policy."
+  },
+  "LTOREQ10": {
+    "label": "Less than 10 days",
+    "definition": "The number of school days a disciplinary action lasts."
+  },
+  "GREATER10": {
+    "label": "Greater than 10 days",
+    "definition": "The number of school days a disciplinary action lasts."
+  },
+  "W": {
+    "label": "Weapons",
+    "definition": "A student with disabilities is removed from their current educational setting to a temporary educational setting for possession of a weapon on school premises."
+  },
+  "SBI": {
+    "label": "Serious bodily injury",
+    "definition": "A student with disabilities is removed from their current educational setting to a temporary educational setting for causing serious bodily injury that can lead to death or cause severe pain. It may also result in lasting changes in appearance or body functions."
+  },
+  "LTOREQ1": {
+    "label": "1 day or less",
+    "definition": "The number of school days a disciplinary action lasts."
+  },
+  "2TO10": {
+    "label": "2 through 10 days",
+    "definition": "The number of school days a disciplinary action lasts."
+  },
+  "SERVPROV": {
+    "label": "Received educational services",
+    "definition": "A student with disabilities recieved educational services while they were removed from the regular school program for discipline reasons."
+  },
+  "SERVNOTPROV": {
+    "label": "Did not receive educational services",
+    "definition": "A student with disabilities did not recieve educational services while they were removed from the regular school program for discipline reasons."
+  },
+  "SPEDTCHFULCRT": {
+    "label": "Fully certified",
+    "definition": "This means a teacher is certified to provide special education to students with disabilities."
+  },
+  "SPEDTCHNFULCRT": {
+    "label": "Not fully certified",
+    "definition": "This means a teacher is not certifed to provide special education to students with disabilities."
+  },
+  "AUDIO": {
+    "label": "Audiologists",
+    "definition": "This means a person who is qualified to assess and support students who have hearing problems, including the use of hearing aids and educating students, families, and other school staff about the student's hearing problems."
+  },
+  "SPEECHPATH": {
+    "label": "Speech-language pathologists",
+    "definition": "This means a person who is qualified to assess and support students with speech or language problems to improve the student's communication skills and/or make communication accessible at school."
+  },
+  "INTERPRET": {
+    "label": "Interpreters",
+    "definition": "This means a person who is qualified to assess and support students who are deaf or hard of hearing by providing sign language and/or other types of translation to  make communication accessible at school."
+  },
+  "PSYCH": {
+    "label": "Psychologists",
+    "definition": "This means a person who is qualified to assess and support students with cognitive, behavioral, mental, social, and/or emotional issues, including educating students, families, and other school staff about the student's strengths and needs. They work with teachers, parents, and students to support those facing learning challenges or emotional difficulties in the school setting."
+  },
+  "OCCTHERAP": {
+    "label": "Occupational therapists",
+    "definition": "This means a person who is qualified to assess and support students who need help with everyday activities at school, including tasks like self-care, using school tools, learning school routines, playing, and making friends."
+  },
+  "PHYSTHERAP": {
+    "label": "Physical therapists",
+    "definition": "This means a person who is qualified to assess and support students who need help with movement at school (walking, running, playing, sitting, etc.), including teaching students, families, and other school staff how to use mobility supports (walkers, wheelchairs, standers, etc.)."
+  },
+  "PEANDREC": {
+    "label": "Physical education teachers and recreation specialists",
+    "definition": "This means a person who is qualified to assess and support students who need adapted teaching, environments, and/or equipment for physical activity at school, including physical, leisure, and recreation education."
+  },
+  "SOCIALWORK": {
+    "label": "Social workers",
+    "definition": "This means a person who is qualified to assess and support students with behavioral, social, and/or emotional needs, including counseling with students and families and coordinating school and community supports."
+  },
+  "MEDNURSE": {
+    "label": "Medical/nursing service staff",
+    "definition": "This means a person who is qualified to assess and support students with medical conditions, including giving medication, responding to medical emergencies, and working with teachers and parents to meet students'  medical needs at school."
+  },
+  "COUNSELOR": {
+    "label": "Counselors and rehabilitation counselors",
+    "definition": "This means a person who is qualified to assess and support students who need help planning  personal, educational, and career paths, including coordinating activities with vocational rehabilitation programs."
+  },
+  "ORIENTMOBIL": {
+    "label": "Orientation and mobility specialists",
+    "definition": "This means a person who is qualified to support students who are blind or have difficulty seeing, teaching them how to move safely and confidently in their surroundings. They teach skills like getting around school and the community, using a cane for help, and staying aware of where they are."
+  },
+  "Q": {
+    "label": "Qualified",
+    "definition": "This means a staff person has the necessary training to provide academic and functional support for students with disabilities, under the direction of other certified or qualified staff."
+  },
+  "NQ": {
+    "label": "Not qualified",
+    "definition": "This means a staff person does not have the necessary training to provide academic and functional support for students with disabilities, under the direction of other certified or qualified staff."
+  },
+  "c009-D": {
+    "label": "Died",
+    "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because they passed away."
+  },
+  "c007-D": {
+    "label": "Drugs",
+    "definition": "A student with disabilities is removed from their current educational setting to a temporary educational setting for the possession of an illegal drug on school premises."
   }
 }

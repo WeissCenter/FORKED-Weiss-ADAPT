@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, map, switchMap, of, BehaviorSubject } from 'rxjs';
-import { Permission, RoleService } from '../../../auth/services/role/role.service';
+import { RoleService } from '../../../auth/services/role/role.service';
 import { FilterPanelService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/filterpanel.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdaptDataService } from '../../../services/adapt-data.service';
@@ -18,6 +18,9 @@ import { ReportModalComponent } from '../../components/report-modal/report-modal
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
 import { LocationStrategy } from '@angular/common';
 import { ModalComponent } from '@adapt/adapt-shared-component-lib';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
+import { PageContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 interface ReportsFilter {
   search: string;
@@ -32,7 +35,6 @@ interface ReportsFilter {
 })
 export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewInit {
   ReportStatus = ReportVersion;
-  Permission = Permission;
 
   Math = Math;
   reportsData: IReport[] = [];
@@ -45,9 +47,6 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
   @ViewChild('publishConfirmationModal') publishConfirmationModal?: ModalComponent;
   public reportStatuses = [
     { label: 'Draft', value: 'draft' },
-    { label: 'Pending', value: 'pending' },
-    { label: 'Approved', value: 'approved' },
-    { label: 'Rejected', value: 'rejected' },
     { label: 'Finalized', value: 'finalized' },
   ];
 
@@ -114,23 +113,12 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
   public updatedSortDirection: 'asc' | 'desc' = 'desc';
   public alphaSortDirection: 'asc' | 'desc' = 'desc';
   focusSortBtn = sessionStorage.getItem('focusSortBtn') === 'true' ? true : false;
+  public activeSort = 'updated';
 
   public statuses = [
     {
       label: 'Draft',
       value: 'draft',
-    },
-    {
-      label: 'Pending Approval',
-      value: 'pending',
-    },
-    {
-      label: 'Approved',
-      value: 'approved',
-    },
-    {
-      label: 'Rejected',
-      value: 'rejected',
     },
     {
       label: 'Finalized',
@@ -150,17 +138,20 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
   ];
 
   public unPublishJustificationForm: FormGroup;
+  $pageContent = this.pagesContentService.getPageContentSignal('reports');
 
   constructor(
     public router: Router,
     public route: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
+    private announcer: LiveAnnouncer,
     public role: RoleService,
     private location: LocationStrategy,
     public alert: AlertService,
     private filterPanelService: FilterPanelService,
-    private dataService: AdaptDataService
+    private dataService: AdaptDataService,
+    public pagesContentService: PagesContentService
   ) {
     this.subscription = this.filterPanelService.currentFilterPanelState.subscribe((state) => {
       this.showFilterPanel = state;
@@ -266,9 +257,10 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
                 }
               };
 
-              let sortResult = sort(updatedA, updatedB, 'number', this.updatedSortDirection);
-
-              if (sortResult === 0) sortResult = sort(alphaA, alphaB, 'string', this.alphaSortDirection);
+              const sortResult =
+                this.activeSort === 'updated'
+                  ? sort(updatedA, updatedB, 'number', this.updatedSortDirection)
+                  : sort(alphaA, alphaB, 'string', this.alphaSortDirection);
 
               return sortResult;
             });
@@ -283,11 +275,11 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
 
             // Store the processed data for later use
             this.reportsData = filtered;
-
             // Update maxPages for pagination
             this.maxPages = Math.max(1, Math.ceil(this.reportsData.length / this.pageSize));
             this.totalItems = this.reportsData.length;
             this.loading = false;
+
             return filtered;
           })
         );
@@ -325,6 +317,10 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
       queryParamsHandling: 'merge',
     });
     if (announce) this.filterStatusMessage = 'Filters have been applied.';
+  }
+
+  ngOnInit(): void {
+    //console.log('Inside reports component ngOnInit');
   }
 
   ngAfterViewInit(): void {
@@ -378,6 +374,7 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
 
     this.filterStatusMessage = 'Sort has been applied.';
     this.focusSortBtn = true;
+    this.activeSort = what;
     this.applyFilters();
   }
 

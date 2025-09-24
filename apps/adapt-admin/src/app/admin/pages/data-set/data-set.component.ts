@@ -19,7 +19,7 @@ import { AdaptDataService } from '../../../services/adapt-data.service';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
 import { getFormErrors, uniqueNameValidator } from '../../../util';
 import { UserService } from '../../../auth/services/user/user.service';
-import { Permission, RoleService } from '../../../auth/services/role/role.service';
+import { RoleService } from '../../../auth/services/role/role.service';
 
 @Component({
   selector: 'adapt-data-set',
@@ -27,8 +27,6 @@ import { Permission, RoleService } from '../../../auth/services/role/role.servic
   styleUrls: ['./data-set.component.scss'],
 })
 export class DataSetComponent implements OnDestroy {
-  Permission = Permission;
-
   getFormErrors = getFormErrors;
 
   PageMode = PageMode;

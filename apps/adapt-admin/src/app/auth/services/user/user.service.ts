@@ -5,11 +5,10 @@ import { concatMap, delay, map, startWith, switchMap, tap, toArray } from 'rxjs/
 import { environment } from '../../../../environments/environment';
 import { IdleStates } from '../../auth-model';
 import { CognitoService } from '../cognito/cognito.service';
-import { AdaptDataService } from '../../../services/adapt-data.service';
 import { RoleService } from '../role/role.service';
 import { RecentActivityService } from '../../../services/recent-activity.service';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
-import { SettingsService } from '../../../admin/services/settings.service';
+import { SettingsService } from '@adapt/adapt-shared-component-lib';
 import { HttpClient } from '@angular/common/http';
 import { Response, UserActivity, UserTimeOutCacheInput } from '@adapt/types';
 
@@ -188,10 +187,8 @@ export class UserService {
    */
   private async initIdle() {
     if (this._idleState === IdleStates.NOT_STARTED || this._idleState === IdleStates.TIMED_OUT) {
-      const settingsSub = this.settings.getSettingsObservable().subscribe((settings) => {
-        this.idle.setIdle(settings.idleMinutes * 60);
-        this.idle.setTimeout(settings.timeoutMinutes * 60);
-      });
+      this.idle.setIdle(this.settings.getSettings().idleMinutes * 60);
+      this.idle.setTimeout(this.settings.getSettings().timeoutMinutes * 60);
 
       // setup ng-idle
 

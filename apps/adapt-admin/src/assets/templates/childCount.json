@@ -2,9 +2,12 @@
   "id": "childCount",
   "title": "Child Count and Education Environments (FS002)",
   "metaTags": ["Part B", "618", "Child Count"],
+  "reportingLevels": ["SEA (State Education Agency)", "LEA (Local Education Agency)"],
   "description": "State-level data on the Individuals with Disabilities Education Act (IDEA) Part B, including an unduplicated count of children with disabilities receiving special education from ages 3 through 21 served by the Office of Special Education Programs (OSEP).",
   "suppression": {
     "required": true,
+    "parentOrganization": "file",
+    "childOrganization": "CategorySetCode",
     "sensitiveColumns": [
       "RACE",
       "SEX",

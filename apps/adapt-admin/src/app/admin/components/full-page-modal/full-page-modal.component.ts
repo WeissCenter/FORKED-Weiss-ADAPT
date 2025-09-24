@@ -14,6 +14,7 @@ export class FullPageModalComponent implements OnDestroy {
     if (!this.modal) return;
     this.opened = true;
     this.modal.nativeElement.showModal();
+    history.pushState(null, '', window.location.href);
   }
 
   public close() {

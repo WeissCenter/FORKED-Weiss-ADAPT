@@ -20,7 +20,7 @@ export const context = async function (this: any, field: string, ...args: any[])
 export const glossary = function (this: any, key: string, field: 'label' | 'definition') {
   const glossary = this.glossaryService as GlossaryService;
 
-  if (!glossary.hasTerm(key)) {
+  if (!glossary?.hasTerm(key)) {
     return key;
   }
 
@@ -430,10 +430,10 @@ export const disability_percentage = async function (
 export const percentage = async function (
   this: any,
   countColumn: string,
-  target: { field: string; value: any },
+  target: { field: string; extra?: string[]; value: any },
   ...conditionFields: { field: string; value: any }[]
 ) {
-  const dataService = this.dataService as AdaptDataService;
+  const dataService = this.dataService;
 
   const conditionFieldArguments: any[] = conditionFields.map((val) =>
     Object.assign(val, { type: mapTypes(val.value) })
@@ -461,7 +461,7 @@ export const percentage = async function (
         field: 'selectColumns',
         type: 'string',
         array: true,
-        value: [target.field],
+        value: [target.field, ...(target.extra || [])],
       },
       {
         field: 'limit',
@@ -476,8 +476,8 @@ export const percentage = async function (
       {
         field: 'groupby',
         type: 'string',
-        array: Array.isArray(target.field),
-        value: target.field,
+        array: true,
+        value: [target.field, ...(target.extra || [])],
       },
       ...conditionFieldArguments,
     ],
@@ -491,12 +491,28 @@ export const percentage = async function (
     this.suppress
   );
 
-  const result = operationResults.find((item) => item.id === id);
+  const result = operationResults.find((item: any) => item.id === id);
 
-  const total = result?.value.reduce((accum: number, val: any) => accum + val[countColumn], 0);
-  const percentageTarget = result?.value.find((val: any) => val[target.field] === target.value);
+  const percentageTargetTotal = result?.value.reduce(
+    (accum: number, val: any) => (val[target.field] === target.value ? accum + val[countColumn] : accum),
+    0
+  );
 
-  return `${((percentageTarget[countColumn] / total) * 100).toFixed(2)}%`;
+  const isSuppressed = result.value.every((val: any) => {
+    if (val[target.field] === target.value && val?.suppressed !== true) return false;
+    return true;
+  });
+
+  let total = 1;
+  if (!result.total) {
+    total = result?.value.reduce((accum: number, val: any) => accum + val[countColumn], 0);
+  } else {
+    total = Math.max(result.total, 1); // prevent div by zero
+  }
+
+  const percent = (percentageTargetTotal / total) * 100 || 0;
+
+  return isSuppressed ? 'Suppressed' : `${percent.toFixed(2)}%`;
 };
 
 export const top_disabilities_percentages_edfacts = async function (
@@ -800,6 +816,7 @@ export const disability_percentage_edfacts = async function (
 export const max = async function (
   this: any,
   index: number,
+  countColumn: string,
   fields: DataSetOperationArgument,
   ...conditionFields: DataSetOperationArgument[]
 ) {
@@ -814,7 +831,7 @@ export const max = async function (
   const conditionFieldIDMapped = conditionFields.map((val) => `${val.field}-${val.value}`).join('_');
   const fieldsMapped = selectColumns.map((val) => `${fields.field}-${val}`).join('_');
 
-  const id = `max_index-${index}_${fieldsMapped}_${conditionFieldIDMapped}`;
+  const id = `max_index-${index}_${countColumn}_${fieldsMapped}_${conditionFieldIDMapped}`;
 
   const operation: DataSetOperation = {
     id: id,
@@ -826,7 +843,7 @@ export const max = async function (
       },
       {
         field: 'columns',
-        value: ['value'],
+        value: [countColumn],
         array: true,
       },
       {
@@ -842,7 +859,7 @@ export const max = async function (
         field: 'order',
         type: 'string',
         array: true,
-        value: ['value desc'],
+        value: [`${countColumn} desc`],
       },
       {
         field: 'groupby',
@@ -868,7 +885,7 @@ export const max = async function (
 
   const maxResultValue = maxResult!.value[index];
 
-  return `${selectColumns.map((v) => maxResultValue[v]).join(' ')}`;
+  return `${selectColumns.map((v) => glossary.bind(this)(maxResultValue[v], 'label')).join(' ')}`;
 };
 
 export const select = async function (
@@ -934,12 +951,15 @@ export const BUILT_IN_FUNCTIONS = [
   { name: 'top_disabilities_percentages_edfacts', func: top_disabilities_percentages_edfacts },
   { name: 'bottom_disabilities_percentages_edfacts', func: bottom_disabilities_percentages_edfacts },
   { name: 'sum', func: sum },
+  { name: 'unfilteredSum', func: sum },
   { name: 'disability_percentage', func: disability_percentage },
   { name: 'disability_percentage_edfacts', func: disability_percentage_edfacts },
   { name: 'percentage', func: percentage },
+  { name: 'unfilteredPercentage', func: percentage },
   { name: 'context', func: context },
   { name: 'disability_sum', func: disability_sum },
   { name: 'glossary', func: glossary },
   { name: 'max', func: max },
+  { name: 'unfilteredMax', func: max },
   { name: 'select', func: select },
 ];

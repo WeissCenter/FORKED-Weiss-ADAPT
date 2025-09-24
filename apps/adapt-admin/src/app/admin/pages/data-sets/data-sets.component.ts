@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, switchMap, map, catchError } from 'rxjs';
 import { ModalComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/modal/modal.component';
 import { AdaptDataService } from '../../../services/adapt-data.service';
-import { Permission, RoleService } from '../../../auth/services/role/role.service';
+import { RoleService } from '../../../auth/services/role/role.service';
 import { NotificationsService } from '../../../services/notifications.service';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
 import { TemplateService } from '../../../services/template.service';
@@ -15,7 +15,6 @@ import { TemplateService } from '../../../services/template.service';
   styleUrls: ['./data-sets.component.scss'],
 })
 export class DataSetsComponent {
-  Permission = Permission;
   Math = Math;
 
   @ViewChild('modal') modal?: ModalComponent;

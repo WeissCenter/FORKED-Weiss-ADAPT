@@ -1,7 +1,10 @@
 {
   "id": "childCount",
   "name": "Child Count for State Level",
-  "description": "For creating Child Count (Part B) reports, States/entities are required to report the Child Count data under Title 1, Part A, Subsection 618 of IDEA.",
+  "dataViewDescription": "State-level data on the Individuals with Disabilities Education Act (IDEA) Part B, including an unduplicated count of children with disabilities receiving special education from ages 3 through 21 served by the Office of Special Education Programs (OSEP).",
+  "step2Description": "For creating Child Count and Educational Environments reports, load data collected from FS002 and FS089.",
+  "step3Description": "Review the summary of your data view below. After checking the details, proceed to the next step to save your data view.",
+  "step4Description": "Before saving, please be sure to give your data view a unique name and a good description.",
   "fields": [
     {
       "id": "reportingYear",
@@ -13,8 +16,29 @@
         {
           "label": "2023-2024",
           "value": "2024"
+        },
+        {
+          "label": "2024-2025",
+          "value": "2025"
         }
       ]
+    },
+    {
+      "type": "select",
+      "id": "reportingLevel",
+      "label": "For what reporting level?",
+      "options": [
+        {
+          "label": "SEA (State Education Agency)",
+          "value": "SEA (State Education Agency)"
+        },
+        {
+          "label": "LEA (Local Education Agency)",
+          "value": "LEA (Local Education Agency)"
+        }
+      ],
+      "required": true,
+      "shortLabel": "Reporting level"
     }
   ],
   "files": [
@@ -22,6 +46,10 @@
       "id": "FS089",
       "name": "FS089 - Children with Disabilities (IDEA) Early Childhood",
       "description": "The unduplicated number of children with disabilities (IDEA) who are ages 3 through 5 and not in kindergarten and receiving special education and related service according to an individualized education program (IEP), an individualized family service plan (IFSP), or a services plan in place on the state's child count date.",
+      "acceptedFileFormats": {
+        "fileInputHint": "Only CSV files are accepted.",
+        "fieldAccept": ".csv"
+      },
       "conditions": [
         {
           "field": "scopeLevel",
@@ -60,6 +88,10 @@
       "id": "FS002",
       "name": "FS002 - Children with Disabilities (IDEA) School Age",
       "description": "The unduplicated number of children with disabilities (IDEA) who are ages 5 (in kindergarten) through 21 and receiving special education and related service according to an individualized education program (IEP) or a services plan in place on the state's child count date.",
+      "acceptedFileFormats": {
+        "fileInputHint": "Only CSV files are accepted.",
+        "fieldAccept": ".csv"
+      },
       "database": {
         "query": "select * from RDS.ReportEDFactsK12StudentCounts where ReportCode = 'c002' and ReportLevel = 'sea' and ReportYear = ${reportingYear}"
       },

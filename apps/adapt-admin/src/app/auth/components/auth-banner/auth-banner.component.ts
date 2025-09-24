@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class AuthBannerComponent {
   @Input() label = 'Generic Auth Banner';
-  @Input() logo = 'assets/ADAPT_Title_Full.svg';
+  @Input() logo = 'assets/shared/svg/state-hero-logo.svg';
   @Input() logoAlt = 'ADAPT logo';
 
   @Input() message = '[Message]';

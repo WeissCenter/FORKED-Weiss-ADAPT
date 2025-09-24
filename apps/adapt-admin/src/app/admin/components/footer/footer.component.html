@@ -1,26 +1,26 @@
 <footer
-  class="usa-footer usa-footer--slim flex-column tablet:flex-row bg-white display-flex flex-justify-center gap-6 margin-top-5 padding-x-2 padding-y-6">
+  class="usa-footer usa-footer--slim flex-column tablet:flex-row bg-white display-flex flex-justify-center flex-align-end gap-6 margin-top-5 padding-x-2 padding-y-6">
   <div class="display-flex flex-justify-center gap-1 flex-column">
-    <p class="font-2xs text-ink line-height-2 text-center">Technology by</p>
     <a
       target="_blank"
       class="display-flex flex-justify-center"
-      aria-label="External link to AEM's homepage"
-      href="https://www.aemcorp.com/">
-      <adapt-inline-svg
-        alt="ADAEMAPT logo"
-        src="assets/shared/logos/aem-logo.svg"
-        svgClass="display-flex logo height-6"></adapt-inline-svg>
+      aria-label="External link to Weiss homepage"
+      href="http://weissta.org/">
+      <lib-adapt-inline-svg
+        label="Logo for the Weiss Center"
+        src="assets/shared/logos/weiss-logo-text-stacked.svg"
+        svgClass="display-flex logo height-7"></lib-adapt-inline-svg>
     </a>
   </div>
-
-  <ng-container *ngIf="$settings | async as settingsLoaded">
+  <ng-container *ngIf="$settings()">
     <nav class="display-flex flex-column flex-justify-center gap-2 maxw-tablet" aria-label="Footer Links">
       <ul
         class="usa-list usa-list--unstyled display-flex gap-4 tablet:flex-row flex-justify-center flex-wrap text-center flex-column flex-wrap tablet:flex-align-center">
-        <li *ngFor="let footerLink of settingsLoaded.footerLinks">
+        <li
+          *ngFor="let footerLink of $settings()?.footerLinks || [] | filterMissingProperty: 'url'"
+          [hidden]="!footerLink.url">
           <a
-            class="font-xs text-no-underline text-center"
+            class="font-xs display-flex flex-align-center text-no-underline text-center"
             [target]="footerLink.target === 'sameTab' ? '' : '_blank'"
             [href]="footerLink.url"
             >{{ footerLink.label }}
@@ -28,7 +28,20 @@
           </a>
         </li>
       </ul>
-      <p class="font-xs text-ink text-center">© {{ year }} {{ settingsLoaded.copyright }}</p>
+      <p class="font-xs text-ink text-center">© {{ year }} {{ $settings().copyright }}</p>
     </nav>
   </ng-container>
+  <div class="display-flex flex-justify-center flex-column">
+    <p class="font-2xs text-ink line-height-2 text-center">Technology by</p>
+    <a
+      target="_blank"
+      class="display-flex flex-justify-center flex-align-end"
+      aria-label="External link to AEM's homepage"
+      href="https://www.aemcorp.com/">
+      <lib-adapt-inline-svg
+        alt="Logo for AEM"
+        src="assets/shared/logos/aem-logo.svg"
+        svgClass="display-flex logo height-4"></lib-adapt-inline-svg>
+    </a>
+  </div>
 </footer>

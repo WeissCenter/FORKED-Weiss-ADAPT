@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, effect, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { firstValueFrom, Subscription } from 'rxjs';
-import { SettingsService } from '../../../services/settings.service';
+import { Subscription } from 'rxjs';
+import { SettingsService } from '@adapt/adapt-shared-component-lib';
 import { AdaptDataService } from '../../../../services/adapt-data.service';
-import { AdaptSettings } from '@adapt/types';
 import { environment } from 'apps/adapt-admin/src/environments/environment';
 import { AlertService } from '@adapt/adapt-shared-component-lib';
 
@@ -40,19 +39,18 @@ export class BrandingSettingsComponent implements OnDestroy, OnInit {
     });
 
     this.subscriptions.push(imagePreviewSub);
-  }
-
-  ngOnInit(): void {
-    const settingsSub = this.settingsService.getSettingsObservable().subscribe((result) => {
-      this.copyright.setValue(result?.copyright || '');
-
-      this.logoPreviewURL = this.sanitzier.bypassSecurityTrustUrl(
-        `https://${environment.s3PublicAssetsDomainName}.s3.amazonaws.com/${result?.logo}`
-      );
+    effect(() => {
+      const settings = this.settingsService.getSettingsSignal()();
+      if (settings) {
+        this.copyright.setValue(settings?.copyright || '');
+        this.logoPreviewURL = this.sanitzier.bypassSecurityTrustUrl(
+          `https://${environment.s3PublicAssetsDomainName}.s3.amazonaws.com/${settings?.logo}`
+        );
+      }
     });
-
-    this.subscriptions.push(settingsSub);
   }
+
+  ngOnInit(): void {}
 
   public async onSave() {
     if (!this.brandingForm.valid) return;

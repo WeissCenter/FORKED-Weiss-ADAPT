@@ -1,13 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, computed, effect, OnInit } from '@angular/core';
+
 import { Title, Meta } from '@angular/platform-browser';
-import { RouterModule, Router } from '@angular/router';
-import { ContentService } from '@adapt/adapt-shared-component-lib';
-import { ComponentsModule } from '../../../components/components.module';
+import { Router } from '@angular/router';
+
 import { CognitoService } from '../../services/cognito/cognito.service';
 import { UserService } from '../../services/user/user.service';
-import { environment } from '../../../../environments/environment';
+import { environment } from '@adapt-apps/adapt-admin/src/environments/environment';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
+import {
+  loginContentText,
+  PageContentText,
+} from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 
 @Component({
   selector: 'adapt-login',
@@ -26,7 +29,11 @@ export class LoginComponent implements OnInit {
     value: '',
     status: { code: '', message: '' },
   };
-  pagesContent: any;
+
+  pageContent: PageContentText | null;
+  loginContent: loginContentText | null;
+  $pageContent = this.pagesContentService.getPageContentSignal('login');
+  $loginContent = computed(() => this.$pageContent()?.loginContent || null);
 
   constructor(
     private router: Router,
@@ -34,22 +41,25 @@ export class LoginComponent implements OnInit {
     private titleService: Title,
     private metaService: Meta,
     private cognito: CognitoService,
-    public contentService: ContentService
-  ) {}
+    public pagesContentService: PagesContentService
+  ) {
+    effect(() => {
+      const loginContent = this.$loginContent();
+      if (loginContent) {
+        console.log('Setting login meta title/description: ', loginContent);
+        this.titleService.setTitle(loginContent.metaTitle);
+        this.metaService.updateTag({ name: 'description', content: loginContent.metaDescription });
+      }
+    });
+  }
 
   goToSSO() {
     window.location.href = CognitoService.LOGIN_URL;
   }
 
   ngOnInit() {
-    // Can update these variables with dynamical content pulled from the database if needed
-    this.contentService.loadContent(environment.defaultContent).subscribe((res) => {
-      if (res.pages) {
-        this.pagesContent = res.pages;
-        this.titleService.setTitle(res.pages.login.metaTitle);
-        this.metaService.updateTag({ name: 'description', content: res.pages.login.metaDescription });
-      }
-    });
+    // this.pagesContentService.loadContent('en');
+    // this.pagesContentService.loadContent('es-MX');
   }
 
   performLogin(e: any) {
@@ -62,5 +72,9 @@ export class LoginComponent implements OnInit {
         // todo set errors on form
       }
     });
+  }
+
+  public get showLogin() {
+    return (this.pageContent as any)?.validLogin?.includes(environment.envLabel);
   }
 }

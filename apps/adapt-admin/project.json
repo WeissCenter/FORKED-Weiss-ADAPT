@@ -49,7 +49,7 @@
           "libs/shared-assets/fontawesome/css/all.css",
           "node_modules/@angular/cdk/_index.scss",
           "node_modules/@angular/cdk/a11y-prebuilt.css",
-          "node_modules/aem-accessibility-center/src/lib/index.scss"
+          "node_modules/weiss-accessibility-center/dist/assets/index.scss"
         ],
         "scripts": [],
         "serviceWorker": true,

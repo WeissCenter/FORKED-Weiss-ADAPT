@@ -1,5 +1,5 @@
 <lib-adapt-alert></lib-adapt-alert>
-<section class="usa-container display-flex position-relative main-container">
+<div class="usa-container display-flex position-relative main-container">
   <adapt-sidebar></adapt-sidebar>
   <div class="admin-content grid-col">
     <adapt-banner></adapt-banner>
@@ -10,5 +10,15 @@
     </main>
     <adapt-footer></adapt-footer>
   </div>
-</section>
-<aem-accessibility-center [position]="'start'"></aem-accessibility-center>
+</div>
+<weiss-accessibility-center
+  [theme]="{
+    title: 'Color Theme',
+    description: 'The color theme setting allows you to adjust the color scheme of the website.',
+    data: [
+      { name: 'ADAPT Light', value: 'default' },
+      { name: 'ADAPT Dark', value: 'dynamic-dark' },
+      { name: 'High Contrast', value: 'high-contrast' },
+    ],
+  }"
+  [position]="'start'"></weiss-accessibility-center>

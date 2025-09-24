@@ -12,31 +12,20 @@
       i18n>
       <ng-container *ngIf="nav_collapsed">
         <i aria-hidden="true" class="fal fa-bars"></i>
-        <span><span class="display-none tablet:display-flex">Open </span>Menu</span>
+        <span class="font-3xs"><span class="display-none tablet:display-inline">Open </span>Menu</span>
       </ng-container>
 
       <ng-container *ngIf="!nav_collapsed">
         <i aria-hidden="true" class="fal fa-arrow-from-right"></i>
-        <span><span class="display-none tablet:display-flex">Collapse </span>Menu</span>
+        <span class="font-3xs"><span class="display-none tablet:display-inline">Collapse </span>Menu</span>
       </ng-container>
     </button>
 
     <div class="sidebar-header">
       <div class="display-flex width-full padding-1 gap-1 flex-align-center flex-justify-center">
-        <!-- <h1>Some State</h1> -->
-
-        <img *ngIf="logoURL" [src]="logoURL" class="logo" alt="Adapt Instance Logo" />
-
-        <span class="font-md display-none-collapsed">State Name Goes Here</span>
+        <img *ngIf="logoURL" [src]="logoURL" class="logo" alt="ADAPT Instance Logo" />
       </div>
     </div>
-    <!-- To be replaced with PayPal Skip To component -->
-    <!-- <button id="skip-to-section"
-      class="usa-button usa-button--outline cursor-pointer display-flex gap-1 text-primary padding-105 border border-base-lighter bg-base-lightest radius-md flex-align-center">
-      <i aria-hidden="true" class="fal fa-list-alt"></i>
-      <span i18n>Contents</span>
-      <i aria-hidden="true" class="fas fa-chevron-down margin-left-auto display-none-collapsed" style="--usa-button-icon-size: var(--usa-font-size-sm)"></i>
-    </button> -->
 
     <nav aria-label="primary" class="margin-top-1">
       <ul #navList role="menubar" aria-orientation="vertical" class="usa-icon-list display-flex flex-column gap-05">
@@ -89,7 +78,7 @@
             <span> Alerts </span>
           </a>
         </li> -->
-        <li role="none">
+        <li role="none" *ngIf="this.role.hasPermission('Tool Settings', 'Read')">
           <a
             routerLink="settings"
             role="menuitem"
@@ -101,7 +90,7 @@
           </a>
         </li>
         <li role="none">
-          <button role="menuitem" aemA11yToggle class="usa-icon-list__item site-nav width-full">
+          <button role="menuitem" weissA11yToggle="ADAPT-a11y-center" class="usa-icon-list__item site-nav width-full">
             <i aria-hidden="true" class="fal fa-universal-access"></i>
 
             <span> Accessibility </span>
@@ -112,7 +101,7 @@
           <a
             role="menuitem"
             rel="noopener noreferrer"
-            href="https://forms.office.com/r/Q88TN6zygX"
+            href="https://github.com/WeissCenter/Weiss-ADAPT/issues"
             target="_blank"
             aria-label="Give Feedback (opens in a new tab)"
             class="usa-icon-list__item site-nav width-full">
@@ -136,16 +125,16 @@
       </ul>
     </nav>
     <span class="margin-top-auto display-flex width-full flex-justify-center">
-      <adapt-inline-svg
+      <lib-adapt-inline-svg
         *ngIf="!nav_collapsed"
         alt="ADAPT logo"
-        src="assets/shared/svg/ADAPT_Title_Full.svg"
-        svgClass="display-flex width-15"></adapt-inline-svg>
-      <adapt-inline-svg
+        [src]="openLogo"
+        svgClass="display-flex width-15"></lib-adapt-inline-svg>
+      <lib-adapt-inline-svg
         *ngIf="nav_collapsed"
         alt="ADAPT logo"
-        src="assets/shared/svg/ADAPT_Mark_Full.svg"
-        svgClass="display-flex width-5"></adapt-inline-svg>
+        [src]="collapsedLogo"
+        svgClass="display-flex width-5"></lib-adapt-inline-svg>
     </span>
   </section>
 </aside>

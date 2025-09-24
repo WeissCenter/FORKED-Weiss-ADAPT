@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AdaptDataService } from 'apps/adapt-admin/src/app/services/adapt-data.service';
 import { Subscription } from 'rxjs';
-import { SettingsService } from '../../../services/settings.service';
+import { ContentService, SettingsService } from '@adapt/adapt-shared-component-lib';
 import { AlertService } from '@adapt/adapt-shared-component-lib';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
 
 @Component({
   selector: 'adapt-security-settings',
@@ -21,7 +22,8 @@ export class SecuritySettingsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private data: AdaptDataService,
     private settings: SettingsService,
-    private alert: AlertService
+    private alert: AlertService,
+    public content: PagesContentService
   ) {
     this.timeOutForm = this.fb.group({
       idleMinutes: this.fb.control(30),
@@ -30,17 +32,19 @@ export class SecuritySettingsComponent implements OnInit, OnDestroy {
     });
 
     this.timeOutForm.setValidators([this.timeOutValidator.bind(this)]);
-  }
-
-  ngOnInit(): void {
-    this.timeoutSub = this.settings.getSettingsObservable().subscribe((settings) => {
-      this.timeOutForm.setValue({
-        idleMinutes: `${settings.idleMinutes}`,
-        warningMinutes: `${settings.warningMinutes}`,
-        timeoutMinutes: `${settings.timeoutMinutes}`,
-      });
+    effect(() => {
+      const settings = this.settings.getSettingsSignal()();
+      if (settings) {
+        this.timeOutForm.setValue({
+          idleMinutes: `${settings.idleMinutes}`,
+          warningMinutes: `${settings.warningMinutes}`,
+          timeoutMinutes: `${settings.timeoutMinutes}`,
+        });
+      }
     });
   }
+
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.timeoutSub?.unsubscribe();

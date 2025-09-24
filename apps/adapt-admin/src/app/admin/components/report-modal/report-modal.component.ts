@@ -1,7 +1,16 @@
-import { AfterViewInit, ChangeDetectorRef, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import {
+  AfterContentChecked,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { StepsIndicatorComponent } from '../steps-indicator/steps-indicator.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, firstValueFrom, map, Observable, Subscription } from 'rxjs';
+import { catchError, firstValueFrom, map, Observable, startWith, Subscription, switchMap, take } from 'rxjs';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { CreateReportInput, DataSetQueueStatus, DataView, IRenderedTemplate, ITemplate, PageMode } from '@adapt/types';
 import { FullPageModalComponent } from '../full-page-modal/full-page-modal.component';
@@ -12,13 +21,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Idle } from '@ng-idle/core';
 import { UserService } from '../../../auth/services/user/user.service';
 import { TemplateService } from '../../../services/template.service';
-
+import { LocationStrategy } from '@angular/common';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
+import slugify from 'slugify';
+import { NGXLogger } from 'ngx-logger';
+import { QuestionOptionContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 @Component({
   selector: 'adapt-report-modal',
   templateUrl: './report-modal.component.html',
   styleUrls: ['./report-modal.component.scss'],
 })
-export class ReportModalComponent implements OnDestroy {
+export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChecked {
   @ViewChild(StepsIndicatorComponent) stepsIndicator!: StepsIndicatorComponent;
   @ViewChild(FullPageModalComponent) modal!: FullPageModalComponent;
   @ViewChild('previewModal') previewModal!: ModalComponent;
@@ -26,21 +39,13 @@ export class ReportModalComponent implements OnDestroy {
   public saving = false;
   public saved = false;
   public failed = false;
-
-  public modalHeaders = [
-    'Step 1: Template and Data Configuration',
-    'Step 2: Name and Preview Report',
-    'Step 3: Report creation summary',
-  ];
-
-  public radioSelectItems = [
-    { label: 'Internal use only', value: 'internal' },
-    { label: 'External public view', value: 'external' },
-  ];
+  public slugPattern = new RegExp('[-a-z0-9]');
 
   public reportTemplates = [
     { label: 'Child Count and Educational Environments', value: 'childCount-multiple' },
+    { label: 'Child Count and Educational Environments Spanish', value: 'childCount-multiple-es-MX' },
     { label: 'Child Count and Settings', value: 'childCountAndSettings' },
+    { label: 'Exiting', value: 'exiting' },
   ];
 
   public currentStep = 0;
@@ -48,8 +53,7 @@ export class ReportModalComponent implements OnDestroy {
   public reportFormGroup: FormGroup;
 
   public dataViews: Observable<DataView[]>;
-
-  private reportTemplateCache = new Map<string, Promise<ITemplate>>();
+  public filteredDataViews$: Observable<DataView[]>;
 
   public subscriptions: Subscription[] = [];
 
@@ -62,6 +66,12 @@ export class ReportModalComponent implements OnDestroy {
 
   public savedReport = '';
 
+  public reportTemplatesAsync: Observable<{ label: string; value: ITemplate }[]>; //this.data.getTemplates('ReportTemplate').pipe(map((result => result.map((temp: any) => ({label: temp.title,  value: temp})))));
+  public filteredReportTemplates$: Observable<{ label: string; value: ITemplate }[]>;
+
+  $pageContent = this.pagesContentService.getPageContentSignal('reports');
+  $pageSections = computed(() => this.$pageContent()?.sections);
+
   @HostListener('window:beforeunload')
   beforeUnload(event: any) {
     if (this.reportFormGroup.dirty) {
@@ -70,21 +80,32 @@ export class ReportModalComponent implements OnDestroy {
   }
 
   constructor(
+    private logger: NGXLogger,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private data: AdaptDataService,
+    //private route: ActivatedRoute,
+    public data: AdaptDataService,
     private idle: Idle,
-    private cd: ChangeDetectorRef,
+    private cdRef: ChangeDetectorRef,
     private user: UserService,
-    private template: TemplateService,
+    //private template: TemplateService,
     private alert: AlertService,
-    private router: Router
+    private location: LocationStrategy,
+    private router: Router,
+    public pagesContentService: PagesContentService
   ) {
+    this.logger.debug('Inside ReportModalComponent constructor');
+
     this.reportFormGroup = this.fb.group({
+      //reportingLevel: this.fb.control('', [Validators.required]),
       dataView: this.fb.control('', [Validators.required]),
       template: this.fb.control('', [Validators.required]),
       visibility: this.fb.control('internal', [Validators.required]),
       title: this.fb.control('', [Validators.required], [uniqueNameValidator('Report', this.data, PageMode.CREATE)]),
+      slug: this.fb.control(
+        '',
+        [Validators.required],
+        [uniqueNameValidator('Report', this.data, PageMode.CREATE, 'slug')]
+      ),
       description: this.fb.control('', [Validators.required]),
       preview: this.fb.control(undefined, [Validators.required]),
     });
@@ -92,10 +113,21 @@ export class ReportModalComponent implements OnDestroy {
     this.title.disable();
     this.description.disable();
     this.preview.disable();
+    this.slug.disable();
+
+    this.location.onPopState((event) => {
+      if (event.type === 'popstate') this.cancel();
+    });
 
     this.dataViews = this.data
       .getDataViews()
       .pipe(map((views) => views.filter((view) => view.status === DataSetQueueStatus.AVAILABLE)));
+
+    this.logger.debug('dataViews: ', this.dataViews);
+
+    this.reportTemplatesAsync = this.data
+      .getTemplates<ITemplate>('ReportTemplate')
+      .pipe(map((result) => result.map((temp: ITemplate) => ({ label: temp.title, value: temp }))));
 
     this.idle.onTimeout.subscribe(() => {
       if (this.reportFormGroup.dirty) {
@@ -106,6 +138,30 @@ export class ReportModalComponent implements OnDestroy {
         });
       }
     });
+
+    // get the dropdown options for the question: What data view do you want to use?
+
+    this.filteredDataViews$ = this.dataViews; //this.filterDataViews('');  // 'SEA (State Education Agency)'
+
+    // this.filteredDataViews$ = this.reportingLevel.valueChanges.pipe(
+    //   startWith(this.reportingLevel.value),
+    //   switchMap((selectedReportingLevel: QuestionOptionContentText) =>
+    //
+    //       this.filterDataViews(selectedReportingLevel.label)
+    //
+    //   )
+    // );
+
+    this.filteredReportTemplates$ = this.reportTemplatesAsync; //this.filterReportTemplates('');
+
+    // this.filteredReportTemplates$ = this.reportingLevel.valueChanges.pipe(
+    //   startWith(this.reportingLevel.value),
+    //   switchMap((selectedReportingLevel: QuestionOptionContentText) =>
+    //     this.filterReportTemplates(selectedReportingLevel.label)
+    //   )
+    // );
+
+    this.logger.debug('filteredReportTemplates$: ', this.filteredReportTemplates$);
 
     const dataViewSub = this.dataView.valueChanges.subscribe((val) => {
       this.preview.setValue(undefined);
@@ -125,8 +181,49 @@ export class ReportModalComponent implements OnDestroy {
     });
   }
 
+  ngOnInit() {
+    // Can update these variables with dynamical content pulled from the database if needed
+    // console.log('Inside report-modal component ngOnInit');
+  }
+
+  private filterDataViews(reportingLevelLabel: string): Observable<DataView[]> {
+    this.logger.debug('Inside filteredDataViews, reportingLevelLabel: ', reportingLevelLabel);
+
+    return this.dataViews.pipe(
+      map((items) => {
+        const filtered = items.filter((item) => {
+          const rl = item.data.fields.find((f) => f.id === 'reportingLevel');
+          return rl?.label === reportingLevelLabel || rl === undefined;
+        }); // Filtered created as const so that we can sort it before returning it
+
+        this.logger.debug('filtered: ', filtered);
+
+        return filtered
+          .slice() // Using slice() to avoid mutating the source array
+          .sort((a, b) => b.updated! - a.updated!); // Sorted in descending order by 'updated' field before returning
+      })
+    );
+  }
+
+  private filterReportTemplates(reportingLevelLabel: string): Observable<{ label: string; value: ITemplate }[]> {
+    this.logger.debug('Inside filterReportTemplates, reportingLevelLabel: ', reportingLevelLabel);
+
+    return this.reportTemplatesAsync.pipe(
+      map((items) => {
+        this.logger.debug('Inside filteredReportTemplates, reportingLevelLabel: ', reportingLevelLabel);
+
+        const filtered = items.filter(
+          (item) =>
+            item.value.reportingLevels === undefined || item.value.reportingLevels?.includes(reportingLevelLabel)
+        );
+
+        this.logger.debug('filtered: ', filtered);
+        return filtered;
+      })
+    );
+  }
+
   public next() {
-    //  debugger;
     if (this.currentStep > 0) this.reportFormGroup.markAllAsTouched();
 
     if (this.reportFormGroup.invalid || this.reportFormGroup.pending) {
@@ -151,10 +248,18 @@ export class ReportModalComponent implements OnDestroy {
       case 1: {
         // LOAD
         this.title.enable();
+
         this.description.enable();
+
         this.title.markAsUntouched();
         this.description.markAsUntouched();
         this.preview.enable();
+
+        if (this.audience.value === 'external') {
+          this.slug.enable();
+          this.slug.markAsUntouched();
+        }
+
         break;
       }
       case 3: {
@@ -184,25 +289,28 @@ export class ReportModalComponent implements OnDestroy {
         if (!this.title.dirty) this.title.setValue(template.title);
         if (!this.description.dirty) this.description.setValue(template.description);
 
+        if (!this.slug.dirty)
+          this.slug.setValue(
+            slugify(template.title, {
+              strict: true,
+              lower: true,
+              trim: true,
+            })
+          );
+
         this.currentReportTemplate = template;
       };
 
-      if (this.reportTemplateCache.has(template)) {
-        const dbTemplate = (await this.reportTemplateCache.get(template)) as ITemplate;
-
-        setFields(dbTemplate);
-      }
-
-      const promise = this.template.getTemplatePromise(template) as Promise<ITemplate>;
-
-      this.reportTemplateCache.set(template, promise);
-
-      setFields(await promise);
+      setFields(template);
     });
 
     this.subscriptions.push(templateSub);
     this.stepsIndicator.setStep(page);
     this.handleNextStep();
+  }
+
+  ngAfterContentChecked() {
+    this.cdRef.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -246,7 +354,7 @@ export class ReportModalComponent implements OnDestroy {
     this.modal.close();
     this.reset();
 
-    this.router.navigate([this.savedReport], { relativeTo: this.route }).then(() => window.location.reload());
+    this.router.navigate(['admin', 'reports', this.savedReport]).then(() => window.location.reload());
   }
 
   public generatePreview() {
@@ -292,6 +400,8 @@ export class ReportModalComponent implements OnDestroy {
       dataViews: report.dataViews,
       dataView: this.dataView.value.dataViewID,
       template: this.currentReportTemplate!,
+      slug: this.slug.value,
+      //  reportingLevel: this.reportingLevel.value.value,
     };
 
     this.data
@@ -318,10 +428,15 @@ export class ReportModalComponent implements OnDestroy {
   }
 
   public onReportPreviewEvent(event: boolean) {
+    console.log(event);
     this.preview.setValue(event);
 
     !event ? this.preview.setErrors({ invalidPreview: true }) : this.preview.setErrors(null);
   }
+
+  // public get reportingLevel() {
+  //   return this.reportFormGroup.get('reportingLevel') as FormControl;
+  // }
 
   public get dataView() {
     return this.reportFormGroup.get('dataView') as FormControl;
@@ -337,6 +452,9 @@ export class ReportModalComponent implements OnDestroy {
   }
   public get description() {
     return this.reportFormGroup.get('description') as FormControl;
+  }
+  public get slug() {
+    return this.reportFormGroup.get('slug') as FormControl;
   }
   public get preview() {
     return this.reportFormGroup.get('preview') as FormControl;

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
+import { IReport } from '@adapt/types';
 
 @Component({
   selector: 'adapt-list-item-report',
@@ -24,7 +25,7 @@ export class ListItemReportComponent {
     private alert: AlertService
   ) {}
 
-  public publishReport() {
-    this.publish.emit();
+  public publishReport(report: IReport) {
+    this.publish.emit(report);
   }
 }

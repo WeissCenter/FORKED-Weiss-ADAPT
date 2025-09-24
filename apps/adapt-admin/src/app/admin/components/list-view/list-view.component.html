@@ -5,10 +5,10 @@
   <div
     class="display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full margin-bottom-3 gap-2">
     <h2
+      #recordsDisplay
       class="font-family-body font-sm line-height-5 text-normal"
       id="showing"
       *ngIf="dataListTap | async | paginate: page : pageSize as items"
-      #recordsDisplay
       aria-live="polite">
       Showing up to
       <select
@@ -32,30 +32,39 @@
         type="button"
         class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
         <i class="fal {{ icon() }}" aria-hidden="true"></i>
-        Sort
+        {{ listViewContent ? listViewContent.actions[0] : 'Sort' }}
       </button>
       <button
+        type="button"
         *ngIf="currentList === 'views'"
         (click)="toggleFilterPanel()"
         id="filterPanelButton"
-        type="button"
         class="usa-button usa-button--outline shadow-none width-auto align-self-start flex-column">
         <i class="fal fa-filter" aria-hidden="true"></i>
-        Filter
+        {{ listViewContent ? listViewContent.actions[1] : 'Filter' }}
       </button>
       <button
-        *ngIf="currentList === 'sources'"
         class="usa-button width-auto align-self-start"
         (click)="createButtonClick.emit()"
-        [disabled]="!role.hasPermission(Permission.WRITE)">
-        Create
+        *adaptAccessControl="
+          'Data Sources';
+          behavior: 'hide';
+          action: 'Write';
+          extraCondition: currentList === 'sources'
+        ">
+        {{ listViewContent ? listViewContent.actions[2] : 'Create' }}
       </button>
 
       <button
-        *ngIf="currentList === 'views'"
         class="usa-button width-auto align-self-start"
         (click)="createButtonClick.emit()"
-        [disabled]="!role.hasPermission(Permission.WRITE)">
+        *adaptAccessControl="
+          'Data Views';
+          behavior: 'hide';
+          action: 'Write';
+          extraCondition: currentList === 'sources';
+          extraCondition: currentList === 'views'
+        ">
         Create
       </button>
     </div>
@@ -78,6 +87,8 @@
         <ng-container *ngSwitchCase="'users'">
           <adapt-list-item-user
             [user]="item"
+            [confirmEdit]="confirm"
+            [confirmModal]="confirmModal"
             *ngFor="
               let item of dataListLoaded.value | sort: sortDirection : recentSortField | paginate: page : pageSize;
               trackBy: identify

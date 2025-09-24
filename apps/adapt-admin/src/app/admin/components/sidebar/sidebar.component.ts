@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UserService } from '../../../auth/services/user/user.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { SettingsService } from '../../services/settings.service';
+import { SettingsService } from '@adapt/adapt-shared-component-lib';
 import { ModalComponent } from '@adapt/adapt-shared-component-lib';
 import { environment } from 'apps/adapt-admin/src/environments/environment';
+import { RoleService } from '../../../auth/services/role/role.service';
 
 @Component({
   selector: 'adapt-sidebar',
@@ -14,23 +15,29 @@ import { environment } from 'apps/adapt-admin/src/environments/environment';
 export class SidebarComponent implements AfterViewInit {
   @ViewChild('confirmLogOut') confirmLogOutModal?: ModalComponent;
   @ViewChild('navList') navList!: ElementRef<HTMLUListElement>;
-  public logoURL?: SafeUrl;
+  public logoURL = 'assets/shared/logos/state-nav-logo.svg'; //computed(() => {
+  //   const settingsLogo = this.settings.getSettingsSignal()().logo;
+  //   return this.sanitzier.bypassSecurityTrustUrl(
+  //     `https://${environment.s3PublicAssetsDomainName}.s3.amazonaws.com/${settingsLogo}`
+  //   );
+  // });
   public skipTo: any;
+
+  // magnifying glass logo
+  collapsedLogo = `https://${environment.appDomain}/assets/shared/svg/adapt-nav-logo.svg`;
+  openLogo = `https://${environment.appDomain}/assets/shared/svg/adapt-Title_Full.svg`;
+
+  // sidebar logo
+  sidebarLogo = `https://${environment.appDomain}/assets/shared/logos/state-nav-logo.svg`;
 
   constructor(
     private route: ActivatedRoute,
+    public role: RoleService,
     private router: Router,
     private sanitzier: DomSanitizer,
     public user: UserService,
     private settings: SettingsService
   ) {
-    // aem-logo.png
-    this.settings.getSettingsObservable().subscribe((settings) => {
-      this.logoURL = this.sanitzier.bypassSecurityTrustUrl(
-        `https://${environment.s3PublicAssetsDomainName}.s3.amazonaws.com/${settings.logo}`
-      );
-    });
-
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         (document.querySelector('.skip-to')?.querySelector('button') as HTMLButtonElement)?.focus();

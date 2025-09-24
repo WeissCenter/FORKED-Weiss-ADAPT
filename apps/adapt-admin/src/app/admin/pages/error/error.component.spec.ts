@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InlineSvgComponent } from './inline-svg.component';
+import { ErrorComponent } from './error.component';
 
-describe('InlineSvgComponent', () => {
-  let component: InlineSvgComponent;
-  let fixture: ComponentFixture<InlineSvgComponent>;
+describe('ErrorComponent', () => {
+  let component: ErrorComponent;
+  let fixture: ComponentFixture<ErrorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InlineSvgComponent],
+      declarations: [ErrorComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InlineSvgComponent);
+    fixture = TestBed.createComponent(ErrorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

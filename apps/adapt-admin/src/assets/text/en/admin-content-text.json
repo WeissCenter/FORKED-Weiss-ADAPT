@@ -1,0 +1,873 @@
+{
+  "pages": [
+    {
+      "name": "login",
+      "title": "Welcome to ADAPT, the Accessible Data Analysis and Publishing Tool.",
+      "loginContent": {
+        "metaTitle": "ADAPT - Login",
+        "metaDescription": "A freely available tool for reporting IDEA data, fully accessible to individuals with disabilities.",
+        "subtitle": "<p class=\"font-sm\" i18n>Developed by the <a class=\"usa-link\" aria-label=\"Rhonda Weiss Center for Accessible IDEA Data Website (opens in a new window)\" href=\"https://www.weissta.org\" target=\"_blank\">Rhonda Weiss Center for Accessible IDEA Data</a>, ADAPT is a collaborative, web-based solution that allows users to develop data products accessible to all, including people with disabilities. By increasing data accessibility, ADAPT promotes broader data use by more diverse individuals, leading to improved decision-making and educational outcomes.</p>",
+        "emailLabel": "Email address",
+        "emailHint": "For example, samantha@example.edu",
+        "emailPlaceholder": "Email...",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Password...",
+        "passwordHint": "It must be a combination of minimum 8 letters, numbers, and symbols.",
+        "rememberMeLabel": "Remember me",
+        "loginButtonLabel": "Login",
+        "ssoLabel": "Login in with:",
+        "microsoftLabel": "Microsoft"
+      }
+    },
+    {
+      "name": "home",
+      "title": "Home Page",
+      "description": "Home Page Description",
+      "sections": [
+        {
+          "title": "What can you do here?",
+          "description": "Here are the most common actions, quick views, and recent activities you can select and act on.",
+          "sub_sections": [
+            {
+              "title": "Your Recent Activity",
+              "description": "Check out your most recent activities to stay up to date on what you've done lately."
+            },
+            {
+              "title": "Common Actions",
+              "description": "Here is a list of the common actions you can perform, making it easy to quickly access and manage your routine tasks.",
+              "items": ["Create New Report", "Create New Data View"]
+            }
+          ]
+        },
+        {
+          "title": "Reports and Data Views",
+          "description": "This section allows you to access and manage a variety of reports and data views. The list of items in each section below can be expanded on to provide you with additional information and actions.",
+          "sub_sections": [
+            {
+              "title": "View Reports",
+              "description": "See the most recently updated reports here. To view the full list of reports with filtering options, you may select the View All button below. If you wish to create a new report, you may select the Create New Report button below.",
+              "items": ["Create New Report"]
+            },
+            {
+              "title": "Data Views",
+              "description": "See the most recently updated data views here. To view the full list of data views with filtering options, you may select the View All button below. If you wish to create a new data view, you may select the Create New Data View button below.",
+              "items": ["Create New Data View"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "data",
+      "title": "Data Views",
+      "description": "Manage your data views here for report creation. You can create new data views from your connected data sources or by uploading a file. You can also edit existing data views by either expanding on a data view or selecting the title for a data view.",
+      "sections": [
+        {
+          "name": "Define",
+          "title": "Define data",
+          "header": "Getting started with your data.",
+          "description": "Specify the data you want to load, the reporting year, and where the data is coming from.",
+          "questions": [
+            {
+              "label": "What data do you want to load?",
+              "type": "dropdown",
+              "required": true,
+              "selected_option": "IDEA Child Count and Educational Environments"
+            },
+            {
+              "label": "Where is the data coming from?",
+              "type": "dropdown",
+              "required": true,
+              "selected_option": "By uploading data files",
+              "options": [
+                {
+                  "value": "collection",
+                  "label": "By uploading data files"
+                },
+                {
+                  "value": "database",
+                  "label": "By connecting to a database"
+                }
+              ]
+            },
+            {
+              "label": "Which database?",
+              "type": "dropdown",
+              "required": true,
+              "validation_messages": {
+                "required": "Database is required."
+              }
+            }
+          ],
+          "messages": {
+            "warning": {
+              "type": "warning",
+              "message": "This data view already exists.",
+              "details": "Please check the following data view before continuing:"
+            }
+          }
+        },
+        {
+          "name": "Load",
+          "title": "Load data",
+          "header": "Load data",
+          "description": "To create accurate reports, please load the necessary data listed below. Proceed to the next step or close this window at any time. File uploads will keep running in the background but be aware that closing the window will stop any ongoing uploads.",
+          "instructions": "Select the corresponding file to upload or drag-and-drop the file over the area below.",
+          "additional_info": "Proceed to the next step, save, or close this window at any time. File uploads will keep running in the background, but be aware that closing the window will stop any ongoing uploads.",
+          "questions": [
+            {
+              "label": "Data view",
+              "id": "dataView"
+            },
+            {
+              "label": "Reporting year",
+              "id": "reportingYear"
+            },
+            {
+              "label": "Reporting level",
+              "id": "reportingLevel"
+            },
+            {
+              "label": "Data load method",
+              "id": "dataLoad"
+            },
+            {
+              "label": "Expected data and load status",
+              "id": "dataLoadStatus"
+            }
+          ],
+          "messages": {
+            "success": {
+              "message": "Data loaded successfully",
+              "details": "You may preview the first 10 records of the loaded data to confirm: "
+            },
+            "error": {
+              "message": "Something went wrong",
+              "details": "This data is required to load."
+            },
+            "required": {
+              "message": "This file is required for upload."
+            },
+            "please_wait": {
+              "message": "Retrieving Data, please wait a moment."
+            }
+          },
+          "sub_sections": [
+            {
+              "title": "Data preview",
+              "description": "Here is a preview of the first 10 rows retrieved from your data. You may need to scroll horizontally to review all columns.",
+              "actions": {
+                "close_button": "Close Preview"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Review",
+          "title": "Data view summary",
+          "header": "Review summary",
+          "description": "Review the summary of your data view below. After checking the details, proceed to the next step to save your data view.",
+          "questions": [
+            {
+              "label": "Data view",
+              "id": "dataView"
+            },
+            {
+              "label": "Reporting year",
+              "id": "reportingYear"
+            },
+            {
+              "label": "Reporting level",
+              "id": "reportingLevel"
+            },
+            {
+              "label": "Data load method",
+              "id": "dataLoad"
+            },
+            {
+              "label": "Expected data and load status",
+              "id": "dataLoadStatus"
+            }
+          ]
+        },
+        {
+          "name": "Save",
+          "title": "Name data view",
+          "header": "Name your data view",
+          "description": "Before saving, please be sure to give your data view a unique name and a good description.",
+          "questions": [
+            {
+              "label": "Name this data view: ",
+              "placeholder": "Create a friendly and unique name.",
+              "validation_messages": {
+                "required": "Data View name is required.",
+                "unique": "Data View name must be unique."
+              }
+            },
+            {
+              "label": "Add a description",
+              "placeholder": "Create a clear and detailed description about your data view.",
+              "validation_messages": {
+                "required": "Description is required."
+              }
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "next_button": "Next: ",
+        "cancel_button": "Cancel",
+        "save_button": "Save",
+        "back_button": "Back",
+        "database": "by Database connection",
+        "collection": "by File upload"
+      }
+    },
+    {
+      "name": "reports",
+      "title": "Reports List",
+      "description": "Create reports using your selected data views and report templates or edit existing reports. When creating a report, you can choose to create internal reports for private use or external reports that can be finalized and published for public access.",
+      "tabs": ["All Reports", "Draft Reports", "Finalized Reports", "Archived Reports"],
+      "sections": [
+        {
+          "name": "Define",
+          "title": "Report Template and Data Selection",
+          "header": "Select a report template and data view.",
+          "description": "Below you will need to choose an available data view that you have created, select a report template, as well as select the audience for your report.",
+          "questions": [
+            {
+              "label": "Reporting level",
+              "type": "dropdown",
+              "required": true,
+              "options": [
+                {
+                  "label": "SEA (State Education Agency)",
+                  "value": "SEA",
+                  "selected": true
+                },
+                {
+                  "label": "LEA (Local Education Agency)",
+                  "value": "LEA",
+                  "selected": false
+                },
+                {
+                  "label": "SCH (School)",
+                  "value": "SCH",
+                  "selected": false
+                }
+              ],
+              "validation_messages": {
+                "required": "Reporting level is required."
+              }
+            },
+            {
+              "label": "What data view do you want to use?",
+              "type": "dropdown",
+              "required": true,
+              "validation_messages": {
+                "required": "Data View is required."
+              },
+              "selected_option": "Child Count and Settings - 2023-24 - by File Upload - 08/27/2024, 09:40 AM"
+            },
+            {
+              "label": "Select report template",
+              "type": "dropdown",
+              "required": true,
+              "validation_messages": {
+                "required": "Report Template is required."
+              },
+              "selected_option": "Child Count and Education Environments"
+            },
+            {
+              "label": "Who is the audience for the report?",
+              "type": "radio_buttons",
+              "required": true,
+              "options": [
+                {
+                  "label": "Internal use only",
+                  "value": "internal",
+                  "selected": true
+                },
+                {
+                  "label": "External public view",
+                  "value": "external",
+                  "selected": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Preview",
+          "title": "Name and Preview Report",
+          "header": "Name and preview report",
+          "description": "Before previewing your report, please be sure to give your report a unique name and a good description.",
+          "questions": [
+            {
+              "label": "Title:",
+              "comment": "We populated this field to get you started, or you can create your own friendly and unique name.",
+              "required": true
+            },
+            {
+              "label": "Public report identifier:",
+              "comment": "We have populated this field with a report identifier based on the report template you selected, which will be displayed on the Public Viewer site. You can also create your own friendly and unique report identifier before publishing.",
+              "required": true
+            },
+            {
+              "label": "Description:",
+              "comment": "Create a clear and detailed description about your report.",
+              "required": true
+            }
+          ],
+          "messages": {
+            "preview": {
+              "type": "preview",
+              "message": "You must generate a preview of your report and confirm it loads before proceeding to the next step to save your report."
+            },
+            "status": {
+              "type": "status",
+              "message": "Successful report preview is required. Check your data view and template and try again."
+            }
+          }
+        },
+        {
+          "name": "Save",
+          "title": "Report summary",
+          "header": "Review summary",
+          "description": "Review the summary of your report below. After checking the details, proceed to the next step to save and view the draft report.",
+          "questions": [
+            {
+              "label": "Report name:"
+            },
+            {
+              "label": "Report description:"
+            },
+            {
+              "label": "Report template:"
+            },
+            {
+              "label": "Data view:"
+            },
+            {
+              "label": "Distribution:"
+            },
+            {
+              "label": "Meta tags:"
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "next_button": "Next: ",
+        "cancel_button": "Cancel",
+        "save_button": "Save and View Draft",
+        "back_button": "Back",
+        "preview_button": "Generate Preview"
+      }
+    },
+    {
+      "name": "settings",
+      "title": "Settings",
+      "description": "Tailor key aspects of your application to meet your specific needs. You can easily create and manage your data sources, configure your data suppression rules, control user management, and more.",
+      "sections": [
+        {
+          "title": "Categories",
+          "description": "Select any of the options below to configure ADAPT.",
+          "sub_sections": [
+            {
+              "title": "Data Sources",
+              "description": "Connect to a database to create a new data source or manage and configure your existing data sources to ensure they are up-to-date and ready for data view and report creation.",
+              "path": "data-sources"
+            },
+            {
+              "title": "Data Suppression",
+              "description": "Protect sensitive data with configurable suppression rules, maintaining user privacy and adhering to compliance standards.",
+              "path": "data-suppression"
+            },
+            {
+              "title": "Footer Links",
+              "description": "Edit and manage essential footer content such as privacy policies and terms of service, providing transparency and user guidance.",
+              "path": "footer-links"
+            },
+            {
+              "title": "Language Translation Options",
+              "description": "Select the language options you’d like to support to turn on translation features for your external reports.",
+              "path": "language-access"
+            },
+            {
+              "title": "Security",
+              "description": "Secure your application with configurable security settings such as session time-outs and alerts, to protect user data and system integrity.",
+              "path": "security"
+            },
+            {
+              "title": "User Management",
+              "description": "Administer users and roles within the application, ensuring secure access control and efficient user oversight.",
+              "path": "user-management"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "data-sources",
+      "title": "Data Sources",
+      "description": "Connect to a database to create a data source, which you can then use to create a data view to prepare for report creation. You can also edit and manage your existing data sources to ensure they are up-to-date.",
+      "sections": [
+        {
+          "name": "Create",
+          "title": "Define data source",
+          "header": "Define your data source",
+          "description": "Get started by defining your data source. Specify the source type, give the data source a unique name, and describe your data source.",
+          "questions": [
+            {
+              "label": "Source type",
+              "type": "dropdown",
+              "required": true,
+              "options": [
+                {
+                  "label": "Microsoft SQL Server",
+                  "value": "mssql"
+                }
+              ],
+              "validation_messages": {
+                "required": "Source type is required."
+              }
+            },
+            {
+              "label": "Data source name",
+              "placeholder": "Create a friendly and unique name that humans can read.",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Data source name is required."
+              }
+            },
+            {
+              "label": "Description",
+              "type": "textarea",
+              "required": true,
+              "selected_option": "By uploading data files",
+              "validation_messages": {
+                "required": "Data source description is required."
+              }
+            }
+          ]
+        },
+        {
+          "name": "Connect",
+          "title": "Define source connection",
+          "header": "Connect to your database",
+          "description": "Add the server address and details below. A successful connection is required to continue.",
+          "questions": [
+            {
+              "label": "Data source details"
+            },
+            {
+              "label": "Server address",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Data source address is required."
+              }
+            },
+            {
+              "label": "Port number",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Data source port number is required."
+              }
+            },
+            {
+              "label": "Database name",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Data source database name is required."
+              }
+            },
+            {
+              "label": "Username",
+              "type": "text",
+              "required": true,
+              "validation_messages": {
+                "required": "Data source username is required."
+              }
+            },
+            {
+              "label": "Password",
+              "type": "password",
+              "required": true,
+              "validation_messages": {
+                "required": "Data source password is required."
+              }
+            }
+          ],
+          "messages": {
+            "test_fail": {
+              "type": "test",
+              "message": "A Successful connection is required to continue."
+            },
+            "unable_to_connect": {
+              "type": "fail",
+              "message": "Unable to connect. Review your connection details and test it again."
+            },
+            "success_connect": {
+              "type": "success",
+              "message": "Connected successfully."
+            }
+          }
+        },
+        {
+          "name": "Review",
+          "title": "Impact analysis",
+          "header": "Review impact analysis",
+          "description": "Review the impact analysis below to understand how these changes may impact existing data views and reports."
+        },
+        {
+          "name": "Save",
+          "title": "Data Source Summary",
+          "header": "Data Source Summary",
+          "description": "Review the following information before saving.",
+          "questions": [
+            {
+              "label": "General information"
+            },
+            {
+              "label": "Connection type"
+            },
+            {
+              "label": "Friendly name"
+            },
+            {
+              "label": "Description"
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "add_button": "Add Data View",
+        "next_button": "Next: ",
+        "cancel_button": "Cancel",
+        "save_button": "Save",
+        "edit_button": "Edit",
+        "back_button": "Back",
+        "archive_button": "Archive",
+        "test_connection_button": "Test Connection",
+        "edit_pw_button": "Edit Password"
+      }
+    },
+    {
+      "name": "footer-links",
+      "title": "Footer Links",
+      "description": "To customize what links show up in your footer, click the edit button and you will be able to create and update the footer links. You can name the link with the Link Label field, and add a URL in the Link URL field. You may also select if it is an External Link by selecting the box, and then you can specify how the link should open (e.g., new tab or same tab). You can also assign an icon to the link by copying an icon from https://fontawesome.com/v5/search and pasting it in the Link Icon field. If you need to add additional fields, you can select the Add Footer Links button, or you may save your changes by selecting the Save button.",
+      "sections": [
+        {
+          "name": "links",
+          "header": "Links",
+          "description": "Configure your footer links.",
+          "questions": [
+            {
+              "label": "Link Label"
+            },
+            {
+              "label": "Link URL"
+            },
+            {
+              "label": "External Link"
+            },
+            {
+              "label": "Action"
+            },
+            {
+              "label": "Link Icon"
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "add_button": "Add Footer Link",
+        "save_button": "Save",
+        "close_button": "Close",
+        "edit_button": "Edit"
+      }
+    },
+    {
+      "name": "language-access",
+      "title": "Language Translation Options",
+      "description": "Select the language options you’d like to support to turn on translation features for your external reports.",
+      "sections": [
+        {
+          "name": "lang-options",
+          "header": "Select Language Translation Options",
+          "description": "Select the language(s) your organization wishes to support for translation in external reports.",
+          "disclaimer": "Please note: Changing the language translation settings won't automatically update your published reports. To apply the new language translation options, you'll need to unpublish the report(s) first, then republish them. This ensures the changes are reflected properly.",
+          "questions": [
+            {
+              "label": "Select Language Translation Options"
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "add_button": "Add Footer Link",
+        "save_button": "Save",
+        "close_button": "Close",
+        "edit_button": "Edit"
+      }
+    },
+    {
+      "name": "security",
+      "title": "Security",
+      "description": "Manage your session idle timeout settings and other security settings.",
+      "sections": [
+        {
+          "name": "Session Timeout",
+          "header": "Session Timeout",
+          "description": "Configure your session timeout settings.",
+          "questions": [
+            {
+              "label": "Idle Time",
+              "comment": "The number of minutes without any activity before you are considered idle. (default 30 minutes)",
+              "validation_messages": {
+                "required": "Idle Time is required."
+              }
+            },
+            {
+              "label": "Warning Time",
+              "comment": "Number of minutes before you are logged out to show a warning. (default 2 minutes)",
+              "validation_messages": {
+                "required": "Warning Time is required."
+              }
+            },
+            {
+              "label": "Timeout Time",
+              "comment": "The number of minutes after being marked as idle before the system automatically logs you out due to inactivity. (default 5 minutes)",
+              "validation_messages": {
+                "required": "Timeout Time is required."
+              }
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "save_button": "Save",
+        "close_button": "Close",
+        "edit_button": "Edit"
+      }
+    },
+    {
+      "name": "error",
+      "title": "Error Page",
+      "sections": [
+        {
+          "name": "404",
+          "header": "404: Page Not Found",
+          "subHeader": "Encountered an error",
+          "sub_sections": [
+            {
+              "title": "Sorry, but the page you’re looking for doesn’t seem to exist. Please verify the URL and try again.",
+              "description": "Select the button below to return to the main ADAPT admin page."
+            }
+          ]
+        },
+        {
+          "name": "unauthorized",
+          "header": "Protected",
+          "subHeader": "The access to this page is",
+          "sub_sections": [
+            {
+              "title": "Please check your permissions to access this page.",
+              "description": "You do not have the appropriate permissions to complete this request. Please contact your IT administrator."
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "return": "Return to Home Page"
+      }
+    },
+    {
+      "name": "data-suppression",
+      "title": "Data Suppression",
+      "description": "Customize your data suppression rules.",
+      "sections": [
+        {
+          "name": "N-Size",
+          "header": "N-Size",
+          "description": "  Configure your organization's N-Size suppression.",
+          "questions": [
+            {
+              "label": "What is your organizations N-Size threshold",
+              "comment": "Please note: Changing the N-size won't automatically update your published reports. To apply the new N-size to those reports, you'll need to unpublish them first, then republish them. This ensures the changes are reflected properly.",
+              "validation_messages": {
+                "required": "Database is required."
+              }
+            }
+          ]
+        }
+      ],
+      "actions": {
+        "close_button": "Close",
+        "edit_button": "Edit",
+        "save_button": "Save"
+      }
+    },
+    {
+      "name": "report-page",
+      "title": "Report Page",
+      "sections": [
+        {
+          "name": "Edit Report Fields",
+          "header": "Language",
+          "description": "Configure the audience.",
+          "questions": [
+            {
+              "label": "Who is the audience for the report?",
+              "options": [
+                {
+                  "label": "Internal use only",
+                  "value": "internal"
+                },
+                {
+                  "label": "External use only",
+                  "value": "external"
+                }
+              ]
+            },
+            {
+              "label": "Select Language",
+              "options": [
+                {
+                  "label": "English",
+                  "localizedLabel": "English",
+                  "value": "en"
+                },
+                {
+                  "label": "Spanish",
+                  "localizedLabel": "Español",
+                  "value": "es-MX"
+                }
+              ]
+            },
+            {
+              "label": "External Link"
+            },
+            {
+              "label": "Action"
+            },
+            {
+              "label": "Link Icon"
+            }
+          ]
+        },
+        {
+          "name": "Data Suppression Warning",
+          "header": "Data suppression is active.",
+          "description": "Specific data has been suppressed to protect the privacy of individuals in accordance with FERPA guidelines. Details that could lead to the identification of individuals in small population groups are not disclosed. To view all data available"
+        },
+        {
+          "name": "Quick Summary",
+          "header": "Quick Summary"
+        },
+        {
+          "name": "filter-popup",
+          "header": "Filters Applied",
+          "description": "There are {{filter_count}} filters applied across {{category_count}} categories."
+        },
+        {
+          "name": "data-rep-data-modal",
+          "description": "Specific data has been suppressed to protect the privacy of individuals in accordance with FERPA guidelines. Details that could lead to the identification of individuals in small population groups are not disclosed."
+        }
+      ],
+      "actions": {
+        "add_button": "Add Footer Link",
+        "save_button": "Save",
+        "close_button": "Close",
+        "edit_button": "Edit",
+        "suppress_data": "Suppress Data",
+        "un_suppress_data": "un-suppress data.",
+        "explain": "Explain",
+        "glossary": "Glossary",
+        "success": "Success",
+        "percent": "Percent (%)",
+        "quick_filters": "Quick Filters",
+        "download_csv": "Download CSV",
+        "download_excel": "Download Excel (XLSX)",
+        "value_label": "Value",
+        "filter": "Filter",
+        "note": "Note:",
+        "section_unavailable": "This Section is Unavailable.",
+        "of": "of",
+        "verified": "Verified",
+        "verify_translations": "Verify Translations",
+        "generate_translations": "Generate Translations",
+        "selected": "selected",
+        "filter_description": "Make your filtering selections and select apply.",
+        "filter_controls_description": "Select apply to save your changes.",
+        "apply_and_close": "Apply and Close",
+        "reset": "Reset",
+        "cancel": "Cancel",
+        "open_filter_panel": "Open Filter Panel",
+        "reset_all_filters": "Reset All Filters",
+        "plain_language_summary": "Plain language summary",
+        "translation_successful": "Translations were generated, please verify them before publishing your report.",
+        "translation_error": "Translations must be generated and verified before you can publish the report.",
+        "data": "Data",
+        "preset_hint": "Please note: Due to how the data is organized, custom filtering is limited to the preset options provided below.",
+        "filter_groups": "Choose from the preset filter groups below to customize your report.",
+        "suppressed": "Suppressed",
+        "filtered": "Filtered",
+        "close": "Close",
+        "total_label": "Total",
+        "report-filter-no-data": "Data is not collected for this category in your State."
+      }
+    },
+    {
+      "name": "user-management",
+      "title": "User Management",
+      "description": "Manage your ADAPT users effectively. View user details, assign user roles, and deactivate users."
+    }
+  ],
+  "shared": {
+    "multiSelect": {
+      "select_all": "Select All",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "selected_template": "({{ selectedCount }} of {{ total }} selected)"
+    },
+    "impactAnalysis": {
+      "reportName": "Report Name",
+      "dataSourceCountTemplate": "There are {{ dataViewCount }} data views(s) and {{ reportCount }} report(s) using this data source:",
+      "dataViewCountTemplate": "There are {{ reportCount }} report(s) using this data view:",
+      "glossaryCountTemplate": "There are {{ reportCount }} report(s) using this glossary term:",
+      "title": "Impact analysis",
+      "status": "Status",
+      "learnMore": "To learn more, please click here.",
+      "audience": "Audience",
+      "noDataViews": "No data views or reports have been created with this data source.",
+      "noReports": "No reports have been created with this data view."
+    },
+    "languageAccess": {
+      "supportedLanguages": [
+        {
+          "label": "English",
+          "localizedLabel": "English",
+          "value": "en"
+        },
+        {
+          "label": "Spanish",
+          "localizedLabel": "Español",
+          "value": "es-MX"
+        }
+      ]
+    },
+    "createUpdate": {
+      "lastUpdated": "Last updated",
+      "createdBy": "Created by"
+    }
+  },
+  "adaptListView": {
+    "actions": ["Sort", "Filter", "Create"]
+  }
+}

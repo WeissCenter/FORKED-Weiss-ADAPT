@@ -3,7 +3,6 @@
   top: 0;
   display: flex;
   align-self: flex-start;
-  z-index: 3;
 }
 
 aside {
@@ -19,7 +18,6 @@ aside {
 
   button {
     box-shadow: none;
-    --usa-button-font-size: var(--usa-font-size-2xs);
     --usa-button-icon-size: var(--usa-font-size-lg);
   }
 
@@ -106,6 +104,9 @@ a.site-nav {
 }
 
 @media all and (max-width: 39.99em) {
+  :host {
+    z-index: 101;
+  }
   aside {
     max-width: 100vw;
     position: sticky;
@@ -117,6 +118,7 @@ a.site-nav {
     border-bottom: var(--usa-base-lighter) solid var(--usa-spacing-1px);
 
     &:not(.collapsed) {
+      z-index: 200;
       max-width: 90vw;
       min-width: 90vw;
       position: fixed;

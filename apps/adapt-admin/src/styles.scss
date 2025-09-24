@@ -16,3 +16,13 @@
 @import 'libs/shared-styles/variables/generated';
 
 @import 'libs/shared-styles/theme';
+
+a {
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+
+button {
+  min-width: 44px !important;
+  min-height: 44px !important;
+}

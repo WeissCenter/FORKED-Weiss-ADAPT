@@ -163,7 +163,7 @@ export class CognitoService {
     );
   }
 
-  private recordEvent(event: string, type: EventType, metadata?: any) {
+  public recordEvent(event: string, type: EventType, metadata?: any) {
     return this.http.post<Response<any>>(`${environment.API_URL}event`, { event, type, metadata });
   }
 
@@ -203,8 +203,8 @@ export class CognitoService {
    * @param res HttpErrorResponse from API call observable
    */
   public handleLogoutError(res: HttpErrorResponse): string {
-    console.error(res);
-    if (res.error.error) {
+    // console.log(res);
+    if (res.error?.error) {
       switch (res.error.error) {
         case 'invalid_request':
           return 'You are not logged in.';

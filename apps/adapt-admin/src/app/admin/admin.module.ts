@@ -41,7 +41,7 @@ import { ReportModalComponent } from './components/report-modal/report-modal.com
 import { ListItemReportComponent } from './components/list-item-report/list-item-report.component';
 import { ListItemDataComponent } from './components/list-item-data/list-item-data.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { SharedModule } from '../app.shared-module';
+//import { SharedModule } from '../app.shared-module';
 import { DataSourcesSettingsComponent } from './pages/settings/data-sources-settings/data-sources-settings.component';
 import { DataSourceModalComponent } from './components/data-source-modal/data-source-modal.component';
 import { BrandingSettingsComponent } from './pages/settings/branding-settings/branding-settings.component';
@@ -55,7 +55,12 @@ import { InactivityBannerComponent } from './components/inactivity-banner/inacti
 import { SecuritySettingsComponent } from './pages/settings/security-settings/security-settings.component';
 import { SessionReloadBannerComponent } from './components/session-reload-banner/session-reload-banner.component';
 import { LibModule } from '@adapt/adapt-shared-component-lib';
+import { WeissAccessibilityCenterModule } from 'weiss-accessibility-center';
 import { environment } from '../../environments/environment';
+import { AccessControlDirective } from '../auth/directive/access-control.directive';
+import { DataSuppressionSettingsComponent } from './pages/settings/data-suppression-settings/data-suppression-settings.component';
+import { ErrorComponent } from './pages/error/error.component';
+import { LanguageSettingsComponent } from './pages/settings/language-settings/language-settings.component';
 
 @NgModule({
   declarations: [
@@ -107,21 +112,25 @@ import { environment } from '../../environments/environment';
     UserSettingsComponent,
     ListItemUserComponent,
     InactivityBannerComponent,
+    DataSuppressionSettingsComponent,
     SecuritySettingsComponent,
     SessionReloadBannerComponent,
+    ErrorComponent,
+    LanguageSettingsComponent,
   ],
-  exports: [BannerComponent, HeroBannerComponent],
-  providers: [{ provide: 'defaultContent', useValue: environment.defaultContent }],
+  exports: [BannerComponent, HeroBannerComponent, WeissAccessibilityCenterModule],
+  //providers: [{provide: 'defaultContent', useValue: environment.loginContent}],
   imports: [
     CommonModule,
     AdminRoutingModule,
+    AccessControlDirective,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
     A11yModule,
-    SharedModule,
     ComponentsModule,
     LibModule,
+    WeissAccessibilityCenterModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -4,6 +4,11 @@ import { AdaptDataService } from '../../../../services/adapt-data.service';
 import { BehaviorSubject, map, switchMap } from 'rxjs';
 import { DataSourceModalComponent } from '../../../components/data-source-modal/data-source-modal.component';
 import { LocationStrategy } from '@angular/common';
+import {
+  PageContentText,
+  PageSectionContentText,
+} from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
 
 @Component({
   selector: 'adapt-data-sources-settings',
@@ -22,6 +27,8 @@ export class DataSourcesSettingsComponent implements AfterViewInit {
   actionSourcesRef?: TemplateRef<unknown>;
   @ViewChild('loadingSourcesContent', { static: true })
   loadingSourcesRef?: TemplateRef<unknown>;
+
+  $pageContent = this.pagesContentService.getPageContentSignal('data-sources');
 
   public search = new BehaviorSubject('');
   public $search = this.search.asObservable();
@@ -44,7 +51,8 @@ export class DataSourcesSettingsComponent implements AfterViewInit {
 
   constructor(
     private data: AdaptDataService,
-    private location: LocationStrategy
+    private location: LocationStrategy,
+    public pagesContentService: PagesContentService
   ) {}
 
   public onSave(dataSource: DataSource) {
@@ -62,6 +70,10 @@ export class DataSourcesSettingsComponent implements AfterViewInit {
         this.dataSourceModal.open(state.dataSource, PageMode.EDIT, state.dataSource.page ?? 0, state.dirty);
       }
     }
+  }
+
+  ngOnInit(): void {
+    //console.log('Inside settings component ngOnInit');
   }
 
   ngAfterViewInit(): void {

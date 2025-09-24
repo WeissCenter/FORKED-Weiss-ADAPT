@@ -7,6 +7,7 @@ import {
   ISummaryTemplate,
   ITemplate,
   ITemplateFilters,
+  LanguageCode,
   PageMode,
   ReportVersion,
   SelectFilter,
@@ -17,33 +18,39 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  computed,
+  effect,
   EventEmitter,
   HostListener,
   Input,
   OnDestroy,
   Output,
+  signal,
   ViewChild,
 } from '@angular/core';
 
 import {
   BehaviorSubject,
   Observable,
+  ReplaySubject,
   Subscription,
   catchError,
   combineLatest,
+  distinctUntilChanged,
   filter,
   firstValueFrom,
   forkJoin,
   map,
   of,
   pairwise,
+  skip,
   startWith,
   switchMap,
   tap,
   zip,
 } from 'rxjs';
 import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { RecentActivityService } from '../../../services/recent-activity.service';
@@ -57,9 +64,11 @@ import { Idle } from '@ng-idle/core';
 import { IdleStates } from '../../../auth/auth-model';
 import { LocationStrategy } from '@angular/common';
 import { ConfirmModalComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/confirm-modal/confirm-modal.component';
-import { ModalComponent } from '@adapt/adapt-shared-component-lib';
+import { ContentService, ModalComponent, SettingsService } from '@adapt/adapt-shared-component-lib';
 import { TemplateService } from '../../../services/template.service';
-
+import { PagesContentService } from '../../../auth/services/content/pages-content.service';
+import { getFormErrors, uniqueNameValidator } from '../../../util';
+import slugify from 'slugify';
 interface ReportFilter {
   [key: string]: any;
 }
@@ -70,9 +79,11 @@ interface ReportFilter {
   styleUrls: ['./report.component.scss'],
 })
 export class ReportComponent implements AfterViewInit, OnDestroy {
+  getFormErrors = getFormErrors;
   PageMode = PageMode;
   ReportVersion = ReportVersion;
   @ViewChild(TabViewComponent) tabView?: TabViewComponent;
+  @ViewChild('editConfirmationModal') editConfirmationModal?: ModalComponent;
 
   @Output() loaded = new EventEmitter<boolean>();
 
@@ -80,22 +91,28 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   @ViewChild('resetModal') resetModal?: ModalComponent;
   @ViewChild('unPublishModal') unPublishModal?: ModalComponent;
   @ViewChild('publishConfirmationModal') publishConfirmationModal?: ModalComponent;
-  @ViewChild('shareModal') shareModal?: ModalComponent;
   @Input() report?: any;
 
   @Input() preview = false;
 
   @Input() previewSuppress = false;
+  reportTemplateHasSuppression = true;
+
+  public slugPattern = new RegExp('[-a-z0-9]');
+  public $formLang = signal(this.settings.getDefaultLanguage() as string);
+  public $reportLang = signal(this.settings.getDefaultLanguage());
 
   public showFilters = false;
   public filtered = false;
   private intialLoad = true;
-
-  public shareURL?: Observable<string>;
+  public translationsGenerated = false;
+  public submitted = false;
 
   public startTime = 0;
 
   public reportTabIndex = 0;
+
+  public langIndex = 0;
 
   public mode = PageMode.VIEW;
 
@@ -103,6 +120,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     { label: 'Internal use only', value: 'internal' },
     { label: 'External public view', value: 'external' },
   ];
+  showFilterButton: boolean;
 
   @HostListener('window:beforeunload')
   canDeactivate(isRouter = false, nextState?: RouterStateSnapshot): boolean {
@@ -116,7 +134,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   filterClass: 'filtered' | 'suppressed' = 'filtered';
 
   public templateSubject = new BehaviorSubject<ITemplate | ISummaryTemplate | null>(null);
-
+  public templateErrorSubject = new ReplaySubject();
   public $template = this.templateSubject
     .asObservable()
     .pipe(filter((temp) => !!temp))
@@ -145,7 +163,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
                 if (this.intialLoad) this.applyFilterChanges(true);
                 this.existingFilters = this.buildExistingFilters();
               }
-
               const filters =
                 changes !== undefined && Object.keys(cleanObject(changes)).length
                   ? cleanObject(changes)
@@ -153,6 +170,17 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
               this.filtered = changes !== undefined && Object.keys(cleanObject(changes)).length > 0;
 
+              const pageId = (temp as ITemplate).pages?.[this.reportTabIndex]?.id || undefined;
+              if (!this.preview) {
+                return this.dataService.getReportData(
+                  this.report.reportID,
+                  this.report.version,
+                  filters,
+                  this.previewSuppress,
+                  this.$reportLang(),
+                  pageId
+                );
+              }
               // assume new data view structure
               return this.temp.renderTemplateWithMultipleViews(
                 structuredClone(temp) as ITemplate,
@@ -165,22 +193,52 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       )
     )
     .pipe(
-      tap(() => {
-        const time = Date.now() - this.startTime;
-        console.log(`Report Took: ${Math.floor(time / 1000)} s to load`);
-        this.loading = false;
+      tap((temp) => {
+        if (temp.filters) {
+          this.showFilterButton = Object.values(temp.filters).some((filter) => {
+            const typedFilter = filter as IFilter<unknown>;
+            const pageId = (temp as ITemplate).pages?.[this.reportTabIndex]?.id || undefined;
+            if (!pageId) return false; // no pageId, no filter condition
+            return typedFilter?.condition?.pages?.includes(pageId) ?? true;
+          });
+        } else {
+          // When creating a preview, there are no previews
+          this.showFilterButton = false;
+        }
 
-        this.announcer.announce('Report Loaded');
-        this.tabView?.refresh();
+        if (temp.filtersUsed) {
+          this.filterFormGroup.reset(temp.filtersUsed);
+          // function to determine if the onFilter value is the same as the temp.filtersUsed
+          // check if the onFilter value is the same as the temp.filtersUsed
+          // if not, emit the new filters temp.filtersUsed is the source of truth
+          if (!sameObjects(this.onFilter.value, temp.filtersUsed)) {
+            this.onFilter.next(temp.filtersUsed);
+          }
+        }
+        this.loading = false;
         this.loaded.emit(true);
+
+        // this.editTitle.setValue(temp.title);
+        // this.editDescription.setValue(temp.description);
+      }),
+      catchError((err) => {
+        console.log('err', err);
+        this.templateErrorSubject.next({ success: false, err });
+        this.loaded.emit(false);
+        return of();
       })
+    )
+    .pipe(
+      distinctUntilChanged(
+        (a, b) => sameObjects(a.filtersUsed, b.filtersUsed) && a.suppressed === b.suppressed && a.title === b.title
+      ) // prevents unnecessary reloads
     );
 
-  public $templateError = this.$template.pipe(
-    catchError((err) => of({ success: false, err })),
-    filter((val) => (val as { success: boolean })?.success === false),
-    tap((err) => this.loaded.emit(false))
-  );
+  // public $templateError = this.$template.pipe(
+  //   catchError((err) => of({ success: false, err })),
+  //   filter((val) => (val as { success: boolean })?.success === false),
+  //   tap((err) => this.loaded.emit(false))
+  // );
 
   @Output() templateUpdate = new EventEmitter<ITemplate | ISummaryTemplate | null>();
 
@@ -191,8 +249,33 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   filterStateMessage = '';
   existingFilters: ReportFilter = {};
   previousFilters: ReportFilter | null = null;
+  filterGroupSelection: string | null = null;
 
   public unPublishJustificationForm: FormGroup;
+
+  $englishReportPageContent = this.pages.getPageContentSignal('report-page', 'en');
+  $reportPageContent = computed(() => {
+    return this.pages.getPageContentSignal('report-page', this.$reportLang())();
+  });
+  $reportSharedContent = computed(() => {
+    return this.pages.getSharedContentSignal(this.$reportLang())();
+  });
+
+  public $languageOptions = computed(() => {
+    const englishReportPageContent = this.$englishReportPageContent();
+    const contentLanguageOptions = englishReportPageContent?.sections?.[0].questions?.[1].options || [
+      { label: 'English', localizedLabel: 'English', value: 'en' },
+    ];
+    const supportedLanguages = this.settings.getSettingsSignal()().supportedLanguages || ['en'];
+
+    return contentLanguageOptions.filter((item) => supportedLanguages.includes(item.value as LanguageCode));
+  });
+
+  public dataModalOpen = false;
+
+  onDataModalStateChange(isOpen: boolean) {
+    this.dataModalOpen = isOpen;
+  }
 
   toggleFilterPanel(close = false) {
     this.showFilterPanel = !this.showFilterPanel;
@@ -247,6 +330,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   public filterFormGroup: FormGroup;
   public editReportForm: FormGroup;
   availableFilters!: any[];
+  loadingAvailableFilters = false;
 
   public onFilter = new BehaviorSubject({});
   public $onFilter = this.onFilter.asObservable();
@@ -262,6 +346,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private user: UserService,
     private idle: Idle,
+    private settings: SettingsService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private alert: AlertService,
@@ -270,13 +355,38 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     private dataService: AdaptDataService,
     private recentActivity: RecentActivityService,
     private filterPanelService: FilterPanelService,
-    private focusService: FocusService
+    private focusService: FocusService,
+    private cd: ChangeDetectorRef,
+    public pages: PagesContentService,
+    public content: ContentService
   ) {
     this.editReportForm = this.fb.group({
-      title: this.fb.control('', [Validators.required]),
-      description: this.fb.control('', [Validators.required]),
+      reportTexts: this.fb.array([], [Validators.required]),
       audience: this.fb.control('internal', [Validators.required]),
+      slug: this.fb.control('', [Validators.required]),
     });
+
+    this.editSlug.disable();
+
+    const editAudienceValueChanges = this.editAudience.valueChanges.subscribe((changes) => {
+      if (changes === 'internal') {
+        this.editSlug.disable();
+      } else {
+        this.editSlug.enable();
+      }
+
+      if (changes === 'external' && !this.editSlug.dirty && !this.editSlug.value?.length) {
+        this.editSlug.setValue(
+          slugify(this.editTitle.value, {
+            strict: true,
+            lower: true,
+            trim: true,
+          })
+        );
+      }
+    });
+
+    this.subscriptions.push(editAudienceValueChanges);
 
     this.unPublishJustificationForm = this.fb.group({
       justification: this.fb.control('', [Validators.required]),
@@ -300,6 +410,52 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
         });
       }
     });
+
+    const filterFormChangesSub = this.filterFormGroup.valueChanges.subscribe((changes) => {
+      // console.groupCollapsed('Filter Form Group Changes');
+      const templateFilters = (this.templateSubject.value as ITemplate).filters;
+      const pageId = (this.templateSubject.value as ITemplate).pages?.[this.reportTabIndex]?.id || undefined;
+      // console.log('Changes:', changes);
+      // console.log('formGroup:', this.filterFormGroup);
+      // console.log('Template Filters:', templateFilters);
+      // console.log('PageId:', pageId);
+
+      // find the select filter that has the same key as the filterFormGroup
+      const selectFilter = Object.keys(this.filterFormGroup.controls).find(
+        (key) =>
+          templateFilters[key] &&
+          'type' in templateFilters[key] &&
+          templateFilters[key].type === 'select' &&
+          this.validateFilterCondition(key, pageId, changes, this.templateSubject.value as ITemplate)
+      );
+      // console.log(`Select Filter: ${selectFilter}`);
+
+      if (!selectFilter) {
+        console.warn('No select filter found in the filterFormGroup');
+      }
+
+      if (selectFilter && selectFilter in changes && changes[selectFilter] !== this.filterGroupSelection) {
+        // console.log(`Filter ${selectFilter} has changed from ${this.filterGroupSelection} to ${changes[selectFilter]}`);
+        // set all values in changes to null except the selectFilter
+        const resetFormValues: Record<string, any> = {};
+        for (const filterKey in changes) {
+          resetFormValues[filterKey] = filterKey === selectFilter ? changes[filterKey] : null;
+        }
+        this.loadingAvailableFilters = true;
+        // console.log(`Resetting filter form group with values:`, resetFormValues);
+        const defaultFilterGroupSelection = changes[selectFilter] === '' ? '' : null;
+        this.filterGroupSelection = changes[selectFilter] || defaultFilterGroupSelection;
+        this.filterFormGroup.reset(resetFormValues);
+        setTimeout(() => {
+          this.loadingAvailableFilters = false;
+        }, 0);
+        // console.groupEnd();
+        return;
+      }
+      // console.groupEnd();
+    });
+
+    this.subscriptions.push(filterFormChangesSub);
   }
 
   ngOnDestroy(): void {
@@ -330,6 +486,53 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       }
     });
     this.availableFilters = this.filterFormGroup.value;
+  }
+
+  validateFilterCondition(
+    filterKey: string,
+    pageId: string | undefined,
+    filters: any,
+    reportTemplate: ITemplate
+  ): boolean {
+    const reportFilter = reportTemplate.filters[filterKey] as IFilter<unknown>;
+    if (!reportFilter?.condition) return true;
+    const { pages, conditions, operator } = reportFilter.condition;
+
+    if (pages?.length && pageId && !pages.includes(pageId)) return false; // If the filter is not applicable to the current page, skip validation
+    if (!conditions?.length) return true; // No conditions, no validation needed
+
+    // if the conditions are defined filter based on the validity of the parent filter
+    const validConditions = conditions.filter((cond: ICondition) => {
+      return cond.parent;
+    });
+
+    if (!validConditions.length) return true; // No valid conditions, no validation needed
+    switch (operator) {
+      case 'AND': {
+        return validConditions.every((cond: ICondition) => {
+          const parentValue = filters[cond.parent];
+          return cond.value.includes(parentValue);
+        });
+      }
+      case 'OR': {
+        return validConditions.some((cond: ICondition) => {
+          const parentValue = filters[cond.parent];
+          return cond.value.includes(parentValue);
+        });
+      }
+      case 'NOR': {
+        return !validConditions.some((cond: ICondition) => {
+          const parentValue = filters[cond.parent];
+          return cond.value.includes(parentValue);
+        });
+      }
+      case 'NAND': {
+        return !validConditions.every((cond: ICondition) => {
+          const parentValue = filters[cond.parent];
+          return cond.value.includes(parentValue);
+        });
+      }
+    }
   }
 
   public showFilter(template: ITemplate, filter: IFilter<unknown>) {
@@ -388,42 +591,91 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     this.templateSubject.next(this.templateSubject.value);
   }
 
-  test(event: any) {}
-
   async ngAfterViewInit() {
     if (this.preview) {
       const reportPreview = this.report as IReportPreview;
 
-      const template = await firstValueFrom(this.temp.getTemplate(reportPreview!.template as string));
+      // const template = await firstValueFrom(this.temp.getTemplate(reportPreview!.template as string));
 
-      this.report.template = template;
+      this.report.template = reportPreview.template;
 
       this.templateSubject.next(this.report.template);
+      this.reportTemplateHasSuppression = Object.keys(this.report.template?.suppression || {}).length !== 0;
 
       return;
     }
 
     // const data = await firstValueFrom(rawdata);
     // this.report = data['reportResolver'];
-
     this.routeSub = combineLatest([this.route.params, this.route.queryParams]).subscribe(
       async ([params, queryParams]) => {
         try {
           const reportData = await firstValueFrom(
             this.dataService.getReport(params['id'], queryParams['version']).pipe(
-              tap((result) => {
-                this.recentActivity.addRecentActivity(params['id'], 'Report', result);
+              tap((reports) => {
+                reports = reports as IReport[];
+
+                const result = reports[0];
+                this.recentActivity.addRecentActivity(params['id'], 'Report', reports[0]);
+
+                const supportedLangs = this.settings.getSettings().supportedLanguages || ['en'];
+
+                const maxLength = Math.min(reports.length, supportedLangs.length);
+
+                const texts: any[] = [];
+
+                for (let i = 0; i < maxLength; i++) {
+                  const item = reports[i] || reports[0];
+
+                  const text = {
+                    title: item?.template.title,
+                    description: item?.template.description,
+                    verified: i === 0 || !!item?.translationsVerified,
+                  };
+
+                  texts.push(text);
+                }
+
+                for (const _ of texts) {
+                  const newGrp = this.fb.group({
+                    title: this.fb.control(
+                      '',
+                      [Validators.required],
+                      [uniqueNameValidator('Report', this.dataService, PageMode.EDIT)]
+                    ),
+                    description: this.fb.control('', [Validators.required]),
+                    verified: this.fb.control(false, [Validators.requiredTrue]),
+                  });
+
+                  if (result?.visibility === 'internal') newGrp.get('verified')!.disable();
+
+                  this.reportTexts.push(newGrp);
+                }
+
+                const resetVertificationStatuses = this.defaultReportText.valueChanges
+                  .pipe(skip(3))
+                  .subscribe((changes) => {
+                    this.translationsGenerated = false;
+                    this.reportTexts.controls.forEach((ctl, idx) =>
+                      idx !== 0 ? ctl.get('verified')?.setValue(false, { emitEvent: false }) : null
+                    );
+                  });
+
+                this.subscriptions.push(resetVertificationStatuses);
 
                 this.editReportForm.setValue({
-                  title: result?.name,
-                  description: result?.template.description,
+                  reportTexts: texts,
                   audience: result?.visibility,
+                  slug: result?.slug ?? '',
                 });
               })
             )
           );
-          this.report = reportData;
-          this.previewSuppress = reportData?.visibility === 'external';
+          this.report = (reportData as IReport[])[0];
+          this.reportTemplateHasSuppression =
+            Object.keys((reportData as IReport[])[0]?.template?.suppression || {}).length !== 0;
+          this.previewSuppress =
+            (reportData as IReport[])[0]?.visibility === 'external' && this.reportTemplateHasSuppression;
           // resolve data view
 
           const state = this.location.getState() as any;
@@ -437,14 +689,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
           );
 
           this.templateSubject.next(this.report.template);
-
-          const filters = Object.keys(queryParams).reduce(
-            (accum, val) => (val === 'version' ? accum : Object.assign(accum, { [val]: queryParams[val] })),
-            {}
-          );
-
-          this.filterFormGroup.patchValue(filters);
-          this.onFilter.next(filters);
 
           this.existingFilters = this.buildExistingFilters();
         } catch (error) {
@@ -464,7 +708,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     const existingSelections: { [key: string]: string[] } = {};
     let filterCount = 0;
     let categoryCount = 0;
-
     for (const key in this.filterFormGroup.value) {
       if (key in this.report.template.filters) {
         let hasValue = false;
@@ -534,7 +777,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
   public reset() {
     this.editReportForm.setValue({
-      title: this.report?.name,
+      title: this.report?.template.title,
       description: this.report?.template.description,
       audience: this.report?.visibility,
     });
@@ -549,8 +792,17 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   public publishReport() {
+    //  (this.editAudience.value === 'external' && this.defaultReportText.dirty && !this.translationsGenerated)
+
+    // verify stuff
+
+    for (const text of this.reportTexts.value) {
+      if (!text.verified) return;
+    }
+
     this.dataService.startReportPublish(this.report).subscribe({
       next: () => {
+        this.publishConfirmationModal?.close();
         this.alert.add({
           type: 'success',
           title: 'Report Publish Success',
@@ -558,6 +810,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
         });
       },
       error: () => {
+        this.publishConfirmationModal?.close();
         this.alert.add({
           type: 'error',
           title: 'Report Publish Failed',
@@ -593,29 +846,68 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       });
   }
 
-  public onEditSave() {
-    if (!this.editReportForm.valid) return;
-    const { title, audience, description } = this.editReportForm.getRawValue();
-    const reportEdit = structuredClone(this.report) as IReport;
+  private blockEdit() {
+    const errors = getFormErrors(this.editReportForm);
 
-    reportEdit.name = title;
-    reportEdit.template.title = title;
-    reportEdit.template.description = description;
-    reportEdit.visibility = audience;
+    if (errors?.['reportTexts']) {
+      // check we only have verified errors
+      const formErrors = Object.values(errors['reportTexts']);
 
-    this.dataService.editReport(reportEdit).subscribe({
+      return formErrors.length > 0 && !formErrors.every((err: any) => 'verified' in err);
+    }
+
+    return this.editReportForm.invalid;
+  }
+
+  public onEditSave(confirmed = false) {
+    if (!confirmed) {
+      this.editConfirmationModal?.open();
+      return;
+    }
+
+    this.submitted = true;
+
+    if (this.blockEdit()) return;
+
+    const { reportTexts, audience, slug } = this.editReportForm.getRawValue();
+    // const reportEdit = structuredClone(this.report) as IReport;
+
+    const editObject = (reportTexts as any[]).reduce((accum, val, index) => {
+      const lang = (this.settings.getSettings().supportedLanguages || ['en'])[index];
+
+      if (!lang) {
+        throw Error('failed to get lang for editing');
+      }
+
+      const accumObject = {
+        template: val,
+        visibility: audience,
+        slug,
+        lang,
+        verified: val.verified,
+      };
+
+      return Object.assign({ [lang]: accumObject }, accum);
+    }, {});
+
+    this.dataService.editReport({ reportID: this.report.reportID, languages: editObject }).subscribe({
       next: (report) => {
         this.alert.add({ type: 'success', title: 'Report Save Complete', body: `Your report edits have been saved` });
         this.mode = PageMode.VIEW;
 
-        this.report = report;
-        if (this.templateSubject.value) {
-          this.templateSubject.value!.description = description;
-          this.templateSubject.value!.title = title;
-        } else {
-          this.templateSubject.next(this.report.template);
-        }
+        // this.templateSubject.next(this.report.template);
+
         this.dataService.refreshReports();
+        this.langIndex = 0;
+
+        const languages = this.$englishReportPageContent()!.sections![0].questions![1].options;
+        this.$formLang.set(languages[this.langIndex].value);
+        this.translationsGenerated = false;
+        this.reportTexts.markAsPristine();
+
+        this.dataService.getReport(this.report.reportID, this.report.version).subscribe((reportData) => {
+          if (reportData) this.report = (reportData as IReport[])[0];
+        });
       },
       error: (err) => {
         this.alert.add({
@@ -625,38 +917,129 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
         });
       },
     });
+
+    this.editConfirmationModal?.close();
+  }
+
+  public generateTranslations() {
+    this.dataService
+      .translateReportText(this.report.reportID, {
+        title: this.reportTexts.at(0).value['title'],
+        description: this.reportTexts.at(0).value['description'],
+      })
+      .subscribe((result) => {
+        this.reportTexts.markAsDirty();
+        const settings = this.settings.getSettings();
+        for (const key of Object.keys(result)) {
+          const idx = (settings.supportedLanguages || ['en'])?.indexOf(key as LanguageCode);
+
+          if (idx === -1) {
+            // missing translation default to english?
+          }
+
+          this.reportTexts.at(idx).setValue({ ...result[key as LanguageCode], verified: false });
+        }
+
+        const content = this.$englishReportPageContent();
+
+        this.alert.add({ type: 'success', body: content?.actions?.['translation_successful'] || '', title: 'Success' });
+
+        this.translationsGenerated = true;
+      });
+  }
+
+  public reportLanguageChange(val: string) {
+    if (this.mode !== PageMode.EDIT) {
+      // update top part!!
+      const languages = this.$englishReportPageContent()!.sections![0].questions![1].options;
+
+      const index = languages.findIndex((lang) => lang.value === val);
+
+      this.langIndex = index;
+    }
+
+    this.onFilter.next(this.filterFormGroup.value);
+  }
+
+  public get defaultReportText() {
+    return this.reportTexts.at(0);
+  }
+
+  public get reportTexts() {
+    return this.editReportForm.get('reportTexts') as FormArray;
   }
 
   public get editTitle() {
-    return this.editReportForm.get('title') as FormControl;
+    return this.reportTexts.at(this.langIndex).get('title') as FormControl;
   }
 
   public get editDescription() {
-    return this.editReportForm.get('description') as FormControl;
+    return this.reportTexts.at(this.langIndex).get('description') as FormControl;
   }
 
   public get editAudience() {
     return this.editReportForm.get('audience') as FormControl;
   }
 
-  public openShareModal() {
-    this.shareModal?.open();
-
-    const appliedFilters: any = this.onFilter.value;
-
-    const validFilters = Object.keys(this.onFilter.value).reduce((accum, key) => {
-      if (appliedFilters[key] !== null && appliedFilters[key] !== undefined)
-        return Object.assign(accum, { [key]: appliedFilters[key] });
-
-      return accum;
-    }, {});
-
-    this.shareURL = this.dataService
-      .shareReport(this.report.reportID, validFilters)
-      .pipe(switchMap((slug) => of(`${location.protocol}//${location.host}/admin/share/${slug}`)));
+  public get editSlug() {
+    return this.editReportForm.get('slug') as FormControl;
   }
 
   public copy(text: string) {
     navigator.clipboard.writeText(text);
   }
+
+  public getLangLabel(delta = 1) {
+    const languages = this.$languageOptions();
+    const index = languages.findIndex((lang) => lang.value === this.$formLang());
+
+    if (index === -1 || index + delta > languages.length - 1 || index + delta < 0) {
+      return null;
+    }
+
+    return languages[index + delta].label;
+  }
+
+  public showVerifcationErrors() {
+    const languages = this.$languageOptions();
+    return languages.length > 1 && this.reportTexts.controls.some((ct) => ct.get('verified')!.hasError('required'));
+  }
+
+  public getLang(delta = 0) {
+    const languages = this.$languageOptions();
+    const index = languages.findIndex((lang) => lang.value === this.$formLang());
+    this.$formLang.set(languages[index + delta].value);
+    this.langIndex = index + delta;
+  }
+
+  onReportLangChange(event: any) {
+    this.content.requestNewLanguage(this.$reportLang());
+    this.templateSubject.next(this.templateSubject.value);
+  }
 }
+
+const sameObjects = (obj1: { [x: string]: any }, obj2: { [x: string]: any }) => {
+  if (obj1 === obj2) return true;
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 === null || obj2 === null) {
+    return false;
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) return false;
+
+  return keys1.every((key) => {
+    if (!Object.prototype.hasOwnProperty.call(obj2, key)) return false;
+
+    const val1 = obj1[key];
+    const val2 = obj2[key];
+
+    if (Array.isArray(val1) && Array.isArray(val2)) {
+      if (val1.length !== val2.length) return false;
+      return val1.every((item, i) => item === val2[i]);
+    }
+
+    return val1 === val2;
+  });
+};

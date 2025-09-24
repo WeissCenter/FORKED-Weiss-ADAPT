@@ -1,7 +1,9 @@
 {
   "id": "disputeResolution",
   "name": "Dispute Resolution",
-  "description": "Part B Description here",
+  "step2Description": "Part B Description here",
+  "step3Description": "Here's a summary of your selection. Part B Description here.",
+  "step4Description": "Before proceeding, make sure to name this collection with a good description.",
   "fields": [
     {
       "id": "reportingYear",
@@ -13,6 +15,10 @@
         {
           "label": "2023-2024",
           "value": "2023-24"
+        },
+        {
+          "label": "2024-2025",
+          "value": "2024-25"
         }
       ]
     }

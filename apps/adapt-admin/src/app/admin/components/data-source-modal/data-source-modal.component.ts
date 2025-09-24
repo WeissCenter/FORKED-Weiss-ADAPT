@@ -1,5 +1,5 @@
 import { DataSource, DataSourceConnectionInfo, IDataSource, PageMode } from '@adapt/types';
-import { Component, EventEmitter, HostListener, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, computed, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { StepsIndicatorComponent } from '../steps-indicator/steps-indicator.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FullPageModalComponent } from '../full-page-modal/full-page-modal.component';
@@ -13,13 +13,19 @@ import { Idle } from '@ng-idle/core';
 import { UserService } from '../../../auth/services/user/user.service';
 import { IdleStates } from '../../../auth/auth-model';
 import { ConfirmModalComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/confirm-modal/confirm-modal.component';
+import { LocationStrategy } from '@angular/common';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
+import {
+  PageSectionContentText,
+  PageContentText,
+} from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 
 @Component({
   selector: 'adapt-data-source-modal',
   templateUrl: './data-source-modal.component.html',
   styleUrls: ['./data-source-modal.component.scss'],
 })
-export class DataSourceModalComponent implements OnDestroy {
+export class DataSourceModalComponent implements OnDestroy, OnInit {
   PageMode = PageMode;
   ConnectionTestState = ConnectionTestState;
   @ViewChild(StepsIndicatorComponent) stepsIndicator!: StepsIndicatorComponent;
@@ -36,6 +42,8 @@ export class DataSourceModalComponent implements OnDestroy {
   public mode = PageMode.CREATE;
   public currentStep = 0;
   public opened = false;
+  public validConnection = false;
+  public connectionTested = false;
   public subscriptions: Subscription[] = [];
 
   public editPassword = false;
@@ -75,13 +83,18 @@ export class DataSourceModalComponent implements OnDestroy {
   public dataViews = this.data.getDataViews();
   public reports = this.data.getReports();
 
+  $pageContent = this.pagesContentService.getPageContentSignal('data-sources', 'en');
+  $pageSections = computed(() => this.$pageContent()?.sections || []);
+
   constructor(
     private fb: FormBuilder,
     private idle: Idle,
     private user: UserService,
     private data: AdaptDataService,
     private alert: AlertService,
-    private router: Router
+    private location: LocationStrategy,
+    private router: Router,
+    public pagesContentService: PagesContentService
   ) {
     this.dataSourceForm = this.fb.group({
       type: this.fb.control('mssql', [Validators.required]),
@@ -92,6 +105,11 @@ export class DataSourceModalComponent implements OnDestroy {
       database: this.fb.control('', [Validators.required]),
       username: this.fb.control('', [Validators.required]),
       password: this.fb.control('', [Validators.required]),
+      testConnection: this.fb.control(undefined, [Validators.required]),
+    });
+
+    this.location.onPopState((event) => {
+      if (event.type === 'popstate') this.internalClose();
     });
 
     this.editJustificationForm = fb.group({
@@ -101,6 +119,10 @@ export class DataSourceModalComponent implements OnDestroy {
 
     const justificationReasonSub = this.reason.valueChanges.subscribe((val) => {
       val === 'other' ? this.justification.addValidators(Validators.required) : this.justification.clearValidators();
+    });
+
+    const resetConnectionFlagSub = this.dataSourceForm.valueChanges.subscribe((result) => {
+      this.testCon.setValue(undefined, { emitEvent: false });
     });
 
     const timeOutSub = this.idle.onTimeout.subscribe(() => {
@@ -130,13 +152,20 @@ export class DataSourceModalComponent implements OnDestroy {
       }
     });
 
-    this.subscriptions.push(justificationReasonSub, timeOutSub);
+    this.subscriptions.push(justificationReasonSub, timeOutSub, resetConnectionFlagSub);
 
     this.address.disable();
     this.port.disable();
     this.database.disable();
     this.username.disable();
+    this.testCon.disable();
     this.password.disable();
+  }
+
+  ngOnInit() {
+    // Can update these variables with dynamical content pulled from the database if needed
+
+    console.log('Inside report-modal component ngOnInit');
   }
 
   public open(
@@ -152,53 +181,22 @@ export class DataSourceModalComponent implements OnDestroy {
       this.currentDataSource = dataSource;
 
       if (!dirty) {
-        this.dataSourceForm.patchValue({
-          name: dataSource?.name,
-          description: dataSource?.description,
-          address: dataSource.path,
-          type: (dataSource as DataSourceConnectionInfo).type,
-          port: (dataSource as DataSourceConnectionInfo).port,
-          database: (dataSource as DataSourceConnectionInfo).database,
-          username: (dataSource as DataSourceConnectionInfo).username,
-          password: '',
+        this.data.getDataSource(dataSource!.dataSourceID!, true).subscribe((result) => {
+          this.dataSourceForm.patchValue({
+            name: dataSource?.name,
+            description: dataSource?.description,
+            address: dataSource.path,
+            type: (result as DataSourceConnectionInfo).type,
+            port: (result as DataSourceConnectionInfo).port,
+            database: (result as DataSourceConnectionInfo).database,
+            username: (result as DataSourceConnectionInfo).username,
+            password: '',
+          });
         });
       }
 
       if (this.mode === PageMode.EDIT) {
-        this.data.getDataSource(dataSource.dataSourceID as string, true).subscribe({
-          next: (result) => {
-            const connectionInfo = result as DataSourceConnectionInfo;
-            const dataSource = result as DataSource;
-
-            let patch = {
-              type: connectionInfo.type,
-              port: connectionInfo.port,
-              database: connectionInfo.database,
-              username: connectionInfo.username,
-              password: '',
-            };
-
-            if (dirty) {
-              patch = Object.assign(patch, {
-                name: dataSource?.name,
-                description: dataSource?.description,
-                address: dataSource.path,
-                password: '',
-              });
-            }
-
-            this.dataSourceForm.patchValue(patch);
-          },
-
-          error: () => {
-            this.alert.add({
-              type: 'error',
-              title: 'Failed to load data source',
-              body: 'data source connection information failed to load, please try again later',
-            });
-            this.internalClose();
-          },
-        });
+        this.loadConnectionData(dataSource, dirty);
       }
     }
 
@@ -209,6 +207,43 @@ export class DataSourceModalComponent implements OnDestroy {
     this.handleCurrentStep();
   }
 
+  private loadConnectionData(dataSource: DataSource | (DataSource & DataSourceConnectionInfo), dirty: boolean) {
+    this.data.getDataSource(dataSource.dataSourceID as string, true).subscribe({
+      next: (result) => {
+        const connectionInfo = result as DataSourceConnectionInfo;
+        const dataSource = result as DataSource;
+
+        let patch = {
+          type: connectionInfo.type,
+          port: connectionInfo.port,
+          database: connectionInfo.database,
+          username: connectionInfo.username,
+          password: '',
+        };
+
+        if (dirty) {
+          patch = Object.assign(patch, {
+            name: dataSource?.name,
+            description: dataSource?.description,
+            address: dataSource.path,
+            password: '',
+          });
+        }
+
+        this.dataSourceForm.patchValue(patch);
+      },
+
+      error: () => {
+        this.alert.add({
+          type: 'error',
+          title: 'Failed to load data source',
+          body: 'data source connection information failed to load, please try again later',
+        });
+        this.internalClose();
+      },
+    });
+  }
+
   private handleCurrentStep() {
     switch (this.currentStep) {
       case 1: {
@@ -217,7 +252,7 @@ export class DataSourceModalComponent implements OnDestroy {
         this.description.disable();
 
         this.dataSourceForm.markAsUntouched();
-
+        this.testCon.enable();
         this.address.enable();
         this.port.enable();
         this.database.enable();
@@ -242,6 +277,7 @@ export class DataSourceModalComponent implements OnDestroy {
     this.confirmModal.close();
     this.port.disable();
     this.database.disable();
+    this.testCon.disable();
     this.username.disable();
     this.password.disable();
     this.connectionTestState = ConnectionTestState.READY;
@@ -259,6 +295,19 @@ export class DataSourceModalComponent implements OnDestroy {
   }
 
   public async doSave(close = false, confirmed = false) {
+    const handleClose = () => {
+      if (close) {
+        this.modal.close();
+      }
+
+      this.reset();
+    };
+
+    if (!this.dataSourceForm.dirty) {
+      handleClose();
+      return;
+    }
+
     if (this.dataSourceForm.invalid) return;
 
     if (!confirmed && this.mode === PageMode.EDIT) {
@@ -283,28 +332,37 @@ export class DataSourceModalComponent implements OnDestroy {
       delete body.connectionInfo.password;
     }
 
-    if (this.mode === PageMode.EDIT && this.currentDataSource) {
-      const editedDataSource = await this.data.editDataSourcePromise(
-        this.currentDataSource.dataSourceID as string,
-        body
-      );
-      this.save.emit(editedDataSource);
-    } else if (this.mode === PageMode.CREATE) {
-      const newDataSource = await this.data.createDataSourcePromise(body);
-      this.save.emit(newDataSource);
+    try {
+      if (this.mode === PageMode.EDIT && this.currentDataSource) {
+        const editedDataSource = await this.data.editDataSourcePromise(
+          this.currentDataSource.dataSourceID as string,
+          body
+        );
+
+        this.alert.add({ type: 'success', title: 'Edit save success', body: 'Data Source edits were saved' });
+        this.save.emit(editedDataSource);
+      } else if (this.mode === PageMode.CREATE) {
+        const newDataSource = await this.data.createDataSourcePromise(body);
+        this.save.emit(newDataSource);
+        this.alert.add({
+          type: 'success',
+          title: 'Data source created successfully',
+          body: 'Data Source was successfully created',
+        });
+      }
+    } catch (err) {
+      this.alert.add({ type: 'error', title: 'Failed to create data source', body: 'Failed to create data source' });
+      return;
     }
 
-    if (close) {
-      this.modal.close();
-    }
-
-    this.reset();
+    handleClose();
   }
 
   public next() {
     this.dataSourceForm.markAllAsTouched();
+
     if (
-      this.dataSourceForm.invalid ||
+      (this.dataSourceForm.dirty && this.dataSourceForm.invalid) ||
       (this.currentStep === 1 && this.editPassword && this.connectionTestState !== ConnectionTestState.SUCCESS)
     ) {
       return;
@@ -323,7 +381,7 @@ export class DataSourceModalComponent implements OnDestroy {
         this.type.enable();
         this.name.enable();
         this.description.enable();
-
+        this.testCon.disable();
         this.address.disable();
         this.port.disable();
         this.database.disable();
@@ -362,8 +420,14 @@ export class DataSourceModalComponent implements OnDestroy {
         password: this.password.value,
       })
       .subscribe({
-        next: () => (this.connectionTestState = ConnectionTestState.SUCCESS),
-        error: () => (this.connectionTestState = ConnectionTestState.FAILED),
+        next: () => {
+          this.connectionTestState = ConnectionTestState.SUCCESS;
+          this.testCon.setValue(this.connectionTestState, { emitEvent: false });
+        },
+        error: () => {
+          this.connectionTestState = ConnectionTestState.FAILED;
+          this.testCon.setValue(undefined, { emitEvent: false });
+        },
       });
   }
 
@@ -371,6 +435,12 @@ export class DataSourceModalComponent implements OnDestroy {
     this.editPassword = !this.editPassword;
 
     this.editPassword ? this.password.enable() : this.password.disable();
+  }
+
+  public switchToEditMode() {
+    this.mode = PageMode.EDIT;
+
+    this.loadConnectionData(this.currentDataSource!, false);
   }
 
   get type() {
@@ -411,6 +481,10 @@ export class DataSourceModalComponent implements OnDestroy {
 
   get justification() {
     return this.editJustificationForm.get('justification') as FormControl;
+  }
+
+  get testCon() {
+    return this.dataSourceForm.get('testConnection') as FormControl;
   }
 }
 

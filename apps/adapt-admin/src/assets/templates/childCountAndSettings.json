@@ -4,7 +4,8 @@
   "metaTags": ["Part C", "Child Count And Settings"],
   "suppression": {
     "required": true,
-    "parentOrganization": "section",
+    "parentOrganization": "file",
+    "childOrganization": "section",
     "sensitiveColumns": ["setting", "race", "gender", "age"],
     "frequencyColumns": ["value"]
   },
@@ -57,6 +58,7 @@
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -79,6 +81,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -89,7 +92,7 @@
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.2", "A.2"]
+                              "value": ["A.1", "A.2"]
                             }
                           ]
                         }
@@ -99,6 +102,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -121,6 +125,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -141,6 +146,7 @@
                       "function": "max",
                       "args": [
                         2,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -163,6 +169,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -185,12 +192,13 @@
               {
                 "title": "Distribution of Most Common Race/Ethnicity",
                 "body": {
-                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}})",
+                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}}).",
                   "variables": {
                     "ethnicity": {
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -233,6 +241,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -275,6 +284,7 @@
                       "function": "max",
                       "args": [
                         2,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -319,12 +329,13 @@
               {
                 "title": "Distribution of Gender",
                 "body": {
-                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}) ",
+                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}).",
                   "variables": {
                     "gender": {
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "gender"
@@ -357,6 +368,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "gender"
@@ -406,6 +418,7 @@
           "content": {
             "title": "All ages",
             "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+            "filterDescription": "Choose an age range to see specific data and insights.",
             "dataLabel": "Setting",
             "explainTemplate": "In the reported data, the Setting categories in your State are distributed as, {{first}}, {{second}}, and {{third}}.",
             "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
@@ -489,8 +502,9 @@
             "title": "All Race/Ethnicity",
             "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
             "dataLabel": "Setting",
+            "filterDescription": "Choose a race/ethnicity to see specific data and insights.",
             "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
-            "explainTemplate": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{first}}, {{second}}, and {{third}}.",
+            "explainTemplate": "In the reported data, the top three Setting categories receiving Early Intervention services in your State are {{first}}, {{second}}, and {{third}}.",
             "allMap": "of all race/ethnicity",
             "prefix": "that are",
             "chart": {
@@ -751,6 +765,7 @@
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -773,6 +788,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -783,7 +799,7 @@
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.2"]
+                              "value": ["A.1"]
                             }
                           ]
                         }
@@ -793,6 +809,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -815,6 +832,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -835,6 +853,7 @@
                       "function": "max",
                       "args": [
                         2,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -857,6 +876,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -879,12 +899,13 @@
               {
                 "title": "Distribution of Most Common Race/Ethnicity",
                 "body": {
-                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}})",
+                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}}).",
                   "variables": {
                     "ethnicity": {
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -927,6 +948,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -969,6 +991,7 @@
                       "function": "max",
                       "args": [
                         2,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -1013,12 +1036,13 @@
               {
                 "title": "Distribution of Gender",
                 "body": {
-                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}) ",
+                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}).",
                   "variables": {
                     "gender": {
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "gender"
@@ -1051,6 +1075,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "gender"
@@ -1428,7 +1453,7 @@
           "content": {
             "level": "h2",
             "text": "At Risk Child Count",
-            "body": "This section represents the number of children under the age of three at risk of having substantial delays without early intervention services and having an active Individualized Family Service Plan (IFSP) in place on the count date, according to the child’s race/ethnicity and age."
+            "body": "This section represents the number of children under the age of three who are receiving services and considered at risk of having substantial delays if they didn’t receive early intervention services, in place on the count date, according to the child’s race/ethnicity and age."
           }
         },
         {
@@ -2038,6 +2063,7 @@
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -2060,6 +2086,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -2080,6 +2107,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -2102,6 +2130,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -2122,6 +2151,7 @@
                       "function": "max",
                       "args": [
                         2,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "setting"
@@ -2144,6 +2174,7 @@
                             "value",
                             {
                               "field": "setting",
+                              "extra": ["age"],
                               "parent": true
                             },
                             {
@@ -2166,12 +2197,13 @@
               {
                 "title": "Distribution of Most Common Race/Ethnicity",
                 "body": {
-                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}})",
+                  "template": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{ethnicity}} ({{ethnicity.percentage}}), {{ethnicity-two}} ({{ethnicity-two.percentage}}), {{ethnicity-three}} ({{ethnicity-three.percentage}}).",
                   "variables": {
                     "ethnicity": {
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -2214,6 +2246,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -2256,6 +2289,7 @@
                       "function": "max",
                       "args": [
                         2,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "race"
@@ -2300,12 +2334,13 @@
               {
                 "title": "Distribution of Gender",
                 "body": {
-                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}) ",
+                  "template": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{gender}} ({{gender.percentage}}), and {{gender-two}} ({{gender-two.percentage}}).",
                   "variables": {
                     "gender": {
                       "function": "max",
                       "args": [
                         0,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "gender"
@@ -2338,6 +2373,7 @@
                       "function": "max",
                       "args": [
                         1,
+                        "value",
                         {
                           "field": "maxSelect",
                           "value": "gender"
@@ -2389,6 +2425,7 @@
             "filterDescription": "Choose an age range to see specific data and insights.",
             "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
             "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
+            "prefix": "ages",
             "dataLabel": "Setting",
             "explainTemplate": "In the reported data, the Setting categories in your State are distributed as, {{first}}, {{second}}, and {{third}}.",
             "allMap": "ages 3 or older",
@@ -2496,7 +2533,8 @@
             "title": "All Race/Ethnicities",
             "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
             "descriptionTemplate": "There are {{total}} ({{percentage}}) children, {{filter}}, served in various settings.",
-            "allMap": "ages 3 or older",
+            "prefix": "that are",
+            "allMap": "of all race/ethnicity",
             "dataLabel": "Setting",
             "explainTemplate": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{first}}, {{second}}, and {{third}}.",
             "filterDescription": "Choose race/ethnicity to see specific data and insights.",

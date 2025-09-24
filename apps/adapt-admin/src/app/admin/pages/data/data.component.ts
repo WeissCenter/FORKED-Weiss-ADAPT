@@ -1,4 +1,3 @@
-import { ContextMenuItem, DataSet, DataSource, IDataSource, IReport, PageMode } from '@adapt/types';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -10,24 +9,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  Observable,
-  Subject,
-  Subscription,
-  catchError,
-  filter,
-  map,
-  merge,
-  of,
-  reduce,
-  switchMap,
-  tap,
-  zip,
-} from 'rxjs';
-import { Permission, RoleService } from '../../../auth/services/role/role.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { RoleService } from '../../../auth/services/role/role.service';
 import { AdaptDataService } from '../../../services/adapt-data.service';
-import { ListViewComponent } from '../../components/list-view/list-view.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterPanelService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/filterpanel.service';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
@@ -35,6 +19,8 @@ import { RightSidePanelComponent } from '../../../../../../../libs/adapt-shared-
 import { DataViewModalComponent } from '../../components/data-view-modal/data-view-modal.component';
 import { DataView } from '@adapt/types';
 import { LocationStrategy } from '@angular/common';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
+import { NGXLogger } from 'ngx-logger';
 
 interface DataViewFilter {
   dataSource: string[];
@@ -48,11 +34,10 @@ interface DataViewFilter {
 })
 export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
   Math = Math;
-  Permission = Permission;
 
   @ViewChild(DataViewModalComponent) dataViewModal?: DataViewModalComponent;
   public dataViewModalSubject = new BehaviorSubject<DataViewModalComponent | null>(null);
-  public $dataViewModalSubject = this.dataViewModalSubject.asObservable();
+  //public $dataViewModalSubject = this.dataViewModalSubject.asObservable();
 
   @ViewChild('recordsDisplay') recordsDisplay!: ElementRef;
 
@@ -97,6 +82,8 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
   public currentDataList = new BehaviorSubject<DataView[]>([]);
   public $currentDataList = this.currentDataList.asObservable();
 
+  $pageContent = this.pagesContentService.getPageContentSignal('data');
+
   public search(query?: string) {
     this.router.navigate(['./'], {
       queryParams: { search: query },
@@ -109,13 +96,17 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: LocationStrategy,
+    private logger: NGXLogger,
     public role: RoleService,
     private data: AdaptDataService,
-    private alert: AlertService,
+    //private alert: AlertService,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
-    private filterPanelService: FilterPanelService
+    private filterPanelService: FilterPanelService,
+    public pagesContentService: PagesContentService
   ) {
+    this.logger.debug('Inside DataComponent constructor');
+
     this.viewFilterGroup = this.fb.group({
       status: this.fb.control(''),
     });
@@ -186,6 +177,8 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    //console.log('Inside data component ngOnInit');
+
     this.data.getDataViews().subscribe((val) => {
       this.loadingViews = false;
     });
@@ -202,10 +195,12 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   public editDataView(dataView: DataView, pageIndex = 0) {
+    this.logger.debug('Inside editDataView');
     this.dataViewModal?.open(dataView, false, pageIndex);
   }
 
   public viewDataView(dataView: DataView) {
+    this.logger.debug('Inside viewDataView');
     this.dataViewModal?.open(dataView, true);
   }
 
@@ -237,6 +232,10 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
       case 'EDIT': {
         this.dataViewModal!.open(state.dataView, false, state.dataView.page);
       }
+    }
+
+    if ('dataSource' in state) {
+      this.dataViewModal.open(undefined, false, 0, state.dataSource);
     }
   }
 }

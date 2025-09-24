@@ -1,8 +1,7 @@
-import { AdaptSettings } from '@adapt/types';
 import { Component, OnDestroy } from '@angular/core';
 import { Idle } from '@ng-idle/core';
-import { interval, map, Subscription } from 'rxjs';
-import { SettingsService } from '../../services/settings.service';
+import { Subscription } from 'rxjs';
+import { SettingsService } from '@adapt/adapt-shared-component-lib';
 
 @Component({
   selector: 'adapt-inactivity-banner',

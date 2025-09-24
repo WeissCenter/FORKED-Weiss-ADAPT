@@ -12,12 +12,19 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { Observable, Subscription, tap } from 'rxjs';
-import { Permission, RoleService } from '../../../auth/services/role/role.service';
+import { Observable, Subject, Subscription, tap } from 'rxjs';
+import { RoleService } from '../../../auth/services/role/role.service';
 import { FilterPanelService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/filterpanel.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataViewModalComponent } from '../data-view-modal/data-view-modal.component';
 import { DataSourceModalComponent } from '../data-source-modal/data-source-modal.component';
+import { ConfirmModalComponent } from 'libs/adapt-shared-component-lib/src/lib/components/confirm-modal/confirm-modal.component';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
+import {
+  AdaptListViewContentText,
+  PageContentText,
+} from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'adapt-list-view',
@@ -26,8 +33,6 @@ import { DataSourceModalComponent } from '../data-source-modal/data-source-modal
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListViewComponent implements OnDestroy, OnInit {
-  Permission = Permission;
-
   @Output() createButtonClick = new EventEmitter();
 
   @Input() $reports!: any;
@@ -50,6 +55,9 @@ export class ListViewComponent implements OnDestroy, OnInit {
   @Input() dataViewModal!: any;
   @Input() dataSourceModal!: DataSourceModalComponent;
 
+  @Input() confirmModal?: ConfirmModalComponent;
+  @Input() confirm?: Subject<boolean>;
+
   public page = 1;
   public query = '';
   public maxPages = 1;
@@ -61,17 +69,23 @@ export class ListViewComponent implements OnDestroy, OnInit {
 
   public dataListTap?: Observable<any[]>;
 
+  listViewContent: AdaptListViewContentText | null;
+
   toggleFilterPanel() {
+    this.logger.debug('Inside toggleFilterPanel');
     this.showFilterPanel = !this.showFilterPanel;
     this.filterPanelService.changeFilterPanelState(this.showFilterPanel);
   }
 
   constructor(
+    private logger: NGXLogger,
     public role: RoleService,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-    private filterPanelService: FilterPanelService
+    private filterPanelService: FilterPanelService,
+    public pagesContentService: PagesContentService
   ) {
+    this.logger.debug('Inside ListViewComponent constructor');
     this.subscriptions = [];
     this.subscriptions[0] = this.filterPanelService.currentFilterPanelState.subscribe((state) => {
       this.showFilterPanel = state;
@@ -89,6 +103,8 @@ export class ListViewComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+    this.listViewContent = this.pagesContentService.getListViewContentSignal()();
+
     this.dataListTap = this.dataList?.pipe(
       tap((list) => {
         this.totalItems = list.length;
@@ -120,6 +136,7 @@ export class ListViewComponent implements OnDestroy, OnInit {
   }
 
   public doSort() {
+    this.logger.debug('Inside doSort');
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 

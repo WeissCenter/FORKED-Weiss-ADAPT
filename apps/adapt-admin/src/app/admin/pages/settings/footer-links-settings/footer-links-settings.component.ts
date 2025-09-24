@@ -1,12 +1,16 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SettingsService } from '../../../services/settings.service';
+import { SettingsService } from '@adapt/adapt-shared-component-lib';
 import { Subscription } from 'rxjs';
 import { AdaptDataService } from 'apps/adapt-admin/src/app/services/adapt-data.service';
-import { NotificationsService } from 'apps/adapt-admin/src/app/services/notifications.service';
 import { AlertService } from '@adapt/adapt-shared-component-lib';
 import { RouterStateSnapshot } from '@angular/router';
 import { ConfirmModalComponent } from '../../../../../../../../libs/adapt-shared-component-lib/src/lib/components/confirm-modal/confirm-modal.component';
+import {
+  PageContentText,
+  PageSectionContentText,
+} from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
 
 @Component({
   selector: 'adapt-footer-links-settings',
@@ -18,6 +22,7 @@ export class FooterLinksSettingsComponent implements OnInit {
   public editLinks = false;
 
   public footerLinksForm: FormGroup;
+  $pageContent = this.pagesContentService.getPageContentSignal('footer-links');
 
   public targetOptions = [
     { label: 'Same Tab', value: 'sameTab' },
@@ -38,32 +43,34 @@ export class FooterLinksSettingsComponent implements OnInit {
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private alert: AlertService,
-    private data: AdaptDataService
+    private data: AdaptDataService,
+    public pagesContentService: PagesContentService
   ) {
     this.footerLinksForm = this.fb.group({
       links: this.fb.array<FormGroup>([]),
     });
-  }
 
-  ngOnInit(): void {
-    const settingsSub = this.settingsService.getSettingsObservable().subscribe((result) => {
-      this.links.clear();
+    effect(() => {
+      const settings = this.settingsService.getSettingsSignal()();
+      if (settings) {
+        this.links.clear();
 
-      for (const link of result.footerLinks || []) {
-        this.links.push(
-          this.fb.group({
-            label: this.fb.control(link.label),
-            url: this.fb.control(link.url),
-            external: this.fb.control(link.external),
-            target: this.fb.control(link.target),
-            icon: this.fb.control(link.icon),
-          })
-        );
+        for (const link of settings.footerLinks || []) {
+          this.links.push(
+            this.fb.group({
+              label: this.fb.control(link.label),
+              url: this.fb.control(link.url),
+              external: this.fb.control(link.external),
+              target: this.fb.control(link.target),
+              icon: this.fb.control(link.icon),
+            })
+          );
+        }
       }
     });
-
-    this.subscriptions.push(settingsSub);
   }
+
+  ngOnInit(): void {}
 
   public onSave() {
     if (this.footerLinksForm.invalid) return;
