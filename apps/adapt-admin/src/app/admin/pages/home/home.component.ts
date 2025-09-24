@@ -50,17 +50,15 @@ export class HomeComponent implements OnInit {
       });
     });
 
-    this.route.params.subscribe(params => {
-      if('slug' in params){
-        this.data.loadSharedReport(params['slug'] as string)
-        .subscribe(result => {
-
-          this.router.navigate(['admin', 'reports', result.reportID], {queryParams: {...result.filters, version: 'draft'}})
-
-        })
+    this.route.params.subscribe((params) => {
+      if ('slug' in params) {
+        this.data.loadSharedReport(params['slug'] as string).subscribe((result) => {
+          this.router.navigate(['admin', 'reports', result.reportID], {
+            queryParams: { ...result.filters, version: 'draft' },
+          });
+        });
       }
-    })
-
+    });
   }
 
   public getImpactAnalysisForView(view: DataSet) {

@@ -2,10 +2,10 @@
 <div
   [hidden]="!show"
   #filterPanel
-  class="report-filtering position-fixed overflow-auto top-0 right-0 height-viewport width-full maxw-mobile display-flex flex-column gap-05 z-200 bg-base-lightest border-left-1px border-base-lighter radius-left-lg shadow-2"
+  class="report-filtering position-fixed overflow-auto top-0 right-0 height-viewport width-full maxw-mobile-lg display-flex flex-column gap-05 z-200 bg-base-lightest border-left-1px border-base-lighter radius-left-lg shadow-2"
   role="dialog"
   aria-modal="true"
-  cdkTrapFocus
+  cdkTrapFocus="{{ show }}"
   aria-labelledby="filterPanelTitle">
   <div class="display-flex margin-y-1 padding-x-2 flex-align-start gap-2 flex-justify">
     <h2 id="filterPanelTitle" class="font-lg text-semibold margin-x-0 margin-bottom-0 margin-top-1">{{ title }}</h2>
@@ -14,7 +14,7 @@
       class="usa-button usa-button--unstyled width-auto text-no-underline margin-left-auto"
       id="filterPanelCloseButton"
       (click)="toggleFilterPanel()">
-      Close
+      {{ close }}
       <i class="fas fa-times" aria-hidden="true"></i>
     </button>
   </div>

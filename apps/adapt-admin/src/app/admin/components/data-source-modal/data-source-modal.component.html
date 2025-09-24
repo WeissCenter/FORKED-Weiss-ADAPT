@@ -43,7 +43,7 @@
 
               <div *ngIf="mode !== PageMode.CREATE" class="edit-mode-preview display-flex gap-2 flex-column">
                 <label
-                  >Source Type: <strong>{{ type.value | valueLabel : sourceTypeOptions }}</strong></label
+                  >Source Type: <strong>{{ type.value | valueLabel: sourceTypeOptions }}</strong></label
                 >
               </div>
 
@@ -87,7 +87,11 @@
               </lib-adapt-text-input>
 
               <ng-container *ngIf="(editPassword && mode === PageMode.EDIT) || mode !== PageMode.EDIT">
-                <lib-adapt-text-input autocomplete="password" type="password" label="Password" formControlName="password">
+                <lib-adapt-text-input
+                  autocomplete="password"
+                  type="password"
+                  label="Password"
+                  formControlName="password">
                   <p required class="usa-prose">Data source password is required.</p>
                 </lib-adapt-text-input>
               </ng-container>
@@ -118,7 +122,6 @@
             <div class="impact-body padding-3 padding-left-5 border-2px border-base-lighter radius-lg bg-white">
               <adapt-impact-analysis
                 type="DataSource"
-  
                 [dataViews]="dataViews"
                 [reports]="reports"
                 [id]="$any(currentDataSource!.dataSourceID)"></adapt-impact-analysis>
@@ -189,8 +192,8 @@
             </p>
 
             <p class="usa-prose">
-              Last updated: {{ currentDataSource?.updated | date : 'MM/dd/YYYY' }} at
-              {{ currentDataSource?.updated | date : 'HH:MM:SS a' }}
+              Last updated: {{ currentDataSource?.updated | date: 'MM/dd/YYYY' }} at
+              {{ currentDataSource?.updated | date: 'HH:MM:SS a' }}
             </p>
           </section>
 
@@ -229,7 +232,7 @@
     extra
     [ngClass]="{
       'bg-primary': connectionTestState === ConnectionTestState.SUCCESS,
-      'bg-red': connectionTestState === ConnectionTestState.FAILED
+      'bg-red': connectionTestState === ConnectionTestState.FAILED,
     }"
     class="alert-box width-full display-flex padding-2 text-white gap-2 flex-justify-center">
     <ng-container [ngSwitch]="connectionTestState">
@@ -277,9 +280,9 @@
   </div>
 </adapt-full-page-modal>
 
-<lib-adapt-confirm-modal [heading]="$any(dataSourceForm.dirty ? 'You have unsaved changes.' : 'Are you sure you want to close?')" (confirm)="internalClose()"></lib-adapt-confirm-modal>
-
-
+<lib-adapt-confirm-modal
+  [heading]="$any(dataSourceForm.dirty ? 'You have unsaved changes.' : 'Are you sure you want to close?')"
+  (confirm)="internalClose()"></lib-adapt-confirm-modal>
 
 <lib-adapt-modal closeText="Close" heading="Please provide a reason." #confirmModal>
   <div class="confirm-modal-body width-tablet-lg display-flex flex-column gap-2 padding-1">

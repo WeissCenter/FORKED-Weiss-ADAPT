@@ -54,7 +54,7 @@ import { ListItemUserComponent } from './components/list-item-user/list-item-use
 import { InactivityBannerComponent } from './components/inactivity-banner/inactivity-banner.component';
 import { SecuritySettingsComponent } from './pages/settings/security-settings/security-settings.component';
 import { SessionReloadBannerComponent } from './components/session-reload-banner/session-reload-banner.component';
-import {LibModule} from '@adapt/adapt-shared-component-lib'
+import { LibModule } from '@adapt/adapt-shared-component-lib';
 import { environment } from '../../environments/environment';
 
 @NgModule({
@@ -108,10 +108,10 @@ import { environment } from '../../environments/environment';
     ListItemUserComponent,
     InactivityBannerComponent,
     SecuritySettingsComponent,
-    SessionReloadBannerComponent
+    SessionReloadBannerComponent,
   ],
   exports: [BannerComponent, HeroBannerComponent],
-  providers: [{provide: 'defaultContent', useValue: environment.defaultContent}],
+  providers: [{ provide: 'defaultContent', useValue: environment.defaultContent }],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -121,7 +121,7 @@ import { environment } from '../../environments/environment';
     A11yModule,
     SharedModule,
     ComponentsModule,
-    LibModule
+    LibModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

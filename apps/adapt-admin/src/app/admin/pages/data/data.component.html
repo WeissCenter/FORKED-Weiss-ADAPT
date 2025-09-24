@@ -73,7 +73,7 @@
   </p>
   <div class="display-flex flex-column width-full gap-1">
     <p class="text-normal font-sm text-ink" *ngIf="item.status">
-      <span><strong>Last Updated:</strong> {{ item.updated | date : 'MM/dd/yyyy' }}, </span>
+      <span><strong>Last Updated:</strong> {{ item.updated | date: 'MM/dd/yyyy' }}, </span>
       <span><strong>Created By:</strong> {{ item.author }}</span>
     </p>
     <div class="display-flex gap-1 flex-wrap">
@@ -123,7 +123,11 @@
 </ng-template>
 
 <ng-template #collapsedViewsContent let-item>
-  <adapt-impact-analysis [name]="item.name" [reports]="$reports" type="DataView" [id]="item.dataViewID"></adapt-impact-analysis>
+  <adapt-impact-analysis
+    [name]="item.name"
+    [reports]="$reports"
+    type="DataView"
+    [id]="item.dataViewID"></adapt-impact-analysis>
 </ng-template>
 
 <ng-template #actionViewsContent let-item>

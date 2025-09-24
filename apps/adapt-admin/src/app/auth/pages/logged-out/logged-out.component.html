@@ -1,18 +1,22 @@
 <adapt-banner></adapt-banner>
-<adapt-auth-banner label="Session Ended: User Logged out" message="See you soon!" messageSubTitle="Thanks for using our services"></adapt-auth-banner>
+<adapt-auth-banner
+  label="Session Ended: User Logged out"
+  message="See you soon!"
+  messageSubTitle="Thanks for using our services"></adapt-auth-banner>
 
-<section aria-label="Logged out information and relogin" class="timed-out-container display-flex flex-justify-center flex-align-center">
+<section
+  aria-label="Logged out information and relogin"
+  class="timed-out-container display-flex flex-justify-center flex-align-center">
+  <div class="timed-out-body display-flex flex-column maxw-desktop gap-3 padding-top-6">
+    <h2 class="margin-0 font-xl">You have successfully signed out of your account.</h2>
 
-    <div class="timed-out-body display-flex flex-column maxw-desktop gap-3 padding-top-6">
-        <h2 class="margin-0 font-xl">You have successfully signed out of your account.</h2>
+    <p class="usa-prose maxw-tablet">
+      Signing out helps protect your personal information, ensures your privacy on shared devices, and safeguards your
+      account from unauthorized access.
+    </p>
 
-        <p class="usa-prose maxw-tablet">
-            Signing out helps protect your personal information, ensures your privacy on shared devices, and safeguards your account from unauthorized access.
-        </p>
+    <p class="usa-prose maxw-tablet">For your security, please close your browser window.</p>
 
-        <p class="usa-prose maxw-tablet"> For your security, please close your browser window.</p>
-    
-        <button [routerLink]="['/auth', 'login']" class="usa-button flex-align-self-start">Sign back in</button>
-    </div>
-
+    <button [routerLink]="['/auth', 'login']" class="usa-button flex-align-self-start">Sign back in</button>
+  </div>
 </section>

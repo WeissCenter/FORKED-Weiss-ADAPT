@@ -32,36 +32,40 @@ export type PermissionMatrix = {
 };
 
 export type AppRolePermissions = {
-  [key in AppRole]: {
-    description: string;
-    permissions: AppPermissions;
-  };
+  [key in AppRole]: AppRolePermission;
+};
+
+export type AppRolePermission = {
+  description: string;
+  permissions: AppPermissions;
 };
 
 // Define the permissions for each role
 export const appRolePermissions: AppRolePermissions = {
   Reader: {
-    description: 'Adapt Reader',
+    description: 'ADAPT Reader',
     permissions: {
-      'Data Sources': ['Read'],
+      'Data Sources': [],
       'Data Views': ['Read'],
       'Report Templates': ['Read'],
       Reports: ['Read'],
       Glossary: ['Read'],
+      'Tool Settings': [],
     },
   },
   Editor: {
-    description: 'Adapt Editor',
+    description: 'ADAPT Editor',
     permissions: {
-      'Data Sources': ['Read', 'Write'],
+      'Data Sources': [],
       'Data Views': ['Read', 'Write'],
       'Report Templates': ['Read', 'Write'],
       Reports: ['Read', 'Write'],
       Glossary: ['Read', 'Write'],
+      'Tool Settings': [],
     },
   },
   Manager: {
-    description: 'Adapt Manager',
+    description: 'ADAPT Manager',
     permissions: {
       'Data Sources': ['Read', 'Write'],
       'Data Views': ['Read', 'Write'],
@@ -73,7 +77,7 @@ export const appRolePermissions: AppRolePermissions = {
     },
   },
   Admin: {
-    description: 'Adapt Admin',
+    description: 'ADAPT Admin',
     permissions: {
       'Data Sources': ['Read', 'Write'],
       'Data Views': ['Read', 'Write'],
@@ -85,7 +89,7 @@ export const appRolePermissions: AppRolePermissions = {
     },
   },
   SuperAdmin: {
-    description: 'Adapt Super Admin',
+    description: 'ADAPT Super Admin',
     permissions: {
       'Data Sources': ['Read', 'Write'],
       'Data Views': ['Read', 'Write'],

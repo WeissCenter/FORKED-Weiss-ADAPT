@@ -1,16 +1,20 @@
 <nav class="usa-breadcrumb" [attr.aria-label]="breadcrumbsLabel | async" *ngIf="showBreadcrumb">
-  <ol class="usa-breadcrumb__list">
+  <ol class="usa-breadcrumb__list display-flex flex-align-center">
     <ng-container *ngIf="breadcrumbs | async as crumbs">
       <ng-container *ngIf="crumbs.length < 5; else escape">
         <ng-container *ngFor="let crumb of breadcrumbs | async; let isLast = last">
-          <li *ngIf="!isLast; else notLink" class="usa-breadcrumb__list-item">
-            <a [routerLink]="crumb.link" [queryParams]="crumb.queryParams" class="usa-breadcrumb__link"
+          <li *ngIf="!isLast; else notLink" class="usa-breadcrumb__list-item display-flex flex-align-center">
+            <a
+              [routerLink]="crumb.link"
+              [queryParamsHandling]="'replace'"
+              [queryParams]="crumb.queryParams"
+              class="usa-breadcrumb__link display-flex flex-align-center flex-align-center"
               ><span>{{ crumb.label }}</span></a
             >
           </li>
 
           <ng-template #notLink>
-            <li class="usa-breadcrumb__list-item usa-current" aria-current="page">
+            <li class="usa-breadcrumb__list-item display-flex flex-align-center usa-current" aria-current="page">
               <span>{{ crumb.label }}</span>
             </li>
           </ng-template>

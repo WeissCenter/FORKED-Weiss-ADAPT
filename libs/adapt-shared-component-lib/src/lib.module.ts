@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { A11yModule } from '@angular/cdk/a11y';
 import { RouterModule } from '@angular/router';
@@ -39,12 +39,26 @@ import { CheckboxComponent } from './lib/form-components/checkbox/checkbox.compo
 import { SecondaryNavigationComponent } from './lib/components/secondary-navigation/secondary-navigation.component';
 import { SecondaryNavigationItemComponent } from './lib/components/secondary-navigation-item/secondary-navigation-item.component';
 import { FieldLengthSortPipe } from './lib/pipes/field-length-sort.pipe';
+import { InlineSvgComponent } from './lib/components/inline-svg/inline-svg.component';
+import { SidePanelComponent } from './lib/components/side-panel/side-panel.component';
+import { API_URL } from '.';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { PageAlertComponent } from './lib/components/page-alert/page-alert.component';
+import { ParseStringTemplatePipe } from './lib/pipes/parse-string-template.pipe';
+import { StripQuotesPipe } from './lib/pipes/strip-quotes.pipe';
+import { DataRepComparisonComponent } from './lib/report-components/data-rep-comparison/data-rep-comparison.component';
+import { DataRepComparisonTriggerComponent } from './lib/report-components/data-rep-comparison/controls/data-rep-comparison-trigger.component';
+import { DataRepComparisonControlsComponent } from './lib/report-components/data-rep-comparison/controls/data-rep-comparison-controls.component';
+import { DataRepService } from './lib/services/data-rep.service';
+import { FilterMissingPropertyPipe } from './lib/pipes/filter-missing-property.pipe';
 
 @NgModule({
   declarations: [
     HElementComponent,
     CheckboxComponent,
     AlertComponent,
+    InlineSvgComponent,
+    PageAlertComponent,
     ReportHeadingBlockComponent,
     LoadingPipe,
     PaginatePipe,
@@ -70,6 +84,7 @@ import { FieldLengthSortPipe } from './lib/pipes/field-length-sort.pipe';
     DataRepComponent,
     GridViewComponent,
     GlossaryPipe,
+    FilterMissingPropertyPipe,
     DataRepGroupedComponent,
     PaginationComponent,
     ModalComponent,
@@ -77,9 +92,17 @@ import { FieldLengthSortPipe } from './lib/pipes/field-length-sort.pipe';
     SecondaryNavigationComponent,
     SecondaryNavigationItemComponent,
     FieldLengthSortPipe,
+    InlineSvgComponent,
+    SidePanelComponent,
+    ParseStringTemplatePipe,
+    StripQuotesPipe,
+    DataRepComparisonComponent,
+    DataRepComparisonTriggerComponent,
+    DataRepComparisonControlsComponent,
   ],
   exports: [
     HElementComponent,
+    InlineSvgComponent,
     SecondaryNavigationComponent,
     SecondaryNavigationItemComponent,
     CheckboxComponent,
@@ -88,6 +111,9 @@ import { FieldLengthSortPipe } from './lib/pipes/field-length-sort.pipe';
     FieldLengthSortPipe,
     TableComponent,
     LoadingPipe,
+    ParseStringTemplatePipe,
+    StripQuotesPipe,
+    SidePanelComponent,
     PaginatePipe,
     ReportHeadingBlockComponent,
     ReportCommentBlockComponent,
@@ -109,14 +135,27 @@ import { FieldLengthSortPipe } from './lib/pipes/field-length-sort.pipe';
     DataRepComponent,
     QuickSummaryComponent,
     GlossaryPipe,
+    FilterMissingPropertyPipe,
     GridViewComponent,
     EditableDirective,
     ModalComponent,
     PaginationComponent,
     DataRepGroupedComponent,
+    InlineSvgComponent,
+    PageAlertComponent,
+    DataRepComparisonComponent,
+    DataRepComparisonTriggerComponent,
+    DataRepComparisonControlsComponent,
   ],
-  providers: [AlertService, GlossaryService, FilterPanelService],
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, A11yModule],
+  providers: [AlertService, FilterPanelService, DecimalPipe, DataRepService],
+  imports: [CommonModule, NgxMaskDirective, NgxMaskPipe, RouterModule, FormsModule, ReactiveFormsModule, A11yModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class LibModule {}
+export class LibModule {
+  static forRoot(api: string) {
+    return {
+      ngModule: LibModule,
+      providers: [{ provide: API_URL, useValue: api, multi: true }],
+    };
+  }
+}

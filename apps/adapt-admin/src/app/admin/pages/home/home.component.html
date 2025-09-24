@@ -133,7 +133,7 @@
               <p class="usa-prose" i18n>Loading reports...</p>
             </div>
           </div> -->
-        <ng-container *ngIf="reports | loading : 'Reports have loaded' | async as reportsLoaded">
+        <ng-container *ngIf="reports | loading: 'Reports have loaded' | async as reportsLoaded">
           <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="reportsLoaded.loading">
             <div class="display-flex flex-align-center gap-1">
               <div class="loader"></div>
@@ -145,7 +145,7 @@
             <ng-container *ngIf="reportsLoaded.value.length; else noReports">
               <span class="visually-hidden" aria-live="polite" id="report-load-notifier">Reports have loaded</span>
               <adapt-list-item-report
-                *ngFor="let report of reportsLoaded.value | limitTo : 5"
+                *ngFor="let report of reportsLoaded.value | limitTo: 5"
                 [report]="report"
                 headingLvl="h4"></adapt-list-item-report>
               <div class="display-flex gap-2 flex-wrap margin-top-2 width-full">
@@ -190,7 +190,7 @@
         </div>
 
         <div class="display-flex flex-column margin-top-1 gap-1 width-full">
-          <ng-container *ngIf="dataViews | loading : 'Data views have loaded' | async as viewsLoaded">
+          <ng-container *ngIf="dataViews | loading: 'Data views have loaded' | async as viewsLoaded">
             <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="viewsLoaded.loading">
               <div class="display-flex flex-align-center gap-1">
                 <div class="loader"></div>
@@ -205,7 +205,7 @@
                   [$reports]="reports"
                   [dataViewModal]="dataViewModal"
                   [reportModal]="reportModal"
-                  *ngFor="let view of viewsLoaded.value | limitTo : 5"
+                  *ngFor="let view of viewsLoaded.value | limitTo: 5"
                   [view]="view"
                   [headingLvl]="'h4'"></adapt-list-item-data>
                 <div class="display-flex gap-2 flex-wrap margin-top-2 width-full">

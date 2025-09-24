@@ -1,20 +1,27 @@
-import { Inject, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { GlossaryService } from '../services/glossary.service';
-import { IGlossaryTerm } from '@adapt/types';
-import { map, Observable, of } from 'rxjs';
+import { IGlossaryTerm, LanguageCode } from '@adapt/types';
 
 @Pipe({
-  name: 'glossary'
+  name: 'glossary',
 })
 export class GlossaryPipe implements PipeTransform {
-  constructor(@Inject(GlossaryService) private glossary: GlossaryService) {}
+  constructor(private glossary: GlossaryService) {}
 
-  transform(key: string, field?: 'label' | 'definition'): Observable<string> {
-
-    return this.glossary.getTermObservable(key)
-    .pipe(map(term => {
-      return term ? term[field || 'label'] : key;
-    }));
-
+  transform(key: string, field: 'label' | 'definition' = 'label', lang: string = 'en', fileSpec?: string) {
+    let term: IGlossaryTerm | undefined;
+    if (fileSpec) {
+      term = this.glossary.getFileSpecTerm(fileSpec.toLowerCase(), key, lang as LanguageCode);
+    } else {
+      term = this.glossary.getTerm(key, lang as LanguageCode);
+    }
+    // return term ? term[field] : key;
+    return new Promise<string>((resolve) => {
+      if (term) {
+        resolve(term[field]);
+      } else {
+        resolve(key);
+      }
+    });
   }
 }

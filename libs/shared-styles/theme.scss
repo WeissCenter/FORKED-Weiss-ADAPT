@@ -1,4 +1,3 @@
-
 :root {
   //   --usa-body-background: var(--usa-color-gray-3);
   //   --usa-input-background-color: var(--usa-white);
@@ -18,7 +17,7 @@
   --adapt-secondary-lightest: #f0cfe3;
   --adapt-secondary-lighter: #e19fc7;
   --adapt-secondary-light: #d26fab;
-  --adapt-secondary-base: #c33f8f;
+  --adapt-secondary-base: #690052;
   --adapt-secondary-vivid: #690052;
   --adapt-secondary-dark: #590046;
   --adapt-secondary-darker: #480039;
@@ -26,7 +25,6 @@
 
   --adapt-logo-secondary: var(--adapt-secondary-base);
   --adapt-logo-primary: var(--adapt-primary-base);
-
 
   --usa-step-indicator-text-color: var(--usa-ink);
 }
@@ -151,4 +149,9 @@ router-outlet {
 body:has(dialog[open]) {
   overflow: hidden;
   scrollbar-gutter: stable;
+}
+
+html[data-weiss-accessibility-theme='high-contrast'] {
+  --adapt-logo-secondary: var(--high-contrast-foreground) !important;
+  --adapt-logo-primary: var(--high-contrast-foreground) !important;
 }

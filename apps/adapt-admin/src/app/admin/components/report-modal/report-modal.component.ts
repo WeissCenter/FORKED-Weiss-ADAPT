@@ -97,32 +97,37 @@ export class ReportModalComponent implements OnDestroy {
       .getDataViews()
       .pipe(map((views) => views.filter((view) => view.status === DataSetQueueStatus.AVAILABLE)));
 
+    this.idle.onTimeout.subscribe(() => {
+      if (this.reportFormGroup.dirty) {
+        this.user.userInactivitySave({
+          action: 'CREATION',
+          type: 'Report',
+          body: { page: this.currentStep || this.stepsIndicator.step, ...this.reportFormGroup.getRawValue() },
+        });
+      }
+    });
 
-      this.idle.onTimeout.subscribe(() => {
-        if(this.reportFormGroup.dirty) {
-          this.user.userInactivitySave({action: 'CREATION', type: 'Report', body: {page: this.currentStep || this.stepsIndicator.step , ...this.reportFormGroup.getRawValue()}})
-        }
-      })
-    
     const dataViewSub = this.dataView.valueChanges.subscribe((val) => {
-      this.preview.setValue(undefined)
-      this.preview.markAsPristine()
-    })
+      this.preview.setValue(undefined);
+      this.preview.markAsPristine();
+    });
 
-    this.subscriptions.push(dataViewSub)
+    this.subscriptions.push(dataViewSub);
 
-      this.idle.onTimeout.subscribe(() => {
-        if(this.reportFormGroup.dirty) {
-          this.user.userInactivitySave({action: 'CREATION', type: 'Report', body: {page: this.currentStep || this.stepsIndicator.step , ...this.reportFormGroup.getRawValue()}})
-        }
-      })
-
+    this.idle.onTimeout.subscribe(() => {
+      if (this.reportFormGroup.dirty) {
+        this.user.userInactivitySave({
+          action: 'CREATION',
+          type: 'Report',
+          body: { page: this.currentStep || this.stepsIndicator.step, ...this.reportFormGroup.getRawValue() },
+        });
+      }
+    });
   }
 
   public next() {
-  //  debugger;
+    //  debugger;
     if (this.currentStep > 0) this.reportFormGroup.markAllAsTouched();
-
 
     if (this.reportFormGroup.invalid || this.reportFormGroup.pending) {
       return;
@@ -166,15 +171,15 @@ export class ReportModalComponent implements OnDestroy {
       this.dataView.setValue(dataView);
     }
 
-    if(report){
-      this.reportFormGroup.patchValue(report)
+    if (report) {
+      this.reportFormGroup.patchValue(report);
     }
 
     this.audience.setValue('internal');
 
     const templateSub = this.reportTemplate.valueChanges.subscribe(async (template) => {
-      this.preview.setValue(undefined)
-      this.preview.markAsPristine()
+      this.preview.setValue(undefined);
+      this.preview.markAsPristine();
       const setFields = (template: ITemplate) => {
         if (!this.title.dirty) this.title.setValue(template.title);
         if (!this.description.dirty) this.description.setValue(template.description);
@@ -194,8 +199,6 @@ export class ReportModalComponent implements OnDestroy {
 
       setFields(await promise);
     });
-
-
 
     this.subscriptions.push(templateSub);
     this.stepsIndicator.setStep(page);

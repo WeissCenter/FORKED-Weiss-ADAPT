@@ -1,0 +1,238 @@
+{
+  "name": "adapt-viewer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "adapt-viewer",
+  "sourceRoot": "apps/adapt-viewer/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/adapt-viewer/browser",
+        "index": "apps/adapt-viewer/src/index.html",
+        "main": "apps/adapt-viewer/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/adapt-viewer/tsconfig.app.json",
+        "assets": [
+          "apps/adapt-viewer/src/assets",
+          {
+            "glob": "**/*",
+            "input": "node_modules/@uswds/uswds/dist/img",
+            "output": "./assets/"
+          },
+          {
+            "glob": "**/*",
+            "input": "node_modules/@uswds/uswds/dist/js",
+            "output": "./assets/"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared-assets",
+            "output": "assets/shared/"
+          }
+        ],
+        "styles": [
+          "apps/adapt-viewer/src/styles.scss",
+          "node_modules/@angular/cdk/_index.scss",
+          "node_modules/@angular/cdk/a11y-prebuilt.css",
+          "node_modules/weiss-accessibility-center/dist/assets/index.scss"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "buildOptimizer": true,
+          "optimization": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-viewer/src/environments/environment.ts",
+              "with": "apps/adapt-viewer/src/environments/environment.production.ts"
+            }
+          ]
+        },
+        "uat": {
+          "buildOptimizer": true,
+          "optimization": true,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-viewer/src/environments/environment.ts",
+              "with": "apps/adapt-viewer/src/environments/environment.uat.ts"
+            }
+          ]
+        },
+        "qa": {
+          "buildOptimizer": true,
+          "optimization": true,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-viewer/src/environments/environment.ts",
+              "with": "apps/adapt-viewer/src/environments/environment.qa.ts"
+            }
+          ]
+        },
+        "development": {
+          "buildOptimizer": true,
+          "optimization": true,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-viewer/src/environments/environment.ts",
+              "with": "apps/adapt-viewer/src/environments/environment.development.ts"
+            }
+          ]
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "adapt-viewer:build:production"
+        },
+        "qa": {
+          "browserTarget": "adapt-viewer:build:qa"
+        },
+        "development": {
+          "browserTarget": "adapt-viewer:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "adapt-viewer:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/adapt-viewer/**/*.ts", "apps/adapt-viewer/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/adapt-viewer/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "adapt-viewer:build"
+      }
+    },
+    "server": {
+      "dependsOn": ["build"],
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/apps/adapt-viewer/server",
+        "main": "apps/adapt-viewer/server.ts",
+        "tsConfig": "apps/adapt-viewer/tsconfig.server.json",
+        "externalDependencies": ["@uswds/uswds", "uswds"]
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media"
+        },
+        "qa": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-viewer/src/environments/environment.ts",
+              "with": "apps/adapt-viewer/src/environments/environment.qa.ts"
+            }
+          ]
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-viewer/src/environments/environment.ts",
+              "with": "apps/adapt-viewer/src/environments/environment.development.ts"
+            }
+          ]
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "serve-ssr": {
+      "executor": "@angular-devkit/build-angular:ssr-dev-server",
+      "options": {
+        "routes": ["/"]
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "adapt-viewer:build:development",
+          "serverTarget": "adapt-viewer:server:development"
+        },
+        "production": {
+          "browserTarget": "adapt-viewer:build:production",
+          "serverTarget": "adapt-viewer:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "prerender": {
+      "executor": "@angular-devkit/build-angular:prerender",
+      "options": {
+        "routes": ["/", "/reports/idea-child-count-and-educational-environments"]
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "adapt-viewer:build:development",
+          "serverTarget": "adapt-viewer:server:development"
+        },
+        "production": {
+          "browserTarget": "adapt-viewer:build:production",
+          "serverTarget": "adapt-viewer:server:production"
+        }
+      },
+      "defaultConfiguration": "production"
+    }
+  }
+}

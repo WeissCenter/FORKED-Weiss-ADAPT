@@ -101,10 +101,7 @@
           </a>
         </li>
         <li role="none">
-          <button
-            role="menuitem"
-            aemA11yToggle
-            class="usa-icon-list__item site-nav width-full">
+          <button role="menuitem" aemA11yToggle class="usa-icon-list__item site-nav width-full">
             <i aria-hidden="true" class="fal fa-universal-access"></i>
 
             <span> Accessibility </span>
@@ -126,7 +123,6 @@
           </a>
         </li>
         <li role="none">
-
           <a
             role="menuitem"
             (keypress)="startSignout($event)"
@@ -154,12 +150,16 @@
   </section>
 </aside>
 
-
 <lib-adapt-modal closeText="Close" heading="Are you sure you want to sign out?" #confirmLogOut>
   <div class="confirm-modal-body display-flex flex-column gap-2 padding-1">
     <div class="confirm-modal-footer padding-1 display-flex gap-2">
       <button class="usa-button" (keydown.enter)="signOut($event)" (click)="signOut($event)">Sign out</button>
-      <button class="usa-button usa-button--unstyled" (keydown.enter)="cancelLogout($event)" (click)="cancelLogout($event)" >Cancel</button>
+      <button
+        class="usa-button usa-button--unstyled"
+        (keydown.enter)="cancelLogout($event)"
+        (click)="cancelLogout($event)">
+        Cancel
+      </button>
     </div>
   </div>
 </lib-adapt-modal>

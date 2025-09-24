@@ -4,7 +4,7 @@ import { Observable, from, isObservable, of, switchMap, catchError, map, startWi
 
 @Pipe({ name: 'loading' })
 export class LoadingPipe implements PipeTransform {
-  constructor(private announcer: LiveAnnouncer){}
+  constructor(private announcer: LiveAnnouncer) {}
   transform(val: any, liveAnnounce?: string): Observable<any> {
     if (val instanceof Promise) {
       val = from(val);
@@ -16,9 +16,8 @@ export class LoadingPipe implements PipeTransform {
     return val.pipe(
       delay(250),
       map((value) => {
+        if (Array.isArray(value) && value.length && liveAnnounce) this.announcer.announce(liveAnnounce);
 
-        if(Array.isArray(value) && value.length && liveAnnounce) this.announcer.announce(liveAnnounce);
-        
         return { loading: false, value };
       }),
       startWith({ loading: true }),

@@ -21,8 +21,8 @@
       Last pulled by
       <strong>{{ selectedDataSet?.pulledBy || 'Unknown' }}</strong> on
       <strong
-        >{{ selectedDataSet?.lastPull | date : 'MM/dd/YYYY' }} at
-        {{ selectedDataSet?.lastPull | date : 'HH:MM:SS a' }}</strong
+        >{{ selectedDataSet?.lastPull | date: 'MM/dd/YYYY' }} at
+        {{ selectedDataSet?.lastPull | date: 'HH:MM:SS a' }}</strong
       >
     </p>
 
@@ -141,7 +141,7 @@
     <div
       class="data-management-table-header display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full margin-bottom-3 gap-2">
       <span
-        *ngIf="dataList | async | paginate : page : pageSize as items"
+        *ngIf="dataList | async | paginate: page : pageSize as items"
         class="font-family-body font-xs"
         #recordsDisplay
         aria-live="polite"
@@ -169,7 +169,7 @@
       </ng-template>
 
       <ng-container *ngIf="dataListLoaded.value">
-        <lib-adapt-expandable-list-item *ngFor="let item of dataListLoaded.value | paginate : page : pageSize">
+        <lib-adapt-expandable-list-item *ngFor="let item of dataListLoaded.value | paginate: page : pageSize">
           <div visible-content>
             <h3 class="usa-prose margin-0">
               <a
@@ -183,7 +183,7 @@
             </p>
             <div class="display-flex flex-column width-full gap-1">
               <p class="text-normal font-sm text-ink" *ngIf="item.dataPullStatus">
-                <span>Last Updated: {{ item.lastPull | date : 'MM/dd/yyyy' }}, </span>
+                <span>Last Updated: {{ item.lastPull | date: 'MM/dd/yyyy' }}, </span>
                 <span>Created By: {{ item.author }}</span>
               </p>
               <div class="display-flex flex-wrap gap-1">

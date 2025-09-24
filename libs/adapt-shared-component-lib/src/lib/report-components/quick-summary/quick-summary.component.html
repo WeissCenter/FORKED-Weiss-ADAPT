@@ -5,8 +5,8 @@
     </div> -->
   <section
     class="report-quick-summary bg-white margin-top-2 padding-3 gap-2 border-2px display-flex flex-column flex-1 border-base-lighter radius-lg">
-    <h2 class="usa-prose margin-0">Quick summary</h2>
-    <div class="report-quick-summary-heading padding-top-2">
+    <h2 class="usa-prose margin-0">{{ cmsContent.header }}</h2>
+    <div *ngIf="content['heading']" class="report-quick-summary-heading padding-top-2">
       <div class="report-quick-summary-heading-text usa-prose grid-row">
         <h3 class="text-normal margin-0 grid-col-10">{{ content['heading'] }}</h3>
       </div>
@@ -15,8 +15,11 @@
     <div class="report-quick-summary-sections accessibility-layout grid-row grid-gap-4">
       <div class="grid-col-12 tablet:grid-col-6 padding-y-2 usa-prose" *ngFor="let section of content['sections']">
         <p>
-          <strong>{{ section.title }}</strong
-          >: {{ section.body }}
+          <ng-container *ngIf="section.title?.length">
+            <strong>{{ section.title }}</strong
+            >:
+          </ng-container>
+          {{ section.body }}
         </p>
       </div>
     </div>

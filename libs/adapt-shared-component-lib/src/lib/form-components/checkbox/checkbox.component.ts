@@ -1,5 +1,16 @@
-import { Component, ElementRef, EventEmitter, Host, Input, OnInit, Optional, Output, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Host,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  ViewChild,
+  Injector,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { MultiSelectComponent } from '../multi-select/multi-select.component';
 
 @Component({
@@ -9,80 +20,100 @@ import { MultiSelectComponent } from '../multi-select/multi-select.component';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      multi: true,
       useExisting: CheckboxComponent,
+      multi: true,
     },
   ],
 })
 export class CheckboxComponent implements OnInit, ControlValueAccessor {
   @ViewChild('input') inputElement!: ElementRef<HTMLInputElement>;
 
-  @Output() blurred = new EventEmitter();
-  @Output() focused = new EventEmitter();
+  //  If this checkbox lives inside one of our custome multi select components, we’ll toggle group state.
+  private checkboxGroup?: MultiSelectComponent;
+  private ngControl?: NgControl;
+
   @Input() value: any;
   @Input() label = '';
   @Input() id: string = crypto.randomUUID();
   @Input() classes = '';
-
-  public disabled = false;
+  @Input() name?: string;
 
   @Input() checked = false;
   @Output() checkedChange = new EventEmitter<boolean>();
 
-  idSafeLabel = '';
+  @Output() blurred = new EventEmitter<FocusEvent>();
+  @Output() focused = new EventEmitter<FocusEvent>();
 
-  public onChange = (bool: boolean) => {
-    return;
+  public disabled = false;
+  public idSafeLabel = '';
+
+  // ControlValueAccessor callbacks
+  private onChange: (v: any) => void = (_: any) => {
+    /* noop */
   };
-  public onTouched = () => {
-    return;
-  };
+  private onTouched?: () => void;
 
-  constructor(@Host() @Optional() private checkboxGroup: MultiSelectComponent) {
-
-  }
-
-  writeValue(obj: any): void {
-    this.value = obj;
-    this.checked = obj;
-  }
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-  setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+  constructor(
+    private injector: Injector,
+    @Host() @Optional() checkboxGroup: MultiSelectComponent
+  ) {
+    // grab the group if present (no circular DI here)
+    this.checkboxGroup = checkboxGroup ?? undefined;
   }
 
   ngOnInit() {
+    // sanitize label for ID usage
     this.idSafeLabel = this.label ? this.label.replace(/[^a-zA-Z0-9]/g, '_') : '';
-  }
 
-  toggleCheck() {
-    if (this.checkboxGroup) {
-      this.checkboxGroup?.addOrRemove(this.value);
-      return;
+    this.ngControl = this.injector.get(NgControl, undefined);
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
     }
-    this.checked = !this.checked;
-    this.checkedChange.emit(this.checked);
-    this.onChange(this.checked);
-    this.onTouched();
   }
 
-  onCheckboxChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.checked = input.checked;
-    this.checkedChange.emit(this.checked);
+  writeValue(obj: any): void {
+    this.checked = !!obj;
   }
 
-  isChecked() {
-    if (this.checkboxGroup) return this.checkboxGroup?.contains(this.value);
-    return this.checked;
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  onInputChange(event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    if (this.checkboxGroup) {
+      // toggle in the parent multiselect
+      this.checkboxGroup.addOrRemove(this.value);
+    } else {
+      // standalone checkbox:
+      this.checked = isChecked;
+      this.onChange(isChecked);
+      this.checkedChange.emit(isChecked);
+    }
+  }
+
+  onInputBlur(event: FocusEvent) {
+    if (this.onTouched) {
+      this.onTouched();
+    }
+    this.blurred.emit(event);
   }
 
   focus() {
-    this.inputElement?.nativeElement.focus();
+    this.inputElement.nativeElement.focus();
+  }
+
+  // final truth check (group overrides standalone)
+  isChecked(): boolean {
+    return this.checkboxGroup ? !!this.checkboxGroup.contains(this.value) : this.checked;
   }
 }

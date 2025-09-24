@@ -73,21 +73,18 @@ export class SidebarComponent implements AfterViewInit {
     }
   }
 
-  public startSignout($event: any){
-    if(($event.code !== 'Enter' && $event.code !== 'Space') && !($event instanceof PointerEvent)) return;
-    this.confirmLogOutModal?.open(); 
-    this.closeMenuOnNavigation()
+  public startSignout($event: any) {
+    if ($event.code !== 'Enter' && $event.code !== 'Space' && !($event instanceof PointerEvent)) return;
+    this.confirmLogOutModal?.open();
+    this.closeMenuOnNavigation();
   }
 
   public signOut(event: any) {
-    this.confirmLogOutModal?.close()
+    this.confirmLogOutModal?.close();
     this.user.logout();
   }
 
-
-  public cancelLogout(event: any){
-    this.confirmLogOutModal?.close()
+  public cancelLogout(event: any) {
+    this.confirmLogOutModal?.close();
   }
-  
-  
 }

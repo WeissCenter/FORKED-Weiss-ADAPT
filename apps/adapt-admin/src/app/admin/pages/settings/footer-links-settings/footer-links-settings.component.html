@@ -30,8 +30,14 @@
             <li *ngFor="let item of links.controls; let i = index">
               <div class="footer-link-controls display-flex flex-column gap-2" [formGroup]="$any(item)">
                 <div class="footer-links-control-row display-flex width-full gap-2">
-                  <lib-adapt-text-input class="flex-1" formControlName="label" [label]="'Link Label'"></lib-adapt-text-input>
-                  <lib-adapt-text-input class="flex-1" formControlName="url" [label]="'Link URL'"></lib-adapt-text-input>
+                  <lib-adapt-text-input
+                    class="flex-1"
+                    formControlName="label"
+                    [label]="'Link Label'"></lib-adapt-text-input>
+                  <lib-adapt-text-input
+                    class="flex-1"
+                    formControlName="url"
+                    [label]="'Link URL'"></lib-adapt-text-input>
                 </div>
                 <div class="footer-links-control-row flex-align-center display-flex gap-2">
                   <lib-adapt-checkbox formControlName="external" label="External Link"></lib-adapt-checkbox>
@@ -43,7 +49,10 @@
                     itemAccessor="value"
                     itemLabel="label"
                     [items]="targetOptions"></lib-adapt-combo-box>
-                  <lib-adapt-text-input class="flex-1" formControlName="icon" [label]="'Link Icon'"></lib-adapt-text-input>
+                  <lib-adapt-text-input
+                    class="flex-1"
+                    formControlName="icon"
+                    [label]="'Link Icon'"></lib-adapt-text-input>
                 </div>
               </div>
             </li>

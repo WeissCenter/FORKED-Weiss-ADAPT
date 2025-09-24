@@ -61,7 +61,9 @@ export class ReportConditionPipe implements PipeTransform {
 
     const result = conditions[func]((cond) => {
       const filter = filters[cond.filterCode];
-
+      if (filter === null) {
+        return false;
+      }
       if (!filter) {
         return true;
       }

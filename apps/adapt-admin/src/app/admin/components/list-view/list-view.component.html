@@ -7,7 +7,7 @@
     <h2
       class="font-family-body font-sm line-height-5 text-normal"
       id="showing"
-      *ngIf="dataListTap | async | paginate : page : pageSize as items"
+      *ngIf="dataListTap | async | paginate: page : pageSize as items"
       #recordsDisplay
       aria-live="polite">
       Showing up to
@@ -61,7 +61,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="dataList | loading : 'Data list has been loaded' | async as dataListLoaded">
+  <ng-container *ngIf="dataList | loading: 'Data list has been loaded' | async as dataListLoaded">
     <ng-container>
       <div
         id="contentLoadingIndicator"
@@ -79,7 +79,7 @@
           <adapt-list-item-user
             [user]="item"
             *ngFor="
-              let item of dataListLoaded.value | sort : sortDirection : recentSortField | paginate : page : pageSize;
+              let item of dataListLoaded.value | sort: sortDirection : recentSortField | paginate: page : pageSize;
               trackBy: identify
             "></adapt-list-item-user>
         </ng-container>
@@ -93,7 +93,7 @@
             [dataViewModal]="dataViewModal"
             [reportModal]="reportModal"
             *ngFor="
-              let item of dataListLoaded.value | sort : sortDirection : recentSortField | paginate : page : pageSize;
+              let item of dataListLoaded.value | sort: sortDirection : recentSortField | paginate: page : pageSize;
               trackBy: identify
             "
             [view]="item"

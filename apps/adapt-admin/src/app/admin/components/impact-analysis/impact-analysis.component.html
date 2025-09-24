@@ -1,5 +1,5 @@
 <div class="impact-analysis-widget display-flex flex-column gap-2">
-  <ng-container *ngIf="items | async | paginate : page : pageSize as itemsLoaded">
+  <ng-container *ngIf="items | async | paginate: page : pageSize as itemsLoaded">
     <div class="impact-analysis-heading display-flex flex-column gap-2">
       <lib-adapt-h-element [level]="headingLevel"> Impact analysis </lib-adapt-h-element>
 
@@ -14,7 +14,10 @@
       </ng-container>
 
       <ng-container *ngIf="inAccordion && (reportCount > 0 || dataViewCount > 0)">
-        <button [attr.aria-label]="'learn more about ' + name + ' impact analysis'" class="flex-align-self-start usa-button usa-button--unstyled" (click)="learnMore.emit(id)">
+        <button
+          [attr.aria-label]="'learn more about ' + name + ' impact analysis'"
+          class="flex-align-self-start usa-button usa-button--unstyled"
+          (click)="learnMore.emit(id)">
           To learn more, please click here.
         </button>
       </ng-container>

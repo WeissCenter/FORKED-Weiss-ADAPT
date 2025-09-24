@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
 import { FilterPanelService } from '../../services/filterpanel.service';
 import { Subscription } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './right-side-panel.component.html',
   styleUrls: ['./right-side-panel.component.scss'],
 })
-export class RightSidePanelComponent {
+export class RightSidePanelComponent implements OnDestroy {
   private subscription: Subscription;
 
   // @Input() show = false;
@@ -16,6 +16,8 @@ export class RightSidePanelComponent {
 
   @Input() title = 'Filter';
   @Input() description = 'Make your filtering selections and hit apply.';
+  @Input() close = 'Close';
+  @Input() location = 'right';
 
   constructor(private filterPanelService: FilterPanelService) {
     this.subscription = this.filterPanelService.currentFilterPanelState.subscribe((state) => {

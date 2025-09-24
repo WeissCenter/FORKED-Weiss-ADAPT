@@ -28,14 +28,18 @@ import { Inject, Injectable } from '@angular/core';
 import { AdaptDataService } from './adapt-data.service';
 import { BUILT_IN_FUNCTIONS } from './template-functions/template-functions';
 import { firstValueFrom, tap } from 'rxjs';
-import {GlossaryService} from '@adapt/adapt-shared-component-lib'
+import { GlossaryService } from '@adapt/adapt-shared-component-lib';
 @Injectable({
   providedIn: 'root',
 })
 export class TemplateService {
   private templateFunctions: { [funcName: string]: (...args: any[]) => Promise<string> | string } = {};
 
-  constructor(private http: HttpClient, private dataService: AdaptDataService, @Inject(GlossaryService) private glossary: GlossaryService) {
+  constructor(
+    private http: HttpClient,
+    private dataService: AdaptDataService,
+    @Inject(GlossaryService) private glossary: GlossaryService
+  ) {
     BUILT_IN_FUNCTIONS.forEach(({ name, func }) => this.registerTemplateFunction(name, func));
   }
 
@@ -284,7 +288,6 @@ export class TemplateService {
     suppress = false,
     pageIndex = -1
   ) {
-
     const renderedTemplate: ITemplate = {
       id: template.id,
       multiFile: template.multiFile ?? true,
@@ -319,8 +322,6 @@ export class TemplateService {
 
       for (const code of Object.keys(filters)) {
         const tempFilter = templateFilters[code];
-
-    
 
         if (!tempFilter.condition?.pages?.length || tempFilter?.condition?.pages?.includes(page.id)) {
           filtersToApply[code] = filters[code];
@@ -585,22 +586,20 @@ export class TemplateService {
     return section;
   }
 
-
   private async handleBarChart(section: ISection, ctx: TemplateContext) {
-   
     const content: any = section.content;
 
-    if(section.type === SectionType.BarChart){
+    if (section.type === SectionType.BarChart) {
       const [title, description] = await Promise.all([
         this.parseString(content.title, ctx),
         this.parseString(content.description, ctx),
       ]);
-  
+
       content.title = title;
       content.description = description;
-    }else if (section.type === SectionType.BarChartGrouped){
+    } else if (section.type === SectionType.BarChartGrouped) {
       const title = await this.parseString(content.title, ctx);
-  
+
       content.title = title;
     }
 
@@ -612,7 +611,6 @@ export class TemplateService {
 
     for (const [code, value] of Object.entries(ctx.appliedFilters)) {
       const templateFilter = ctx!.templateFilters?.[code];
-
 
       if (!templateFilter) {
         throw 'unknown filter ' + code;
@@ -682,7 +680,6 @@ export class TemplateService {
   }
 
   private getSortableCategoryArgs(ctx: TemplateContext) {
-
     const sortableCategories = (ctx.template as ITemplate)?.sortableCategories;
 
     if (!sortableCategories) return;
@@ -720,17 +717,14 @@ export class TemplateService {
         }
       }
     }
-    
+
     const cats = [...categories];
 
-    if(!cats.length) return;
-
+    if (!cats.length) return;
 
     arg.value = cats;
 
-
-
-   // debugger;
+    // debugger;
     return arg;
   }
 

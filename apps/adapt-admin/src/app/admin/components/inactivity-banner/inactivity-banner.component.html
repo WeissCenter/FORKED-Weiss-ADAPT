@@ -4,9 +4,9 @@
   aria-live="assertive"
   aria-label="User inactivity banner">
   <div class="usa-alert__body">
-    <h1 class="usa-alert__heading">You've been inactive for {{ idleTime | date : 'm' }} minute(s).</h1>
+    <h1 class="usa-alert__heading">You've been inactive for {{ idleTime | date: 'm' }} minute(s).</h1>
     <p class="usa-alert__text">
-      for security reasons, we will sign you out in {{ countdown | date : 'mm:ss' }} minute(s).
+      for security reasons, we will sign you out in {{ countdown | date: 'mm:ss' }} minute(s).
     </p>
   </div>
 </section>

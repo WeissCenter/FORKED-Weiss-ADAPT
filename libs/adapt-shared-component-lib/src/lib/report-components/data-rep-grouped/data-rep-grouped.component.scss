@@ -24,6 +24,7 @@
     max-width: 100%;
     padding: var(--usa-spacing-105) 0;
     --usa-data-rep-series-group-padding-x: var(--usa-spacing-05);
+
     .insight {
       padding: 0;
     }
@@ -33,62 +34,71 @@
     }
     .action-bar {
       --usa-data-rep-action-bar-padding-x: 0;
+      flex-basis: unset;
+      width: 100%;
     }
 
     .plain-language {
       border: var(--usa-data-rep-container-border-width) solid var(--usa-data-rep-container-border-color);
     }
     ol.series li .bar-wrapper .bar {
-      &.data-bar-2 {
-        background: var(--usa-warning-lighter);
-        background-image: repeating-linear-gradient(
-          -45deg,
-          currentColor,
-          currentColor 2px,
-          transparent 0,
-          transparent 50%
-        );
-        background-image: repeating-linear-gradient(
-          -45deg,
-          currentColor 0,
-          currentColor var(--usa-spacing-2px),
-          transparent 0,
-          transparent 50%
-        );
-        background-size: var(--usa-spacing-2) var(--usa-spacing-2);
-        color: var(--usa-warning-base);
-      }
-      &.data-bar-3 {
-        background: var(--usa-magenta);
-        background-image: repeating-linear-gradient(
-          -45deg,
-          currentColor,
-          currentColor 2px,
-          transparent 0,
-          transparent 50%
-        );
-        background-image: repeating-linear-gradient(
-          -45deg,
-          currentColor 0,
-          currentColor var(--usa-spacing-2px),
-          transparent 0,
-          transparent 50%
-        );
-        background-size: var(--usa-spacing-2) var(--usa-spacing-2);
-        color: #faf3d1;
-        color: var(--usa-warning-lighter);
-      }
+      // &.data-bar-2 {
+      //   background: var(--usa-warning-lighter);
+      //   background-image: repeating-linear-gradient(
+      //     -45deg,
+      //     currentColor,
+      //     currentColor 2px,
+      //     transparent 0,
+      //     transparent 50%
+      //   );
+      //   background-image: repeating-linear-gradient(
+      //     -45deg,
+      //     currentColor 0,
+      //     currentColor var(--usa-spacing-2px),
+      //     transparent 0,
+      //     transparent 50%
+      //   );
+      //   background-size: var(--usa-spacing-2) var(--usa-spacing-2);
+      //   color: var(--usa-warning-base);
+      // }
+      // &.data-bar-3 {
+      //   background: var(--usa-magenta);
+      //   background-image: repeating-linear-gradient(
+      //     -45deg,
+      //     currentColor,
+      //     currentColor 2px,
+      //     transparent 0,
+      //     transparent 50%
+      //   );
+      //   background-image: repeating-linear-gradient(
+      //     -45deg,
+      //     currentColor 0,
+      //     currentColor var(--usa-spacing-2px),
+      //     transparent 0,
+      //     transparent 50%
+      //   );
+      //   background-size: var(--usa-spacing-2) var(--usa-spacing-2);
+      //   color: #faf3d1;
+      //   color: var(--usa-warning-lighter);
+      // }
     }
   }
 }
 
-
-.footer-row{
+.footer-row {
   color: var(--usa-white) !important;
   background-color: var(--usa-black) !important;
 }
 
-.header-row>*{
+.header-row > * {
   color: var(--usa-white) !important;
   background-color: var(--usa-black) !important;
+}
+
+.usa-button {
+  text-transform: none !important;
+}
+
+.no-data-warning {
+  background-color: var(--usa-warning-lighter);
 }

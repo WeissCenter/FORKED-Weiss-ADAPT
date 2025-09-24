@@ -2,7 +2,7 @@
   <ul class="usa-pagination__list">
     <li *ngIf="page > 1" class="usa-pagination__item usa-pagination__arrow">
       <a
-        (click)="page = page - 1"
+        (click)="changePage(page - 1)"
         routerLink="."
         [queryParams]="{ page: page - 1 }"
         [queryParamsHandling]="'merge'"
@@ -12,7 +12,7 @@
         ><svg class="usa-icon" aria-hidden="true" role="img">
           <use xlink:href="/assets/sprite.svg#navigate_before"></use>
         </svg>
-        <span class="usa-pagination__link-text">Previous</span></a
+        <span class="usa-pagination__link-text">{{ previous }}</span></a
       >
     </li>
 
@@ -22,6 +22,7 @@
         class="usa-pagination__item usa-pagination__page-no">
         <a
           routerLink="."
+          (click)="changePage(i + 1)"
           [queryParams]="{ page: i + 1 }"
           [queryParamsHandling]="'merge'"
           [ngClass]="{ 'usa-current': page === i + 1 }"
@@ -39,6 +40,7 @@
           <li *ngFor="let num of pages" class="usa-pagination__item usa-pagination__page-no">
             <a
               routerLink="."
+              (click)="changePage(num)"
               [queryParams]="{ page: num }"
               [queryParamsHandling]="'merge'"
               [ngClass]="{ 'usa-current': page === num }"
@@ -85,13 +87,13 @@
 
     <li *ngIf="page < maxPages" class="usa-pagination__item usa-pagination__arrow">
       <a
-        (click)="page = page + 1"
+        (click)="changePage(page + 1)"
         routerLink="."
         [queryParams]="{ page: page + 1 }"
         [queryParamsHandling]="'merge'"
         class="usa-pagination__link usa-pagination__next-page"
         aria-label="Next page"
-        ><span class="usa-pagination__link-text">Next </span
+        ><span class="usa-pagination__link-text">{{ next }}</span
         ><svg class="usa-icon" aria-hidden="true" role="img">
           <use xlink:href="/assets/sprite.svg#navigate_next"></use></svg
       ></a>

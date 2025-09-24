@@ -44,8 +44,8 @@ export class ImpactAnalysisComponent implements OnInit {
 
             return zip(dataViews.map((vt) => this.getImpactAnalysisForView(vt))).pipe(
               map((val) => {
-                (this.dataViewCount = dataViews.length),
-                  (this.reportCount = val.reduce((accum, item) => accum + item.reports.length, 0));
+                ((this.dataViewCount = dataViews.length),
+                  (this.reportCount = val.reduce((accum, item) => accum + item.reports.length, 0)));
 
                 return val;
               })

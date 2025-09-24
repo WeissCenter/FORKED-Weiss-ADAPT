@@ -1,5 +1,6 @@
+import { PageContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 import { ITemplatePage } from '@adapt/types';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'lib-adapt-grid-view',
@@ -11,6 +12,9 @@ export class GridViewComponent {
 
   @Input() content: any;
   @Input() page!: ITemplatePage;
+  @Input() lang = 'en';
+
+  @Input() cmsContent?: PageContentText;
 
   @Input() filters: any = {};
 
@@ -20,4 +24,9 @@ export class GridViewComponent {
   @Input() filterClass: 'filtered' | 'suppressed' = 'filtered';
 
   @Input() tabIndex?: number;
+  @Output() dataModalStateChange = new EventEmitter<boolean>();
+
+  onDataModalStateChange(isOpen: boolean) {
+    this.dataModalStateChange.emit(isOpen);
+  }
 }

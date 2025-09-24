@@ -14,8 +14,9 @@
             >{{ template.title }}</lib-adapt-h-element
           >
 
-
-          <div role="alert" *ngIf="state.editMode && editTitle?.invalid && (editTitle?.dirty || editTitle?.touched)"
+          <div
+            role="alert"
+            *ngIf="state.editMode && editTitle?.invalid && (editTitle?.dirty || editTitle?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <div *ngIf="editTitle?.errors?.['required']" i18n>Report title is required.</div>
           </div>
@@ -24,10 +25,9 @@
             {{ template.description }}
           </p>
 
-
-
-
-          <div role="alert" *ngIf="state.editMode &&  editDescription?.invalid && (editDescription?.dirty || editDescription?.touched)"
+          <div
+            role="alert"
+            *ngIf="state.editMode && editDescription?.invalid && (editDescription?.dirty || editDescription?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <div *ngIf="editDescription?.errors?.['required']" i18n>Report description is required.</div>
           </div>
@@ -41,8 +41,9 @@
             formControlName="audience"
             [items]="radioSelectItems"></lib-adapt-radio-select>
 
-
-          <div role="alert" *ngIf=" editAudience?.invalid && (editAudience?.dirty || editAudience?.touched)"
+          <div
+            role="alert"
+            *ngIf="editAudience?.invalid && (editAudience?.dirty || editAudience?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <div *ngIf="editAudience?.errors?.['required']" i18n>Report audience is required.</div>
           </div>
@@ -132,11 +133,15 @@
                     Suppress
                 </button> -->
 
-          <button (click)="openShareModal()" id="shareReportBtn" type="button" 
-                    class="usa-button flex-column padding-2 usa-button--unstyled" *ngIf="!preview">
-                    <i class="fal fa-share" aria-hidden="true"></i>
-                    Share
-                </button>
+          <button
+            (click)="openShareModal()"
+            id="shareReportBtn"
+            type="button"
+            class="usa-button flex-column padding-2 usa-button--unstyled"
+            *ngIf="!preview">
+            <i class="fal fa-share" aria-hidden="true"></i>
+            Share
+          </button>
 
           <button
             id="filterPanelButton"
@@ -219,7 +224,7 @@
               <ng-container *ngFor="let section of page.sections; let isFirst = first">
                 <ng-container
                   [ngTemplateOutlet]="sectionTemplate"
-                  [ngTemplateOutletContext]="{section, page}"></ng-container>
+                  [ngTemplateOutletContext]="{ section, page }"></ng-container>
               </ng-container>
             </div>
           </adapt-tab>
@@ -229,7 +234,7 @@
       <ng-template #onlySections>
         <div class="report-content display-flex gap-2 flex-column">
           <ng-container *ngFor="let section of data.template.sections; let isFirst = first">
-            <ng-container [ngTemplateOutlet]="sectionTemplate" [ngTemplateOutletContext]="{section}"></ng-container>
+            <ng-container [ngTemplateOutlet]="sectionTemplate" [ngTemplateOutletContext]="{ section }"></ng-container>
           </ng-container>
         </div>
       </ng-template>
@@ -240,7 +245,7 @@
         #filterPanel>
         <ng-container body>
           <form [formGroup]="filterFormGroup" class="display-flex flex-column margin-top-1 gap-3">
-            <ng-container *ngFor="let filter of data.template.filters | keyvalue : originalOrder">
+            <ng-container *ngFor="let filter of data.template.filters | keyvalue: originalOrder">
               <ng-container *ngIf="showFilter(data.template, $any(filter.value))">
                 <ng-container
                   *ngTemplateOutlet="
@@ -314,7 +319,6 @@
           itemLabel="label"
           itemAccessor="value"></lib-adapt-multi-select>
 
-          
         <!-- <lib-adapt-combo-box *ngSwitchCase="'select'" [labelStyle]="{'margin-top': '0'}"
                     [label]="$any(filter.value).label" [comboID]="$any(filter.value).code"
                     [formControlName]="$any(filter.value).code" [items]="$any($any(filter.value).filter).options"
@@ -336,25 +340,49 @@
   <ng-container *ngIf="$onFilter | async as filters">
     <section
       [attr.aria-label]="section.sectionLabel"
-      *ngIf="section | reportCondition : filters : page.context : reportTabIndex as sectionResult">
+      *ngIf="section | reportCondition: filters : page.context : reportTabIndex as sectionResult">
       <ng-container *ngIf="sectionResult.section as section">
         <ng-container [ngSwitch]="section.type">
           <lib-adapt-quick-summary
             *ngSwitchCase="'quickSummary'"
             [report]="report"
             [content]="section.content"></lib-adapt-quick-summary>
-          <lib-adapt-data-rep [filtered]="filtered" [suppressed]="previewSuppress" *ngSwitchCase="'barChart'" [noData]="sectionResult.noData"
-            rawDataType="barChart" [filterClass]="filterClass" [raw]="section.content"></lib-adapt-data-rep>
-          <lib-adapt-data-rep [filtered]="filtered" [suppressed]="previewSuppress" [filterClass]="filterClass" [noData]="sectionResult.noData"
-            *ngSwitchCase="'countBreakdown'" [raw]="section.content"></lib-adapt-data-rep>
-          <lib-adapt-data-rep-grouped [filtered]="filtered" [suppressed]="previewSuppress" [filterClass]="filterClass"
-            *ngSwitchCase="'barChartGrouped'" [noData]="sectionResult.noData"
+          <lib-adapt-data-rep
+            [filtered]="filtered"
+            [suppressed]="previewSuppress"
+            *ngSwitchCase="'barChart'"
+            [noData]="sectionResult.noData"
+            rawDataType="barChart"
+            [filterClass]="filterClass"
+            [raw]="section.content"></lib-adapt-data-rep>
+          <lib-adapt-data-rep
+            [filtered]="filtered"
+            [suppressed]="previewSuppress"
+            [filterClass]="filterClass"
+            [noData]="sectionResult.noData"
+            *ngSwitchCase="'countBreakdown'"
+            [raw]="section.content"></lib-adapt-data-rep>
+          <lib-adapt-data-rep-grouped
+            [filtered]="filtered"
+            [suppressed]="previewSuppress"
+            [filterClass]="filterClass"
+            *ngSwitchCase="'barChartGrouped'"
+            [noData]="sectionResult.noData"
             [raw]="section.content"></lib-adapt-data-rep-grouped>
-          <lib-adapt-grid-view [filtered]="filtered" [page]="page" [tabIndex]="reportTabIndex" [suppressed]="previewSuppress" [filters]="filters"
-            *ngSwitchCase="'gridView'" [filterClass]="filterClass" [report]="report"
+          <lib-adapt-grid-view
+            [filtered]="filtered"
+            [page]="page"
+            [tabIndex]="reportTabIndex"
+            [suppressed]="previewSuppress"
+            [filters]="filters"
+            *ngSwitchCase="'gridView'"
+            [filterClass]="filterClass"
+            [report]="report"
             [content]="section.content"></lib-adapt-grid-view>
 
-          <lib-adapt-report-heading-block *ngSwitchCase="'header'" [content]="section.content"></lib-adapt-report-heading-block>
+          <lib-adapt-report-heading-block
+            *ngSwitchCase="'header'"
+            [content]="section.content"></lib-adapt-report-heading-block>
           <lib-adapt-report-comment-block
             *ngSwitchCase="'comment'"
             [content]="section.content"></lib-adapt-report-comment-block>
@@ -381,8 +409,7 @@
   </div>
 </lib-adapt-modal>
 
-<lib-adapt-confirm-modal (confirm)="confirmCancel()" ></lib-adapt-confirm-modal>
-
+<lib-adapt-confirm-modal (confirm)="confirmCancel()"></lib-adapt-confirm-modal>
 
 <lib-adapt-modal closeText="Close" heading="Confirmation" #resetModal>
   <div class="confirm-modal-body display-flex flex-column gap-2">
@@ -411,22 +438,23 @@
     <p class="usa-prose">Copy Link</p>
     <ng-container *ngIf="shareURL | async as url; else gen">
       <div class="copy-link-box maxw-tablet-lg display-flex gap-1 padding-1 flex-align-center border-1px">
-
         <p class="usa-prose overflow-auto">
-          {{url}}
+          {{ url }}
         </p>
-        <button (click)="copy(url)" title="Copy report share link" aria-label="Copy report share link" class="usa-button usa-button--unstyled">
+        <button
+          (click)="copy(url)"
+          title="Copy report share link"
+          aria-label="Copy report share link"
+          class="usa-button usa-button--unstyled">
           <i aria-hidden="true" class="fal fa-copy"></i>
         </button>
-    
       </div>
-  </ng-container> 
+    </ng-container>
 
-  <ng-template #gen>
-    <p aria-busy="true" class="usa-prose">Generating link...</p>
-  </ng-template>
+    <ng-template #gen>
+      <p aria-busy="true" class="usa-prose">Generating link...</p>
+    </ng-template>
   </div>
-
 </lib-adapt-modal>
 
 <div aria-live="polite" id="filterStateMessage" *ngIf="filterStateMessage" class="visually-hidden">

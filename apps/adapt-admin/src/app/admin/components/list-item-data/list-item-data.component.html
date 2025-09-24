@@ -32,7 +32,7 @@
         </ng-container> -->
         <p class="text-normal font-sm line-height-5 text-ink" *ngIf="view.description">{{ view.description }}</p>
         <p class="text-normal font-sm line-height-4 text-ink">
-          Last updated on {{ view.created | date : 'MM/dd/yyyy' }} at {{ view.created | date : 'hh:mm a' }}, Created by
+          Last updated on {{ view.created | date: 'MM/dd/yyyy' }} at {{ view.created | date: 'hh:mm a' }}, Created by
           {{ view.author }}
         </p>
         <div class="display-flex flex-align-start accessibility-layout flex-column tablet:flex-row gap-105">
@@ -79,7 +79,7 @@
           <p *ngIf="view?.description?.length">{{ view.description }}</p>
           <div class="display-flex flex-column width-full gap-1">
             <p class="text-normal font-sm text-ink">
-              Last updated on {{ view.created | date : 'MM/dd/yyyy' }} at {{ view.created | date : 'hh:mm a' }}, Created
+              Last updated on {{ view.created | date: 'MM/dd/yyyy' }} at {{ view.created | date: 'hh:mm a' }}, Created
               by {{ view.author }}
             </p>
 

@@ -81,7 +81,7 @@
                 <input class="usa-input maxw-full" id="name" type="text" formControlName="title" />
 
                 <div
-                role="alert"
+                  role="alert"
                   *ngIf="title?.invalid && (title?.dirty || title?.touched)"
                   class="form-errors margin-top-1 text-emergency">
                   <div *ngIf="title?.errors?.['required']" i18n>Report title is required</div>
@@ -100,7 +100,7 @@
                   formControlName="description"></textarea>
 
                 <div
-                role="alert"
+                  role="alert"
                   *ngIf="description?.invalid && (description?.dirty || description?.touched)"
                   class="form-errors margin-top-1 text-emergency">
                   <div *ngIf="description?.errors?.['required']" i18n>Description is required</div>
@@ -124,7 +124,7 @@
             </button>
 
             <div
-            role="alert"
+              role="alert"
               *ngIf="preview?.invalid && (preview?.dirty || preview?.touched)"
               class="form-errors margin-top-1 text-emergency">
               <div *ngIf="preview?.errors?.['invalidPreview']" i18n>
@@ -229,7 +229,7 @@
               <span>Distribution:</span>
               <ul class="usa-list">
                 <li>
-                  <strong>{{ audience.value | valueLabel : radioSelectItems }}</strong>
+                  <strong>{{ audience.value | valueLabel: radioSelectItems }}</strong>
                 </li>
               </ul>
             </li>

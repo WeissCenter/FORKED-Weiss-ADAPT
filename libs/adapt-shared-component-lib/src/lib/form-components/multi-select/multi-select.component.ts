@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -10,9 +9,13 @@ import {
   QueryList,
   SimpleChanges,
   ViewChildren,
+  Injector,
+  Optional,
+  Self,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, Validators } from '@angular/forms';
 import { CheckboxComponent } from '../checkbox/checkbox.component';
+import { MultiSelectContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 
 @Component({
   selector: 'lib-adapt-multi-select',
@@ -29,6 +32,7 @@ import { CheckboxComponent } from '../checkbox/checkbox.component';
 export class MultiSelectComponent implements ControlValueAccessor, OnInit, OnChanges {
   @ViewChildren(CheckboxComponent) checkboxes!: QueryList<CheckboxComponent>;
 
+  @Input() name?: string;
   @Input() readonly = false;
   @Input() selectID = '';
   @Input() label = '';
@@ -39,6 +43,9 @@ export class MultiSelectComponent implements ControlValueAccessor, OnInit, OnCha
   @Input() compareID?: string;
   @Input() labelStyle?: { [clazz: string]: string };
   @Input() required?: boolean;
+  @Input() content?: MultiSelectContentText;
+
+  private ngControl?: NgControl;
 
   @Output() applyFn = new EventEmitter<boolean>();
 
@@ -59,8 +66,7 @@ export class MultiSelectComponent implements ControlValueAccessor, OnInit, OnCha
   focusedItem: any = null;
   changeCount = 0;
 
-  constructor(){
-  }
+  constructor(private injector: Injector) {}
 
   onApplyFn() {
     this.applyFn.emit(true);
@@ -224,6 +230,22 @@ export class MultiSelectComponent implements ControlValueAccessor, OnInit, OnCha
     this._exclusiveFields = this.items
       .filter((item: any) => item.exclusive)
       .map((item: any) => item[this.itemAccessor]);
+
+    this.ngControl = this.injector.get(NgControl, undefined);
+    if (this.ngControl) {
+      // hook up the ControlValueAccessor
+      this.ngControl.valueAccessor = this;
+
+      // optional: mirror a required validator from the form if you want
+      const hasRequired = this.ngControl.control?.hasValidator(Validators.required);
+      if (hasRequired) {
+        this.required = true;
+      }
+    }
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   onSearch(event: Event) {

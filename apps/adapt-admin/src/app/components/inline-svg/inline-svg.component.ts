@@ -19,7 +19,10 @@ export class InlineSvgComponent implements OnInit {
   svgContent: SafeHtml = '';
   randomId = ('img-desc' + Math.random().toString(36).substr(2, 9)) as string;
 
-  constructor(private svgService: InlineSvgService, private sanitizer: DomSanitizer) {}
+  constructor(
+    private svgService: InlineSvgService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {
     this.loadSvg();

@@ -2,7 +2,7 @@
   <div *ngIf="content" class="display-flex flex-column accessibility-layout desktop:flex-row gap-2">
     <div *ngFor="let column of content.columns" class="grid-col display-flex flex-column gap-2">
       <ng-container *ngFor="let row of column.rows">
-        <ng-container *ngIf="$any(row) | reportCondition : filters : page.context : tabIndex as rowResult">
+        <ng-container *ngIf="$any(row) | reportCondition: filters : page.context : tabIndex as rowResult">
           <ng-container *ngIf="rowResult.section as row">
             <ng-container [ngSwitch]="row.type">
               <section [attr.aria-label]="row.sectionLabel" class="display-flex width-full">
@@ -13,23 +13,32 @@
                 <lib-adapt-data-rep
                   [filtered]="filtered"
                   [suppressed]="suppressed"
+                  [content]="cmsContent"
+                  [lang]="lang"
                   class="width-full"
                   *ngSwitchCase="'barChart'"
                   [noData]="rowResult.noData"
                   rawDataType="barChart"
-                  [raw]="row.content"></lib-adapt-data-rep>
+                  [raw]="row.content"
+                  (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep>
                 <lib-adapt-data-rep
                   [suppressed]="suppressed"
+                  [lang]="lang"
+                  [content]="cmsContent"
                   [filtered]="filtered"
                   *ngSwitchCase="'countBreakdown'"
                   [noData]="rowResult.noData"
-                  [raw]="row.content"></lib-adapt-data-rep>
+                  [raw]="row.content"
+                  (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep>
                 <lib-adapt-data-rep-grouped
                   [filtered]="filtered"
+                  [content]="cmsContent"
+                  [lang]="lang"
                   [suppressed]="suppressed"
                   *ngSwitchCase="'barChartGrouped'"
                   [noData]="rowResult.noData"
-                  [raw]="row.content"></lib-adapt-data-rep-grouped>
+                  [raw]="row.content"
+                  (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep-grouped>
               </section>
             </ng-container>
           </ng-container>

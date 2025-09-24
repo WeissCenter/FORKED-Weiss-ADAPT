@@ -4,7 +4,7 @@ import { ComponentsModule } from './components/components.module';
 import { TemplateService } from './services/template.service';
 import { UserService } from './auth/services/user/user.service';
 import { AemAccessibilityCenterService, AemAccessibilityCenterModule } from 'aem-accessibility-center';
-import {GlossaryService} from '@adapt/adapt-shared-component-lib'
+import { GlossaryService } from '@adapt/adapt-shared-component-lib';
 
 @Component({
   standalone: true,
@@ -16,7 +16,12 @@ import {GlossaryService} from '@adapt/adapt-shared-component-lib'
 export class AppComponent implements OnInit, AfterViewInit {
   title = 'adapt-admin';
 
-  constructor(private template: TemplateService, private user: UserService, private gl: GlossaryService, private aemA11yService: AemAccessibilityCenterService) {}
+  constructor(
+    private template: TemplateService,
+    private user: UserService,
+    private gl: GlossaryService,
+    private aemA11yService: AemAccessibilityCenterService
+  ) {}
 
   ngOnInit(): void {
     this.user.initUserSession();

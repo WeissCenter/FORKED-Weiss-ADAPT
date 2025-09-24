@@ -328,13 +328,10 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
   }
 
   ngAfterViewInit(): void {
-      
     const state = this.location.getState() as any;
-    if('report' in state){
-      this.reportModal?.open(undefined, state.report, state.report.page)
+    if ('report' in state) {
+      this.reportModal?.open(undefined, state.report, state.report.page);
     }
-
-
   }
 
   // private _getStatusAndApprovalCounts(

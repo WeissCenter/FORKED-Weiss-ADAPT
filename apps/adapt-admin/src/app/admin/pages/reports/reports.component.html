@@ -119,7 +119,7 @@
     id="reports"
     [attr.aria-label]="(status.value[0] | titlecase) + ' Reports'"
     class="reports-table display-flex flex-column gap-1 width-full">
-    <ng-container *ngIf="$reports | loading : 'Reports have loaded' | async as reportsLoaded">
+    <ng-container *ngIf="$reports | loading: 'Reports have loaded' | async as reportsLoaded">
       <div
         class="data-management-table-header display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full margin-bottom-3 gap-2">
         <!-- <span *ngIf="reports | async | paginate: page: pageSize as items" class="font-family-body font-xs" #recordsDisplay
@@ -129,7 +129,7 @@
         <h2
           class="font-family-body font-sm line-height-5 text-normal"
           id="showing"
-          *ngIf="reports | async | paginate : page : pageSize as items"
+          *ngIf="reports | async | paginate: page : pageSize as items"
           #recordsDisplay
           aria-live="polite">
           Showing up to
@@ -197,8 +197,10 @@
         </div>
       </div>
 
-      <ng-container *ngIf="reportsLoaded.value | paginate : page : pageSize as reports">
-        <span  *ngIf="reports.length" class="visually-hidden" aria-live="polite" id="report-load-notifier">Reports have loaded</span>
+      <ng-container *ngIf="reportsLoaded.value | paginate: page : pageSize as reports">
+        <span *ngIf="reports.length" class="visually-hidden" aria-live="polite" id="report-load-notifier"
+          >Reports have loaded</span
+        >
         <adapt-list-item-report
           (publish)="publishConfirmationModal.open()"
           (unPublish)="startUnPublish(report)"

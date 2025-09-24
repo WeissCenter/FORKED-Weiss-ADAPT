@@ -26,6 +26,7 @@ export interface DBDataViewDataCollection {
 
 export interface DataViewField {
   id: string;
+  label: string;
   value: any;
 }
 

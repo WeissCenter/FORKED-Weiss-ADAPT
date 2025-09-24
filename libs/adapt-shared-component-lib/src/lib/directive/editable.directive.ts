@@ -23,6 +23,8 @@ export class EditableDirective implements AfterViewInit, OnChanges, ControlValue
 
   @Input() ariaLabel = '';
 
+  public id = crypto.randomUUID();
+
   public value?: string;
 
   public disabled = false;
@@ -39,7 +41,10 @@ export class EditableDirective implements AfterViewInit, OnChanges, ControlValue
     return this.elementRef.nativeElement['innerHTML'];
   }
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private elementRef: ElementRef,
+    private renderer: Renderer2
+  ) {}
   writeValue(obj: string): void {
     this.value = obj;
 
@@ -85,6 +90,7 @@ export class EditableDirective implements AfterViewInit, OnChanges, ControlValue
       this.renderer.addClass(this.inputElement, 'border-2px');
       this.renderer.addClass(this.inputElement, 'width-full');
       this.renderer.addClass(this.inputElement, 'maxw-full');
+      this.renderer.setAttribute(this.inputElement, 'id', this.id);
     };
 
     const element = this.elementRef.nativeElement as HTMLHeadingElement;

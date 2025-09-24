@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '@angular/cdk';
+
+::selection {
+  background: var(--usa-color-mint-vivid-10);
+}
+
+@import 'libs/shared-assets/fontawesome/css/all.css';
+//@import 'apps/adapt-admin/src/assets/fontawesome/css/all.css';
+
+@import 'libs/shared-styles/aem-uswds/_us-aem-wds.min.css';
+//@import 'apps/adapt-admin/src/app/styles/_us-aem-wds.min.css';
+
+//@import 'apps/adapt-admin/src/app/styles/variables/generated';
+@import 'libs/shared-styles/variables/generated';
+
+@import 'libs/shared-styles/theme';
+
+// @media all and (min-width: 40em) and (min-width: 64em){
+//   .tablet\:flex-row-reverse{
+//     flex-direction: row-reverse;
+//   }
+// }
+
+@media all and (min-width: 64em) and (min-width: 64em) {
+  .desktop\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+@media all and (min-width: 30em) and (min-width: 64em) {
+  .mobile-lg\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+@media (min-width: 40em) {
+  .tablet\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+a,
+button {
+  min-width: 44px !important;
+  min-height: 44px !important;
+}

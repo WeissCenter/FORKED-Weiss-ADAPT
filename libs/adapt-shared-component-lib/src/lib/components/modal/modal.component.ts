@@ -1,4 +1,15 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  Output,
+  PLATFORM_ID,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,10 +35,12 @@ export class ModalComponent implements OnDestroy {
 
   private closeRoute?: string;
 
-  constructor(private router: Router){}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platform: string
+  ) {}
 
   public open(closeRoute?: string) {
-
     if (!this.dialog) return;
     this.closeRoute = closeRoute;
     this.dialog?.nativeElement.showModal();
@@ -38,13 +51,15 @@ export class ModalComponent implements OnDestroy {
     this.dialog?.nativeElement.close();
     this.closed.emit();
 
-
-    if(this.closeRoute) {
-      this.router.navigateByUrl(this.closeRoute)
+    if (this.closeRoute) {
+      this.router.navigateByUrl(this.closeRoute);
     }
   }
 
   ngOnDestroy(): void {
-    this.dialog?.nativeElement.close();
+    try {
+      this.dialog?.nativeElement.close();
+      // eslint-disable-next-line no-empty
+    } catch (err) {}
   }
 }

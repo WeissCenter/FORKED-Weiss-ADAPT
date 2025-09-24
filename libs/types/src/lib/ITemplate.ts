@@ -8,6 +8,7 @@ export interface ITemplate {
   title: string;
   description: string;
   metaTags?: string[];
+  reportingLevels?: string[];
   multiFile: boolean;
   suppression: ISuppression;
   filters: ITemplateFilters;
@@ -15,6 +16,7 @@ export interface ITemplate {
   conditionalFilters?: ITemplateFilters;
   pages?: ITemplatePage[];
   sections?: ISection[];
+  filtersUsed?: Record<string, any>;
 }
 
 export interface SortableCategory {
@@ -32,6 +34,11 @@ export interface ITemplatePage {
   filters?: ITemplateFilters;
   description: string;
   sections: ISection[];
+}
+
+export interface ViewerTemplate extends Omit<ITemplate, 'suppression'> {
+  suppression?: ISuppression;
+  suppressed?: boolean; // if the template is suppressed
 }
 
 export interface ISuppression {
@@ -117,6 +124,8 @@ export interface IRenderedTemplate {
   description: StringTemplate | string;
   sections?: Promise<ISection>[];
   pages?: Promise<ITemplatePage[]>;
+  suppression?: ISuppression;
+  filtersUsed?: Record<string, any>;
 }
 
 export interface InfoField {

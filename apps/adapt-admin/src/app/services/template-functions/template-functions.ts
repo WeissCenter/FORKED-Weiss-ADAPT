@@ -11,7 +11,7 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { AdaptDataService } from '../adapt-data.service';
 import { formatNumber } from '@angular/common';
-import {GlossaryService} from '@adapt/adapt-shared-component-lib'
+import { GlossaryService } from '@adapt/adapt-shared-component-lib';
 
 export const context = async function (this: any, field: string, ...args: any[]) {
   return this[field];
@@ -80,9 +80,9 @@ export const top_disabilities_percentages = async function (
       },
 
       {
-        "field": "CategorySetCode",
-        "type": "string",
-        "value": "ST3"
+        field: 'CategorySetCode',
+        type: 'string',
+        value: 'ST3',
       },
       ...conditionFieldArguments,
     ],
@@ -96,9 +96,9 @@ export const top_disabilities_percentages = async function (
         field: 'StudentCount',
       },
       {
-        "field": "CategorySetCode",
-        "type": "string",
-        "value": "TOT"
+        field: 'CategorySetCode',
+        type: 'string',
+        value: 'TOT',
       },
       ...conditionFieldArguments,
     ],
@@ -185,9 +185,9 @@ export const bottom_disabilities_percentages = async function (
       },
 
       {
-        "field": "CategorySetCode",
-        "type": "string",
-        "value": "ST3"
+        field: 'CategorySetCode',
+        type: 'string',
+        value: 'ST3',
       },
       ...conditionFieldArguments,
     ],
@@ -201,9 +201,9 @@ export const bottom_disabilities_percentages = async function (
         field: 'StudentCount',
       },
       {
-        "field": "CategorySetCode",
-        "type": "string",
-        "value": "TOT"
+        field: 'CategorySetCode',
+        type: 'string',
+        value: 'TOT',
       },
       ...conditionFieldArguments,
     ],

@@ -49,18 +49,28 @@ export class SecuritySettingsComponent implements OnInit, OnDestroy {
   public onSave() {
     if (this.timeOutForm.invalid) return;
 
-    this.data.updateSettings({ idleMinutes: Number(this.idleMinutes.value), warningMinutes: Number(this.warningMinutes.value), timeoutMinutes: Number(this.timeoutMinutes.value) }).subscribe({
-      next: () => {
-        this.alert.add({ type: 'success', title: 'Settings Saved', body: 'Timeout settings were saved successfully.' });
-      },
-      error: () => {
-        this.alert.add({
-          type: 'error',
-          title: 'Settings Save Failed',
-          body: 'Timeout settings failed to save, please try again.',
-        });
-      },
-    });
+    this.data
+      .updateSettings({
+        idleMinutes: Number(this.idleMinutes.value),
+        warningMinutes: Number(this.warningMinutes.value),
+        timeoutMinutes: Number(this.timeoutMinutes.value),
+      })
+      .subscribe({
+        next: () => {
+          this.alert.add({
+            type: 'success',
+            title: 'Settings Saved',
+            body: 'Timeout settings were saved successfully.',
+          });
+        },
+        error: () => {
+          this.alert.add({
+            type: 'error',
+            title: 'Settings Save Failed',
+            body: 'Timeout settings failed to save, please try again.',
+          });
+        },
+      });
   }
 
   public get idleMinutes() {
