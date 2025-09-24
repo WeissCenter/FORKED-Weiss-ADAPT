@@ -1,6 +1,7 @@
 name: Weiss ADAPT Viewer Deploy
 run-name: ${{ github.actor }} pushed an update.
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'apps/adapt-viewer/**'
