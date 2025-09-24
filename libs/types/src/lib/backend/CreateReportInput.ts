@@ -7,6 +7,8 @@ export interface CreateReportInput {
   dataSetID?: string;
   dataViews?: string[];
   dataView?: string;
+  slug?: string;
   template: ITemplate;
   visibility: ReportVisibility;
+  reportingLevel?: string;
 }

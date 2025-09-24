@@ -10,8 +10,10 @@
           (blur)="onBlur()"
           [(ngModel)]="value"
           [disabled]="disabled"
+          [mask]="mask"
+          [patterns]="patterns"
           (change)="onChange($any($event.target)?.value)"
-          class="usa-input maxw-full"
+          class="usa-input maxw-full usa-masked"
           [id]="id"
           type="text" />
       </ng-container>
@@ -53,8 +55,9 @@
       </ng-container>
     </ng-container>
 
-    <div   role="alert" *ngIf="parent?.invalid && (parent?.dirty || parent?.touched)" class="form-errors text-emergency">
-      <ng-content select="[required]"></ng-content>
+    <div role="alert" *ngIf="parent?.invalid && (parent?.dirty || parent?.touched)" class="form-errors text-emergency">
+      <ng-content *ngIf="parent?.errors?.['required']" select="[required]"></ng-content>
+      <ng-content *ngIf="parent?.errors?.['uniqueName']" select="[uniqueName]"></ng-content>
     </div>
   </ng-container>
 

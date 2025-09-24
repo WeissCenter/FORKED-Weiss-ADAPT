@@ -22,6 +22,7 @@ To start contributing, ensure you have the following set up:
 3. **Angular CLI**: Install via `npm install -g @angular/cli`
 
 Clone the repository:
+
 ```bash
 git clone https://github.com/WeissCenter/Weiss-ADAPT.git
 cd Weiss-ADAPT
@@ -29,6 +30,7 @@ npm install
 ```
 
 Run the project locally:
+
 ```bash
 nx serve
 ```
@@ -60,9 +62,11 @@ We follow the Gitflow workflow:
 To contribute:
 
 1. Create a new branch off of the `main` branch:
+
 ```bash
 git checkout -b feature/your-feature-name
 ```
+
 2. Make your changes and test them locally or in your own environment.
 3. Push your branch and open a pull request against `dev`.
 
@@ -94,11 +98,13 @@ Types include:
 ## Code Style
 
 We follow Google’s TypeScript style guide along with Angular and Nx best practices. Code should be formatted using prettier before pushing changes:
+
 ```bash
 prettier . --write
 ```
 
 ## Pull Requests
+
 When submitting a pull request:
 
 1. Ensure your branch is up to date with `dev`.
@@ -108,6 +114,7 @@ When submitting a pull request:
 We will review your pull request and provide feedback if necessary. Please address any feedback and update the pull request accordingly.
 
 ## Resources
+
 Here are some useful resources for Angular and Nx development:
 
 - [Nx Documentation](https://nx.dev/)

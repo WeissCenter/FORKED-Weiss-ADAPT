@@ -37,6 +37,7 @@
     <ng-content select="[visible-content]"></ng-content>
 
     <button
+      *ngIf="expandable"
       type="button"
       class="usa-accordion__button"
       aria-label="Expand list item"

@@ -55,7 +55,9 @@ export class UserService {
     this._isLoggedIn.next(isLoggedIn);
   }
 
-  private readonly _userActivity: BehaviorSubject<UserActivity> = new BehaviorSubject<UserActivity>({username: 'unknown'});
+  private readonly _userActivity: BehaviorSubject<UserActivity> = new BehaviorSubject<UserActivity>({
+    username: 'unknown',
+  });
   public readonly userActivity$ = this._userActivity.asObservable();
   public get userActivity(): UserActivity {
     return this._userActivity.value;
@@ -101,27 +103,26 @@ export class UserService {
     }
   }
 
-  public userInactivitySave(input: UserTimeOutCacheInput){
+  public userInactivitySave(input: UserTimeOutCacheInput) {
     const request = this.http
-    .post<Response<UserActivity>>(`${environment.API_URL}timedout`, input)
-    .pipe(map((result) => result.data))
-
+      .post<Response<UserActivity>>(`${environment.API_URL}timedout`, input)
+      .pipe(map((result) => result.data));
 
     this.saveRequestsSubject.next(request);
   }
 
-  public clearUserInactivity(){
+  public clearUserInactivity() {
     this.http
-    .post<Response<UserActivity>>(`${environment.API_URL}timedout`, {action: 'CLEAR', type: 'Generic'})
-    .pipe(map((result) => result.data))
-    .subscribe((userActivity) => this._userActivity.next(userActivity));
+      .post<Response<UserActivity>>(`${environment.API_URL}timedout`, { action: 'CLEAR', type: 'Generic' })
+      .pipe(map((result) => result.data))
+      .subscribe((userActivity) => this._userActivity.next(userActivity));
   }
 
-  private getUserActivity(){
+  private getUserActivity() {
     this.http
-    .get<Response<UserActivity>>(`${environment.API_URL}user`)
-    .pipe(map((result) => result.data))
-    .subscribe((userActivity) => this._userActivity.next(userActivity));
+      .get<Response<UserActivity>>(`${environment.API_URL}user`)
+      .pipe(map((result) => result.data))
+      .subscribe((userActivity) => this._userActivity.next(userActivity));
   }
 
   public get accessToken() {
@@ -156,16 +157,13 @@ export class UserService {
         this.isLoggedIn = false;
         //   this.idle.stop(); // end idle session
         this._idleState = idleState || IdleStates.NOT_STARTED;
- 
 
-        if(idleState === IdleStates.TIMED_OUT) {
-          localStorage.setItem('session_expiry', `${Date.now()}`)
+        if (idleState === IdleStates.TIMED_OUT) {
+          localStorage.setItem('session_expiry', `${Date.now()}`);
           return this.router.navigateByUrl('/auth/timedout');
         }
 
-
         return this.router.navigateByUrl('/auth/loggedout');
-
       },
       error: (err) => {
         // user isn't logged in - clear auth storage
@@ -177,10 +175,8 @@ export class UserService {
         const errMsg = this.cognito.handleLogoutError(err);
 
         return this.router.navigateByUrl('/auth/error');
-
-      }
-    }
-    );
+      },
+    });
 
     const accessibilitySettings = localStorage.getItem('adapt-accessibility-settings');
     localStorage.clear();
@@ -215,12 +211,13 @@ export class UserService {
         this._idleState = IdleStates.TIMED_OUT;
       });
 
-      this.sessionTimeout$.pipe(
-        switchMap(() => this.waitForAllSaveRequests()), // Wait for all save requests before logging out
-        delay(1000),
-        tap(() => this.logout(this.idleState)) // Logout after all save requests finish
-      ).subscribe();
-
+      this.sessionTimeout$
+        .pipe(
+          switchMap(() => this.waitForAllSaveRequests()), // Wait for all save requests before logging out
+          delay(1000),
+          tap(() => this.logout(this.idleState)) // Logout after all save requests finish
+        )
+        .subscribe();
 
       // start ng-idle
       this.resetIdle();
@@ -231,7 +228,7 @@ export class UserService {
     return this.saveRequestsSubject.pipe(
       startWith(of(null)),
       switchMap((saveRequests) => {
-        return saveRequests
+        return saveRequests;
       })
     );
   }

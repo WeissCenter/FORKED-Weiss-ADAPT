@@ -12,6 +12,8 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() hint?: string;
   @Input() readOnly = false;
+  @Input() mask = '';
+  @Input() patterns = {};
   @Input() type: 'short' | 'long' | 'password' | 'number' = 'short';
   public _value = '';
 
@@ -24,7 +26,10 @@ export class TextInputComponent implements ControlValueAccessor {
 
   public disabled = false;
 
-  constructor(private cd: ChangeDetectorRef, @Self() @Optional() public parent?: NgControl) {
+  constructor(
+    private cd: ChangeDetectorRef,
+    @Self() @Optional() public parent?: NgControl
+  ) {
     if (this.parent) {
       this.parent.valueAccessor = this;
     }

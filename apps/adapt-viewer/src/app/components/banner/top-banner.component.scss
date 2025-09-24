@@ -1,0 +1,35 @@
+.usa-banner__header-flag {
+  width: unset;
+  height: var(--usa-spacing-105);
+}
+
+.usa-banner {
+  --usa-banner-background: var(--usa-base-darkest);
+  --usa-link-active-color: var(--usa-color-mint-5);
+  --usa-link-hover-color: var(--usa-color-mint-20);
+  --usa-link-visited-color: var(--usa-color-violet-warm-vivid-10);
+  --usa-link-color: var(--usa-color-cyan-vivid-10);
+}
+
+.usa-banner__header,
+.usa-banner__content {
+  color: var(--usa-white);
+  min-height: unset;
+}
+
+.usa-banner__inner {
+  max-width: var(--usa-spacing-widescreen);
+  align-items: center;
+}
+
+@media (max-width: 39.99em) {
+  .usa-banner__button[aria-expanded='true']:before {
+    background-color: var(--usa-base-darker);
+  }
+}
+
+[data-adapt-color-theme='dark'] {
+  .usa-banner {
+    --usa-banner-background: var(--usa-black);
+  }
+}

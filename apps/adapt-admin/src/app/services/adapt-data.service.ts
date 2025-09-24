@@ -68,7 +68,11 @@ export class AdaptDataService {
     map((items) => this.reduceOperations(items))
   );
 
-  constructor(private http: HttpClient, private user: UserService, private settings: SettingsService) {
+  constructor(
+    private http: HttpClient,
+    private user: UserService,
+    private settings: SettingsService
+  ) {
     // this.getDataFromDataSet$.pipe(switchMap(response => {
     //   return forkJoin(response.map((item: any) => from(this._tryCacheData(item.operations, item.dataSetID))))
     // }))
@@ -97,7 +101,7 @@ export class AdaptDataService {
           .pipe(map((result) => result.data))
           .subscribe((reports) => this._reports.next(reports));
 
-          this.http
+        this.http
           .get<APIResponse<AdaptSettings>>(`${environment.API_URL}settings`)
           .pipe(map((result) => result.data))
           .subscribe((settings) => this.settings.next(settings));
@@ -141,8 +145,6 @@ export class AdaptDataService {
 
     return reducedItems;
   }
-
-
 
   public startReportPublish(report: IReport) {
     return this.http.post<APIResponse<string>>(`${environment.API_URL}report/${report.reportID}/publish`, {});
@@ -234,20 +236,18 @@ export class AdaptDataService {
 
   public editDataView(body: DataView, justification?: string) {
     return this.http
-      .put<APIResponse<DataView>>(
-        `${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`,
-        body
-      )
+      .put<
+        APIResponse<DataView>
+      >(`${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`, body)
       .pipe(map((result) => result.data));
   }
 
   public editDataViewPromise(body: DataView, justification?: string) {
     return firstValueFrom(
       this.http
-        .put<APIResponse<DataView>>(
-          `${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`,
-          body
-        )
+        .put<
+          APIResponse<DataView>
+        >(`${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`, body)
         .pipe(map((result) => result.data))
     );
   }
@@ -370,11 +370,9 @@ export class AdaptDataService {
 
     const resolveMissing = await firstValueFrom(
       this.http
-        .post<APIResponse<GetDataFromDataSetOutput>>(
-          `${environment.API_URL}dataview/${dataViewID}/data`,
-          { operations: missingCache, fileSpec, suppression },
-          { params }
-        )
+        .post<
+          APIResponse<GetDataFromDataSetOutput>
+        >(`${environment.API_URL}dataview/${dataViewID}/data`, { operations: missingCache, fileSpec, suppression }, { params })
         .pipe(map((result) => result.data))
     );
 
@@ -500,19 +498,17 @@ export class AdaptDataService {
     return this.http.get<APIResponse<any>>(`${environment.API_URL}users`).pipe(map((result) => result.data));
   }
 
-
-  public shareReport(reportID: string, filters: Record<string, any>){
+  public shareReport(reportID: string, filters: Record<string, any>) {
     return this.http
-    .post<APIResponse<string>>(`${environment.API_URL}share`, {reportID, filters})
-    .pipe(map((result) => result.data));
+      .post<APIResponse<string>>(`${environment.API_URL}share`, { reportID, filters })
+      .pipe(map((result) => result.data));
   }
 
-  public loadSharedReport(slug: string){
+  public loadSharedReport(slug: string) {
     return this.http
-    .get<APIResponse<ShareReport>>(`${environment.API_URL}share/${slug}`)
-    .pipe(map((result) => result.data));
+      .get<APIResponse<ShareReport>>(`${environment.API_URL}share/${slug}`)
+      .pipe(map((result) => result.data));
   }
-
 
   public uploadToPresignedURL(file: File, url: string) {
     const req = new HttpRequest('PUT', url, file, {

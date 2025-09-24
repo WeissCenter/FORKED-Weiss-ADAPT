@@ -20,7 +20,10 @@ export class InactivityBannerComponent implements OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(public idle: Idle, public settings: SettingsService) {
+  constructor(
+    public idle: Idle,
+    public settings: SettingsService
+  ) {
     idle.onTimeoutWarning.subscribe((seconds) => {
       this.countdown = seconds * 1000;
       this.secondsSinceIdle++;
@@ -47,16 +50,16 @@ export class InactivityBannerComponent implements OnDestroy {
 
   public get showWarning() {
     const { warningMinutes } = this.settings.getSettings();
-    return this.countdown > 0 && this.countdown <= (warningMinutes * 60) * 1000;
+    return this.countdown > 0 && this.countdown <= warningMinutes * 60 * 1000;
   }
 
   public get idleTime() {
     const { idleMinutes } = this.settings.getSettings();
-    return ((idleMinutes * 60) + this.secondsSinceIdle) * 1000;
+    return (idleMinutes * 60 + this.secondsSinceIdle) * 1000;
   }
 
   public get extendTime() {
     const { idleMinutes } = this.settings.getSettings();
-    return (idleMinutes * 60) * 1000;
+    return idleMinutes * 60 * 1000;
   }
 }

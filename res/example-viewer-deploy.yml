@@ -11,13 +11,13 @@ on:
     branches: ['main']
 
 env:
-  AWS_REGION: 'us-east-1'      # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: ''           # set this to your Amazon ECR repository name
-  ECS_SERVICE: ''              # set this to your Amazon ECS service name
-  ECS_CLUSTER: ''              # set this to your Amazon ECS cluster name
+  AWS_REGION: 'us-east-1' # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: '' # set this to your Amazon ECR repository name
+  ECS_SERVICE: '' # set this to your Amazon ECS service name
+  ECS_CLUSTER: '' # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: 'task-definition.json'
   ECS_TASK_DEFINITION_NAME: '' # set this to your Amazon ECS task definition name
-  CONTAINER_NAME: ''           # set this to the name of the container in the containerDefinitions section of your task definition
+  CONTAINER_NAME: '' # set this to the name of the container in the containerDefinitions section of your task definition
 
 jobs:
   deploy:
@@ -54,7 +54,7 @@ jobs:
 
       - name: Download task definition
         run: |
-            aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION_NAME --query taskDefinition > $ECS_TASK_DEFINITION
+          aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION_NAME --query taskDefinition > $ECS_TASK_DEFINITION
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def

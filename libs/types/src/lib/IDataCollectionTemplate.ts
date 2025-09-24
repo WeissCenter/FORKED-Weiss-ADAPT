@@ -1,7 +1,10 @@
 export interface IDataCollectionTemplate {
   id: string;
   name: string;
-  description: string;
+  dataViewDescription: string;
+  step2Description: string;
+  step3Description: string;
+  step4Description: string;
   fields: DataCollectionFieldDefinition[];
   files: DataCollectionFileDefinition[];
 }
@@ -55,8 +58,13 @@ export interface DataCollectionFileDefinition {
   id: string;
   name: string;
   description: string;
+  dataViewDescription: string;
   conditions: DataCollectionFileCondition[];
   validation?: string;
+  acceptedFileFormats: {
+    fileInputHint: string;
+    fieldAccept: string;
+  };
   previewHeaders?: string[];
   dataParse?: DataParseDefinition;
   database?: {

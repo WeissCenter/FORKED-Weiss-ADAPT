@@ -1,0 +1,31 @@
+<lib-adapt-alert></lib-adapt-alert>
+<section class="usa-container display-flex position-relative main-container">
+  <adapt-viewer-sidebar></adapt-viewer-sidebar>
+  <div class="viewer-content display-flex flex-column grid-col">
+    <adapt-top-banner></adapt-top-banner>
+    <main id="main" class="display-flex height-full width-full flex-column">
+      <div class="grid-container width-full">
+        <lib-adapt-breadcrumb
+          *ngIf="$breadcrumbContent()"
+          [contentMap]="$breadcrumbContent()"
+          [root]="$breadcrumbContent()?.home || ''"></lib-adapt-breadcrumb>
+      </div>
+      <router-outlet></router-outlet>
+    </main>
+    <adapt-viewer-footer class="margin-top-auto"></adapt-viewer-footer>
+  </div>
+</section>
+
+<weiss-accessibility-center
+  [languageMap]="$a11yContent()"
+  [selectedLanguage]="language.$language()"
+  [theme]="{
+    title: 'Color Theme',
+    description: 'The color theme setting allows you to adjust the color scheme of the website.',
+    data: [
+      { name: 'ADAPT Light', value: 'default' },
+      { name: 'ADAPT Dark', value: 'dynamic-dark' },
+      { name: 'High Contrast', value: 'high-contrast' },
+    ],
+  }"
+  [position]="'start'"></weiss-accessibility-center>

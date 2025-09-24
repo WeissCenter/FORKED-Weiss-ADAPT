@@ -107,11 +107,13 @@ function handleHTML(
                 const selectValue = getSelectValue(schema, $);
 
                 if (!selectValue) {
-                  errors.push({ error: schema.errorText || 'failed to match html file value to required values' });
+                  errors.push({
+                    error: schema.errorText || 'failed to match html file value to required values',
+                  });
                   continue;
                 }
 
-                handleStringSchema(string, selectValue, errors, schema, name, context);
+                handleStringSchema(string, selectValue?.trim(), errors, schema, name, context);
 
                 break;
               }
@@ -178,7 +180,7 @@ function headerValidate(
     case 'string': {
       const stringSchema = schema as StringSchema;
 
-      handleStringSchema(stringSchema, select, errors, schema, name, context);
+      handleStringSchema(stringSchema, select?.trim(), errors, schema, name, context);
 
       break;
     }
@@ -207,7 +209,11 @@ function handleStringSchema(
 
   if (!stringSchema.array && stringSchema.value?.length) {
     if (stringSchema.value !== select) {
-      errors.push({ error: schema.errorText || 'Header string value is invalid', header: schema.name, rule: name });
+      errors.push({
+        error: schema.errorText || 'Header string value is invalid',
+        header: schema.name,
+        rule: name,
+      });
     }
   }
 
@@ -268,13 +274,19 @@ function handleCSV(
           const value = header[headerSelect.headerIndex] as number;
 
           if (sheetJSON.length < value || sheetJSON.length > value) {
-            errors.push({ error: rowCountValidator.errorText || 'Row Count does not match', rule: name });
+            errors.push({
+              error: rowCountValidator.errorText || 'Row Count does not match',
+              rule: name,
+            });
           }
         }
 
         if (typeof rowCountValidator.value === 'number') {
           if (sheetJSON.length < rowCountValidator.value || sheetJSON.length > rowCountValidator.value) {
-            errors.push({ error: rowCountValidator.errorText || 'Row Count does not match', rule: name });
+            errors.push({
+              error: rowCountValidator.errorText || 'Row Count does not match',
+              rule: name,
+            });
           }
         }
 
@@ -289,21 +301,27 @@ function handleCSV(
               const select = schema as TypeFieldSchema;
 
               if (!select?.value) {
-                errors.push({ error: 'invalid validation schema index:' + index });
+                errors.push({
+                  error: 'invalid validation schema index:' + index,
+                });
                 continue;
               }
 
               const value = select.value as HeaderSelect;
 
               if (!value?.field) {
-                errors.push({ error: 'invalid validation schema index:' + index });
+                errors.push({
+                  error: 'invalid validation schema index:' + index,
+                });
                 continue;
               }
 
-              const selectValue = header[value.headerIndex];
+              const selectValue = header[value.headerIndex]?.trim();
 
               if (!selectValue) {
-                errors.push({ error: 'invalid validation schema index:' + index });
+                errors.push({
+                  error: 'invalid validation schema index:' + index,
+                });
                 continue;
               }
 

@@ -198,8 +198,6 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
       this.totalCurrentDataList.next(sorted);
     });
 
-
-
     // this.outletCreateClickSub = event.createButtonClick.subscribe(evt => this.dataViewModal?.open())
   }
 
@@ -228,19 +226,17 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
     this.dataViewModalSubject?.unsubscribe();
   }
 
-  private handleResume(){
-    if(!this.dataViewModal) return;
+  private handleResume() {
+    if (!this.dataViewModal) return;
     const state = this.location.getState() as any;
-      switch(state.mode){
-        case 'CREATION':{
-          this.dataViewModal!.open(state.dataView, false, state.dataView.page)
-          break;
-        }
-        case 'EDIT':{
-          this.dataViewModal!.open(state.dataView, false, state.dataView.page)
-        }
+    switch (state.mode) {
+      case 'CREATION': {
+        this.dataViewModal!.open(state.dataView, false, state.dataView.page);
+        break;
       }
-
+      case 'EDIT': {
+        this.dataViewModal!.open(state.dataView, false, state.dataView.page);
+      }
+    }
   }
-
 }

@@ -481,7 +481,7 @@
             "text": "Child Count and Settings by Race/Ethnicity",
             "body": "This section represents the number of children, ages birth through 3 or older, with an active Individualized Family Service Plan (IFSP) in place on the child count date, according to the child’s race/ethnicity and primary settings."
           }
-        },      
+        },
         {
           "type": "barChartGrouped",
           "sectionLabel": "Section B",
@@ -574,18 +574,18 @@
             "explainTemplate": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{first}}, {{second}}.",
             "description": {
               "template": "There are {{total}} children, male or female, who received early intervention services.",
-              "variables":{
-                  "total":{
-                      "function": "sum",
-                      "args": [
-                        "value",
-                        {
-                          "field": "section",
-                          "array": true,
-                          "value": ["C.1", "C.2"]
-                        }
-                      ]
+              "variables": {
+                "total": {
+                  "function": "sum",
+                  "args": [
+                    "value",
+                    {
+                      "field": "section",
+                      "array": true,
+                      "value": ["C.1", "C.2"]
                     }
+                  ]
+                }
               }
             },
             "chart": {
@@ -1324,21 +1324,21 @@
               "template": "There are {{gender}} children, that are male or female, receiving early intervention services.",
               "variables": {
                 "gender": {
-                    "function": "sum",
-                    "args": [
-                      "value",
-                      {
-                        "field": "section",
-                        "array": true,
-                        "value": ["C.1"]
-                      },
-                      {
-                        "field": "gender",
-                        "array": true,
-                        "value": ["Male", "Female"]
-                      }
-                    ]
-                  }
+                  "function": "sum",
+                  "args": [
+                    "value",
+                    {
+                      "field": "section",
+                      "array": true,
+                      "value": ["C.1"]
+                    },
+                    {
+                      "field": "gender",
+                      "array": true,
+                      "value": ["Male", "Female"]
+                    }
+                  ]
+                }
               }
             },
             "filterDescription": "Choose setting to see specific data and insights.",
@@ -1450,18 +1450,18 @@
                       "description": {
                         "template": "There are {{total}} children, of all race/ethnicity, who are receiving services and considered at risk of having substantial delays if they didn’t receive early intervention services.",
                         "variables": {
-                            "total": {
-                                "function": "sum",
-                                "args": [
-                                  "value",
-                                  {
-                                    "field": "section",
-                                    "array": true,
-                                    "value": ["D.1"]
-                                  }
-                                ]
+                          "total": {
+                            "function": "sum",
+                            "args": [
+                              "value",
+                              {
+                                "field": "section",
+                                "array": true,
+                                "value": ["D.1"]
                               }
+                            ]
                           }
+                        }
                       },
                       "chart": {
                         "filterOn": "x",
@@ -1539,18 +1539,18 @@
                       "description": {
                         "template": "There are {{total}} children, ages birth through 2, who are receiving services and considered at risk of having substantial delays if they didn’t receive early intervention services.",
                         "variables": {
-                            "total": {
-                                "function": "sum",
-                                "args": [
-                                  "value",
-                                  {
-                                    "field": "section",
-                                    "array": true,
-                                    "value": ["D.1"]
-                                  }
-                                ]
+                          "total": {
+                            "function": "sum",
+                            "args": [
+                              "value",
+                              {
+                                "field": "section",
+                                "array": true,
+                                "value": ["D.1"]
                               }
+                            ]
                           }
+                        }
                       },
                       "chart": {
                         "filterOn": "x",
@@ -1651,33 +1651,33 @@
             "level": "h2",
             "text": "Cumulative Child Count by Race/Ethnicity and Gender",
             "body": {
-                "template": "This section represents the number of infants and toddlers with disabilities, ages birth through 2, who received early intervention services from {{date-left}} to {{date-right}}.",
-                "variables":{
-                    "date-left":{
-                        "function": "select",
-                        "args": [
-                          "comment",
-                          1,
-                          "section desc",
-                          {
-                            "field": "section",
-                            "value": "section-e-date-left"
-                          }
-                        ]
-                    },
-                    "date-right":{
-                        "function": "select",
-                        "args": [
-                          "comment",
-                          1,
-                          "section desc",
-                          {
-                            "field": "section",
-                            "value": "section-e-date-right"
-                          }
-                        ]
+              "template": "This section represents the number of infants and toddlers with disabilities, ages birth through 2, who received early intervention services from {{date-left}} to {{date-right}}.",
+              "variables": {
+                "date-left": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "section-e-date-left"
                     }
+                  ]
+                },
+                "date-right": {
+                  "function": "select",
+                  "args": [
+                    "comment",
+                    1,
+                    "section desc",
+                    {
+                      "field": "section",
+                      "value": "section-e-date-right"
+                    }
+                  ]
                 }
+              }
             }
           }
         },
@@ -1699,42 +1699,42 @@
                       "explainTemplate": "In the reported data, the top three Race/Ethnicity categories receiving Early Intervention services in your State are {{first}}, {{second}}, and {{third}}.",
                       "description": {
                         "template": "There are {{total}} children, of all race/ethnicity, who received early intervention services from {{date-left}} to {{date-right}}.",
-                        "variables":{
-                            "total":{
-                                "function": "sum",
-                                "args": [
-                                  "value",
-                                  {
-                                    "field": "section",
-                                    "array": true,
-                                    "value": ["E.1"]
-                                  }
-                                ]
-                              },
-                            "date-left":{
-                                "function": "select",
-                                "args": [
-                                  "comment",
-                                  1,
-                                  "section desc",
-                                  {
-                                    "field": "section",
-                                    "value": "section-e-date-left"
-                                  }
-                                ]
-                            },
-                            "date-right":{
-                                "function": "select",
-                                "args": [
-                                  "comment",
-                                  1,
-                                  "section desc",
-                                  {
-                                    "field": "section",
-                                    "value": "section-e-date-right"
-                                  }
-                                ]
-                            }
+                        "variables": {
+                          "total": {
+                            "function": "sum",
+                            "args": [
+                              "value",
+                              {
+                                "field": "section",
+                                "array": true,
+                                "value": ["E.1"]
+                              }
+                            ]
+                          },
+                          "date-left": {
+                            "function": "select",
+                            "args": [
+                              "comment",
+                              1,
+                              "section desc",
+                              {
+                                "field": "section",
+                                "value": "section-e-date-left"
+                              }
+                            ]
+                          },
+                          "date-right": {
+                            "function": "select",
+                            "args": [
+                              "comment",
+                              1,
+                              "section desc",
+                              {
+                                "field": "section",
+                                "value": "section-e-date-right"
+                              }
+                            ]
+                          }
                         }
                       },
                       "chart": {
@@ -1806,42 +1806,42 @@
                       "explainTemplate": "In the reported data, the Gender categories receiving Early Intervention services in your State are distributed as, {{first}}, and {{second}}.",
                       "description": {
                         "template": "There are {{total}} children, male or female, who received early intervention services from {{date-left}} to {{date-right}}.",
-                        "variables":{
-                            "total":{
-                                "function": "sum",
-                                "args": [
-                                  "value",
-                                  {
-                                    "field": "section",
-                                    "array": true,
-                                    "value": ["E.2"]
-                                  }
-                                ]
-                              },
-                            "date-left":{
-                                "function": "select",
-                                "args": [
-                                  "comment",
-                                  1,
-                                  "section desc",
-                                  {
-                                    "field": "section",
-                                    "value": "section-e-date-left"
-                                  }
-                                ]
-                            },
-                            "date-right":{
-                                "function": "select",
-                                "args": [
-                                  "comment",
-                                  1,
-                                  "section desc",
-                                  {
-                                    "field": "section",
-                                    "value": "section-e-date-right"
-                                  }
-                                ]
-                            }
+                        "variables": {
+                          "total": {
+                            "function": "sum",
+                            "args": [
+                              "value",
+                              {
+                                "field": "section",
+                                "array": true,
+                                "value": ["E.2"]
+                              }
+                            ]
+                          },
+                          "date-left": {
+                            "function": "select",
+                            "args": [
+                              "comment",
+                              1,
+                              "section desc",
+                              {
+                                "field": "section",
+                                "value": "section-e-date-left"
+                              }
+                            ]
+                          },
+                          "date-right": {
+                            "function": "select",
+                            "args": [
+                              "comment",
+                              1,
+                              "section desc",
+                              {
+                                "field": "section",
+                                "value": "section-e-date-right"
+                              }
+                            ]
+                          }
                         }
                       },
                       "chart": {
@@ -2609,15 +2609,15 @@
               "template": "There are {{gender}} children, that are male or female, receiving early intervention services.",
               "variables": {
                 "gender": {
-                    "function": "sum",
-                    "args": [
-                      "value",
-                      {
-                        "field": "section",
-                        "array": true,
-                        "value": ["C.2"]
-                      }
-                    ]
+                  "function": "sum",
+                  "args": [
+                    "value",
+                    {
+                      "field": "section",
+                      "array": true,
+                      "value": ["C.2"]
+                    }
+                  ]
                 }
               }
             },

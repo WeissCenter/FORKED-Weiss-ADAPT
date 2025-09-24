@@ -1,45 +1,111 @@
-<div class="data-rep-grouped">
+<div *ngIf="content" class="data-rep-grouped">
   <div class="display-flex flex-1 flex-column gap-1 padding-105 bg-base-lighter radius-md">
-    <lib-adapt-h-element class="quick-filter-title" [level]="mapHeadingLvl(headingLvl2)">Quick filters</lib-adapt-h-element>
+    <lib-adapt-h-element
+      [id]="id + '-quick-filter-heading'"
+      class="quick-filter-title"
+      [level]="mapHeadingLvl(headingLvl2)"
+      >{{ content.actions!['quick_filters'] }}</lib-adapt-h-element
+    >
     <p>{{ raw.filterDescription || 'Description' }}</p>
     <ul
-      class="usa-list usa-list--unstyled display-flex margin-top-105 flex-column gap-1 padding-left-105 border-left-2px border-base-light">
-      <li>
+      role="listbox"
+      [attr.aria-labelledby]="id + '-quick-filter-heading'"
+      class="usa-list usa-list--unstyled display-flex margin-top-105 flex-column gap-1 border-left-2px border-base-light">
+      @let filters = quickFilters | keyvalue: noSort;
+
+      <li role="option" *ngFor="let filter of filters; index as index">
+        @let selected = $currentFilterIdx() === index;
+        @let sectionHeading = filter?.value?.metadata?.['sectionName'] || filter.key | glossary: 'label' : lang | async;
+        @let filterOptions = filter?.value?.metadata?.['filterOptions'];
+        @let optionExpanded = selected && expanded;
+
         <button
-          class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
-          [ngClass]="{ 'text-bold': raw.title === header }"
+          *ngIf="filters.length <= 1"
+          class="usa-button usa-button--unstyled text-no-underline flex-align-center padding-left-2 display-flex"
+          [ngClass]="{ 'text-bold border-left-05': $currentFilter() === 'all' }"
           (click)="applyQuickFilter('all')">
           {{ raw.title ?? raw.name }}
         </button>
-      </li>
-      <li *ngFor="let item of quickFilters; index as index">
+
         <button
-          class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
-          [ngClass]="{ 'text-bold': item === header }"
-          (click)="applyQuickFilter(item)">
-          {{ item | glossary | async }}
+          *ngIf="filters.length > 1"
+          [id]="id + '-quickfilter-dropdown-heading-' + index"
+          [attr.aria-controls]="id + '-quickfilter-list-' + index"
+          class="usa-button font-md text-bold usa-button--unstyled hover:text-black text-no-underline flex-align-center padding-left-105 display-flex border-black"
+          [ngClass]="{ 'border-left-05 text-black ': selected }"
+          (click)="onGroupSelect(filter, index)">
+          {{ sectionHeading | stripQuotes }}
+
+          <i
+            aria-hidden="true"
+            class="fas"
+            [ngClass]="{ 'fa-chevron-down': !optionExpanded, 'fa-chevron-up': optionExpanded }"></i>
         </button>
-        <p
-          class="font-xs line-height-3 margin-bottom-1 margin-top-05"
-          [hidden]="dataRepSettings.showGlossary === true ? undefined : true"
-          [attr.aria-expanded]="dataRepSettings.showGlossary"
-          [id]="id + '-quickfilter-item-definition-' + index">
-          <span [innerHTML]="item | glossary : 'definition' | async"></span>
-        </p>
+
+        <ul
+          [attr.aria-expanded]="optionExpanded"
+          [id]="id + '-quickfilter-list-' + index"
+          role="listbox"
+          class="usa-list usa-list--unstyled"
+          [hidden]="!optionExpanded">
+          <li
+            *ngIf="filters.length > 1"
+            [id]="id + '-quickfilter-item-all'"
+            role="option"
+            class="padding-left-2"
+            [ngClass]="{ 'border-left-05': $currentFilter() === 'all' }"
+            [attr.aria-selected]="$currentFilter() === 'all'">
+            <button
+              class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
+              [ngClass]="{ 'text-bold': $currentFilter() === 'all' }"
+              (click)="applyQuickFilter('all')">
+              {{ 'All ' + sectionHeading }}
+            </button>
+            <!-- <p class="font-xs line-height-3 margin-bottom-1 margin-top-05"
+            [hidden]="dataRepSettings.showGlossary === true ? undefined : true"
+            [attr.aria-expanded]="dataRepSettings.showGlossary" [id]="id + '-quickfilter-item-definition-' + index">
+            <span [innerHTML]="item | glossary : 'definition' : lang | async"></span>
+          </p> -->
+          </li>
+
+          <li
+            [id]="id + '-quickfilter-item-' + item"
+            role="option"
+            [attr.aria-selected]="item === $header()"
+            class="padding-left-2"
+            [ngClass]="{ 'border-left-05': item === $header() }"
+            *ngFor="let item of filterOptions || filter.value.filters; let idx = index">
+            <button
+              class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
+              [ngClass]="{ 'text-bold': item === $header() }"
+              (click)="applyQuickFilter(item)">
+              {{ item | glossary: 'label' : lang : $fileSpec() | async | stripQuotes }}
+            </button>
+            <p
+              class="font-xs line-height-3 margin-bottom-1 margin-top-05"
+              [hidden]="dataRepSettings.showGlossary === true ? undefined : true"
+              [attr.aria-expanded]="dataRepSettings.showGlossary"
+              [id]="id + '-quickfilter-item-definition-' + index">
+              <span [innerHTML]="item | glossary: 'definition' : lang : $fileSpec() | async"></span>
+            </p>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
-  
+
   <article
     class="data-rep-wrapper flex-2"
     [attr.aria-labelledby]="id + '-title'"
     [attr.aria-describedby]="id + '-insight' + id + '-total'">
-    <lib-adapt-h-element class="title" [level]="mapHeadingLvl(headingLvl)">{{ header | glossary | async }}</lib-adapt-h-element>
-    <p class="insight" [innerHTML]="insight"></p>
+    <lib-adapt-h-element class="title" [level]="mapHeadingLvl(headingLvl)"
+      >{{ $header() | glossary: 'label' : lang : $fileSpec() | async }} {{ filterOrSuppress }}</lib-adapt-h-element
+    >
+    <p class="insight" [innerHTML]="$insight()"></p>
 
     <ng-container *ngIf="{ noData: isNoData() } as loaded">
       <div class="action-bar">
-        <ul *ngIf="!loaded.noData" role="group">
+        <ul *ngIf="!$showNoData()" role="group">
           <li>
             <button
               (click)="togglePlainLanguage()"
@@ -51,10 +117,10 @@
                 class="far"
                 [ngClass]="{
                   'fa-toggle-off': !dataRepSettings.showPlainLanguage,
-                  'fa-toggle-on': dataRepSettings.showPlainLanguage
+                  'fa-toggle-on': dataRepSettings.showPlainLanguage,
                 }"
                 aria-hidden="true"></i>
-              <label [for]="id + '-explanation-switch'">Explain</label>
+              {{ content.actions!['explain'] }}
             </button>
           </li>
           <li>
@@ -68,16 +134,16 @@
                 class="far"
                 [ngClass]="{
                   'fa-toggle-off': !dataRepSettings.showGlossary,
-                  'fa-toggle-on': dataRepSettings.showGlossary
+                  'fa-toggle-on': dataRepSettings.showGlossary,
                 }"
                 aria-hidden="true"></i>
-              <label [for]="id + '-glossary-switch'">Glossary</label>
+              {{ content.actions!['glossary'] }}
             </button>
           </li>
           <li>
             <button #dataModalSwitch [id]="id + '-data-modal-button'" (click)="openDataModal()">
               <i class="far fa-table" aria-hidden="true"></i>
-              <label [for]="id + '-data-modal-button'">Data</label>
+              {{ content.actions!['data'] }}
             </button>
           </li>
           <!-- <button>
@@ -93,47 +159,63 @@
         [attr.aria-expanded]="dataRepSettings.showPlainLanguage"
         [hidden]="dataRepSettings.showPlainLanguage === true ? undefined : true"
         tabindex="-1">
-        <lib-adapt-h-element class="plain-language-title" [level]="mapHeadingLvl(headingLvl2)"
-          >Plain language summary</lib-adapt-h-element
+        <lib-adapt-h-element class="plain-language-title" [level]="mapHeadingLvl(headingLvl2)">
+          {{ content.actions!['plain_language_summary'] }}</lib-adapt-h-element
         >
-        <span [innerHTML]="plainLanguage"></span>
+        <span [innerHTML]="!actuallyNoData ? $plainLanguage() : $insight()"></span>
       </div>
-      <ol *ngIf="!loaded.noData" #bars class="series">
-        <ng-container *ngFor="let item of data; index as index">
-          <li tabindex="0" *ngIf="item[raw.chart.yAxisValue] > 0" [id]="id + '-series-item-' + index">
+      <ol *ngIf="!$showNoData()" #bars class="series">
+        <ng-container *ngFor="let item of $data(); index as index">
+          <li tabindex="0" *ngIf="item[raw.chart.yAxisValue] >= 0" [id]="id + '-series-item-' + index">
             <span class="content">
               <lib-adapt-h-element
                 class="label"
                 [id]="id + '-series-item-label-' + index"
                 [level]="mapHeadingLvl(headingLvl2)"
-                >{{ item[raw.chart.xAxisLabel] | glossary | async }}</lib-adapt-h-element
+                >{{ item[raw.chart.xAxisLabel] | glossary: 'label' : lang : $fileSpec() | async }}</lib-adapt-h-element
               >
               <p
                 class="definition"
                 [hidden]="dataRepSettings.showGlossary === true ? undefined : true"
                 [attr.aria-expanded]="dataRepSettings.showGlossary"
                 [id]="id + '-series-item-definition-' + index">
-                <span [innerHTML]="item[raw.chart.xAxisLabel] | glossary : 'definition' | async"></span>
+                <span
+                  [innerHTML]="item[raw.chart.xAxisLabel] | glossary: 'definition' : lang : $fileSpec() | async"></span>
               </p>
             </span>
             <div class="bar-wrapper">
               <div
-                class="bar data-bar-{{ index + 1 }}"
+                class="bar"
                 [ngStyle]="{ '--usa-data-rep-series-item-flex-amount': item.flexAmount }"
                 aria-hidden="true"></div>
               <ul class="details">
                 <li class="percentage" [id]="id + '-series-item-percentage-' + index">
-                  {{item.percentage?.toLocaleString(this.localization, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                                })
-                  }}%
+                  <ng-container *ngIf="suppressedItem(item)">
+                    {{ content.actions!['suppressed'] }}
+                  </ng-container>
+
+                  <ng-container *ngIf="item.percentage > 0">
+                    {{
+                      item.percentage?.toLocaleString(this.localization, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }) + '%'
+                    }}
+                  </ng-container>
                 </li>
                 <li class="value" [id]="id + '-series-item-value-' + index">
-                  {{item[raw.chart.yAxisValue].toLocaleString(this.localization, {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0,
-                                })}}
+                  <ng-container *ngIf="item.value === 0 && suppressed">
+                    {{ content.actions!['suppressed'] }}
+                  </ng-container>
+
+                  <ng-container *ngIf="item[raw.chart.yAxisValue] > 0">
+                    {{
+                      item[raw.chart.yAxisValue].toLocaleString(this.localization, {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                    }}
+                  </ng-container>
                 </li>
               </ul>
             </div>
@@ -141,12 +223,30 @@
         </ng-container>
       </ol>
 
-      <div *ngIf="loaded.noData" class="no-data-warning display-flex gap-2 bg-accent-warm-lighter margin-2 padding-2">
+      <ng-container *ngIf="$showNoData()">
+        <p class="font-xs line-height-3">Categories with values of zero: {{ $noDataSummary() }}</p>
+      </ng-container>
+
+      <div *ngIf="actuallyNoData" class="no-data-warning display-flex gap-2 bg-accent-warm-lighter margin-2 padding-2">
         <div class="errors-icon">
           <i class="fal font-xl fa-exclamation-circle"></i>
         </div>
         <div class="errors-body display-flex flex-column gap-2">
-          <strong>This Section is Unavailable.</strong>
+          <strong>{{ content.actions!['section_unavailable'] }}</strong>
+
+          <p class="usa-prose">
+            {{ $insight() || 'Data is not collected for this category in your State.' }}
+          </p>
+        </div>
+      </div>
+      <div
+        *ngIf="$showNoData() && filtered && raw?.noDataDescription?.length"
+        class="no-data-warning display-flex gap-2 bg-accent-warm-lighter margin-2 padding-2">
+        <div class="errors-icon">
+          <i class="fal font-xl fa-exclamation-circle"></i>
+        </div>
+        <div class="errors-body display-flex flex-column gap-2">
+          <strong>{{ content.actions!['section_unavailable'] }}</strong>
 
           <p class="usa-prose">
             {{
@@ -162,7 +262,7 @@
 
 <article
   [id]="id + '-data-modal'"
-  cdkTrapFocus
+  cdkTrapFocus="{{ !dataModal.hidden }}"
   class="modal"
   role="dialog"
   aria-modal="true"
@@ -173,56 +273,79 @@
   <section class="modal-content" role="document">
     <div class="display-flex gap-2 flex-justify">
       <h2 id="{{ id }}-data-modal-title" class="modal-title">
-        {{ header | glossary | async }} {{ filterOrSuppress }}
+        {{ $header() | glossary: 'label' : lang | async }} {{ filterOrSuppress }}
       </h2>
       <button [id]="id + '-close-modal-button'" #dataModalCloseBtn class="close-modal" (click)="closeModal()">
         Close
         <i class="fas fa-times" aria-hidden="true"></i>
       </button>
     </div>
-    <p class="description" [innerHTML]="insight"></p>
+    <p class="description" [innerHTML]="$insight()"></p>
     <p *ngIf="suppressed" class="redaction-note">
-      <strong>Note:</strong> Specific data has been suppressed to protect the privacy of individuals in accordance with
-      FERPA guidelines. Details that could lead to the identification of individuals in small population groups are not
-      disclosed.
+      <strong>{{ (content?.actions)!['note'] }}</strong> {{ content?.sections?.[4]?.description }}
     </p>
     <div class="table-content-downloads display-flex gap-2">
-      <button (click)="downloadData('csv')" class="usa-button usa-button--unstyled">Download CSV</button>
-      <button (click)="downloadData('xlsx')" class="usa-button usa-button--unstyled">Download Excel (XLSX)</button>
+      <button (click)="downloadData('csv')" class="usa-button usa-button--unstyled">
+        {{ (content?.actions)!['download_csv'] }}
+      </button>
+      <button (click)="downloadData('xlsx')" class="usa-button usa-button--unstyled">
+        {{ (content?.actions)!['download_excel'] }}
+      </button>
     </div>
-    <table #dataTable class="data-table" [attr.aria-label]="header + '-data table'">
+    <table #dataTable class="data-table" [attr.aria-label]="$header() + '-data table'">
       <thead>
         <tr class="header-row">
-          <th scope="col" class="th label">{{raw.dataLabel || 'Label'}}</th>
-          <th scope="col" class="th percentage">Percent (%)</th>
-          <th scope="col" class="th value">Value</th>
+          <th scope="col" class="th label">{{ raw.dataLabel || 'Label' }}</th>
+          <th scope="col" class="th percentage">{{ (content?.actions)!['percent'] }}</th>
+          <th scope="col" class="th value">{{ (content?.actions)!['value_label'] }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr tabindex="0" class="flex-row" *ngFor="let item of data">
-          <th scope="row" class="td label">{{ item[raw.chart.xAxisLabel] | glossary | async }}</th>
+        <tr tabindex="0" class="flex-row" *ngFor="let item of $data()">
+          <th scope="row" class="td label">
+            {{ item[raw.chart.xAxisLabel] | glossary: 'label' : lang : $fileSpec() | async }}
+          </th>
           <td class="td percentage">
             <ng-container *ngIf="suppressed; else notSuppressedPct">
-              {{ item?.percentage > 0 ? item.percentage.toLocaleString(
-                            this.localization,
-                            {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                            }
-                            ) + "%" : 'Suppressed' }}
+              {{
+                item?.percentage > 0
+                  ? item?.percentage.toLocaleString(this.localization, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }) + '%'
+                  : content!.actions!['suppressed'] || 'Suppressed'
+              }}
             </ng-container>
 
             <ng-template #notSuppressedPct>
-              {{item.percentage.toLocaleString(
-                            this.localization,
-                            {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                            }
-                            )
-
-
+              {{
+                item.percentage.toLocaleString(this.localization, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
               }}%
+            </ng-template>
+          </td>
+
+          <td class="td value">
+            <ng-container *ngIf="suppressed; else notSuppressed">
+              {{
+                item[raw.chart.yAxisValue] > 0
+                  ? item[raw.chart.yAxisValue].toLocaleString(this.localization, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })
+                  : content!.actions!['suppressed'] || 'Suppressed'
+              }}
+            </ng-container>
+
+            <ng-template #notSuppressed>
+              {{
+                item[raw.chart.yAxisValue].toLocaleString(this.localization, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                })
+              }}
             </ng-template>
           </td>
         </tr>
@@ -230,12 +353,14 @@
       <tfoot>
         <tr class="footer-row" tabindex="0">
           <td colspan="3" class="tf">
-            Total:
+            {{ content!.actions!['total_label'] || 'Total' }}:
             <strong>
-              {{this.total.toLocaleString(this.localization, {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 0,
-                            })}}
+              {{
+                $selectedTotal().toLocaleString(this.localization, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                })
+              }}
             </strong>
           </td>
         </tr>

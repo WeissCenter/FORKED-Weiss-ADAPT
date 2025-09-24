@@ -28,7 +28,7 @@
           <label class="usa-label" for="name" i18n>Data View Name</label>
           <input type="text" id="name" formControlName="name" class="usa-input" />
           <div
-          role="alert"
+            role="alert"
             *ngIf="name?.invalid && (name?.dirty || name?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <div *ngIf="name?.errors?.['required']" i18n>Data View Name is required.</div>
@@ -44,7 +44,7 @@
           <textarea class="usa-textarea" formControlName="description" id="description"></textarea>
 
           <div
-          role="alert"
+            role="alert"
             *ngIf="description?.invalid && (description?.dirty || description?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <div *ngIf="description?.errors?.['required']" i18n>A Description is required.</div>
@@ -68,7 +68,7 @@
           <ng-container errors>
             <ng-container *ngIf="source.get('dataSource') as dtSource">
               <div
-              role="alert"
+                role="alert"
                 *ngIf="dtSource?.invalid && (dtSource?.dirty || dtSource?.touched)"
                 class="form-errors margin-top-1 text-emergency">
                 <div *ngIf="dtSource?.errors?.['required']" i18n>Source is required.</div>
@@ -95,7 +95,7 @@
                 <ng-container errors>
                   <ng-container *ngIf="source.get('table') as table">
                     <div
-                    role="alert"
+                      role="alert"
                       *ngIf="table?.invalid && (table?.dirty || table?.touched)"
                       class="form-errors margin-top-1 text-emergency">
                       <div *ngIf="table?.errors?.['required']" i18n>Table is required.</div>
@@ -128,7 +128,7 @@
 
           <ng-container *ngIf="source.get('query') as query">
             <div
-            role="alert"
+              role="alert"
               *ngIf="query?.invalid && (query?.dirty || query?.touched)"
               class="form-errors margin-top-1 text-emergency">
               <div *ngIf="query?.errors?.['required']" i18n>Query is required.</div>
@@ -182,14 +182,14 @@
                 <table class="usa-table usa-table--borderless width-full">
                   <thead>
                     <tr>
-                      <th *ngFor="let row of queryResult.value.result[0] | keyvalue : originalOrder" scope="col">
+                      <th *ngFor="let row of queryResult.value.result[0] | keyvalue: originalOrder" scope="col">
                         {{ row.key }}
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let row of queryResult.value.result">
-                      <td *ngFor="let item of row | keyvalue : originalOrder">{{ item.value || 'null' }}</td>
+                      <td *ngFor="let item of row | keyvalue: originalOrder">{{ item.value || 'null' }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -244,7 +244,6 @@
                 <ng-container errors>
                   <ng-container *ngIf="group.get('joinType') as joinType">
                     <div
-
                       *ngIf="joinType?.invalid && (joinType?.dirty || joinType?.touched)"
                       class="form-errors margin-top-1 text-emergency">
                       <div *ngIf="joinType?.errors?.['required']" i18n>A Join Type is required.</div>
@@ -263,7 +262,6 @@
                 <ng-container errors>
                   <ng-container *ngIf="group.get('fromField') as fromField">
                     <div
-
                       *ngIf="fromField?.invalid && (fromField?.dirty || fromField?.touched)"
                       class="form-errors margin-top-1 text-emergency">
                       <div *ngIf="fromField?.errors?.['required']" i18n>A Column is required.</div>
@@ -281,7 +279,6 @@
                 <ng-container errors>
                   <ng-container *ngIf="group.get('toField') as toField">
                     <div
-              
                       *ngIf="toField?.invalid && (toField?.dirty || toField?.touched)"
                       class="form-errors margin-top-1 text-emergency">
                       <div *ngIf="toField?.errors?.['required']" i18n>A Target Column is required.</div>

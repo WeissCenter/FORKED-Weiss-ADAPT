@@ -12,6 +12,7 @@ export class ExpandableListItemComponent {
    */
 
   @Input() headerTag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' = 'h4';
+  @Input() expandable = true;
 
   id = 'expandable-list-item-' + Math.floor(Math.random() * 1000000);
 }

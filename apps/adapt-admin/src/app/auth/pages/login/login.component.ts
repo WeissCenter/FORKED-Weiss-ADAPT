@@ -1,14 +1,13 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { Title, Meta } from "@angular/platform-browser";
-import { RouterModule, Router } from "@angular/router";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Title, Meta } from '@angular/platform-browser';
+import { RouterModule, Router } from '@angular/router';
 import { ContentService } from '@adapt/adapt-shared-component-lib';
-import { ComponentsModule } from "../../../components/components.module";
-import { CognitoService } from "../../services/cognito/cognito.service";
-import { UserService } from "../../services/user/user.service";
+import { ComponentsModule } from '../../../components/components.module';
+import { CognitoService } from '../../services/cognito/cognito.service';
+import { UserService } from '../../services/user/user.service';
 import { environment } from '../../../../environments/environment';
-
 
 @Component({
   selector: 'adapt-login',
@@ -56,7 +55,7 @@ export class LoginComponent implements OnInit {
   performLogin(e: any) {
     e.preventDefault();
 
-    this.cognito.signIn({username: this.email.value, password: this.password.value}).then(result => {
+    this.cognito.signIn({ username: this.email.value, password: this.password.value }).then((result) => {
       if (result) {
         this.router.navigateByUrl('/admin');
       } else {

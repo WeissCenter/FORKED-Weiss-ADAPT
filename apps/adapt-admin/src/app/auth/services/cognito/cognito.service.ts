@@ -150,14 +150,17 @@ export class CognitoService {
       }),
     };
 
-
     const refresh_token = this.authSet.REFRESH_TOKEN;
     const body = new HttpParams().set('token', refresh_token).set('client_id', CognitoService._CLIENT_ID);
-    return this.recordEvent('User signed out', EventType.USER).pipe( switchMap(() => this.http.post(CognitoService._BASE_URL + '/oauth2/revoke', body, options).pipe(
-      tap((res: any) => {
-        this.clearAuthStorage();
-      })
-    )));
+    return this.recordEvent('User signed out', EventType.USER).pipe(
+      switchMap(() =>
+        this.http.post(CognitoService._BASE_URL + '/oauth2/revoke', body, options).pipe(
+          tap((res: any) => {
+            this.clearAuthStorage();
+          })
+        )
+      )
+    );
   }
 
   private recordEvent(event: string, type: EventType, metadata?: any) {

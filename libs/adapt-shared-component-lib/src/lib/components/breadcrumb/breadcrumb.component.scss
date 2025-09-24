@@ -1,3 +1,7 @@
 .usa-breadcrumb {
   --usa-breadcrumb-padding-x: 0;
 }
+
+.usa-breadcrumb__list-item:not(:last-child):after {
+  bottom: 0px !important;
+}

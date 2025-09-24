@@ -39,7 +39,14 @@ const routes: Routes = [
             title: 'ADAPT Admin - Viewing Report',
             component: ReportComponent,
             data: { breadcrumbLabel: 'View Report' },
-            canDeactivate: [(component: ReportComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState: RouterStateSnapshot) => component.canDeactivate(true, nextState)],
+            canDeactivate: [
+              (
+                component: ReportComponent,
+                currentRoute: ActivatedRouteSnapshot,
+                currentState: RouterStateSnapshot,
+                nextState: RouterStateSnapshot
+              ) => component.canDeactivate(true, nextState),
+            ],
           },
         ],
       },
@@ -125,7 +132,14 @@ const routes: Routes = [
             path: 'footer-links',
             component: FooterLinksSettingsComponent,
             data: { breadcrumbLabel: 'Footer Links' },
-            canDeactivate: [(component: ReportComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState: RouterStateSnapshot) => component.canDeactivate(true, nextState)],
+            canDeactivate: [
+              (
+                component: ReportComponent,
+                currentRoute: ActivatedRouteSnapshot,
+                currentState: RouterStateSnapshot,
+                nextState: RouterStateSnapshot
+              ) => component.canDeactivate(true, nextState),
+            ],
           },
           {
             path: 'user-management',

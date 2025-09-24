@@ -26,7 +26,6 @@ export class DataSourcesSettingsComponent implements AfterViewInit {
   public search = new BehaviorSubject('');
   public $search = this.search.asObservable();
 
-
   public $dataViews = this.data.$dataViews;
 
   public $reports = this.data.$reports;
@@ -43,29 +42,29 @@ export class DataSourcesSettingsComponent implements AfterViewInit {
     )
   );
 
-  constructor(private data: AdaptDataService, private location: LocationStrategy) {}
+  constructor(
+    private data: AdaptDataService,
+    private location: LocationStrategy
+  ) {}
 
   public onSave(dataSource: DataSource) {
     this.data.addDataSource(dataSource);
   }
 
-  private handleResume(){
+  private handleResume() {
     const state = this.location.getState() as any;
-      switch(state.mode){
-        case 'CREATION':{
-          this.dataSourceModal.open(state.dataSource, PageMode.CREATE, state.dataSource.page ?? 0, state.dirty)
-          break;
-        }
-        case 'EDIT':{
-          this.dataSourceModal.open(state.dataSource, PageMode.EDIT, state.dataSource.page ?? 0, state.dirty)
-        }
+    switch (state.mode) {
+      case 'CREATION': {
+        this.dataSourceModal.open(state.dataSource, PageMode.CREATE, state.dataSource.page ?? 0, state.dirty);
+        break;
       }
-
+      case 'EDIT': {
+        this.dataSourceModal.open(state.dataSource, PageMode.EDIT, state.dataSource.page ?? 0, state.dirty);
+      }
+    }
   }
 
   ngAfterViewInit(): void {
-    this.handleResume()
+    this.handleResume();
   }
-
-
 }

@@ -19,14 +19,14 @@
   --usa-accordion-padding-y: var(--usa-spacing-2);
   --usa-accordion-padding-x: var(--usa-spacing-205);
   --usa-accordion-border-radius: var(--usa-border-radius-0);
-  --usa-primary-lightest: #cfe1ef;
-  --usa-primary-lighter: #9fc3df;
-  --usa-primary-light: #6fa4cf;
-  --usa-primary-base: #1f577c;
-  --usa-primary-vivid: #1f577c;
-  --usa-primary-dark: #1a4c6a;
-  --usa-primary-darker: #153e57;
-  --usa-primary-darkest: #102e41;
+  --usa-primary-lightest: hsl(223, 45%, 85%);
+  --usa-primary-lighter: hsl(223, 45%, 75%);
+  --usa-primary-light: hsl(223, 45%, 55%);
+  --usa-primary-base: hsl(223, 65%, 35%);
+  --usa-primary-vivid: hsl(223, 65%, 35%);
+  --usa-primary-dark: hsl(223, 65%, 28%);
+  --usa-primary-darker: hsl(223, 65%, 20%);
+  --usa-primary-darkest: hsl(223, 65%, 15%);
   --usa-accent-cool-lightest: #f0cfe3;
   --usa-accent-cool-lighter: #e19fc7;
   --usa-accent-cool-light: #d26fab;
@@ -77,15 +77,51 @@
   --usa-button-outline-border-color: var(--usa-primary);
   --usa-button-outline-border-hover-color: var(--usa-primary-dark);
   --usa-button-outline-border-active-color: var(--usa-primary-darker);
-  --usa-font-size-3xs: clamp(calc(12px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(12px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(12px * 1.075 * var(--a11y-font-size-modifier)));
-  --usa-font-size-2xs: clamp(calc(14px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(14px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(14px * 1.075 * var(--a11y-font-size-modifier)));
-  --usa-font-size-xs: clamp(calc(15px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(15px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(15px * 1.075 * var(--a11y-font-size-modifier)));
-  --usa-font-size-sm: clamp(calc(16px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(16px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(16px * 1.075 * var(--a11y-font-size-modifier)));
-  --usa-font-size-md: clamp(calc(18px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(18px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(18px * 1.075 * var(--a11y-font-size-modifier)));
-  --usa-font-size-lg: clamp(calc(22px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(22px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(22px * 1.075 * var(--a11y-font-size-modifier)));
-  --usa-font-size-xl: clamp(calc(32px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(32px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(32px * 1.075 * var(--a11y-font-size-modifier)));
-  --usa-font-size-2xl: clamp(calc(40px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(40px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(40px * 1.075 * var(--a11y-font-size-modifier)));
-  --usa-font-size-3xl: clamp(calc(48px * 0.925 * var(--a11y-font-size-modifier)), calc(calc(48px * 0.925 * var(--a11y-font-size-modifier)) + .23vw), calc(48px * 1.075 * var(--a11y-font-size-modifier)));
+  --usa-font-size-3xs: clamp(
+    calc(12px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(12px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(12px * 1.075 * var(--a11y-font-size-modifier))
+  );
+  --usa-font-size-2xs: clamp(
+    calc(14px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(14px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(14px * 1.075 * var(--a11y-font-size-modifier))
+  );
+  --usa-font-size-xs: clamp(
+    calc(15px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(15px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(15px * 1.075 * var(--a11y-font-size-modifier))
+  );
+  --usa-font-size-sm: clamp(
+    calc(16px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(16px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(16px * 1.075 * var(--a11y-font-size-modifier))
+  );
+  --usa-font-size-md: clamp(
+    calc(18px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(18px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(18px * 1.075 * var(--a11y-font-size-modifier))
+  );
+  --usa-font-size-lg: clamp(
+    calc(22px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(22px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(22px * 1.075 * var(--a11y-font-size-modifier))
+  );
+  --usa-font-size-xl: clamp(
+    calc(32px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(32px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(32px * 1.075 * var(--a11y-font-size-modifier))
+  );
+  --usa-font-size-2xl: clamp(
+    calc(40px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(40px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(40px * 1.075 * var(--a11y-font-size-modifier))
+  );
+  --usa-font-size-3xl: clamp(
+    calc(48px * 0.925 * var(--a11y-font-size-modifier)),
+    calc(calc(48px * 0.925 * var(--a11y-font-size-modifier)) + 0.23vw),
+    calc(48px * 1.075 * var(--a11y-font-size-modifier))
+  );
   --usa-line-height-1: calc(100% * var(--a11y-line-height-modifier));
   --usa-line-height-2: calc(110% * var(--a11y-line-height-modifier));
   --usa-line-height-3: calc(125% * var(--a11y-line-height-modifier));
@@ -94,7 +130,7 @@
   --usa-line-height-6: calc(175% * var(--a11y-line-height-modifier));
   --usa-font-sans: 'Public Sans Web', Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
   --usa-font-serif: Merriweather Web, Georgia, Cambria, Times New Roman, Times, serif;
-  --usa-font-mono: 'Roboto Mono Web', "Bitstream Vera Sans Mono", "Consolas", "Courier", monospace;
+  --usa-font-mono: 'Roboto Mono Web', 'Bitstream Vera Sans Mono', 'Consolas', 'Courier', monospace;
   --usa-font-heading: var(--usa-font-sans);
   --usa-font-ui: var(--usa-font-sans);
   --usa-font-code: var(--usa-font-mono);
@@ -450,14 +486,14 @@
   --usa-step-indicator-label-font-weight: var(--usa-font-weight-normal);
   --usa-step-indicator-label-font-weight-current: var(--usa-font-weight-semibold);
   --usa-step-indicator-label-background: var(--usa-step-indicator-background-color);
-  --usa-step-indicator-label-background-current: #3E4DED;
+  --usa-step-indicator-label-background-current: #3e4ded;
   --usa-step-indicator-label-background-complete: var(--usa-base-dark);
   --usa-step-indicator-label-padding-y: var(--usa-spacing-05);
   --usa-step-indicator-label-padding-x: var(--usa-spacing-1);
   --usa-step-indicator-min-width: var(--usa-spacing-tablet);
   --usa-step-indicator-segment-color-pending: var(--usa-base-light);
   --usa-step-indicator-segment-color-complete: var(--usa-base-darkest);
-  --usa-step-indicator-segment-color-current: #222FBF;
+  --usa-step-indicator-segment-color-current: #222fbf;
   --usa-step-indicator-segment-gap: var(--usa-spacing-0);
   --usa-step-indicator-segment-height: var(--usa-spacing-1);
   --usa-step-indicator-segment-max-width: var(--usa-spacing-card-lg);
@@ -518,8 +554,8 @@
   --usa-data-rep-modal-close-button-hover-color: var(--usa-data-rep-modal-content-ink);
   --usa-data-rep-modal-close-button-gap: var(--usa-data-rep-action-bar-item-gap);
   --usa-data-rep-modal-close-button-border-radius: var(--usa-data-rep-action-bar-item-border-radius);
-  --usa-data-rep-modal-close-button-padding-y: .25rem;
-  --usa-data-rep-modal-close-button-padding-x: .5rem;
+  --usa-data-rep-modal-close-button-padding-y: 0.25rem;
+  --usa-data-rep-modal-close-button-padding-x: 0.5rem;
   --usa-data-rep-modal-close-button-font-family: var(--usa-data-rep-action-bar-item-font-family);
   --usa-data-rep-modal-close-button-font-size: var(--usa-data-rep-action-bar-item-font-size);
   --usa-data-rep-modal-close-button-font-weight: var(--usa-data-rep-action-bar-item-font-weight);
@@ -567,7 +603,7 @@
   --usa-data-rep-container-border-width: var(--usa-spacing-2px);
   --usa-data-rep-container-border-radius: var(--usa-border-radius-lg);
   --usa-data-rep-container-content-font-family: var(--usa-font-body);
-  --usa-data-rep-container-content-font-size: var(--usa-font-size-lg);
+  --usa-data-rep-container-content-font-size: var(--usa-font-size-md);
   --usa-data-rep-container-content-line-height: var(--usa-line-height-5);
   --usa-data-rep-container-content-font-weight: var(--usa-font-weight-normal);
   --usa-data-rep-container-heading-font-family: var(--usa-font-heading);
@@ -596,7 +632,9 @@
   --usa-data-rep-action-bar-toggle-track-background: var(--usa-data-rep-container-ink);
   --usa-data-rep-action-bar-toggle-track-border-color: var(--usa-data-rep-action-bar-toggle-track-background);
   --usa-data-rep-action-bar-toggle-track-active-background: var(--usa-data-rep-action-bar-button-color);
-  --usa-data-rep-action-bar-toggle-track-active-border-color: var(--usa-data-rep-action-bar-toggle-track-active-background);
+  --usa-data-rep-action-bar-toggle-track-active-border-color: var(
+    --usa-data-rep-action-bar-toggle-track-active-background
+  );
   --usa-data-rep-action-bar-toggle-track-border-radius: 1.25rem;
   --usa-data-rep-action-bar-toggle-track-border-width: var(--usa-data-rep-container-border-width);
   --usa-data-rep-action-bar-item-outline-offset: var(--usa-button-outline-offset);
@@ -613,7 +651,7 @@
   --usa-data-rep-series-group-gap: var(--usa-spacing-205);
   --usa-data-rep-series-item-background: var(--usa-primary-base);
   --usa-data-rep-series-item-gap: var(--usa-spacing-1);
-  --usa-data-rep-series-item-min-width: .125rem;
+  --usa-data-rep-series-item-min-width: 0.125rem;
   --usa-data-rep-series-item-border-radius: 0;
   --usa-data-rep-series-item-flex-amount: 1;
   --usa-data-rep-series-item-font-family: var(--usa-data-rep-container-content-font-family);
@@ -642,5 +680,4 @@
   --usa-data-rep-plain-language-title-font-weight: var(--usa-data-rep-container-heading-font-weight);
   --usa-data-rep-plain-language-title-line-height: var(--usa-data-rep-container-heading-line-height);
   --usa-data-rep-plain-language-title-font-family: var(--usa-data-rep-container-heading-font-family);
-  
-  }
+}

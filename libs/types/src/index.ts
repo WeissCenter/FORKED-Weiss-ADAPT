@@ -8,6 +8,7 @@ export * from './lib/CEDS/Level';
 export * from './lib/CEDS/ReportCode';
 export * from './lib/backend/DatabaseRequestTemplate';
 export * from './lib/backend/DataSource';
+export * from './lib/backend/EditUserInput';
 export * from './lib/backend/DataSourceType';
 export * from './lib/backend/AddDataInput';
 export * from './lib/backend/SQLType';
@@ -16,9 +17,9 @@ export * from './lib/backend/DataSourceStatus';
 export * from './lib/sections/HeaderBlock';
 export * from './lib/AdaptSettings';
 export * from './lib/backend/Response';
-export * from './lib/backend/UserTimeOutCacheInput'
-export * from './lib/backend/UserActivity'
-export * from './lib/backend/UserTimeOutCache'
+export * from './lib/backend/UserTimeOutCacheInput';
+export * from './lib/backend/UserActivity';
+export * from './lib/backend/UserTimeOutCache';
 export * from './lib/util';
 export * from './lib/backend/NewDataSetInput';
 export * from './lib/backend/DataSet';
@@ -51,4 +52,4 @@ export * from './lib/DataView';
 export * from './lib/Permissions';
 export * from './lib/sections/CommentBlock';
 export * from './lib/backend/ReportVersion';
-export * from './lib/backend/ShareReport'
+export * from './lib/backend/ShareReport';

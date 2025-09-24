@@ -1,18 +1,21 @@
 import {
+  afterRender,
   AfterViewInit,
   Component,
   ElementRef,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
   Optional,
+  PLATFORM_ID,
   QueryList,
   Self,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, Validators } from '@angular/forms';
-import { comboBox } from '@uswds/uswds/js';
+let comboBox: any;
 
 @Component({
   selector: 'lib-adapt-combo-box',
@@ -28,8 +31,10 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
   @Input() readonly = false;
 
   @Input() comboID = '';
+  @Input() delayedSet = false;
   @Input() label = '';
   @Input() hint = '';
+  @Input() disableClear = false;
 
   @Input() placeholder = '';
 
@@ -37,6 +42,7 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
 
   @Input() itemAccessor?: string;
   @Input() itemLabel = 'name';
+  @Input() itemLocalizedLabel?: string;
 
   @Input() compareID?: string;
 
@@ -60,10 +66,43 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
 
   public compareFunc = this.compareByID.bind(this);
 
-  constructor(@Self() @Optional() private parentControl?: NgControl) {
+  constructor(
+    @Inject(PLATFORM_ID) platform: string,
+    @Self() @Optional() private parentControl?: NgControl
+  ) {
     if (this.parentControl) {
       this.parentControl.valueAccessor = this;
     }
+
+    afterRender(() => {
+      import('@uswds/uswds/js').then((lib) => {
+        comboBox = lib.comboBox;
+
+        if (this.options) {
+          this.options.changes.subscribe(() => this.writeValue(this.value));
+        }
+
+        if (this.comboBoxContainer && comboBox) {
+          comboBox.init(this.comboBoxContainer.nativeElement);
+
+          if (this.disabled || this.readonly) {
+            comboBox.disable(this.parent!.nativeElement);
+          }
+
+          if (this.disableClear)
+            this.comboBoxContainer.nativeElement
+              .getElementsByClassName('usa-combo-box__clear-input__wrapper')
+              .item(0)
+              ?.setAttribute('hidden', 'true');
+
+          this.parent?.nativeElement.addEventListener('focusout', (event) => {
+            if (!event.isTrusted) return;
+
+            this.markAsTouched();
+          });
+        }
+      });
+    });
   }
 
   compareByID(itemOne: any, itemTwo: any) {
@@ -75,27 +114,31 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
   }
 
   ngAfterViewInit(): void {
-    if (this.options) {
-      this.options.changes.subscribe(() => this.writeValue(this.value));
-    }
-
-    if (this.comboBoxContainer) {
-      comboBox.init(this.comboBoxContainer.nativeElement);
-
-      if (this.disabled || this.readonly) {
-        comboBox.disable(this.parent!.nativeElement);
-      }
-
-      this.parent?.nativeElement.addEventListener('focusout', (event) => {
-        if (!event.isTrusted) return;
-
-        this.markAsTouched();
-      });
-    }
+    // import('@uswds/uswds/js').then((lib) => {
+    //   comboBox = lib.comboBox
+    //   if (this.options) {
+    //     this.options.changes.subscribe(() => this.writeValue(this.value));
+    //   }
+    //   if (this.comboBoxContainer && comboBox) {
+    //     comboBox.init(this.comboBoxContainer.nativeElement);
+    //     if (this.disabled || this.readonly) {
+    //       comboBox.disable(this.parent!.nativeElement);
+    //     }
+    //     if (this.disableClear)
+    //       this.comboBoxContainer.nativeElement
+    //         .getElementsByClassName('usa-combo-box__clear-input__wrapper')
+    //         .item(0)
+    //         ?.setAttribute('hidden', 'true');
+    //     this.parent?.nativeElement.addEventListener('focusout', (event) => {
+    //       if (!event.isTrusted) return;
+    //       this.markAsTouched();
+    //     });
+    //   }
+    // })
   }
 
   ngOnDestroy(): void {
-    if (this.comboBoxContainer) {
+    if (this.comboBoxContainer && comboBox) {
       comboBox.off(this.comboBoxContainer.nativeElement);
     }
   }
@@ -109,7 +152,9 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
 
   writeValue(obj: any): void {
     setTimeout(() => {
-      if (this.parent) {
+      if (this.delayedSet) this.value = obj;
+
+      if (this.parent && comboBox) {
         const { comboBoxEl } = comboBox.getComboBoxContext(this.parent.nativeElement);
 
         const event = new CustomEvent('focusout', { bubbles: true, cancelable: true });
@@ -119,7 +164,7 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
       }
     }, 100);
 
-    this.value = obj;
+    if (!this.delayedSet) this.value = obj;
   }
 
   registerOnChange(fn: any): void {
@@ -132,7 +177,7 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
 
   private updateDisabledState() {
     try {
-      if (this.parent) {
+      if (this.parent && this.parent.nativeElement) {
         this.disabled ? comboBox.disable(this.parent.nativeElement) : comboBox.enable(this.parent.nativeElement);
       }
     } catch (err) {
@@ -143,7 +188,7 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
 
-    if (this.parent) {
+    if (this.parent && this.parent.nativeElement) {
       this.disabled ? comboBox.disable(this.parent.nativeElement) : comboBox.enable(this.parent.nativeElement);
     }
   }

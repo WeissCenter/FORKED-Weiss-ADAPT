@@ -9,6 +9,10 @@ export class PaginationComponent {
   @Input() page = 1;
   @Input() maxPages = 1;
   @Input() paginationSize = 5;
+  @Input() previous = 'Previous';
+  @Input() next = 'Next';
+
+  @Output() pageChange = new EventEmitter<number>();
 
   public paginationNumbers(rulerSize?: number) {
     const arr = new Array(rulerSize || this.paginationSize).fill(null);
@@ -23,6 +27,11 @@ export class PaginationComponent {
         return this.page + idx - min;
       }
     });
+  }
+
+  public changePage(val: number) {
+    this.page = val;
+    this.pageChange.emit(this.page);
   }
 }
 

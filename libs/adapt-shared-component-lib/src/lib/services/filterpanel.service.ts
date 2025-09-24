@@ -45,8 +45,6 @@ export class FilterPanelService {
 
     if (element) {
       setTimeout(() => (element as HTMLElement).focus(), 0); // Using setTimeout to ensure the element is ready to receive focus
-    } else {
-      console.error('Element not found:', targetElementId);
     }
   }
 }

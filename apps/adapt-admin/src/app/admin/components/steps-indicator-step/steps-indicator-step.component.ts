@@ -18,7 +18,10 @@ export class StepsIndicatorStepComponent implements AfterViewInit {
   @ViewChild('content', { static: true }) content!: TemplateRef<HTMLElement>;
   @Input() name = '';
 
-  constructor(private viewContainerRef: ViewContainerRef, private renderer: Renderer2) {}
+  constructor(
+    private viewContainerRef: ViewContainerRef,
+    private renderer: Renderer2
+  ) {}
 
   focusFirstInput() {
     // Use ViewContainerRef to create an embedded view

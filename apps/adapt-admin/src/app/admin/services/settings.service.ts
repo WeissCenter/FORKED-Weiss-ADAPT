@@ -19,9 +19,7 @@ export class SettingsService {
     warningMinutes: 120,
   });
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   public next(val: AdaptSettings) {
     return this._settings.next(val);

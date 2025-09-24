@@ -19,7 +19,10 @@ export class ListItemReportComponent {
     return this.onLandingPage ? [this.report.reportID] : 'reports/' + [this.report.reportID];
   }
 
-  constructor(private data: AdaptDataService, private alert: AlertService) {}
+  constructor(
+    private data: AdaptDataService,
+    private alert: AlertService
+  ) {}
 
   public publishReport() {
     this.publish.emit();

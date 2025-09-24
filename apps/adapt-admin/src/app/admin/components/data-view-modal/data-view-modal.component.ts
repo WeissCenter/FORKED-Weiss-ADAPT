@@ -158,7 +158,13 @@ export class DataViewModalComponent implements OnDestroy {
     }
   }
 
-  constructor(private fb: FormBuilder, private data: AdaptDataService, private alert: AlertService, private idle: Idle, private user: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private data: AdaptDataService,
+    private alert: AlertService,
+    private idle: Idle,
+    private user: UserService
+  ) {
     this.baseDataViewForm = fb.group({
       type: this.fb.control('', [Validators.required]),
       source: this.fb.control('collection', [Validators.required]),
@@ -241,25 +247,29 @@ export class DataViewModalComponent implements OnDestroy {
     });
 
     const timeOutSub = this.idle.onTimeout.subscribe(() => {
+      if (!this.baseDataViewForm.dirty) return;
 
-      if(!this.baseDataViewForm.dirty) return;
+      const data = this.getSaveInput();
 
-      const data = this.getSaveInput()
-
-      switch(this.mode){
-        case PageMode.CREATE:{
-          this.user.userInactivitySave({action: 'CREATION', type: 'DataView', body: {...data, page: this.stepsIndicator.step}})
+      switch (this.mode) {
+        case PageMode.CREATE: {
+          this.user.userInactivitySave({
+            action: 'CREATION',
+            type: 'DataView',
+            body: { ...data, page: this.stepsIndicator.step },
+          });
           break;
         }
-        case PageMode.EDIT:{
-          this.user.userInactivitySave({action: 'EDIT', type: 'DataView', body: {dataViewID: this.currentDataView?.dataViewID, page: this.stepsIndicator.step, ...data}})
+        case PageMode.EDIT: {
+          this.user.userInactivitySave({
+            action: 'EDIT',
+            type: 'DataView',
+            body: { dataViewID: this.currentDataView?.dataViewID, page: this.stepsIndicator.step, ...data },
+          });
           break;
         }
       }
-
- 
-
-    })
+    });
 
     this.subscriptions.push(typeChanges, sourceSub, duplicateCheckSub, justificationReasonSub, timeOutSub);
   }
@@ -461,7 +471,7 @@ export class DataViewModalComponent implements OnDestroy {
     this.stepsIndicator.next();
   }
 
-  private handleCurrentStepNext(delta = 0){
+  private handleCurrentStepNext(delta = 0) {
     switch (this.currentStep) {
       case 0 + delta: {
         // LOAD is next
@@ -691,7 +701,6 @@ export class DataViewModalComponent implements OnDestroy {
 
     this.opened = true;
 
-
     if (dataView) {
       this.mode = viewMode ? PageMode.VIEW : PageMode.EDIT;
 
@@ -734,7 +743,6 @@ export class DataViewModalComponent implements OnDestroy {
     this.reloadData = pageIndex === 1;
 
     this.handleCurrentStepNext(1);
-
   }
 
   public close() {

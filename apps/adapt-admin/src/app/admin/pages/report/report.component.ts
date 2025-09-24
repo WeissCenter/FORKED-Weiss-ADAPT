@@ -80,7 +80,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   @ViewChild('resetModal') resetModal?: ModalComponent;
   @ViewChild('unPublishModal') unPublishModal?: ModalComponent;
   @ViewChild('publishConfirmationModal') publishConfirmationModal?: ModalComponent;
-  @ViewChild('shareModal') shareModal?: ModalComponent
+  @ViewChild('shareModal') shareModal?: ModalComponent;
   @Input() report?: any;
 
   @Input() preview = false;
@@ -91,7 +91,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   public filtered = false;
   private intialLoad = true;
 
-  public shareURL?: Observable<string>
+  public shareURL?: Observable<string>;
 
   public startTime = 0;
 
@@ -106,7 +106,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('window:beforeunload')
   canDeactivate(isRouter = false, nextState?: RouterStateSnapshot): boolean {
-    if(this.user.idleState === IdleStates.TIMED_OUT) return true;
+    if (this.user.idleState === IdleStates.TIMED_OUT) return true;
 
     if (isRouter) this.confirmModal?.open(nextState?.url);
 
@@ -140,17 +140,18 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
           )
           .pipe(
             switchMap((changes) => {
-
               this.loading = true;
               if (!this.preview) {
                 if (this.intialLoad) this.applyFilterChanges(true);
                 this.existingFilters = this.buildExistingFilters();
               }
 
-              const filters = changes !== undefined && Object.keys(cleanObject(changes)).length ? cleanObject(changes) : { ...this.existingFilters };
-     
-              this.filtered = changes !== undefined && Object.keys(cleanObject(changes)).length > 0;
+              const filters =
+                changes !== undefined && Object.keys(cleanObject(changes)).length
+                  ? cleanObject(changes)
+                  : { ...this.existingFilters };
 
+              this.filtered = changes !== undefined && Object.keys(cleanObject(changes)).length > 0;
 
               // assume new data view structure
               return this.temp.renderTemplateWithMultipleViews(
@@ -259,7 +260,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   constructor(
     private temp: TemplateService,
     private router: Router,
-    private user: UserService, 
+    private user: UserService,
     private idle: Idle,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -286,14 +287,19 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       this.showFilterPanel = state;
     });
 
-
     this.idle.onTimeout.subscribe(() => {
-      if(this.editReportForm.dirty) {
-        this.user.userInactivitySave({action: 'EDIT', type: 'Report', body: {reportID: this.report.reportID, version: this.route?.snapshot?.queryParams['version'] ?? 'draft' , ...this.editReportForm.getRawValue()}})
+      if (this.editReportForm.dirty) {
+        this.user.userInactivitySave({
+          action: 'EDIT',
+          type: 'Report',
+          body: {
+            reportID: this.report.reportID,
+            version: this.route?.snapshot?.queryParams['version'] ?? 'draft',
+            ...this.editReportForm.getRawValue(),
+          },
+        });
       }
-    })
-
-
+    });
   }
 
   ngOnDestroy(): void {
@@ -422,8 +428,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
           const state = this.location.getState() as any;
 
-
-          if(state?.['editMode']) this.mode = PageMode.EDIT;
+          if (state?.['editMode']) this.mode = PageMode.EDIT;
 
           this.report.dataView = await firstValueFrom(
             this.dataService
@@ -433,10 +438,13 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
           this.templateSubject.next(this.report.template);
 
-          const filters = Object.keys(queryParams).reduce((accum, val) => val === 'version' ? accum : Object.assign(accum, {[val]: queryParams[val]}), {})
+          const filters = Object.keys(queryParams).reduce(
+            (accum, val) => (val === 'version' ? accum : Object.assign(accum, { [val]: queryParams[val] })),
+            {}
+          );
 
-          this.filterFormGroup.patchValue(filters)
-          this.onFilter.next(filters)
+          this.filterFormGroup.patchValue(filters);
+          this.onFilter.next(filters);
 
           this.existingFilters = this.buildExistingFilters();
         } catch (error) {
@@ -619,8 +627,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-
-
   public get editTitle() {
     return this.editReportForm.get('title') as FormControl;
   }
@@ -633,27 +639,24 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     return this.editReportForm.get('audience') as FormControl;
   }
 
-  public openShareModal(){
+  public openShareModal() {
     this.shareModal?.open();
 
     const appliedFilters: any = this.onFilter.value;
 
     const validFilters = Object.keys(this.onFilter.value).reduce((accum, key) => {
-      if(appliedFilters[key] !== null && appliedFilters[key] !== undefined) return Object.assign(accum, {[key]: appliedFilters[key]})
+      if (appliedFilters[key] !== null && appliedFilters[key] !== undefined)
+        return Object.assign(accum, { [key]: appliedFilters[key] });
 
-        return accum;
-    }, {})
+      return accum;
+    }, {});
 
-    this.shareURL = this.dataService.shareReport(this.report.reportID, validFilters)
-    .pipe(switchMap(slug => of(`${location.protocol}//${location.host}/admin/share/${slug}`)))
-
+    this.shareURL = this.dataService
+      .shareReport(this.report.reportID, validFilters)
+      .pipe(switchMap((slug) => of(`${location.protocol}//${location.host}/admin/share/${slug}`)));
   }
 
-  public copy(text: string){
+  public copy(text: string) {
     navigator.clipboard.writeText(text);
   }
-
-
-
-
 }

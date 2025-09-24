@@ -853,7 +853,7 @@
                       "title": "Sex",
                       "description": "The following shows the distribution of children, ages 3-5 (Not in kindergarten), with disabilities that are either male or female in your State.",
                       "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
-                      "explainTemplate":"In the reported data, the Sex categories with disabilities in your State are distributed as, {{first}} and {{second}}.",
+                      "explainTemplate": "In the reported data, the Sex categories with disabilities in your State are distributed as, {{first}} and {{second}}.",
                       "dataLabel": "Sex",
                       "chart": {
                         "filterOn": "x",
@@ -1401,7 +1401,7 @@
                       "title": "Race/Ethnicity ",
                       "description": "The following shows the distribution of children, ages 5-21, with disabilities by Race/Ethnicity in your State.",
                       "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
-                      "explainTemplate":"In the reported data, the top three Race/Ethnicity categories with disabilities in your State are {{first}}, {{second}}, and {{third}}.",
+                      "explainTemplate": "In the reported data, the top three Race/Ethnicity categories with disabilities in your State are {{first}}, {{second}}, and {{third}}.",
                       "dataLabel": "Race / Ethnicity",
                       "chart": {
                         "filterOn": "x",
@@ -1476,7 +1476,7 @@
                       "title": "Educational Environments",
                       "description": "The following shows the distribution of children, 5-21, with disabilities in various Educational Environments in your State.",
                       "noDataDescription": "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
-                      "explainTemplate":"In the reported data, the top three Educational Environments categories students are in with disabilities in your State are, {{first}}, {{second}}, and {{third}}.",
+                      "explainTemplate": "In the reported data, the top three Educational Environments categories students are in with disabilities in your State are, {{first}}, {{second}}, and {{third}}.",
                       "dataLabel": "Education Environment",
                       "chart": {
                         "filterOn": "x",

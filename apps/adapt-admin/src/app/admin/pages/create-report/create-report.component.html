@@ -44,7 +44,6 @@
 
           <ng-container errors>
             <div
-         
               *ngIf="template?.invalid && (template?.dirty || template?.touched)"
               class="form-errors margin-top-1 text-emergency">
               <div *ngIf="template?.errors?.['required']" i18n>Report Template is required.</div>
@@ -69,7 +68,6 @@
             </ng-container>
             <ng-container errors>
               <div
-         
                 *ngIf="dataSet?.invalid && (dataSet?.dirty || dataSet?.touched)"
                 class="form-errors margin-top-1 text-emergency">
                 <div *ngIf="dataSet?.errors?.['required']">Data View is required.</div>

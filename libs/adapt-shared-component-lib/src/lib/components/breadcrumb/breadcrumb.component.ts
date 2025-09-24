@@ -1,7 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, NavigationCancel, NavigationEnd, Router } from '@angular/router';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  RouterEvent,
+  NavigationCancel,
+  NavigationEnd,
+  Router,
+} from '@angular/router';
+import {
+  BehaviorSubject,
   Observable,
+  Subject,
   combineLatest,
   distinctUntilChanged,
   filter,
@@ -20,21 +29,23 @@ import {
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss'],
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent implements OnInit, OnChanges {
   @Input() root = '';
+  @Input() contentMap: any = {};
   public paramsHistory: { [path: string]: any } = {};
 
-  public breadcrumbs: Observable<Breadcrumb[]> = this.router.events.pipe(
+  private lastNavigationEvent: BehaviorSubject<Event | string> = new BehaviorSubject<Event | string>('Init');
+
+  public breadcrumbs: Observable<Breadcrumb[]> = this.lastNavigationEvent.pipe(
     startWith('Init'),
-    distinctUntilChanged(),
+    //distinctUntilChanged(),
     filter((event) => event === 'Init' || event instanceof NavigationEnd || event instanceof NavigationCancel),
     map(() => {
       const breadcrumbs = [];
 
-      if(this.root.length) breadcrumbs.push({link: '', label: this.root})
+      if (this.root.length) breadcrumbs.push({ link: '', label: this.root });
 
-      return this.getBreadcrumbs(this.route.root, '', breadcrumbs)
-    
+      return this.getBreadcrumbs(this.route.root, '', breadcrumbs);
     })
   );
 
@@ -44,7 +55,22 @@ export class BreadcrumbComponent implements OnInit {
 
   showBreadcrumb = true;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    const contentMapChanges = changes['contentMap'];
+
+    if (contentMapChanges && !contentMapChanges.firstChange) {
+      this.lastNavigationEvent.next(this.lastNavigationEvent.getValue());
+    }
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd || event instanceof NavigationCancel))
+      .subscribe((event) => this.lastNavigationEvent.next(event as any));
+  }
 
   private getBreadcrumbs(route: ActivatedRoute, url = '', breadcrumbs: Breadcrumb[] = []): Breadcrumb[] {
     const children: ActivatedRoute[] = route.children;
@@ -60,12 +86,17 @@ export class BreadcrumbComponent implements OnInit {
 
       url += `/${routeURL}`;
 
-      let label = child.snapshot.data['breadcrumbLabel'] as string;
+      let label = child.snapshot.data['breadcrumbLabel'];
+      const type = child.snapshot.data['breadcrumbType'] ?? RouteBreadcrumbType.LITERAL;
+
+      if (type === RouteBreadcrumbType.CONTENT) {
+        label = this.contentMap?.[label] ?? label;
+      }
 
       const variableRegex = /{(.+?)}/g;
 
       if (label.match(variableRegex)) {
-        label = label.replace(variableRegex, (match, code) => {
+        label = label.replace(variableRegex, (match: string, code: string) => {
           return child.snapshot.params[code];
         });
       }
@@ -91,7 +122,7 @@ export class BreadcrumbComponent implements OnInit {
 
   private updateBreadcrumbVisibility(url: string) {
     // Assuming '/admin' is the route path for the home/landing page
-    this.showBreadcrumb = (url !== '/admin' && url !== '/');
+    this.showBreadcrumb = url !== '/admin' && !url.includes('error') && !url.includes('404') && url !== '/';
   }
 
   ngOnInit() {
@@ -111,4 +142,13 @@ interface Breadcrumb {
   link: string;
   label: string;
   queryParams?: any;
+}
+
+export enum RouteBreadcrumbType {
+  LITERAL,
+  CONTENT,
+}
+export interface RouteBreadcrumb {
+  breadcrumbLabel: string;
+  breadcrumbType: RouteBreadcrumbType;
 }

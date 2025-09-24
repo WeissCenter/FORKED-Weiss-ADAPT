@@ -15,103 +15,104 @@ export class SessionReloadBannerComponent {
 
   public dirty = false;
 
-  public cache?: UserTimeOutCache
+  public cache?: UserTimeOutCache;
 
   public review = '';
 
-  constructor(private user: UserService, private router: Router, private data: AdaptDataService){
+  constructor(
+    private user: UserService,
+    private router: Router,
+    private data: AdaptDataService
+  ) {
     this.user.userActivity$.subscribe(async (activity) => {
-      
-      if(!activity.cache || Object.keys(activity.cache).length <= 0) return;
+      if (!activity.cache || Object.keys(activity.cache).length <= 0) return;
 
       const cache = activity.cache;
 
-      if(Date.now() > cache.expiry) return;
+      if (Date.now() > cache.expiry) return;
 
       this.cache = cache;
 
       this.review = this.inactivityReview();
 
       this.show = true;
-
     });
   }
 
+  public resumeSession() {
+    if (!this.cache) return;
 
-
-  public resumeSession(){
-
-    if(!this.cache) return;
-
-    switch(this.cache.type){
-      case 'Report':{
-        
-        if(this.cache.action === 'CREATION'){
-          this.router.navigate(['admin', 'reports'], {state: {report: this.cache.body, dirty: this.cache.dirty}})
-        }else if (this.cache.action === 'EDIT'){
-          this.router.navigate(['admin', 'reports', this.cache.body.reportID], {state: {editMode: true, dirty: this.cache.dirty}, queryParams: {version: this.cache.body.version || 'draft'}})
+    switch (this.cache.type) {
+      case 'Report': {
+        if (this.cache.action === 'CREATION') {
+          this.router.navigate(['admin', 'reports'], { state: { report: this.cache.body, dirty: this.cache.dirty } });
+        } else if (this.cache.action === 'EDIT') {
+          this.router.navigate(['admin', 'reports', this.cache.body.reportID], {
+            state: { editMode: true, dirty: this.cache.dirty },
+            queryParams: { version: this.cache.body.version || 'draft' },
+          });
         }
 
-
         break;
       }
-      case 'DataSource':{
-        this.router.navigate(['admin', 'settings', 'data-sources'], {state: {mode: this.cache.action, dataSource: this.cache.body, dirty: this.cache.dirty}})
+      case 'DataSource': {
+        this.router.navigate(['admin', 'settings', 'data-sources'], {
+          state: { mode: this.cache.action, dataSource: this.cache.body, dirty: this.cache.dirty },
+        });
         break;
       }
-      case 'DataView':{
-        this.router.navigate(['admin', 'data-management'], {state: {mode: this.cache.action, dataView: this.cache.body, dirty: this.cache.dirty}})
+      case 'DataView': {
+        this.router.navigate(['admin', 'data-management'], {
+          state: { mode: this.cache.action, dataView: this.cache.body, dirty: this.cache.dirty },
+        });
         break;
       }
     }
 
     // clear cache
 
-    this.user.clearUserInactivity()
-
-
+    this.user.clearUserInactivity();
   }
 
-  public inactivityReview(){
-    if(!this.cache) return '';
+  public inactivityReview() {
+    if (!this.cache) return '';
 
     let base = '';
 
-    switch(this.cache.action){
-      case 'EDIT':{
-        base += "editing a "
+    switch (this.cache.action) {
+      case 'EDIT': {
+        base += 'editing a ';
         break;
       }
-      case 'CREATION':{
-        base += "creating a new "
+      case 'CREATION': {
+        base += 'creating a new ';
         break;
       }
-      case 'GENERIC_SAVE':{
-        base += "on a "
+      case 'GENERIC_SAVE': {
+        base += 'on a ';
         break;
       }
     }
 
-    switch(this.cache.type){
-      case 'DataSource':{
+    switch (this.cache.type) {
+      case 'DataSource': {
         base += `data source named: ${(this.cache.body as any).name}`;
         break;
       }
-      case 'Report':{
+      case 'Report': {
         base += `report named: ${(this.cache.body as any).title}`;
         break;
       }
-      case 'DataView':{
+      case 'DataView': {
         base += `data view named: ${(this.cache.body as any).name}`;
         break;
       }
-      case 'Generic':{
-        base += "page"
+      case 'Generic': {
+        base += 'page';
         break;
       }
     }
 
     return base;
   }
-
 }

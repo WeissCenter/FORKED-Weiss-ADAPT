@@ -14,4 +14,6 @@ export class HElementComponent {
   @Input() ngClass = '';
   @Input() level: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1';
   @Input() editable = false;
+
+  @Input() id = 'adapt-heading-' + Math.random().toString(36).substr(2, 9);
 }

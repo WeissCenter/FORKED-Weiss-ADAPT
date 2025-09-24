@@ -26,7 +26,7 @@
             formControlName="name"
             class="usa-input" />
           <div
-          role="alert"
+            role="alert"
             *ngIf="name?.invalid && (name?.dirty || name?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <p *ngIf="name?.errors?.['required']" i18n>Data source name is required</p>
@@ -47,18 +47,17 @@
             [items]="[
               {
                 label: 'SQL Database Connection',
-                value: 'sql'
+                value: 'sql',
               },
               {
                 label: 'File Upload',
-                value: 'file'
-              }
+                value: 'file',
+              },
             ]"
             itemLabel="label"
             itemAccessor="value">
             <ng-container errors>
               <div
-    
                 *ngIf="type?.invalid && (type?.dirty || type?.touched)"
                 class="form-errors margin-top-1 text-emergency">
                 <div *ngIf="type?.errors?.['required']">Source type is required.</div>
@@ -71,7 +70,7 @@
           <label class="usa-label margin-top-0" for="description" i18n>Description</label>
           <textarea type="text" id="description" formControlName="description" class="usa-textarea"></textarea>
           <div
-          role="alert"
+            role="alert"
             *ngIf="connectionInfo_secret?.invalid && (connectionInfo_secret?.dirty || connectionInfo_secret?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <div *ngIf="connectionInfo_secret?.errors?.['required']" i18n>Certificate is required.</div>
@@ -87,7 +86,7 @@
             >
             <input type="text" id="path" formControlName="path" class="usa-input" />
             <div
-            role="alert"
+              role="alert"
               *ngIf="path?.invalid && (path?.dirty || path?.touched)"
               class="form-errors margin-top-1 text-emergency">
               <div *ngIf="path?.errors?.['required']" i18n>Database URL is required.</div>
@@ -107,14 +106,13 @@
                 [items]="[
                   {
                     label: 'Microsoft SQL Server',
-                    value: 'mssql'
-                  }
+                    value: 'mssql',
+                  },
                 ]"
                 itemLabel="label"
                 itemAccessor="value">
                 <ng-container errors>
                   <div
-               
                     *ngIf="connectionInfo_type?.invalid && (connectionInfo_type?.dirty || connectionInfo_type?.touched)"
                     class="form-errors margin-top-1 text-emergency">
                     <div *ngIf="connectionInfo_type?.errors?.['required']" i18n>Database type is required.</div>
@@ -129,7 +127,7 @@
               >
               <input type="text" id="name" formControlName="database" class="usa-input" />
               <div
-              role="alert"
+                role="alert"
                 *ngIf="
                   connectionInfo_database?.invalid &&
                   (connectionInfo_database?.dirty || connectionInfo_database?.touched)
@@ -145,7 +143,7 @@
               >
               <input type="text" id="port" formControlName="port" class="usa-input" />
               <div
-              role="alert"
+                role="alert"
                 *ngIf="connectionInfo_port?.invalid && (connectionInfo_port?.dirty || connectionInfo_port?.touched)"
                 class="form-errors margin-top-1 text-emergency">
                 <div *ngIf="connectionInfo_port?.errors?.['required']" i18n>Port is required.</div>
@@ -161,7 +159,7 @@
                 >
                 <input type="text" id="name" formControlName="username" class="usa-input" />
                 <div
-                role="alert"
+                  role="alert"
                   *ngIf="
                     connectionInfo_username?.invalid &&
                     (connectionInfo_username?.dirty || connectionInfo_username?.touched)
@@ -185,7 +183,7 @@
                   {{ pwd.type === 'password' ? 'Show password' : 'Hide password' }}
                 </button>
                 <div
-                role="alert"
+                  role="alert"
                   *ngIf="
                     connectionInfo_password?.invalid &&
                     (connectionInfo_password?.dirty || connectionInfo_password?.touched)
@@ -206,7 +204,7 @@
                 <p class="usa-hint margin-top-05">(base64 pem format)</p>
                 <textarea type="text" id="secret" formControlName="secret" class="usa-textarea"></textarea>
                 <div
-                role="alert"
+                  role="alert"
                   *ngIf="
                     connectionInfo_secret?.invalid && (connectionInfo_secret?.dirty || connectionInfo_secret?.touched)
                   "
@@ -236,12 +234,12 @@
             [items]="[
               {
                 label: 'None',
-                value: 'default'
+                value: 'default',
               },
               {
                 label: 'FS002',
-                value: 'FS002'
-              }
+                value: 'FS002',
+              },
             ]"
             itemLabel="label"
             itemAccessor="value">
@@ -257,7 +255,7 @@
             accept=".csv">
             <ng-container errors>
               <div
-              role="alert"
+                role="alert"
                 *ngIf="path?.invalid && (path?.dirty || path?.touched)"
                 class="form-errors margin-top-1 text-emergency">
                 <div *ngIf="path?.errors?.['required']" i18n>A file is required</div>

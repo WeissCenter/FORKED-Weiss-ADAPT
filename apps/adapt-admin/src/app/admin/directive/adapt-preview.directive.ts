@@ -20,7 +20,11 @@ export class AdaptPreviewDirective implements OnInit {
   // Optional input that allows us to have multiple triggers on the same page that are all tied to the same feature flag (IE, all "share" buttons within report expandable list items).
   @Input() adaptPreviewCategory!: string;
 
-  constructor(private modalService: ModalService, private el: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private modalService: ModalService,
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit() {
     this.applyStyles();

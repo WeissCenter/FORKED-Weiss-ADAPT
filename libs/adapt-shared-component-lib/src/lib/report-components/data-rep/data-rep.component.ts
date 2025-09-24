@@ -1,12 +1,28 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { GlossaryService } from '../../services/glossary.service';
-
+import {
+  AdminContentText,
+  PageContentText,
+} from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 import { CommonModule } from '@angular/common';
 import { GlossaryPipe } from '../../pipes';
-import * as XLSX from 'xlsx'
-import { xlsx_delete_row } from '@adapt/types';
-import { chartExplainTemplateParse } from '@adapt/types';
+import { DataRepService, DataRepSettings } from '../../services/data-rep.service';
+import * as XLSX from 'xlsx';
 
+import { chartExplainTemplateParse, LanguageCode } from '@adapt/types';
+import { xlsx_delete_row } from '../../util';
 
 @Component({
   selector: 'lib-adapt-data-rep',
@@ -21,13 +37,19 @@ export class DataRepComponent implements OnInit, OnChanges {
   @ViewChild('dataModalCloseBtn') dataModalCloseBtn!: ElementRef;
   @ViewChild('dataModalSwitch') dataModalSwitch!: ElementRef;
   @ViewChild('bars') barPanel!: ElementRef;
-  @ViewChild('dataTable', {static: false}) dataTable!: ElementRef;
+  @ViewChild('dataTable', { static: false }) dataTable!: ElementRef;
 
+  @Input() lang = 'en';
+  @Input() localization = 'en-US';
   @Input() total = 0;
-  @Input() noDataItemCount = 0;
-  @Input() noDataSummary = '';
   @Input() suppressed = false;
   @Input() noData = false;
+  noDataSummary: any = {
+    count: 0,
+    summary: '',
+  };
+
+  @Input() content?: PageContentText;
 
   @Input() data: any[] = [];
   @Input() raw!: any;
@@ -51,21 +73,25 @@ export class DataRepComponent implements OnInit, OnChanges {
   showGlossary = false;
   showGlossaryBtn = false;
   glossaryIdsString = '';
-  dataRepSettings = {
-    showPlainLanguage: false,
-    showGlossary: false,
-  };
+  dataRepSettings!: DataRepSettings;
+
+  $fileSpec = computed(() => this.raw.fileSpec);
+
+  @Output() dataModalStateChange = new EventEmitter<boolean>();
 
   private firstFocusableElement: HTMLElement | null = null;
   private lastFocusableElement: HTMLElement | null = null;
   private focusableElementsString =
     'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable], li[tabindex="0"], li[tabindex="-1"], tr[tabindex="0"], tr[tabindex="-1"]';
 
-  localization = 'en-US';
-
-  constructor(private glossary: GlossaryService) {
+  constructor(
+    private glossary: GlossaryService,
+    private cd: ChangeDetectorRef,
+    public dataRepService: DataRepService
+  ) {
     const saved = JSON.parse(localStorage.getItem('adapt-data-rep-settings') || '{}');
     if (saved.showPlainLanguage || saved.showGlossary) this.dataRepSettings = saved;
+    this.dataRepSettings = this.dataRepService.retreiveSettingsLocally();
   }
 
   mapHeadingLvl(lvl: 1 | 2 | 3 | 4 | 5 | 6) {
@@ -116,15 +142,14 @@ export class DataRepComponent implements OnInit, OnChanges {
     });
   }
 
-
   generatePlainLanguageForZeroTotalItems() {
     // Build a plain language sentence detailing which items have no data to show when suppression is off, but items still have no data
     // Get items with no data
     const noDataItems = this.data.filter((item) => item[this.raw.chart.yAxisValue] <= 0);
-    this.noDataItemCount = noDataItems.length;
+
     // Get the plain language label for each item
     const plainLanguageItems = noDataItems.map(
-      (item) => this.glossary.getTermSafe(item[this.raw.chart.xAxisValue]).label
+      (item) => this.glossary.getTermSafe(item[this.raw.chart.xAxisValue], undefined, this.lang as LanguageCode).label
     );
     if (plainLanguageItems.length > 2) {
       // Join all items with commas, but the last item with 'and'
@@ -143,16 +168,20 @@ export class DataRepComponent implements OnInit, OnChanges {
 
   processData() {
     // If data is an array of objects, check if it has the optional definition property
-    if (this.data.length && this.data[0].definition) this.showGlossaryBtn = true;
+    if (this.data?.length && this.data[0].definition) this.showGlossaryBtn = true;
+
+    const data = this.raw.chart.data || this.raw.chart.data[0].value;
+    const { groupBy, xAxisValue, yAxisValue } = this.raw.chart;
+    const sumValue = yAxisValue === groupBy ? xAxisValue : yAxisValue;
 
     // Generate plain language summary
-    this.generatePlainLanguage();
+    this.generatePlainLanguage(sumValue);
 
     // Calculate total
-    if (this.total <= 0 && this.raw.chart.total <= 0) {
+    if (this.total <= 0 && (data.total ?? 0) <= 0) {
       this.total = this.data.reduce((acc, item) => acc + item[this.raw.chart.yAxisValue], 0);
-    } else if (this.total <= 0 && this.raw.chart.total > 0) {
-      this.total = this.raw.chart.total;
+    } else if (this.total <= 0 && (data.total ?? 0) > 0) {
+      this.total = data.total;
     }
 
     // Find largest value
@@ -166,7 +195,9 @@ export class DataRepComponent implements OnInit, OnChanges {
     // In the visual representation, the largest value fills the full width of the chart
     // effectively setting itself as "100%"
     this.data = this.data.map((item, index) => {
-      item.percentage ??= (item[this.raw.chart.yAxisValue] / this.total) * 100;
+      item.percentage = isNaN((item[this.raw.chart.yAxisValue] / this.total) * 100)
+        ? '0.00'
+        : (item[this.raw.chart.yAxisValue] / this.total) * 100;
       item.largest = item[this.raw.chart.yAxisValue] === largestValue;
       item.flexAmount = item[this.raw.chart.yAxisValue] / largestValue;
       glossaryItemIds.push(this.id + 'series-item-definition-' + index);
@@ -176,37 +207,63 @@ export class DataRepComponent implements OnInit, OnChanges {
     this.data.sort((a, b) => b[this.raw.chart.yAxisValue] - a[this.raw.chart.yAxisValue]);
     this.glossaryIdsString = glossaryItemIds.join(' ');
     this.generatePlainLanguageForZeroTotalItems();
+
+    this.suppressed = this.data.some((d) => d['suppressed']);
   }
 
-  generatePlainLanguage() {
+  generatePlainLanguage(sumValue: string) {
     // Slice the array to include only the top items as per plainLanguageMaxCount
     const topItems = this.data.slice(0, this.plainLanguageMaxCount);
 
     // Convert each item into a plain language string
     const plainLanguageItems = topItems.map((item) => {
       // Convert the value to a percentage string with two decimal places
-      const percentageResult = (
+      const percentageResult =
         (item[this.raw.chart.yAxisValue] / this.data.reduce((acc, cur) => acc + cur[this.raw.chart.yAxisValue], 0)) *
-        100
-      );
+        100;
 
       const percentage = isNaN(percentageResult) ? '0.00' : percentageResult.toFixed(2);
 
+      // console.log(this.glossary.getTermSafe(item[this.raw.chart.xAxisValue], undefined, this.lang as LanguageCode))
+
       // Format the string with the label and the percentage
-      return `${this.glossary.getTermSafe(item[this.raw.chart.xAxisValue]).label} (${percentage}%)`;
+      return `${
+        this.glossary.getTermSafe(item[this.raw.chart.xAxisValue], undefined, this.lang as LanguageCode).label
+      } (${percentage}%)`;
     });
 
     const explainTemplate = this.raw?.explainTemplate as string;
 
-    this.plainLanguage = chartExplainTemplateParse(explainTemplate, plainLanguageItems)
+    this.plainLanguage = chartExplainTemplateParse(
+      this.raw.chart.xAxisValue,
+      this.total,
+      sumValue,
+      this.data,
+      explainTemplate,
+      plainLanguageItems
+    );
   }
+
+  // Placeholder for teardown function; will be replaced when tab listeners are set up
+  private teardownTabListeners: () => void = () => {
+    // intentionally left blank
+  };
 
   togglePlainLanguage() {
     this.dataRepSettings.showPlainLanguage = !this.dataRepSettings.showPlainLanguage;
-    this.saveSettingsLocally();
-    this.setupTabbing();
-    // this.explanationSwitch.nativeElement.setAttribute('aria-pressed', this.dataRepSettings.showPlainLanguage);
-    // this.explainationRegion.nativeElement.setAttribute('aria-expanded', this.dataRepSettings.showPlainLanguage);
+    this.dataRepService.saveSettingsLocally(this.dataRepSettings);
+    // Remove old listeners (if any)
+    this.teardownTabListeners?.();
+    if (this.dataRepSettings.showPlainLanguage) {
+      this.teardownTabListeners = this.dataRepService.setupTabbing(true, {
+        region: this.explainationRegion,
+        backwardTrigger: this.explanationSwitch,
+        forwardTrigger: this.glossarySwitch,
+      });
+    } else {
+      // Restore focus to toggle
+      this.explanationSwitch.nativeElement.focus();
+    }
   }
 
   setupTabbing() {
@@ -253,7 +310,7 @@ export class DataRepComponent implements OnInit, OnChanges {
 
   toggleGlossary() {
     this.dataRepSettings.showGlossary = !this.dataRepSettings.showGlossary;
-    this.saveSettingsLocally();
+    this.dataRepService.saveSettingsLocally(this.dataRepSettings);
   }
 
   openDataModal() {
@@ -266,6 +323,7 @@ export class DataRepComponent implements OnInit, OnChanges {
 
     this.dataModalCloseBtn.nativeElement.focus();
     this.dataModal.nativeElement.addEventListener('keydown', this.trapTabKey);
+    this.dataModalStateChange.emit(true);
   }
 
   trapTabKey = (event: KeyboardEvent) => {
@@ -294,48 +352,107 @@ export class DataRepComponent implements OnInit, OnChanges {
     this.dataModal.nativeElement.hidden = true;
     this.dataModal.nativeElement.removeEventListener('keydown', this.trapTabKey);
     this.dataModalSwitch.nativeElement.focus(); // Return focus to the element that opened the modal
+    this.dataModalStateChange.emit(false);
   }
 
   ngOnInit(): void {
     if (this.raw) {
       this.header = this.raw.title ?? this.raw.name;
       this.insight = this.raw.subtitle ?? this.raw.description;
-      this.data = this.raw.chart.data;
-
-      // if (this.rawDataType === 'barChart')
-      //   this.data = this.mapToLabelValueArray(this.raw.chart.data);
-      // else this.data = this.mapToLabelValueArray(this.raw.data);
+      const value = this.dataRepService.processChartData(this.raw, this.id);
+      this.data = value.data;
+      this.total = value.total;
+      this.glossaryIdsString = value.glossaryIdsString;
+      this.plainLanguage = this.dataRepService.generatePlainLanguage(
+        this.raw,
+        this.total,
+        this.plainLanguageMaxCount,
+        this.lang
+      );
+      this.showGlossaryBtn = this.dataRepService.checkForDefinitions(this.data);
+      this.suppressed = this.data.some((d) => d['suppressed']);
+      this.noDataSummary = this.dataRepService.generatePlainLanguageForZeroTotalItems(this.raw, this.lang);
     }
-    this.processData();
   }
 
-  ngAfterViewInit(): void {
-    this.setupTabbing();
+  ngOnDestroy(): void {
+    // Clean up tab listeners if they were set up
+    if (this.teardownTabListeners) {
+      this.teardownTabListeners();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.noData = this.raw.chart.data?.length <= 0;
+    if (this.suppressed) {
+      const totalSelect = Array.isArray(this.raw.chart.data[0]?.value) ? this.raw.chart.data[0] : this.raw.chart;
+
+      const totalSelectTotalIsZero = (totalSelect.total ?? 0) === 0;
+      let totalSelectHasNoData = false;
+
+      if (totalSelect && 'data' in totalSelect) {
+        const totalSelectDataIsArray = Array.isArray(totalSelect.data);
+        const allDataValuesAreZero =
+          totalSelectDataIsArray && totalSelect.data.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
+        const totalSelectDataIsEmpty = totalSelectDataIsArray && totalSelect.data.length <= 0;
+
+        totalSelectHasNoData = totalSelectDataIsEmpty || allDataValuesAreZero;
+      } else if ('value' in totalSelect) {
+        const totalSelectValueIsArray = Array.isArray(totalSelect.value);
+        const totalSelectValueIsZero =
+          totalSelectValueIsArray && totalSelect.value.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
+        const totalSelectValueIsEmpty = totalSelectValueIsArray && totalSelect.value.length <= 0;
+        totalSelectHasNoData = totalSelectValueIsEmpty || totalSelectValueIsZero;
+      }
+
+      this.noData = totalSelectTotalIsZero && totalSelectHasNoData;
+    } else {
+      const select = this.raw.chart.data[0].value || this.raw.chart.data;
+
+      this.noData =
+        select?.length <= 0 ||
+        select.every((item: any) => {
+          if ('value' in item && item.value.length) {
+            return item.value.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
+          } else {
+            return item[this.raw.chart.yAxisValue] <= 0;
+          }
+        });
+    }
   }
 
-  public downloadData(what: 'csv' | 'xlsx'){
-    const fileName = `${this.header}.${what}`
+  public downloadData(what: 'csv' | 'xlsx') {
+    const fileName = `${this.header}.${what}`;
     const workbook = XLSX.utils.table_to_book(this.dataTable.nativeElement);
-    const worksheet = workbook.Sheets[workbook.SheetNames[0]]
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const range = XLSX.utils.decode_range(worksheet['!ref']!);
 
-    xlsx_delete_row(worksheet, range.e.r)
-   
-    XLSX.writeFile(workbook, fileName, {bookType: what});
+    xlsx_delete_row(worksheet, range.e.r);
+
+    XLSX.writeFile(workbook, fileName, { bookType: what });
   }
 
-  public get filterOrSuppress(){
-   if (this.filtered && this.suppressed){
-    return '(Suppressed, Filtered)'
-  }
-    else if(this.filtered){
-      return '(Filtered)';
-    }else if (this.suppressed){
-      return '(Suppressed)'
+  // public get filterOrSuppress() {
+  //   const filtered = this.filtered || this.currentFilter !== 'all';
+  //   if (filtered && this.suppressed) {
+  //     return `(${this.content?.actions?.['suppressed']}, ${this.content?.actions?.['filtered']})`;
+  //   } else if (filtered) {
+  //     return `(${this.content?.actions?.['filtered']})`;
+  //   } else if (this.suppressed) {
+  //     return `(${this.content?.actions?.['suppressed']})`;
+  //   }
+  //   return '';
+  // }
+
+  public get filterOrSuppress() {
+    const suppressed = this.content?.actions?.['suppressed'] || 'Suppressed';
+    const filtered = this.content?.actions?.['filtered'] || 'Filtered';
+
+    if (this.filtered && this.suppressed) {
+      return `(${suppressed}, ${filtered})`;
+    } else if (this.filtered) {
+      return `(${filtered})`;
+    } else if (this.suppressed) {
+      return `(${suppressed})`;
     }
     return '';
   }

@@ -1,1 +1,1 @@
-export * from './editable.directive'
+export * from './editable.directive';

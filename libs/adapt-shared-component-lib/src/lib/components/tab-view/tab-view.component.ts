@@ -48,8 +48,11 @@ export class TabViewComponent implements AfterContentInit, OnChanges {
   }
 
   public selectTab(index: number) {
+    if (this.tabIndex === index) return;
     this.tabIndex = index;
+
     this.tabIndexChange.emit(index);
+
     this.selectedTab = this.tabs.toArray()[index];
   }
 

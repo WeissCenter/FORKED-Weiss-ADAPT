@@ -14,12 +14,11 @@ import { ConfirmModalComponent } from '../../../../../../../../libs/adapt-shared
   styleUrls: ['./footer-links-settings.component.scss'],
 })
 export class FooterLinksSettingsComponent implements OnInit {
-  @ViewChild(ConfirmModalComponent) confirmModal! : ConfirmModalComponent;
+  @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
   public editLinks = false;
 
   public footerLinksForm: FormGroup;
 
-  
   public targetOptions = [
     { label: 'Same Tab', value: 'sameTab' },
     { label: 'New Tab', value: 'newTab' },
@@ -29,7 +28,7 @@ export class FooterLinksSettingsComponent implements OnInit {
   public confirmed = false;
   @HostListener('window:beforeunload')
   canDeactivate(isRouter = false, nextState?: RouterStateSnapshot): boolean {
-    if (isRouter && !this.confirmed){
+    if (isRouter && !this.confirmed) {
       this.confirmModal?.open(nextState?.url);
     }
 

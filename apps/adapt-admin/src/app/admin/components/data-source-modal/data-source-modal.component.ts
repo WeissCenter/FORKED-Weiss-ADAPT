@@ -104,23 +104,31 @@ export class DataSourceModalComponent implements OnDestroy {
     });
 
     const timeOutSub = this.idle.onTimeout.subscribe(() => {
+      if (!this.dataSourceForm.dirty) return;
 
-      if(!this.dataSourceForm.dirty) return;
-
-      switch(this.mode){
-        case PageMode.CREATE:{
-          this.user.userInactivitySave({action: 'CREATION', type: 'DataSource', body: {...this.dataSourceForm.getRawValue(), page: this.stepsIndicator.step}})
+      switch (this.mode) {
+        case PageMode.CREATE: {
+          this.user.userInactivitySave({
+            action: 'CREATION',
+            type: 'DataSource',
+            body: { ...this.dataSourceForm.getRawValue(), page: this.stepsIndicator.step },
+          });
           break;
         }
-        case PageMode.EDIT:{
-          this.user.userInactivitySave({action: 'EDIT', type: 'DataSource', body: {dataSourceID: this.currentDataSource?.dataSourceID, page: this.stepsIndicator.step, ...this.dataSourceForm.getRawValue()}})
+        case PageMode.EDIT: {
+          this.user.userInactivitySave({
+            action: 'EDIT',
+            type: 'DataSource',
+            body: {
+              dataSourceID: this.currentDataSource?.dataSourceID,
+              page: this.stepsIndicator.step,
+              ...this.dataSourceForm.getRawValue(),
+            },
+          });
           break;
         }
       }
-
- 
-
-    })
+    });
 
     this.subscriptions.push(justificationReasonSub, timeOutSub);
 
@@ -131,32 +139,36 @@ export class DataSourceModalComponent implements OnDestroy {
     this.password.disable();
   }
 
-  public open(dataSource?: DataSource | DataSource & DataSourceConnectionInfo, mode = PageMode.CREATE, page = 0, dirty = false) {
+  public open(
+    dataSource?: DataSource | (DataSource & DataSourceConnectionInfo),
+    mode = PageMode.CREATE,
+    page = 0,
+    dirty = false
+  ) {
     this.opened = true;
     this.mode = mode;
-
 
     if (dataSource) {
       this.currentDataSource = dataSource;
 
-      if(!dirty){
-          this.dataSourceForm.patchValue({
-            name: dataSource?.name,
-            description: dataSource?.description,
-            address: dataSource.path,
-            type: (dataSource as DataSourceConnectionInfo).type,
-            port: (dataSource as DataSourceConnectionInfo).port,
-            database: (dataSource as DataSourceConnectionInfo).database,
-            username: (dataSource as DataSourceConnectionInfo).username,
-            password: '',
-          });
+      if (!dirty) {
+        this.dataSourceForm.patchValue({
+          name: dataSource?.name,
+          description: dataSource?.description,
+          address: dataSource.path,
+          type: (dataSource as DataSourceConnectionInfo).type,
+          port: (dataSource as DataSourceConnectionInfo).port,
+          database: (dataSource as DataSourceConnectionInfo).database,
+          username: (dataSource as DataSourceConnectionInfo).username,
+          password: '',
+        });
       }
 
-      if(this.mode === PageMode.EDIT) {
+      if (this.mode === PageMode.EDIT) {
         this.data.getDataSource(dataSource.dataSourceID as string, true).subscribe({
           next: (result) => {
             const connectionInfo = result as DataSourceConnectionInfo;
-            const dataSource = result as DataSource
+            const dataSource = result as DataSource;
 
             let patch = {
               type: connectionInfo.type,
@@ -164,20 +176,20 @@ export class DataSourceModalComponent implements OnDestroy {
               database: connectionInfo.database,
               username: connectionInfo.username,
               password: '',
-            }
+            };
 
-            if(dirty){
+            if (dirty) {
               patch = Object.assign(patch, {
                 name: dataSource?.name,
                 description: dataSource?.description,
                 address: dataSource.path,
                 password: '',
-              })
+              });
             }
-  
+
             this.dataSourceForm.patchValue(patch);
           },
-  
+
           error: () => {
             this.alert.add({
               type: 'error',
@@ -188,8 +200,6 @@ export class DataSourceModalComponent implements OnDestroy {
           },
         });
       }
-
-
     }
 
     this.modal.open();
@@ -197,7 +207,6 @@ export class DataSourceModalComponent implements OnDestroy {
     this.currentStep = page;
 
     this.handleCurrentStep();
-
   }
 
   private handleCurrentStep() {
@@ -330,7 +339,7 @@ export class DataSourceModalComponent implements OnDestroy {
 
   public internalClose() {
     this.modal.close();
-    this.confirmCloseModal.close()
+    this.confirmCloseModal.close();
     this.reset();
   }
 

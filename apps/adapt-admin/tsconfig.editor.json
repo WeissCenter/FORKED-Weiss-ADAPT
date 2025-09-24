@@ -1,6 +1,21 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts", "../../libs/adapt-shared-component-lib/src/lib/directive/editable.directive.spec.ts", "../../libs/adapt-shared-component-lib/src/lib/services/alert.service.spec.ts", "../../libs/adapt-shared-component-lib/src/lib/services/alert.service.ts", "../../libs/adapt-shared-component-lib/src/lib/pipes/report-condition.pipe.spec.ts", "../../libs/adapt-shared-component-lib/src/lib/pipes/report-condition.pipe.ts", "../../libs/adapt-shared-component-lib/src/lib/services/filterpanel.service.spec.ts", "../../libs/adapt-shared-component-lib/src/lib/services/filterpanel.service.ts", "../../libs/adapt-shared-component-lib/src/lib/services/paginate.pipe.spec.ts", "../../libs/adapt-shared-component-lib/src/lib/pipes/paginate.pipe.ts", "../../libs/adapt-shared-component-lib/src/lib/services/loading.pipe.spec.ts", "../../libs/adapt-shared-component-lib/src/lib/services/loading.pipe.ts", "../../libs/adapt-shared-component-lib/src/lib/services/template.service.spec.ts", "../../libs/adapt-shared-component-lib/src/lib/services/template.service.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/directive/editable.directive.spec.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/alert.service.spec.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/alert.service.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/pipes/report-condition.pipe.spec.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/pipes/report-condition.pipe.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/filterpanel.service.spec.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/filterpanel.service.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/paginate.pipe.spec.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/pipes/paginate.pipe.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/loading.pipe.spec.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/loading.pipe.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/template.service.spec.ts",
+    "../../libs/adapt-shared-component-lib/src/lib/services/template.service.ts"
+  ],
   "compilerOptions": {
     "types": ["jest", "node"]
   }
