@@ -11,7 +11,7 @@ export const environment = {
   clientId: '',
   contentRoot: 'assets/text',
   contentFileName: 'admin-content-text.json',
-  appDomain: '',
+  appDomain: 'sandbox-admin.adaptdata.org',
   enforceLogin: true,
   envLabel: 'Prod',
   enforceRole: true,
