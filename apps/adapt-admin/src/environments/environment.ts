@@ -3,7 +3,7 @@ export const environment = {
   VAPID_KEY: '',
   cognitoRegion: 'us-east-1',
   cognitoDomainName: '',
-  s3PublicAssetsDomainName: 'dev-adapt-public-assets-bucket',
+  s3PublicAssetsDomainName: '',
   clientId: '',
   enforceLogin: true,
   envLabel: 'LOCAL',
