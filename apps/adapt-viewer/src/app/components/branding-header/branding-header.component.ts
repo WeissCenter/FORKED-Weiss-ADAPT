@@ -16,7 +16,7 @@ export class BrandingHeaderComponent {
   public $homeContent = this.content.$homeContent;
 
   constructor(public content: ViewerPagesContentService) {
-    this.logoURL = 'assets/shared/logos/viewer-header-logo.svg';
+    this.logoURL = 'assets/shared/svg/state-hero-logo.svg';
     this.svgLogo = this.logoURL.toString().includes('.svg');
   }
 }
