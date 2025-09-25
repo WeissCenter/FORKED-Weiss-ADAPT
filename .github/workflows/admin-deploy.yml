@@ -12,7 +12,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  BUCKET: tobeadded
+  BUCKET: weiss-sandbox-adaptstaticsitest-sitebucket397a1860-m7pllzrq0rwu
   CF_DISTRIBUTION: ENXIHU8DXOX21
   CONFIGURATION: production
 
