@@ -3,7 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ModalComponent, SettingsService } from '@adapt/adapt-shared-component-lib';
-import { environment } from 'apps/adapt-admin/src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { DOCUMENT } from '@angular/common';
 import { WeissAccessibilityCenterService } from 'weiss-accessibility-center';
