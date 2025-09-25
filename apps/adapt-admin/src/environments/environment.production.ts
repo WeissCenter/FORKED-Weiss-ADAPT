@@ -6,7 +6,7 @@ export const environment = {
   API_URL: 'https://8s5i39nu4f.execute-api.us-east-1.amazonaws.com/weiss-sandbox/',
   VAPID_KEY: 'BDSuXbUMbbtgKUGRJIVJugq9xU_J3zYv2ybPXveUYYNyXI0vNuFfzsGpYXgc-LjT3QPCWNba0qjcFuE18KJHt7c',
   cognitoRegion: 'us-east-1',
-  cognitoDomainName: 'sandbox-adaptadmin',
+  cognitoDomainName: 'weiss-sandbox-adaptadmin',
   s3PublicAssetsDomainName: 'weiss-sandbox-adaptpublicassetsbucket',
   clientId: '18ob1nlf000htqlthkqmqr0e4q',
   contentRoot: 'assets/text',
