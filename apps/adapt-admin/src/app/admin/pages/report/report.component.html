@@ -1,148 +1,125 @@
-<section
-  *ngIf="$reportPageContent() as content"
+<section *ngIf="$reportPageContent() as content"
   class="report-container grid-container position-relative gap-4 display-flex flex-column"
-  [class.z-100]="!showFilterPanel && !dataModalOpen"
-  [class.z-200]="showFilterPanel || dataModalOpen"
+  [class.z-100]="!showFilterPanel && !dataModalOpen" [class.z-200]="showFilterPanel || dataModalOpen"
   [ngClass]="{ 'padding-x-0': preview }">
   <!--
   {{getFormErrors(editReportForm) | json}} -->
 
   <ng-container *ngIf="{ template: $template | async, error: templateErrorSubject | async } as data">
-    <ng-container *ngIf="data.template && !loading">
-      <!--  -->
-      <ng-container *ngIf="editAudience.value === 'external' && isEditMode()">
-        <div class="language-switcher display-flex gap-2">
-          <button
-            (click)="getLang(-1)"
-            *ngIf="getLangLabel(-1) as label"
-            [attr.aria-label]="'Switch to ' + label"
-            class="usa-button flex-align-self-end width-4 height-4">
-            <i class="fal fa-arrow-left"></i>
-          </button>
 
-          <lib-adapt-combo-box
-            [(ngModel)]="$formLang"
-            [label]="($englishReportPageContent()?.sections)![0].questions![1].label"
-            (ngModelChange)="getLang()"
-            [items]="$languageOptions()"
-            itemAccessor="value"
-            itemLocalizedLabel="localizedLabel"
+    <ng-container *ngIf="data.template && !loading ">
+      <!--  -->
+      <ng-container *ngIf="editAudience.value === 'external'  && isEditMode() ">
+
+        <div class="language-switcher display-flex gap-2 ">
+
+          <button (click)="getLang(-1)" *ngIf="getLangLabel(-1) as label" [attr.aria-label]="'Switch to ' + label"
+            class="usa-button flex-align-self-end width-4 height-4"><i class="fal fa-arrow-left"></i></button>
+
+          <lib-adapt-combo-box [(ngModel)]="$formLang" [label]="$englishReportPageContent()?.sections![0].questions![1].label" (ngModelChange)="getLang()"
+            [items]="$languageOptions()" itemAccessor="value" itemLocalizedLabel="localizedLabel"
             itemLabel="label"></lib-adapt-combo-box>
 
-          <button
-            (click)="getLang(1)"
-            *ngIf="getLangLabel(1) as label"
-            [attr.aria-label]="'Switch to ' + label"
-            class="usa-button flex-align-self-end width-4 height-4">
-            <i class="fal fa-arrow-right"></i>
-          </button>
+          <button (click)="getLang(1)" *ngIf="getLangLabel(1) as label" [attr.aria-label]="'Switch to ' + label"
+            class="usa-button flex-align-self-end width-4 height-4"><i class="fal fa-arrow-right"></i></button>
+
         </div>
 
-        <button
-          *ngIf="getLangLabel(1) as label"
-          (click)="generateTranslations()"
-          type="button"
-          class="usa-button flex-align-self-start">
-          {{ ($englishReportPageContent()?.actions)!['generate_translations'] }}
-        </button>
+        <button *ngIf="getLangLabel(1) as label" (click)="generateTranslations()" type="button"
+          class="usa-button flex-align-self-start">{{$englishReportPageContent()?.actions!['generate_translations']}}</button>
 
-        <div
-          role="alert"
-          *ngIf="
-            ((defaultReportText.dirty || defaultReportText.touched) && defaultReportText.invalid) ||
-            (reportTexts.controls.length > 1 && reportTexts.invalid)
-          "
+
+        <div role="alert"
+          *ngIf="((defaultReportText.dirty || defaultReportText.touched) && defaultReportText.invalid) || (reportTexts.controls.length > 1 && reportTexts.invalid)"
           class="form-errors margin-top-1 display-flex flex-column text-emergency">
+
           @let showVerificationErrors = showVerifcationErrors();
-          <p *ngIf="!translationsGenerated && showVerificationErrors">
-            {{ ($englishReportPageContent()?.actions)!['translation_error'] }}
-          </p>
+          <p *ngIf="!translationsGenerated && showVerificationErrors">{{$englishReportPageContent()?.actions!['translation_error']}}</p>
+
 
           <ul *ngIf="showVerificationErrors" class="usa-list">
-            <li>
-              Missing Language Verifications:
+            <li>Missing Language Verifications:
 
               <ul>
                 <ng-container *ngFor="let grp of reportTexts.controls; let i = index">
+
                   <ng-container *ngIf="grp.get('verified')! as ctrl">
+
                     <ng-container *ngIf="ctrl.hasError('required')">
+
+
+
                       <ng-container *ngIf="$languageOptions() as opts">
-                        <li>{{ opts[i].label }}</li>
+
+
+
+                        <li>{{opts[i].label}}</li>
+
                       </ng-container>
+
                     </ng-container>
+
+
                   </ng-container>
+
                 </ng-container>
               </ul>
+
             </li>
           </ul>
+
         </div>
+
+
+
       </ng-container>
       <form (ngSubmit)="onEditSave()" class="display-flex flex-column gap-2" [formGroup]="editReportForm">
         <!-- Form Version of Header -->
         <ng-container *ngIf="isEditMode()">
           <div formArrayName="reportTexts" class="report-header width-full display-flex usa-prose flex-column">
+        
             <ng-container *ngFor="let grp of reportTexts.controls; let i = index" [formGroupName]="i">
               <div class="report-header-controls display-flex flex-column gap-2" *ngIf="i === langIndex">
-                <lib-adapt-toggle-switch
-                  class="flex-align-self-start"
-                  *ngIf="i > 0 && report.visibility === 'external'"
-                  [unToggledLabel]="($englishReportPageContent()?.actions)!['verify_translations']"
-                  [toggledLabel]="($englishReportPageContent()?.actions)!['verified']"
+                <lib-adapt-toggle-switch class="flex-align-self-start" *ngIf="i > 0 && report.visibility === 'external'"
+                  [unToggledLabel]="$englishReportPageContent()?.actions!['verify_translations']" [toggledLabel]="$englishReportPageContent()?.actions!['verified']"
                   formControlName="verified"></lib-adapt-toggle-switch>
-
-                <lib-adapt-h-element
-                  [formGroup]="$any(grp)"
-                  controlName="title"
-                  [editable]="true"
-                  [level]="preview ? 'h2' : 'h1'"
-                  ngClass="margin-0 usa-prose"
-                  >{{ editTitle.value }}</lib-adapt-h-element
-                >
-
-                <div
-                  role="alert"
-                  *ngIf="editTitle?.invalid && (editTitle?.dirty || editTitle?.touched)"
+        
+                <lib-adapt-h-element [formGroup]="$any(grp)" controlName="title" [editable]="true"
+                  [level]="preview ? 'h2' : 'h1'" ngClass="margin-0 usa-prose">{{
+                  editTitle.value
+                  }}</lib-adapt-h-element>
+        
+                <div role="alert" *ngIf="editTitle?.invalid && (editTitle?.dirty || editTitle?.touched)"
                   class="form-errors margin-top-1 text-emergency">
+        
                   <div *ngIf="editTitle?.errors?.['required']" i18n>Report title is required.</div>
                   <div *ngIf="editTitle?.errors?.['uniqueName']" i18n>Report title needs to unique.</div>
                 </div>
-
+        
                 <p formControlName="description" [libAdaptEditable]="true" ariaLabel="Report Description">
                   {{ editDescription.value }}
                 </p>
-
-                <div
-                  role="alert"
-                  *ngIf="editDescription?.invalid && (editDescription?.dirty || editDescription?.touched)"
+        
+                <div role="alert" *ngIf="editDescription?.invalid && (editDescription?.dirty || editDescription?.touched)"
                   class="form-errors margin-top-1 text-emergency">
                   <div *ngIf="editDescription?.errors?.['required']" i18n>Report description is required.</div>
                 </div>
               </div>
             </ng-container>
           </div>
-          <lib-adapt-radio-select
-            display="row"
-            [required]="true"
-            legend="Who is the audience for the report?"
-            formControlName="audience"
-            [items]="radioSelectItems"></lib-adapt-radio-select>
-
-          <div
-            role="alert"
-            *ngIf="editAudience?.invalid && (editAudience?.dirty || editAudience?.touched)"
+          <lib-adapt-radio-select display="row" [required]="true" legend="Who is the audience for the report?"
+            formControlName="audience" [items]="radioSelectItems"></lib-adapt-radio-select>
+        
+          <div role="alert" *ngIf="editAudience?.invalid && (editAudience?.dirty || editAudience?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <div *ngIf="editAudience?.errors?.['required']" i18n>Report audience is required.</div>
           </div>
-
+        
           <ng-container *ngIf="editAudience.value === 'external'">
             <!-- [label]="pageSections[1].questions![1].label" [hint]="pageSections[1].questions![1].comment" -->
-            <lib-adapt-text-input
-              [patterns]="{ A: { pattern: slugPattern } }"
-              mask="A*"
-              label="Public report identifier"
+            <lib-adapt-text-input [patterns]="{ 'A': { pattern: slugPattern } }" mask="A*" label="Public report identifier"
               hint="We have populated this field with a report identifier based on the report template you selected, which will be displayed on the Public Viewer site. You can also create your own friendly and unique report identifier before publishing."
-              type="short"
-              formControlName="slug">
+              type="short" formControlName="slug">
               <div required>Public report identifier is required</div>
               <div uniqueName>Public report identifier must be unique</div>
             </lib-adapt-text-input>
@@ -152,8 +129,7 @@
         <!-- Display Version of Header -->
         <ng-container *ngIf="!isEditMode()">
           <lib-adapt-h-element [level]="preview ? 'h2' : 'h1'" ngClass="margin-0 maxw-tablet-lg usa-prose">{{
-            data.template.title
-          }}</lib-adapt-h-element>
+            data.template.title }}</lib-adapt-h-element>
           <p ariaLabel="Report Description">
             {{ data.template.description }}
           </p>
@@ -165,82 +141,66 @@
             <span class="display-flex gap-1">
               <span *ngIf="preview"><span class="usa-tag bg-accent-warm-lighter text-ink">Preview</span></span>
               <ng-container *ngIf="!preview">
-                {{ $reportSharedContent()?.createUpdate?.lastUpdated }}: {{ report.updated | date }}
-                {{ $reportSharedContent()?.createUpdate?.createdBy }}: {{ report.author }}
+                {{ $reportSharedContent()?.createUpdate?.lastUpdated }}: {{ report.updated | date }} {{ $reportSharedContent()?.createUpdate?.createdBy }}: {{ report.author }}
                 <lib-adapt-tag [status]="report.version">{{ report.version | titlecase }}</lib-adapt-tag>
               </ng-container>
 
               <lib-adapt-tag [status]="report.visibility">
                 {{ report.visibility | titlecase }}
               </lib-adapt-tag>
-              <!--              <lib-adapt-tag *ngIf="!preview && report.reportingLevel" [status]="report.reportingLevel">-->
-              <!--                {{ report.reportingLevel }}-->
-              <!--              </lib-adapt-tag>-->
-              <!--              <lib-adapt-tag *ngIf="preview && report.reportingLevel" [status]="report.reportingLevel.value">-->
-              <!--                {{ report.reportingLevel.value }}-->
-              <!--              </lib-adapt-tag>-->
+<!--              <lib-adapt-tag *ngIf="!preview && report.reportingLevel" [status]="report.reportingLevel">-->
+<!--                {{ report.reportingLevel }}-->
+<!--              </lib-adapt-tag>-->
+<!--              <lib-adapt-tag *ngIf="preview && report.reportingLevel" [status]="report.reportingLevel.value">-->
+<!--                {{ report.reportingLevel.value }}-->
+<!--              </lib-adapt-tag>-->
             </span>
           </p>
 
           <div class="display-flex gap-2 flex-align-center flex-wrap">
             <ng-container *ngIf="mode === PageMode.VIEW">
-              <lib-adapt-checkbox
-                *ngIf="report.visibility === 'external' && reportTemplateHasSuppression"
-                [(checked)]="previewSuppress"
-                (checkedChange)="onSuppress($any($event))"
-                label="Suppress Data"
+
+              <lib-adapt-checkbox *ngIf="report.visibility === 'external' && reportTemplateHasSuppression" [(checked)]="previewSuppress"
+                (checkedChange)="onSuppress($any($event))" label="Suppress Data"
                 classes="border-2px border-secondary {{ previewSuppress ? 'bg-secondary-lighter' : '' }}">
               </lib-adapt-checkbox>
 
               <ng-container *ngIf="!preview">
-                <button
-                  *adaptAccessControl="'Reports'; behavior: 'hide'; action: 'Write'"
-                  (click)="editReport()"
-                  id="editReportBtn"
-                  type="button"
-                  class="usa-button usa-button--outline">
+
+                <button *adaptAccessControl="'Reports'; behavior: 'hide'; action: 'Write'" (click)="editReport()"
+                  id="editReportBtn" type="button" class="usa-button usa-button--outline">
                   <i class="fal fa-pencil" aria-hidden="true"></i>
                   Edit
                 </button>
 
-                <button
-                  type="button"
-                  *adaptAccessControl="
-                    'Reports';
-                    behavior: 'hide';
-                    action: 'Approve';
-                    extraCondition: report.version === ReportVersion.DRAFT && report.visibility === 'external'
-                  "
-                  (click)="reportTexts.invalid ? publishWarningModal?.open() : publishConfirmationModal?.open()"
+                <button type="button" *adaptAccessControl="
+                'Reports';
+                behavior: 'hide';
+                action: 'Approve';
+                extraCondition: report.version === ReportVersion.DRAFT && report.visibility === 'external'
+              " (click)="reportTexts.invalid ? publishWarningModal?.open() : publishConfirmationModal?.open()"
                   class="usa-button shadow-none width-auto align-self-start">
                   Publish
                 </button>
 
-                <button
-                  type="button"
-                  (click)="unPublishModal?.open()"
-                  *adaptAccessControl="
-                    'Reports';
-                    behavior: 'hide';
-                    action: 'Approve';
-                    extraCondition: report.version === ReportVersion.FINALIZED && report.visibility === 'external'
-                  "
-                  class="usa-button shadow-none width-auto align-self-start">
+                <button type="button" (click)="unPublishModal?.open()" *adaptAccessControl="
+                'Reports';
+                behavior: 'hide';
+                action: 'Approve';
+                extraCondition: report.version === ReportVersion.FINALIZED && report.visibility === 'external'
+              " class="usa-button shadow-none width-auto align-self-start">
                   Un-Publish
                 </button>
+
               </ng-container>
             </ng-container>
 
             <ng-container *ngIf="mode === PageMode.EDIT && !preview">
-              <button
-                type="button"
-                (click)="cancel()"
+              <button type="button" (click)="cancel()"
                 class="usa-button usa-button--outline width-auto align-self-start">
                 Cancel
               </button>
-              <button
-                type="button"
-                (click)="resetModal?.open()"
+              <button type="button" (click)="resetModal?.open()"
                 class="usa-button usa-button--outline usa-button width-auto align-self-start">
                 Reset
               </button>
@@ -254,33 +214,29 @@
       </form>
     </ng-container>
 
+
     <ng-container *ngIf="data.template && !loading; else loadingWrapper">
       <div
         class="report-heading-controls display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full gap-2">
         <div *ngIf="data.template?.pages?.[reportTabIndex] as reportPage" class="report-header">
           <h2>{{ reportPage.title }}</h2>
-          <p>{{ reportPage.description }}</p>
+          <!-- <p>{{ reportPage.description }}</p> -->
         </div>
 
         <div class="heading-controls display-flex gap-3 flex-align-self-end flex-wrap">
           <div class="flex-column">
-            <label class="usa-label" for="options">{{
-              ($englishReportPageContent()?.sections)![0].questions![1].label
-            }}</label>
-            <select
-              *ngIf="editAudience.value === 'external'"
-              [(ngModel)]="$reportLang"
-              (ngModelChange)="onReportLangChange($event)"
-              aria-labelledby="options"
-              class="usa-select width-auto display-inline"
-              name="options"
-              id="options">
+            <label class="usa-label" for="options">{{$englishReportPageContent()?.sections![0].questions![1].label}}</label>
+            <select *ngIf="editAudience.value === 'external'" [(ngModel)]="$reportLang"
+              (ngModelChange)="onReportLangChange($event)" aria-labelledby="options"
+              class="usa-select width-auto display-inline" name="options" id="options">
               <option *ngFor="let langOption of $languageOptions()" [value]="langOption.value">
-                {{ langOption.label }}
-                <span *ngIf="langOption.localizedLabel !== langOption.label">({{ langOption.localizedLabel }})</span>
+                {{ langOption.label }} <span *ngIf="langOption.localizedLabel !== langOption.label">({{ langOption.localizedLabel
+                  }})</span>
               </option>
             </select>
           </div>
+
+
 
           <!-- <button id="editReportBtn" type="button" class="usa-button text-emergency flex-column usa-button--unstyled"
                     *ngIf="!preview">
@@ -288,69 +244,54 @@
                     Suppress
                 </button> -->
 
-          <button
-            id="filterPanelButton"
-            (click)="toggleFilterPanel()"
-            type="button"
+
+          <button id="filterPanelButton" (click)="toggleFilterPanel()" type="button"
             class="usa-button flex-column flex-align-self-end usa-button--unstyled"
             *ngIf="!preview && showFilterButton">
             <i class="fal fa-filter" aria-hidden="true"></i>
-            {{ content.actions!['filter'] }}
+            {{content.actions!['filter']}}
           </button>
         </div>
       </div>
 
       <ng-container *ngIf="data.template?.pages?.length; else onlySections">
-        <div
-          [hidden]="!previewSuppress"
-          aria-live="assertive"
+        <div [hidden]="!previewSuppress" aria-live="assertive"
           class="display-flex full-width border-left-05 border-error border-bottom-05 padding-x-105 gap-105 padding-y-2 bg-white"
-          style="border-bottom-color: var(--usa-base-lighter)"
-          role="alert">
+          style="border-bottom-color: var(--usa-base-lighter)" role="alert">
           <i class="fas fa-users-slash font-md" role="img" aria-hidden="true"></i>
           <div class="display-flex gap-1 flex-column">
-            <h3 class="font-md text-semibold line-height-2 margin-0">{{ content.sections![1].header }}</h3>
+            <h3 class="font-md text-semibold line-height-2 margin-0">{{content.sections![1].header}}</h3>
             <p class="measure-3 margin-0 font-sm line-height-3">
-              {{ content.sections![1].description }}
-              <button
-                class="usa-button usa-button--unstyled"
+              {{content.sections![1].description}}
+              <button class="usa-button usa-button--unstyled"
                 (click)="previewSuppress = false; onSuppress(previewSuppress)">
-                <span class="text-lowercase">{{ content.actions!['un_suppress_data'] }}</span>
+                <span class="text-lowercase">{{content.actions!['un_suppress_data']}}</span>
               </button>
             </p>
           </div>
         </div>
-        <div
-          aria-live="assertive"
-          [hidden]="!filterSummary.totalFilters"
+        <div aria-live="assertive" [hidden]="!filterSummary.totalFilters"
           class="display-flex full-width border-left-1 border-warning border-bottom-05 padding-x-105 gap-105 padding-y-2 bg-white"
-          style="border-bottom-color: var(--usa-base-lighter)"
-          role="alert">
+          style="border-bottom-color: var(--usa-base-lighter)" role="alert">
           <div class="display-flex gap-1 flex-column">
-            <h3 class="font-md text-semibold line-height-2 margin-0">{{ content.sections![3].header }}</h3>
+            <h3 class="font-md text-semibold line-height-2 margin-0">{{content.sections![3].header}}</h3>
             <p class="usa-prose margin-0 font-sm line-height-3">
-              {{
-                content.sections![3].description
-                  | parseStringTemplate
-                    : { filter_count: filterSummary.totalFilters, category_count: filterSummary.categoriesWithFilters }
-              }}
+              {{content.sections![3].description | parseStringTemplate : {filter_count: filterSummary.totalFilters,
+              category_count: filterSummary.categoriesWithFilters } }}
             </p>
             <div class="display-flex margin-top-1 gap-2">
               <button (click)="toggleFilterPanel()" class="usa-button font-xs usa-button--unstyled">
-                {{ content.actions!['open_filter_panel'] }}
+                {{content.actions!['open_filter_panel']}}
               </button>
               <button (click)="confirmResetFilters()" class="usa-button font-xs usa-button--unstyled">
-                {{ content.actions!['reset_all_filters'] }}
+                {{content.actions!['reset_all_filters']}}
               </button>
             </div>
           </div>
         </div>
-        <div
-          aria-live="assertive"
-          [hidden]="!showResetFilters || filterSummary.totalFilters > 0"
+        <div aria-live="assertive" [hidden]="!showResetFilters || filterSummary.totalFilters > 0"
           class="display-flex full-width border-left-1 border-warning border-bottom-05 padding-x-105 gap-105 padding-y-2 bg-white"
-          style="border-bottom-color: var(--usa-base-lighter)"
-          role="alert">
+          style="border-bottom-color: var(--usa-base-lighter)" role="alert">
           <div class="display-flex gap-1 flex-column">
             <h3 class="font-md text-semibold line-height-2 margin-0">Filters reset to default options</h3>
             <p class="usa-prose margin-0 font-sm line-height-2">
@@ -368,9 +309,8 @@
           <adapt-tab *ngFor="let page of data.template.pages" [name]="page.name">
             <div class="report-content display-flex gap-2 flex-column">
               <ng-container *ngFor="let section of page.sections; let isFirst = first">
-                <ng-container
-                  [ngTemplateOutlet]="sectionTemplate"
-                  [ngTemplateOutletContext]="{ section, page, content }"></ng-container>
+                <ng-container [ngTemplateOutlet]="sectionTemplate"
+                  [ngTemplateOutletContext]="{section, page, content}"></ng-container>
               </ng-container>
             </div>
           </adapt-tab>
@@ -380,30 +320,20 @@
       <ng-template #onlySections>
         <div class="report-content display-flex gap-2 flex-column">
           <ng-container *ngFor="let section of data.template.sections; let isFirst = first">
-            <ng-container [ngTemplateOutlet]="sectionTemplate" [ngTemplateOutletContext]="{ section }"></ng-container>
+            <ng-container [ngTemplateOutlet]="sectionTemplate" [ngTemplateOutletContext]="{section}"></ng-container>
           </ng-container>
         </div>
       </ng-template>
 
-      <adapt-right-side-panel
-        *ngIf="!preview"
-        [close]="content.actions!['close       ']"
-        [title]="content.actions!['filter']"
-        [description]="content.actions!['filter_description']"
-        #filterPanel>
+      <adapt-right-side-panel *ngIf="!preview" [close]="content.actions!['close       ']"
+        [title]="content.actions!['filter']" [description]="content.actions!['filter_description']" #filterPanel>
         <ng-container body>
           <form [formGroup]="filterFormGroup" class="display-flex flex-column margin-top-1 gap-3">
-            <ng-container *ngFor="let filter of data.template.filters | keyvalue: originalOrder">
+            <ng-container *ngFor="let filter of data.template.filters | keyvalue : originalOrder">
               <ng-container *ngIf="showFilter(data.template, $any(filter.value))">
-                <ng-container
-                  *ngTemplateOutlet="
+                <ng-container *ngTemplateOutlet="
                     filterTemplate;
-                    context: {
-                      $implicit: filter,
-                      form: filterFormGroup,
-                      content: $reportSharedContent(),
-                      labels: content.actions,
-                    }
+                    context: { $implicit: filter, form: filterFormGroup, content: $reportSharedContent(), labels: content.actions}
                   "></ng-container>
               </ng-container>
             </ng-container>
@@ -411,22 +341,16 @@
         </ng-container>
 
         <ng-container footer>
-          <p class="usa-prose margin-y-0 font-sm line-height-2">
-            {{ content.actions!['filter_controls_description'] }}
-          </p>
+          <p class="usa-prose margin-y-0 font-sm line-height-2">{{content.actions!['filter_controls_description']}}</p>
           <div class="display-flex flex-justify gap-2">
-            <button
-              type="button"
-              class="usa-button"
+            <button type="button" class="usa-button"
               (click)="toggleFilterPanel(); onFilter.next(filterFormGroup.value)">
-              {{ content.actions!['apply_and_close'] }}
+              {{content.actions!['apply_and_close']}}
             </button>
             <button type="button" class="usa-button usa-button--unstyled" (click)="confirmResetFilters()">
-              {{ content.actions!['reset'] }}
-            </button>
+              {{content.actions!['reset']}}</button>
             <button type="button" class="usa-button usa-button--unstyled" (click)="toggleFilterPanel()">
-              {{ content.actions!['cancel'] }}
-            </button>
+              {{content.actions!['cancel']}}</button>
           </div>
         </ng-container>
       </adapt-right-side-panel>
@@ -443,14 +367,14 @@
       </ng-container>
     </ng-template>
 
+
     <ng-container *ngIf="data.error">
       <div class="error-wrapper display-flex margin-bottom-auto flex-column flex-align-center" aria-live="polite">
         <div class="display-flex flex-column flex-align-center height-viewport flex-justify-center gap-1">
           <i class="far text-emergency font-2xl fa-exclamation-triangle"></i>
 
-          <strong class="usa-prose maxw-tablet"
-            >The data view provided is either unsupported or contains errors.</strong
-          >
+          <strong class="usa-prose maxw-tablet">The data view provided is either unsupported or contains
+            errors.</strong>
           <strong class="usa-prose maxw-tablet">Please check your data view for errors and try again.</strong>
         </div>
       </div>
@@ -464,24 +388,14 @@
     <ng-container [ngSwitch]="$any(filter.value).type">
       <div class="display-flex flex-column width-full position-relative">
         <span *ngIf="!loadingAvailableFilters">
-          <lib-adapt-multi-select
-            *ngSwitchCase="'multiselect'"
-            (applyFn)="applyFilterChanges()"
-            [label]="$any(filter.value).label"
-            [content]="content.multiSelect"
-            [originalItems]="existingFilters[$any(filter.value).code] || []"
-            [selectID]="$any(filter.value).code"
-            [formControlName]="$any(filter.value).code"
-            [items]="$any($any(filter.value).filter).options"
-            itemLabel="label"
-            itemAccessor="value"></lib-adapt-multi-select>
+          <lib-adapt-multi-select *ngSwitchCase="'multiselect'" (applyFn)="applyFilterChanges()"
+            [label]="$any(filter.value).label" [content]="content.multiSelect"
+            [originalItems]="existingFilters[$any(filter.value).code] || []" [selectID]="$any(filter.value).code"
+            [formControlName]="$any(filter.value).code" [items]="$any($any(filter.value).filter).options"
+            itemLabel="label" itemAccessor="value"></lib-adapt-multi-select>
         </span>
-        <lib-adapt-radio-select
-          *ngSwitchCase="'select'"
-          [required]="false"
-          [hint]="labels['preset_hint']"
-          [legend]="labels['filter_groups']"
-          [formControlName]="$any(filter.value).code"
+        <lib-adapt-radio-select *ngSwitchCase="'select'" [required]="false" [hint]="labels['preset_hint']"
+          [legend]="labels['filter_groups']" [formControlName]="$any(filter.value).code"
           [items]="$any($any(filter.value).filter).options"></lib-adapt-radio-select>
       </div>
     </ng-container>
@@ -491,66 +405,33 @@
 <!-- Report Template Section -->
 <ng-template let-section="section" let-content="content" let-page="page" #sectionTemplate>
   <ng-container *ngIf="$onFilter | async as filters">
-    <section
-      [attr.aria-label]="section.sectionLabel"
-      *ngIf="section | reportCondition: filters : page.context : reportTabIndex as sectionResult">
+    <section [attr.aria-label]="section.sectionLabel"
+      *ngIf="section | reportCondition : filters : page.context : reportTabIndex as sectionResult">
       <ng-container *ngIf="sectionResult.section as section">
         <ng-container [ngSwitch]="section.type">
-          <lib-adapt-quick-summary
-            *ngSwitchCase="'quickSummary'"
-            [report]="report"
-            [content]="section.content"
+
+          <lib-adapt-quick-summary *ngSwitchCase="'quickSummary'" [report]="report" [content]="section.content"
             [cmsContent]="content.sections[2]"></lib-adapt-quick-summary>
-          <lib-adapt-data-rep
-            [content]="content"
-            [filtered]="filtered"
-            [lang]="$reportLang()"
-            [suppressed]="previewSuppress"
-            *ngSwitchCase="'barChart'"
-            [noData]="sectionResult.noData"
-            rawDataType="barChart"
-            [filterClass]="filterClass"
-            [raw]="section.content"
+          <lib-adapt-data-rep [content]="content" [filtered]="filtered" [lang]="$reportLang()"
+            [suppressed]="previewSuppress" *ngSwitchCase="'barChart'" [noData]="sectionResult.noData"
+            rawDataType="barChart" [filterClass]="filterClass" [raw]="section.content"
             (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep>
-          <lib-adapt-data-rep
-            [content]="content"
-            [filtered]="filtered"
-            [lang]="$reportLang()"
-            [suppressed]="previewSuppress"
-            [filterClass]="filterClass"
-            [noData]="sectionResult.noData"
-            *ngSwitchCase="'countBreakdown'"
-            [raw]="section.content"
+          <lib-adapt-data-rep [content]="content" [filtered]="filtered" [lang]="$reportLang()"
+            [suppressed]="previewSuppress" [filterClass]="filterClass" [noData]="sectionResult.noData"
+            *ngSwitchCase="'countBreakdown'" [raw]="section.content"
             (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep>
-          <lib-adapt-data-rep-grouped
-            [lang]="$reportLang()"
-            [content]="content"
-            [filtered]="filtered"
-            [suppressed]="previewSuppress"
-            [filterClass]="filterClass"
-            *ngSwitchCase="'barChartGrouped'"
-            [noData]="sectionResult.noData"
-            [raw]="section.content"
+          <lib-adapt-data-rep-grouped [lang]="$reportLang()" [content]="content" [filtered]="filtered"
+            [suppressed]="previewSuppress" [filterClass]="filterClass" *ngSwitchCase="'barChartGrouped'"
+            [noData]="sectionResult.noData" [raw]="section.content"
             (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep-grouped>
-          <lib-adapt-grid-view
-            [cmsContent]="content"
-            [filtered]="filtered"
-            [page]="page"
-            [lang]="$reportLang()"
-            [tabIndex]="reportTabIndex"
-            [suppressed]="previewSuppress"
-            [filters]="filters"
-            *ngSwitchCase="'gridView'"
-            [filterClass]="filterClass"
-            [report]="report"
-            [content]="section.content"
+          <lib-adapt-grid-view [cmsContent]="content" [filtered]="filtered" [page]="page" [lang]="$reportLang()"
+            [tabIndex]="reportTabIndex" [suppressed]="previewSuppress" [filters]="filters" *ngSwitchCase="'gridView'"
+            [filterClass]="filterClass" [report]="report" [content]="section.content"
             (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-grid-view>
 
-          <lib-adapt-report-heading-block
-            *ngSwitchCase="'header'"
+          <lib-adapt-report-heading-block *ngSwitchCase="'header'"
             [content]="section.content"></lib-adapt-report-heading-block>
-          <lib-adapt-report-comment-block
-            *ngSwitchCase="'comment'"
+          <lib-adapt-report-comment-block *ngSwitchCase="'comment'"
             [content]="section.content"></lib-adapt-report-comment-block>
         </ng-container>
       </ng-container>
@@ -608,6 +489,8 @@
   <div class="confirm-modal-body display-flex flex-column gap-2">
     <p class="usa-prose">Are you sure you save these edits?</p>
 
+
+
     <div class="confirm-modal-footer display-flex gap-2">
       <button class="usa-button" (click)="onEditSave(true)">Confirm</button>
       <button class="usa-button usa-button--unstyled" (click)="editConfirmationModal?.close()">Cancel</button>
@@ -618,19 +501,21 @@
 <!-- Publish Warning Modal -->
 <lib-adapt-modal closeText="Close" heading="Publish Warning" #publishWarningModal>
   <div class="confirm-modal-body display-flex flex-column gap-2">
-    <p class="usa-prose">
-      Before publishing this report, you must verify the translations by selecting “Verify Translations”.
+    <p class="usa-prose">Before publishing this report, you must verify the translations by selecting “Verify
+      Translations”.
     </p>
 
     <p class="usa-prose">
       We recommend having a language specialist review them for accuracy. Once confirmed, try publishing again.
     </p>
 
+
     <div class="confirm-modal-footer display-flex gap-2">
       <button class="usa-button" (click)="publishWarningModal?.close()">Acknowledge</button>
     </div>
   </div>
 </lib-adapt-modal>
+
 
 <div aria-live="polite" id="filterStateMessage" *ngIf="filterStateMessage" class="visually-hidden">
   {{ filterStateMessage }}

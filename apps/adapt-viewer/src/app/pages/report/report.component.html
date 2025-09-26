@@ -1,7 +1,6 @@
 <section
-  class="report-container grid-container position-relative gap-4 display-flex flex-column"
-  [class.z-100]="!showFilterPanel && !dataModalOpen"
-  [class.z-200]="showFilterPanel || dataModalOpen"
+  class="report-container grid-container position-relative gap-4 display-flex flex-column" 
+  [class.z-100]="!showFilterPanel && !dataModalOpen" [class.z-200]="showFilterPanel || dataModalOpen"
   *ngIf="$report | async as rpt">
   <div class="report-header width-full display-flex usa-prose flex-column">
     <lib-adapt-h-element level="h1" ngClass="margin-0 maxw-tablet-lg usa-prose">{{
@@ -13,48 +12,47 @@
     </p>
   </div>
 
+
   <ng-container *ngIf="$reportContent()">
-    <lib-adapt-page-alert
-      *ngIf="showSuppressionWarning"
-      [alert]="{
-        type: 'warning',
-        title: ($reportContent()?.suppressionWarning)!.heading,
-        body: ($reportContent()?.suppressionWarning)!.description,
-      }"></lib-adapt-page-alert>
 
-    <ng-container *ngIf="{ template: $template | async, error: templateErrorSubject | async } as data">
-      <ng-container *ngIf="data.template && !loading; else loadingWrapper">
-        <div
-          class="report-heading-controls display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full gap-2">
-          <div *ngIf="data.template?.pages?.[reportTabIndex] as reportPage" class="report-header">
-            <h2>{{ reportPage.title }}</h2>
-            <p>{{ reportPage.description }}</p>
-          </div>
+    <lib-adapt-page-alert *ngIf="showSuppressionWarning" [alert]="{type: 'warning', title: $reportContent()?.suppressionWarning!.heading, body: $reportContent()?.suppressionWarning!.description}"></lib-adapt-page-alert>
 
-          <div class="heading-controls display-flex gap-2 flex-align-center flex-wrap">
-            <button
-              (click)="openShareModal()"
-              id="shareReportBtn"
-              type="button"
-              class="usa-button flex-column padding-2 usa-button--unstyled">
-              <i class="fal fa-share" aria-hidden="true"></i>
-              {{ $reportContent()?.actions?.share }}
-            </button>
 
-            <button
-              id="filterPanelButton"
-              (click)="toggleFilterPanel()"
-              type="button"
-              class="usa-button flex-column usa-button--unstyled"
-              *ngIf="availableFilters && showFilterButton">
-              <i class="fal fa-filter" aria-hidden="true"></i>
-              {{ $reportContent()?.actions?.filter }}
-            </button>
-          </div>
+
+
+  <ng-container *ngIf="{ template: $template | async, error: templateErrorSubject | async } as data">
+    <ng-container *ngIf="data.template && !loading; else loadingWrapper">
+      <div
+        class="report-heading-controls display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full gap-2">
+        <div *ngIf="data.template?.pages?.[reportTabIndex] as reportPage" class="report-header">
+          <h2>{{ reportPage.title }}</h2>
+          <!-- <p>{{ reportPage.description }}</p> -->
         </div>
 
-        <ng-container *ngIf="data.template?.pages?.length; else onlySections">
-          <!-- <div
+        <div class="heading-controls display-flex gap-2 flex-align-center flex-wrap">
+          <button
+            (click)="openShareModal()"
+            id="shareReportBtn"
+            type="button"
+            class="usa-button flex-column padding-2 usa-button--unstyled">
+            <i class="fal fa-share" aria-hidden="true"></i>
+            {{$reportContent()?.actions?.share}}
+          </button>
+
+          <button
+            id="filterPanelButton"
+            (click)="toggleFilterPanel()"
+            type="button"
+            class="usa-button flex-column usa-button--unstyled"
+            *ngIf="availableFilters && showFilterButton">
+            <i class="fal fa-filter" aria-hidden="true"></i>
+            {{$reportContent()?.actions?.filter}}
+          </button>
+        </div>
+      </div>
+
+      <ng-container *ngIf="data.template?.pages?.length; else onlySections">
+        <!-- <div
           aria-live="assertive"
           class="display-flex full-width border-left-05 border-error border-bottom-05 padding-x-105 gap-105 padding-y-2 bg-white"
           style="border-bottom-color: var(--usa-base-lighter)"
@@ -74,135 +72,128 @@
             </p>
           </div>
         </div> -->
-          <div
-            aria-live="assertive"
-            [hidden]="!filterSummary.totalFilters"
-            class="display-flex full-width border-left-1 border-warning border-bottom-05 padding-x-105 gap-105 padding-y-2 bg-white"
-            style="border-bottom-color: var(--usa-base-lighter)"
-            role="alert">
-            <div class="display-flex gap-1 flex-column">
-              <h3 class="font-md text-semibold line-height-2 margin-0">Filters applied</h3>
-              <p class="usa-prose margin-0 font-sm line-height-3">
-                There are {{ filterSummary.totalFilters }} filters applied across
-                {{ filterSummary.categoriesWithFilters }} categories.
-              </p>
-              <div class="display-flex margin-top-1 gap-2">
-                <button (click)="toggleFilterPanel()" class="usa-button font-xs usa-button--unstyled">
-                  {{ ($reportContent()?.actions)!['open_filter_panel'] }}
-                </button>
-                <button (click)="confirmResetFilters()" class="usa-button font-xs usa-button--unstyled">
-                  {{ ($reportContent()?.actions)!['reset_all_filters'] }}
-                </button>
-              </div>
+        <div
+          aria-live="assertive"
+          [hidden]="!filterSummary.totalFilters"
+          class="display-flex full-width border-left-1 border-warning border-bottom-05 padding-x-105 gap-105 padding-y-2 bg-white"
+          style="border-bottom-color: var(--usa-base-lighter)"
+          role="alert">
+          <div class="display-flex gap-1 flex-column">
+            <h3 class="font-md text-semibold line-height-2 margin-0">Filters applied</h3>
+            <p class="usa-prose margin-0 font-sm line-height-3">
+              There are {{ filterSummary.totalFilters }} filters applied across
+              {{ filterSummary.categoriesWithFilters }} categories.
+            </p>
+            <div class="display-flex margin-top-1 gap-2">
+              <button (click)="toggleFilterPanel()" class="usa-button font-xs usa-button--unstyled">
+                {{$reportContent()?.actions!['open_filter_panel']}}
+              </button>
+              <button (click)="confirmResetFilters()" class="usa-button font-xs usa-button--unstyled">
+                {{$reportContent()?.actions!['reset_all_filters']}}
+              </button>
             </div>
           </div>
-          <div
-            aria-live="assertive"
-            [hidden]="!showResetFilters || filterSummary.totalFilters > 0"
-            class="display-flex full-width border-left-1 border-warning border-bottom-05 padding-x-105 gap-105 padding-y-2 bg-white"
-            style="border-bottom-color: var(--usa-base-lighter)"
-            role="alert">
-            <div class="display-flex gap-1 flex-column">
-              <h3 class="font-md text-semibold line-height-2 margin-0">Filters reset to default options</h3>
-              <p class="usa-prose margin-0 font-sm line-height-2">
-                Now showing the default filter settings for this report.
-              </p>
-              <div class="display-flex margin-top-1 gap-2">
-                <button (click)="usePreviousFilters()" class="usa-button font-xs usa-button--unstyled">
-                  Undo reset
-                </button>
-                <button (click)="showResetFilters = false" class="usa-button font-xs usa-button--unstyled">
-                  Dismiss
-                </button>
-              </div>
+        </div>
+        <div
+          aria-live="assertive"
+          [hidden]="!showResetFilters || filterSummary.totalFilters > 0"
+          class="display-flex full-width border-left-1 border-warning border-bottom-05 padding-x-105 gap-105 padding-y-2 bg-white"
+          style="border-bottom-color: var(--usa-base-lighter)"
+          role="alert">
+          <div class="display-flex gap-1 flex-column">
+            <h3 class="font-md text-semibold line-height-2 margin-0">Filters reset to default options</h3>
+            <p class="usa-prose margin-0 font-sm line-height-2">
+              Now showing the default filter settings for this report.
+            </p>
+            <div class="display-flex margin-top-1 gap-2">
+              <button (click)="usePreviousFilters()" class="usa-button font-xs usa-button--unstyled">Undo reset</button>
+              <button (click)="showResetFilters = false" class="usa-button font-xs usa-button--unstyled">
+                Dismiss
+              </button>
             </div>
           </div>
-          <adapt-tab-view (tabIndexChange)="onTabChange($event)" [(tabIndex)]="reportTabIndex">
-            <adapt-tab *ngFor="let page of data.template.pages" [name]="page.name">
-              <div class="report-content display-flex gap-2 flex-column">
-                <ng-container *ngFor="let section of page.sections; let isFirst = first">
-                  <ng-container
-                    [ngTemplateOutlet]="sectionTemplate"
-                    [ngTemplateOutletContext]="{ section, page, cmsContent: $reportContent() }"></ng-container>
-                </ng-container>
-              </div>
-            </adapt-tab>
-          </adapt-tab-view>
-        </ng-container>
-
-        <ng-template #onlySections>
-          <div class="report-content display-flex gap-2 flex-column">
-            <ng-container *ngFor="let section of data.template.sections; let isFirst = first">
-              <ng-container
-                [ngTemplateOutlet]="sectionTemplate"
-                [ngTemplateOutletContext]="{ section, cmsContent: $reportContent() }"></ng-container>
-            </ng-container>
-          </div>
-        </ng-template>
-
-        <adapt-right-side-panel
-          [title]="'Filter'"
-          [description]="'Make your filtering selections and hit apply.'"
-          #filterPanel>
-          <ng-container body>
-            <form [formGroup]="filterFormGroup" class="display-flex flex-column margin-top-1 gap-3">
-              <ng-container *ngFor="let filter of data.template.filters | keyvalue: originalOrder">
-                <ng-container *ngIf="showFilter(data.template, $any(filter.value))">
-                  <ng-container
-                    *ngTemplateOutlet="
-                      filterTemplate;
-                      context: { $implicit: filter, form: filterFormGroup }
-                    "></ng-container>
-                </ng-container>
+        </div>
+        <adapt-tab-view (tabIndexChange)="onTabChange($event)" [(tabIndex)]="reportTabIndex">
+          <adapt-tab *ngFor="let page of data.template.pages" [name]="page.name">
+            <div class="report-content display-flex gap-2 flex-column">
+              <ng-container *ngFor="let section of page.sections; let isFirst = first">
+                <ng-container
+                  [ngTemplateOutlet]="sectionTemplate"
+                  [ngTemplateOutletContext]="{section, page, cmsContent: $reportContent()}"></ng-container>
               </ng-container>
-            </form>
-          </ng-container>
-
-          <ng-container footer>
-            <p class="usa-prose margin-y-0 font-sm line-height-2">Hit apply to save your changes.</p>
-            <div class="display-flex gap-2">
-              <button
-                type="button"
-                class="usa-button"
-                (click)="toggleFilterPanel(); onFilter.next(filterFormGroup.value)">
-                Apply and close
-              </button>
-              <button type="button" class="usa-button usa-button--unstyled" (click)="confirmResetFilters()">
-                Reset
-              </button>
-              <button type="button" class="usa-button usa-button--unstyled" (click)="toggleFilterPanel()">
-                Cancel
-              </button>
             </div>
-          </ng-container>
-        </adapt-right-side-panel>
+          </adapt-tab>
+        </adapt-tab-view>
       </ng-container>
 
-      <ng-template #loadingWrapper>
-        <ng-container *ngIf="!data.error && loading">
-          <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="true">
-            <div class="display-flex flex-column flex-align-center gap-1">
-              <img src="assets/gif/dna.gif" alt aria-hidden="true" />
-              <strong class="usa-prose">We are working on your report. This should only take a moment.</strong>
-            </div>
-          </div>
-        </ng-container>
+      <ng-template #onlySections>
+        <div class="report-content display-flex gap-2 flex-column">
+          <ng-container *ngFor="let section of data.template.sections; let isFirst = first">
+            <ng-container [ngTemplateOutlet]="sectionTemplate" [ngTemplateOutletContext]="{section, cmsContent: $reportContent()}"></ng-container>
+          </ng-container>
+        </div>
       </ng-template>
 
-      <ng-container *ngIf="data.error">
-        <div class="error-wrapper display-flex margin-bottom-auto flex-column flex-align-center" aria-live="polite">
-          <div class="display-flex flex-column flex-align-center height-viewport flex-justify-center gap-1">
-            <i class="far text-emergency font-2xl fa-exclamation-triangle"></i>
+      <adapt-right-side-panel
+        [title]="'Filter'"
+        [description]="'Make your filtering selections and hit apply.'"
+        #filterPanel>
+        <ng-container body>
+          <form [formGroup]="filterFormGroup" class="display-flex flex-column margin-top-1 gap-3">
+            <ng-container *ngFor="let filter of data.template.filters | keyvalue : originalOrder">
+              <ng-container *ngIf="showFilter(data.template, $any(filter.value))">
+                <ng-container
+                  *ngTemplateOutlet="
+                    filterTemplate;
+                    context: { $implicit: filter, form: filterFormGroup }
+                  "></ng-container>
+              </ng-container>
+            </ng-container>
+          </form>
+        </ng-container>
 
-            <strong class="usa-prose maxw-tablet"
-              >The data view provided is either unsupported or contains errors.</strong
-            >
-            <strong class="usa-prose maxw-tablet">Please check your data view for errors and try again.</strong>
+        <ng-container footer>
+          <p class="usa-prose margin-y-0 font-sm line-height-2">Hit apply to save your changes.</p>
+          <div class="display-flex gap-2">
+            <button
+              type="button"
+              class="usa-button"
+              (click)="toggleFilterPanel(); onFilter.next(filterFormGroup.value)">
+              Apply and close
+            </button>
+            <button type="button" class="usa-button usa-button--unstyled" (click)="confirmResetFilters()">Reset</button>
+            <button type="button" class="usa-button usa-button--unstyled" (click)="toggleFilterPanel()">Cancel</button>
+          </div>
+        </ng-container>
+      </adapt-right-side-panel>
+    </ng-container>
+
+    <ng-template #loadingWrapper>
+      <ng-container *ngIf="!data.error && loading">
+        <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="true">
+          <div class="display-flex flex-column flex-align-center gap-1">
+            <img src="assets/gif/dna.gif" alt aria-hidden="true" />
+            <strong class="usa-prose">We are working on your report. This should only take a moment.</strong>
           </div>
         </div>
       </ng-container>
+    </ng-template>
+
+    <ng-container *ngIf="data.error">
+      <div class="error-wrapper display-flex margin-bottom-auto flex-column flex-align-center" aria-live="polite">
+        <div class="display-flex flex-column flex-align-center height-viewport flex-justify-center gap-1">
+          <i class="far text-emergency font-2xl fa-exclamation-triangle"></i>
+
+          <strong class="usa-prose maxw-tablet"
+            >The data view provided is either unsupported or contains errors.</strong
+          >
+          <strong class="usa-prose maxw-tablet">Please check your data view for errors and try again.</strong>
+        </div>
+      </div>
     </ng-container>
   </ng-container>
+
+</ng-container>
 </section>
 
 <ng-template let-filter let-form="form" #filterTemplate>
@@ -233,14 +224,16 @@
 </ng-template>
 
 <ng-template let-section="section" let-cmsContent="cmsContent" let-page="page" #sectionTemplate>
+
   @let lang = language.$language() || 'en';
 
   <ng-container *ngIf="$onFilter | async as filters">
     <section
       [attr.aria-label]="section.sectionLabel"
-      *ngIf="section | reportCondition: filters : page.context : reportTabIndex as sectionResult">
+      *ngIf="section | reportCondition : filters : page.context : reportTabIndex as sectionResult">
       <ng-container *ngIf="sectionResult.section as section">
         <ng-container [ngSwitch]="section.type">
+    
           <lib-adapt-quick-summary
             *ngSwitchCase="'quickSummary'"
             [report]="_report"
@@ -257,7 +250,8 @@
             rawDataType="barChart"
             [filterClass]="filterClass"
             [raw]="section.content"
-            (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep>
+            (dataModalStateChange)="onDataModalStateChange($event)"
+            ></lib-adapt-data-rep>
           <lib-adapt-data-rep
             [filtered]="filtered"
             [suppressed]="suppressed"
@@ -267,7 +261,8 @@
             [noData]="sectionResult.noData"
             *ngSwitchCase="'countBreakdown'"
             [raw]="section.content"
-            (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep>
+            (dataModalStateChange)="onDataModalStateChange($event)"
+            ></lib-adapt-data-rep>
           <lib-adapt-data-rep-grouped
             [filtered]="filtered"
             [content]="cmsContent"
@@ -277,7 +272,8 @@
             *ngSwitchCase="'barChartGrouped'"
             [noData]="sectionResult.noData"
             [raw]="section.content"
-            (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-data-rep-grouped>
+            (dataModalStateChange)="onDataModalStateChange($event)"
+            ></lib-adapt-data-rep-grouped>
           <lib-adapt-grid-view
             [filtered]="filtered"
             [page]="page"
@@ -290,7 +286,8 @@
             [filterClass]="filterClass"
             [report]="_report"
             [content]="section.content"
-            (dataModalStateChange)="onDataModalStateChange($event)"></lib-adapt-grid-view>
+            (dataModalStateChange)="onDataModalStateChange($event)"
+            ></lib-adapt-grid-view>
 
           <lib-adapt-report-heading-block
             *ngSwitchCase="'header'"
