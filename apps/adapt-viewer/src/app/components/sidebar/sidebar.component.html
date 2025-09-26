@@ -4,99 +4,73 @@
   aria-label="App Sidebar Menu"
   [ngClass]="{ collapsed: nav_collapsed }">
   <section class="sidebar-content display-flex gap-1 bg-white flex-column width-full padding-1">
-    <button
-      [attr.aria-expanded]="!nav_collapsed"
-      type="button"
-      class="usa-button gap-0 flex-column usa-button--outline shadow-none"
-      id="expand-menu-button"
-      (click)="toggleNav()"
+
+    <button [attr.aria-expanded]="!nav_collapsed" type="button"
+      class="usa-button gap-0 flex-column usa-button--outline shadow-none" id="expand-menu-button" (click)="toggleNav()"
       i18n>
       <ng-container *ngIf="nav_collapsed">
         <i aria-hidden="true" class="fal fa-bars"></i>
-        <span class="font-3xs"
-          ><span class="display-none tablet:display-inline">{{ $sidebar()?.open }} </span>{{ $sidebar()?.menu }}</span
-        >
+        <span class="font-3xs"><span class="display-none tablet:display-inline">{{$sidebar()?.open}}
+          </span>{{$sidebar()?.menu}}</span>
       </ng-container>
 
       <ng-container *ngIf="!nav_collapsed">
         <i aria-hidden="true" class="fal fa-arrow-from-right"></i>
-        <span class="font-3xs"
-          ><span class="display-none tablet:display-inline">{{ $sidebar()?.collapse }} </span
-          >{{ $sidebar()?.menu }}</span
-        >
+        <span class="font-3xs"><span class="display-none tablet:display-inline">{{$sidebar()?.collapse}}
+          </span>{{$sidebar()?.menu}}</span>
       </ng-container>
     </button>
 
     <div class="sidebar-header">
       <div class="display-flex width-full padding-1 gap-1 flex-align-center flex-justify-center">
-        <lib-adapt-inline-svg
-          alt="Weiss logo"
-          [src]="sidebarLogo"
-          svgClass="display-flex width-6"></lib-adapt-inline-svg>
+        <img *ngIf="sidebarLogo" [src]="sidebarLogo" class="logo" alt="ADAPT Instance Logo" />
       </div>
     </div>
 
     <nav aria-label="primary" class="margin-top-1">
       <ul #navList role="menubar" aria-orientation="vertical" class="usa-icon-list display-flex flex-column gap-05">
         <li role="none">
-          <a
-            aria-describedby="home"
-            role="menuitem"
-            routerLink="/"
-            (click)="closeMenuOnNavigation()"
-            routerLinkActive="active-nav hover:bg-primary-dark"
-            [routerLinkActiveOptions]="{ exact: true }"
+          <a aria-describedby="home" role="menuitem" routerLink="/" (click)="closeMenuOnNavigation()"
+            routerLinkActive="active-nav hover:bg-primary-dark" [routerLinkActiveOptions]="{ exact: true }"
             class="usa-icon-list__item site-nav">
             <i aria-hidden="true" class="fal fa-home"></i>
-            <span id="home"> {{ $sidebar()?.home }} </span>
+            <span id="home"> {{$sidebar()?.home}} </span>
           </a>
         </li>
         <li role="none">
-          <a
-            aria-describedby="reports"
-            role="menuitem"
-            routerLink="reports"
-            (click)="closeMenuOnNavigation()"
-            routerLinkActive="active-nav hover:bg-primary-dark "
-            [routerLinkActiveOptions]="{ exact: true }"
+          <a aria-describedby="reports" role="menuitem" routerLink="reports" (click)="closeMenuOnNavigation()"
+            routerLinkActive="active-nav hover:bg-primary-dark " [routerLinkActiveOptions]="{ exact: true }"
             class="usa-icon-list__item site-nav">
             <i aria-hidden="true" class="fal fa-chart-line"></i>
-            <span> {{ $sidebar()?.reports }} </span>
+            <span> {{$sidebar()?.reports}} </span>
           </a>
         </li>
         <li role="none">
-          <a
-            aria-describedby="resources"
-            role="menuitem"
-            routerLink="resources"
-            (click)="closeMenuOnNavigation()"
-            routerLinkActive="active-nav hover:bg-primary-dark"
-            [routerLinkActiveOptions]="{ exact: true }"
-            id="resourcesBtn"
-            class="usa-icon-list__item site-nav">
+          <a aria-describedby="resources" role="menuitem" routerLink="resources" (click)="closeMenuOnNavigation()"
+            routerLinkActive="active-nav hover:bg-primary-dark" [routerLinkActiveOptions]="{ exact: true }"
+            id="resourcesBtn" class="usa-icon-list__item site-nav">
             <i aria-hidden="true" class="fal fa-file"></i>
-            <span> {{ $sidebar()?.resources }} </span>
+            <span> {{$sidebar()?.resources}} </span>
           </a>
         </li>
         <li role="none">
           <button role="menuitem" (click)="langPanel.open()" class="usa-icon-list__item site-nav width-full">
             <i aria-hidden="true" class="fal fa-language"></i>
 
-            <span> {{ $sidebar()?.languageAccess }} </span>
+            <span> {{$sidebar()?.languageAccess}} </span>
           </button>
         </li>
         <li role="none">
           <button role="menuitem" weissA11yToggle class="usa-icon-list__item site-nav width-full">
             <i aria-hidden="true" class="fal fa-universal-access"></i>
 
-            <span> {{ $sidebar()?.accessibility }} </span>
+            <span> {{$sidebar()?.accessibility}} </span>
           </button>
         </li>
+
       </ul>
     </nav>
-    <span
-      class="display-flex width-full tablet:margin-top-auto tablet:flex-justify-center"
-      [ngClass]="{ 'margin-top-auto flex-justify-center': !nav_collapsed }">
+    <span class="display-flex width-full tablet:margin-top-auto tablet:flex-justify-center" [ngClass]="{'margin-top-auto flex-justify-center': !nav_collapsed}">
       <lib-adapt-inline-svg
         *ngIf="!nav_collapsed"
         alt="ADAPT logo"
@@ -111,26 +85,28 @@
   </section>
 </aside>
 
-<lib-adapt-side-panel
-  [title]="$sharedContent()?.accessibility?.language?.selectorTitle || 'Language Translation Options'"
-  [description]="
-    $sharedContent()?.accessibility?.language?.selectorDescription ||
-    'Select a language to translate the content of ADAPT.'
-  "
+
+
+
+
+<lib-adapt-side-panel [title]="$sharedContent()?.accessibility?.language?.selectorTitle || 'Language Translation Options'"
+  [description]="$sharedContent()?.accessibility?.language?.selectorDescription || 'Select a language to translate the content of ADAPT.'"
   [selectorClose]="$sharedContent()?.accessibility?.language?.selectorClose || 'Close'"
-  direction="left"
-  #langPanel
-  (statusChange)="onSidePanelStatusChange($event)">
+  direction="left" #langPanel (statusChange)="onSidePanelStatusChange($event)">
   <ng-container body>
-    <lib-adapt-radio-select
-      name="language"
-      (ngModelChange)="handleLangChange($event)"
-      [ngModel]="langModel"
-      [items]="$langOptions() || []"
-      itemAccessor="langCode"
+
+    <lib-adapt-radio-select name="language" (ngModelChange)="handleLangChange($event)"
+      [ngModel]="langModel" [items]="$langOptions() || []" itemAccessor="langCode"
       labelAccessor="translatedLabel"></lib-adapt-radio-select>
+
   </ng-container>
+
 </lib-adapt-side-panel>
+
+
+
+
+
 
 <lib-adapt-modal closeText="Close" heading="Are you sure you want to sign out?" #confirmLogOut>
   <div class="confirm-modal-body display-flex flex-column gap-2 padding-1">
