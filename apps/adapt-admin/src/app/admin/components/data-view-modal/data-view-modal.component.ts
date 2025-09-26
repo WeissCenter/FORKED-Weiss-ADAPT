@@ -455,7 +455,6 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     const defaultInput: NewDataViewInput = this.getSaveInput();
 
     this.currentDataView = await firstValueFrom(this.data.createDataView(defaultInput));
-    console.log('currentDataView: ', this.currentDataView);
     this.saving = false;
     this.saved = true;
   }

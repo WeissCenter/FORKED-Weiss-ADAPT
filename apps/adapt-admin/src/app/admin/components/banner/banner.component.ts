@@ -9,4 +9,5 @@ import { environment } from 'apps/adapt-admin/src/environments/environment';
 })
 export class BannerComponent {
   environment = environment;
+  showTestingBanner = environment.envLabel !== 'Prod';
 }

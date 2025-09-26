@@ -4,13 +4,8 @@
   <lib-adapt-inline-svg
     alt="ADAPT logo"
     [src]="logoURL"
-    svgClass="display-none desktop:display-flex width-card"
-    *ngIf="svgLogo"></lib-adapt-inline-svg>
-  <img
-    *ngIf="!svgLogo"
-    [src]="logoURL"
-    class="logo display-none desktop:display-flex width-card"
-    alt="ADAPT Instance Logo" />
+    svgClass="display-none desktop:display-flex width-card" *ngIf="svgLogo"></lib-adapt-inline-svg>
+  <img *ngIf="!svgLogo" [src]="logoURL" class="logo display-none desktop:display-flex width-card" alt="ADAPT Instance Logo" />
   <div class="welcome-user-info width-full display-flex flex-column tablet:flex-row gap-2 padding-y-8">
     <div class="user-info-heading-name-role display-flex gap-1 flex-column">
       <h1 class="font-3xl font-weight-normal margin-0">{{ $homeContent()?.brandingHeader?.heading }}</h1>

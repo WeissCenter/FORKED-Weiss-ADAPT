@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 })
 export class TopBannerComponent {
   environment = environment;
-
+  public showTestingBanner = environment.envLabel !== 'Prod';
+  
   bannerLogo: string = `https://${environment.appDomain}/assets/shared/logos/adapt-logo@mini.svg`;
 }
