@@ -1,8 +1,8 @@
 export const environment = {
-  envLabel: 'LOCAL',
+  envLabel: 'Prod',
   contentRoot: 'assets/text',
   contentFileName: 'viewer-content-text.json',
-  appDomain: 'localhost:4200',
+  appDomain: '',
   defaultContent: 'assets/text/en/viewer-content-text.json',
   API_URL: '',
 };

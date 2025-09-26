@@ -1,11 +1,8 @@
 <adapt-session-reload-banner></adapt-session-reload-banner>
-<adapt-hero-banner [role]="role.role?.description || ''" [name]="user.displayName$ | async"></adapt-hero-banner>
+<adapt-hero-banner [role]="role.role?.description || ''" [name]="user.displayName$ | async" [organization]="organization"></adapt-hero-banner>
 
 @let pageSections = $pageSections();
-<section
-  *ngIf="pageSections && pageSections[0]"
-  aria-label="Recent activities and common actions"
-  class="padding-top-3 tablet:padding-top-5">
+<section *ngIf="pageSections && pageSections[0]" aria-label="Recent activities and common actions" class="padding-top-3 tablet:padding-top-5">
   <div class="grid-container padding-x-0 tablet:padding-x-5">
     <div class="display-flex margin-top-4 width-full padding-x-2 tablet:padding-x-0 flex-column">
       <div class="usa-prose">
@@ -13,15 +10,11 @@
         <h2>{{ pageSections[0].title }}</h2>
         <p class="measure-4">{{ pageSections[0].description }}</p>
 
-        <a
-          href="https://weisscenter.gitbook.io/weisscenter/user-guide/quickstart/homepage"
-          target="_blank"
-          aria-label="Learn More (opens in a new tab)"
-          style="font-size: 0.8rem; margin-top: 8px">
-          <span aria-hidden="true"
-            >Learn More <i aria-hidden="true" class="far fa-external-link margin-left-05"></i
-          ></span>
+        <a href="https://weisscenter.gitbook.io/weisscenter/user-guide/quickstart/homepage" target="_blank"
+          aria-label="Learn More (opens in a new tab)" style="font-size: 0.8rem;margin-top: 8px;">
+          <span aria-hidden="true">Learn More <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
         </a>
+
       </div>
     </div>
 
@@ -150,7 +143,7 @@
               <p class="usa-prose" i18n>Loading reports...</p>
             </div>
           </div> -->
-        <ng-container *ngIf="reports | loading: 'Reports have loaded' | async as reportsLoaded">
+        <ng-container *ngIf="reports | loading : 'Reports have loaded' | async as reportsLoaded">
           <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="reportsLoaded.loading">
             <div class="display-flex flex-align-center gap-1">
               <div class="loader"></div>
@@ -162,7 +155,7 @@
             <ng-container *ngIf="reportsLoaded.value.length; else noReports">
               <span class="visually-hidden" aria-live="polite" id="report-load-notifier">Reports have loaded</span>
               <adapt-list-item-report
-                *ngFor="let report of reportsLoaded.value | limitTo: 5"
+                *ngFor="let report of reportsLoaded.value | limitTo : 5"
                 [report]="report"
                 headingLvl="h4"></adapt-list-item-report>
             </ng-container>
@@ -184,7 +177,10 @@
           <p [innerHtml]="pageSections[1].sub_sections![1].description"></p>
         </div>
         <div class="display-flex gap-2 flex-wrap margin-top-2 width-full">
-          <a class="usa-button usa-button--outline" [routerLink]="['data-management']" aria-label="View all data views">
+          <a
+            class="usa-button usa-button--outline"
+            [routerLink]="['data-management']"
+            aria-label="View all data views">
             <i class="fal fa-folder-open"></i>
             View all
           </a>
@@ -198,7 +194,7 @@
         </div>
 
         <div class="display-flex flex-column margin-top-1 gap-1 width-full">
-          <ng-container *ngIf="dataViews | loading: 'Data views have loaded' | async as viewsLoaded">
+          <ng-container *ngIf="dataViews | loading : 'Data views have loaded' | async as viewsLoaded">
             <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="viewsLoaded.loading">
               <div class="display-flex flex-align-center gap-1">
                 <div class="loader"></div>
@@ -213,9 +209,10 @@
                   [$reports]="reports"
                   [dataViewModal]="dataViewModal"
                   [reportModal]="reportModal"
-                  *ngFor="let view of viewsLoaded.value | limitTo: 5"
+                  *ngFor="let view of viewsLoaded.value | limitTo : 5"
                   [view]="view"
                   [headingLvl]="'h4'"></adapt-list-item-data>
+
               </ng-container>
 
               <ng-template #noViews>

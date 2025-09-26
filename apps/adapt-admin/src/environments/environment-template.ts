@@ -22,4 +22,5 @@ export const environment = {
   },
   loginContent: 'assets/content-labels.json',
   pagesContent: 'assets/text/admin-content-text.json',
+  organizationName: ''
 };

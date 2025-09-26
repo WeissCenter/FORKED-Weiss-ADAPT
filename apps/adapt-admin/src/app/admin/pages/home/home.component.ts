@@ -12,6 +12,7 @@ import {
   PageContentText,
 } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 import { RoleService } from '../../../auth/services/role/role.service';
+import { environment } from '@adapt-apps/adapt-admin/src/environments/environment';
 
 @Component({
   selector: 'adapt-home',
@@ -33,9 +34,8 @@ export class HomeComponent implements OnInit {
 
   public recentActivity = this.recent.history;
 
-  $pageSections = computed<PageSectionContentText[]>(
-    () => this.pagesContentService.getPageContentSignal('home')()?.sections || []
-  );
+  organization = environment.organizationName || 'Your Organization';
+  $pageSections = computed<PageSectionContentText[]>(() => this.pagesContentService.getPageContentSignal('home')()?.sections || []);
 
   constructor(
     public user: UserService,
@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit {
       this.loadingDataViews = false;
       // sort by created field, latest at top
       this.$dataViews = views.sort((a, b) => {
+        
         return new Date(b.created).getTime() - new Date(a.created).getTime();
       });
     });
