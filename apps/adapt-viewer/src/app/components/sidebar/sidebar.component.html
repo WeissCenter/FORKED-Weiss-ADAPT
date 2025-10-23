@@ -23,7 +23,9 @@
 
     <div class="sidebar-header">
       <div class="display-flex width-full padding-1 gap-1 flex-align-center flex-justify-center">
-        <img *ngIf="sidebarLogo" [src]="sidebarLogo" class="logo" alt="ADAPT Instance Logo" />
+        <img *ngIf="!logoIsSvg" [src]="logoURL" class="logo" aria-hidden="true" />
+        <lib-adapt-inline-svg [src]="logoURL" [attr.aria-hidden]="true"
+          svgClass="maxw-6 display-none desktop:display-flex" *ngIf="logoIsSvg"></lib-adapt-inline-svg>
       </div>
     </div>
 

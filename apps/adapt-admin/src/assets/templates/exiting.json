@@ -1,493 +1,527 @@
 {
-  "id": "exiting",
-  "title": "Children with Disabilities (IDEA) Exiting",
-  "metaTags": ["Part B", "Exiting"],
-  "reportingLevels": ["SEA (State Education Agency)", "LEA (Local Education Agency)"],
-  "suppression": {
-    "required": true,
-    "parentOrganization": "file",
-    "childOrganization": "CategorySetCode",
-    "sensitiveColumns": [
-      "specialeducationexitreason",
-      "race",
-      "ideadisabilitytype",
-      "age",
-      "sex",
-      "englishlearnerstatus"
+    "id": "exiting",
+    "title": "Children with Disabilities (IDEA) Exiting",
+    "metaTags": [
+        "Part B",
+        "Exiting"
     ],
-    "frequencyColumns": ["StudentCount"]
-  },
-  "filters": {
-    "exitingSection": {
-      "order": 0,
-      "code": "exitingSection",
-      "label": "Exiting Preset Filters",
-      "field": "CategorySetCode",
-      "type": "select",
-      "dataType": "string",
-      "condition": {
-        "operator": "AND",
-        "pages": ["allMetrics"]
-      },
-      "filter": {
-        "default": "CSA",
-        "options": [
-          {
-            "value": "CSA",
-            "label": "Disability and Age"
-          },
-          {
-            "value": "CSB",
-            "label": "Race/Ethnicity"
-          },
-          {
-            "value": "CSC",
-            "label": "Sex"
-          },
-          {
-            "value": "CSD",
-            "label": "English learner status"
-          }
+    "reportingLevels": ["SEA (State Education Agency)", "LEA (Local Education Agency)"],
+    "suppression": {
+        "required": true,
+        "parentOrganization": "file",
+        "childOrganization": "CategorySetCode",
+        "sensitiveColumns": [
+            "specialeducationexitreason",
+            "race",
+            "ideadisabilitytype",
+            "age",
+            "sex",
+            "englishlearnerstatus"
+        ],
+        "frequencyColumns": [
+            "StudentCount"
         ]
-      }
     },
-    "race": {
-      "code": "race",
-      "label": "Select a Race",
-      "field": "race",
-      "type": "multiselect",
-      "condition": {
-        "operator": "AND",
-        "conditions": [
-          {
-            "parent": "exitingSection",
-            "value": ["CSB"]
-          }
-        ]
-      },
-      "filter": {
-        "default": "all",
-        "options": [
-          {
-            "value": "all",
-            "exclusive": true,
-            "label": "All"
-          },
-          {
-            "value": "AM7",
-            "label": "American Indian or Alaska Native"
-          },
-          {
-            "value": "AS7",
-            "label": "Asian"
-          },
-          {
-            "value": "BL7",
-            "label": "Black or African American"
-          },
-          {
-            "value": "HI7",
-            "label": "Hispanic/Latino"
-          },
-          {
-            "value": "PI7",
-            "label": "Native Hawaiian or Other Pacific Islander"
-          },
-          {
-            "value": "MU7",
-            "label": "Two or more races"
-          },
-          {
-            "value": "WH7",
-            "label": "White"
-          }
-        ]
-      }
-    },
-    "sex": {
-      "code": "sex",
-      "label": "Sex",
-      "field": "sex",
-      "type": "multiselect",
-      "dataType": "string",
-      "condition": {
-        "operator": "AND",
-        "conditions": [
-          {
-            "parent": "exitingSection",
-            "value": ["CSC"]
-          }
-        ]
-      },
-      "filter": {
-        "options": [
-          {
-            "value": "all",
-            "label": "All",
-            "exclusive": true
-          },
-          {
-            "value": "M",
-            "label": "Male"
-          },
-          {
-            "value": "F",
-            "label": "Female"
-          }
-        ]
-      }
-    },
-    "disability": {
-      "order": 3,
-      "code": "disability",
-      "label": "Disability",
-      "field": "ideadisabilitytype",
-      "type": "multiselect",
-      "dataType": "string",
-      "condition": {
-        "operator": "AND",
-        "conditions": [
-          {
-            "parent": "exitingSection",
-            "value": ["CSA"]
-          }
-        ]
-      },
-      "filter": {
-        "options": [
-          {
-            "value": "all",
-            "label": "All",
-            "exclusive": true
-          },
-          {
-            "value": "AUT",
-            "label": "Autism"
-          },
-          {
-            "value": "DB",
-            "label": "Deaf–blindness"
-          },
-          {
-            "value": "DD",
-            "label": "Developmental delay"
-          },
-          {
-            "value": "EMN",
-            "label": "Emotional disturbance"
-          },
-          {
-            "value": "HI",
-            "label": "Hearing impairment"
-          },
-          {
-            "value": "ID",
-            "label": "Intellectual disability"
-          },
-          {
-            "value": "MD",
-            "label": "Multiple disabilities"
-          },
-          {
-            "value": "OI",
-            "label": "Orthopedic impairment"
-          },
-          {
-            "value": "SLD",
-            "label": "Specific learning disability"
-          },
-          {
-            "value": "SLI",
-            "label": "Speech or language impairment"
-          },
-          {
-            "value": "TBI",
-            "label": "Traumatic brain injury"
-          },
-          {
-            "value": "VI",
-            "label": "Visual impairment"
-          },
-          {
-            "value": "OHI",
-            "label": "Other health impairment"
-          }
-        ]
-      }
-    },
-    "age": {
-      "order": 2,
-      "code": "age",
-      "label": "Age",
-      "field": "age",
-      "type": "multiselect",
-      "dataType": "number",
-      "condition": {
-        "operator": "AND",
-        "conditions": [
-          {
-            "parent": "exitingSection",
-            "value": ["CSA"]
-          }
-        ]
-      },
-      "filter": {
-        "options": [
-          {
-            "value": "all",
-            "label": "All",
-            "exclusive": true
-          },
-          {
-            "value": "14",
-            "label": "14"
-          },
-          {
-            "value": "15",
-            "label": "15"
-          },
-          {
-            "value": "16",
-            "label": "16"
-          },
-          {
-            "value": "17",
-            "label": "17"
-          },
-          {
-            "value": "18",
-            "label": "18"
-          },
-          {
-            "value": "19",
-            "label": "19"
-          },
-          {
-            "value": "20",
-            "label": "20"
-          },
-          {
-            "value": "21",
-            "label": "21"
-          }
-        ]
-      }
-    },
-    "englishLearnerStatus": {
-      "order": 6,
-      "code": "englishLearnerStatus",
-      "label": "English learner status",
-      "field": "englishlearnerstatus",
-      "type": "multiselect",
-      "dataType": "string",
-      "condition": {
-        "operator": "AND",
-        "conditions": [
-          {
-            "parent": "exitingSection",
-            "value": ["CSD"]
-          }
-        ]
-      },
-      "filter": {
-        "options": [
-          {
-            "value": "all",
-            "label": "All",
-            "exclusive": true
-          },
-          {
-            "value": "LEP",
-            "label": "English learners"
-          },
-          {
-            "value": "NLEP",
-            "label": "Non-English learners"
-          }
-        ]
-      }
-    }
-  },
-  "multiFile": false,
-  "description": "The unduplicated number of students with disabilities (IDEA) who are ages 14 through 21, were in special education at the start of the reporting period and were not in special education at the end of the reporting period.",
-  "pages": [
-    {
-      "id": "allMetrics",
-      "combined": true,
-      "name": "Reason for Exit",
-      "title": "Reason for Exit",
-      "description": "as of December 01, 2022:",
-      "sections": [
-        {
-          "type": "quickSummary",
-          "content": {
-            "heading": {
-              "template": "In School Year {{dataView.fields.reportingYear}}, there were {{total}} students with disabilities in your State, ages 14-21 who exited special education.",
-              "variables": {
-                "total": {
-                  "args": [
-                    "StudentCount",
-                    {
-                      "field": "ReportCode",
-                      "array": true,
-                      "value": ["C009", "c009"]
-                    },
-                    {
-                      "field": "CategorySetCode",
-                      "value": "ST1"
-                    }
-                  ],
-                  "function": "sum"
-                }
-              }
+    "filters": {
+        "exitingSection": {
+            "order": 0,
+            "code": "exitingSection",
+            "label": "Exiting Preset Filters",
+            "field": "CategorySetCode",
+            "type": "select",
+            "dataType": "string",
+            "condition": {
+                "operator": "AND",
+                "pages": ["allMetrics"]
             },
-            "sections": [
-              {
-                "body": {
-                  "template": "In the reported data, {{var_1}} of students with disabilities exited special education due to receiving a regular high school diploma.",
-                  "variables": {
-                    "var_1": {
-                      "args": [
-                        "StudentCount",
-                        {
-                          "field": "specialeducationexitreason",
-                          "value": "GHS"
-                        },
-                        {
-                          "field": "ReportCode",
-                          "array": true,
-                          "value": ["C009", "c009"]
-                        },
-                        {
-                          "field": "CategorySetCode",
-                          "value": "ST1"
-                        }
-                      ],
-                      "function": "percentage"
+            "filter": {
+                "default": "CSA",
+                "options": [
+                    {
+                        "value": "CSA",
+                        "label": "Disability and Age"
+                    },
+                    {
+                        "value": "CSB",
+                        "label": "Race/Ethnicity"
+                    },
+                    {
+                        "value": "CSC",
+                        "label": "Sex"
+                    },
+                    {
+                        "value": "CSD",
+                        "label": "English learner status"
                     }
-                  }
-                },
-                "title": ""
-              },
-              {
-                "body": {
-                  "template": "In the reported data, {{var_1}} of students with disabilities exited special education due to dropping out of school.",
-                  "variables": {
-                    "var_1": {
-                      "args": [
-                        "StudentCount",
-                        {
-                          "field": "specialeducationexitreason",
-                          "value": "DROPOUT"
-                        },
-                        {
-                          "field": "ReportCode",
-                          "array": true,
-                          "value": ["C009", "c009"]
-                        },
-                        {
-                          "field": "CategorySetCode",
-                          "value": "ST1"
-                        }
-                      ],
-                      "function": "percentage"
-                    }
-                  }
-                },
-                "title": ""
-              }
-            ]
-          },
-          "sectionLabel": "Quick Summary"
-        },
-        {
-          "type": "barChart",
-          "sectionLabel": "Reason for exit",
-          "content": {
-            "title": "Reason for exit",
-            "description": "The following represents students with disabilities in your State, ages 14-21, who exited special education for various reasons.",
-            "explainTemplate": "In the reported data, the top three reasons for exit in your State are, {{first}}, {{second}}, and {{third}}",
-            "chart": {
-              "filterOn": "x",
-              "yAxisLabel": "Child Count",
-              "xAxisLabel": "specialeducationexitreason",
-              "xAxisValue": "specialeducationexitreason",
-
-              "yAxisValue": "StudentCount",
-              "total": {
-                "id": "exitingTotalBarChart",
-                "function": "SUM",
-                "arguments": [
-                  {
-                    "field": "StudentCount"
-                  },
-                  {
-                    "field": "ReportCode",
-                    "array": true,
-                    "value": ["C009", "c009"]
-                  }
                 ]
-              },
-              "dataRetrievalOperations": [
-                {
-                  "id": "childCountExitingBarChart",
-                  "function": "GROUPBY_WITH_DEFAULTS",
-                  "arguments": [
-                    {
-                      "field": "func",
-                      "type": "string",
-                      "value": "sum"
-                    },
-                    {
-                      "field": "columns",
-                      "value": ["StudentCount"],
-                      "array": true
-                    },
-                    {
-                      "field": "selectColumns",
-                      "value": ["specialeducationexitreason"],
-                      "array": true
-                    },
-                    {
-                      "field": "limit",
-                      "type": "number"
-                    },
-                    {
-                      "field": "order",
-                      "type": "string",
-                      "array": true,
-                      "value": ["StudentCount desc"]
-                    },
-                    {
-                      "field": "groupby",
-                      "type": "string",
-                      "array": true,
-                      "value": ["specialeducationexitreason"]
-                    },
-                    {
-                      "field": "defaultValues",
-                      "type": "string",
-                      "array": true,
-                      "value": ["GHS", "GRADALTDPL", "RC", "RMA", "MKC", "TRAN", "DROPOUT", "D"]
-                    },
-                    {
-                      "field": "ReportCode",
-                      "type": "string",
-                      "array": true,
-                      "value": ["C009", "c009"]
-                    },
-                    {
-                      "field": "CategorySetCode",
-                      "type": "string",
-                      "value": "ST1"
-                    }
-                  ]
-                }
-              ]
             }
-          }
-        }
-      ]
+        },
+        "race": {
+            "code": "race",
+            "label": "Select a Race",
+            "field": "race",
+            "type": "multiselect",
+            "condition": {
+                "operator": "AND",
+                "conditions": [
+                    {
+                        "parent": "exitingSection",
+                        "value": [
+                            "CSB"
+                        ]
+                    }
+                ]
+            },
+            "filter": {
+                "default": "all",
+                "options": [
+                    {
+                        "value": "all",
+                        "exclusive": true,
+                        "label": "All"
+                    },
+                    {
+                        "value": "AM7",
+                        "label": "American Indian or Alaska Native"
+                    },
+                    {
+                        "value": "AS7",
+                        "label": "Asian"
+                    },
+                    {
+                        "value": "BL7",
+                        "label": "Black or African American"
+                    },
+                    {
+                        "value": "HI7",
+                        "label": "Hispanic/Latino"
+                    },
+                    {
+                        "value": "PI7",
+                        "label": "Native Hawaiian or Other Pacific Islander"
+                    },
+                    {
+                        "value": "MU7",
+                        "label": "Two or more races"
+                    },
+                    {
+                        "value": "WH7",
+                        "label": "White"
+                    }
+                ]
+            }
+        },
+        "sex": {
+            "code": "sex",
+            "label": "Sex",
+            "field": "sex",
+            "type": "multiselect",
+            "dataType": "string",
+            "condition": {
+                "operator": "AND",
+                "conditions": [
+                    {
+                        "parent": "exitingSection",
+                        "value": [
+                            "CSC"
+                        ]
+                    }
+                ]
+            },
+            "filter": {
+                "options": [
+                    {
+                        "value": "all",
+                        "label": "All",
+                        "exclusive": true
+                    },
+                    {
+                        "value": "M",
+                        "label": "Male"
+                    },
+                    {
+                        "value": "F",
+                        "label": "Female"
+                    }
+                ]
+            }
+        },
+        "disability": {
+            "order": 3,
+            "code": "disability",
+            "label": "Disability",
+            "field": "ideadisabilitytype",
+            "type": "multiselect",
+            "dataType": "string",
+            "condition": {
+                "operator": "AND",
+                "conditions": [
+                    {
+                        "parent": "exitingSection",
+                        "value": [
+                            "CSA"
+                        ]
+                    }
+                ]
+            },
+            "filter": {
+                "options": [
+                    {
+                        "value": "all",
+                        "label": "All",
+                        "exclusive": true
+                    },
+                    {
+                        "value": "AUT",
+                        "label": "Autism"
+                    },
+                    {
+                        "value": "DB",
+                        "label": "Deaf–blindness"
+                    },
+                    {
+                        "value": "DD",
+                        "label": "Developmental delay"
+                    },
+                    {
+                        "value": "EMN",
+                        "label": "Emotional disturbance"
+                    },
+                    {
+                        "value": "HI",
+                        "label": "Hearing impairment"
+                    },
+                    {
+                        "value": "ID",
+                        "label": "Intellectual disability"
+                    },
+                    {
+                        "value": "MD",
+                        "label": "Multiple disabilities"
+                    },
+                    {
+                        "value": "OI",
+                        "label": "Orthopedic impairment"
+                    },
+                    {
+                        "value": "SLD",
+                        "label": "Specific learning disability"
+                    },
+                    {
+                        "value": "SLI",
+                        "label": "Speech or language impairment"
+                    },
+                    {
+                        "value": "TBI",
+                        "label": "Traumatic brain injury"
+                    },
+                    {
+                        "value": "VI",
+                        "label": "Visual impairment"
+                    },
+                    {
+                        "value": "OHI",
+                        "label": "Other health impairment"
+                    }
+                ]
+            }
+        },
+        "age": {
+            "order": 2,
+            "code": "age",
+            "label": "Age",
+            "field": "age",
+            "type": "multiselect",
+            "dataType": "number",
+            "condition": {
+                "operator": "AND",
+                "conditions": [
+                    {
+                        "parent": "exitingSection",
+                        "value": [
+                            "CSA"
+                        ]
+                    }
+                ]
+            },
+            "filter": {
+"options": [
+    {
+        "value": "all",
+        "label": "All",
+        "exclusive": true
+    },
+    {
+        "value": "14",
+        "label": "14"
+    },
+    {
+        "value": "15",
+        "label": "15"
+    },
+    {
+        "value": "16",
+        "label": "16"
+    },
+    {
+        "value": "17",
+        "label": "17"
+    },
+    {
+        "value": "18",
+        "label": "18"
+    },
+    {
+        "value": "19",
+        "label": "19"
+    },
+    {
+        "value": "20",
+        "label": "20"
+    },
+    {
+        "value": "21",
+        "label": "21"
     }
-  ]
+]
+            }
+        },
+        "englishLearnerStatus": {
+            "order": 6,
+            "code": "englishLearnerStatus",
+            "label": "English learner status",
+            "field": "englishlearnerstatus",
+            "type": "multiselect",
+            "dataType": "string",
+            "condition": {
+                "operator": "AND",
+                "conditions": [
+                    {
+                        "parent": "exitingSection",
+                        "value": [
+                            "CSD"
+                        ]
+                    }
+                ]
+            },
+            "filter": {
+                "options": [
+                    {
+                        "value": "all",
+                        "label": "All",
+                        "exclusive": true
+                    },
+                    {
+                        "value": "LEP",
+                        "label": "English learners"
+                    },
+                    {
+                        "value": "NLEP",
+                        "label": "Non-English learners"
+                    }
+                ]
+            }
+        }
+    },
+    "multiFile": false,
+    "description": "The unduplicated number of students with disabilities (IDEA) who are ages 14 through 21, were in special education at the start of the reporting period and were not in special education at the end of the reporting period.",
+    "pages": [
+        {
+            "id": "allMetrics",
+            "combined": true,
+            "name": "Reason for Exit",
+            "title": "Reason for Exit",
+            "description": "as of December 01, 2022:",
+            "sections": [
+                {
+                    "type": "quickSummary",
+                    "content": {
+                        "heading": {
+                            "template": "In School Year {{dataView.fields.reportingYear}}, there were {{total}} students with disabilities in your State, ages 14-21 who exited special education.",
+                            "variables": {
+                                "total": {
+                                    "args": [
+                                        "StudentCount",
+                                        {
+                                            "field": "ReportCode",
+                                            "array": true,
+                                            "value": ["C009", "c009"]
+                                        },
+                                        {
+                                            "field": "CategorySetCode",
+                                            "value": "ST1"
+                                        }
+                                    ],
+                                    "function": "sum"
+                                }
+                            }
+                        },
+                        "sections": [
+                            {
+                                "body": {
+                                    "template": "In the reported data, {{var_1}} of students with disabilities exited special education due to receiving a regular high school diploma.",
+                                    "variables": {
+                                        "var_1": {
+                                            "args": [
+                                                "StudentCount",
+                                                {
+    
+                                                    "field": "specialeducationexitreason",
+                                                    "value": "GHS"
+                                                },
+                                                {
+                                                    "field": "ReportCode",
+                                                    "array": true,
+                                                    "value": ["C009", "c009"]
+                                                },
+                                                {
+                                                    "field": "CategorySetCode",
+                                                    "value": "ST1"
+                                                }
+                                            ],
+                                            "function": "percentage"
+                                        }
+                                    }
+                                },
+                                          "title": ""
+                            },
+                            {
+                                "body": {
+                                    "template": "In the reported data, {{var_1}} of students with disabilities exited special education due to dropping out of school.",
+                                    "variables": {
+                                        "var_1": {
+                                            "args": [
+                                                "StudentCount",
+                                                {
+    
+                                                    "field": "specialeducationexitreason",
+                                                    "value": "DROPOUT"
+                                                },
+                                                {
+                                                    "field": "ReportCode",
+                                                    "array": true,
+                                                    "value": ["C009", "c009"]
+                                                },
+                                                {
+                                                    "field": "CategorySetCode",
+                                                    "value": "ST1"
+                                                }
+                                            ],
+                                            "function": "percentage"
+                                        }
+                                    }
+                                },
+                                          "title": ""
+                            }
+                        ]
+                    },
+                    "sectionLabel": "Quick Summary"
+                },
+                {
+                    "type": "barChart",
+                    "sectionLabel": "Reason for exit",
+                    "content": {
+                        "title": "Reason for exit",
+                        "description": "The following represents students with disabilities in your State, ages 14-21, who exited special education for various reasons.",
+                        "explainTemplate": "In the reported data, the top three reasons for exit in your State are, {{first}}, {{second}}, and {{third}}",
+                        "chart": {
+                            "filterOn": "x",
+                            "yAxisLabel": "Child Count",
+                            "xAxisLabel": "specialeducationexitreason",
+                            "xAxisValue": "specialeducationexitreason",
+
+                            "yAxisValue": "StudentCount",
+                            "total": {
+                                "id": "exitingTotalBarChart",
+                                "function": "SUM",
+                                "arguments": [
+                                    {
+                                        "field": "StudentCount"
+                                    },
+                                    {
+                                        "field": "ReportCode",
+                                        "array": true,
+                                        "value": ["C009", "c009"]
+                                    }
+                                ]
+                            },
+                            "dataRetrievalOperations": [
+                                {
+                                    "id": "childCountExitingBarChart",
+                                    "function": "GROUPBY_WITH_DEFAULTS",
+                                    "arguments": [
+                                        {
+                                            "field": "func",
+                                            "type": "string",
+                                            "value": "sum"
+                                        },
+                                        {
+                                            "field": "columns",
+                                            "value": [
+                                                "StudentCount"
+                                            ],
+                                            "array": true
+                                        },
+                                        {
+                                            "field": "selectColumns",
+                                            "value": [
+                                                "specialeducationexitreason"
+                                            ],
+                                            "array": true
+                                        },
+                                        {
+                                            "field": "limit",
+                                            "type": "number"
+                                        },
+                                        {
+                                            "field": "order",
+                                            "type": "string",
+                                            "array": true,
+                                            "value": [
+                                                "StudentCount desc"
+                                            ]
+                                        },
+                                        {
+                                            "field": "groupby",
+                                            "type": "string",
+                                            "array": true,
+                                            "value": [
+                                                "specialeducationexitreason"
+                                            ]
+                                        },
+                                        {
+                                            "field": "defaultValues",
+                                            "type": "string",
+                                            "array": true,
+                                            "value": [
+                                                "GHS",
+                                                "GRADALTDPL",
+                                                "RC",
+                                                "RMA",
+                                                "MKC",
+                                                "TRAN",
+                                                "DROPOUT",
+                                                "D"
+                                              ]
+                                        },
+                                        {
+                                            "field": "ReportCode",
+                                            "type": "string",
+                                            "array": true,
+                                            "value": ["C009", "c009"]
+                                        },
+                                        {
+                                            "field": "CategorySetCode",
+                                            "type": "string",
+                                            "value": "ST1"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
 }

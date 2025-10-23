@@ -62,9 +62,9 @@ export interface DataCollectionFileDefinition {
   conditions: DataCollectionFileCondition[];
   validation?: string;
   acceptedFileFormats: {
-    fileInputHint: string;
-    fieldAccept: string;
-  };
+    fileInputHint: string,
+    fieldAccept: string
+  }
   previewHeaders?: string[];
   dataParse?: DataParseDefinition;
   database?: {

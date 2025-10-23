@@ -1,7 +1,11 @@
 {
   "id": "childCountMultiple",
   "title": "IDEA Recuento de Niños y Entornos Educativos",
-  "metaTags": ["Parte B", "618", "Recuento de niños"],
+  "metaTags": [
+    "Parte B",
+    "618",
+    "Recuento de niños"
+  ],
   "suppression": {
     "required": true,
     "sensitiveColumns": [
@@ -13,7 +17,9 @@
       "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
       "AGE"
     ],
-    "frequencyColumns": ["StudentCount"]
+    "frequencyColumns": [
+      "StudentCount"
+    ]
   },
   "description": "Datos a nivel estatal sobre la Ley de Educación de Individuos con Discapacidades (IDEA) Parte B, incluyendo un conteo no duplicado de niños con discapacidad que reciben educación especial de 3 a 21 años atendidos por la Oficina de Programas de Educación Especial (OSEP).",
   "filters": {
@@ -26,7 +32,9 @@
       "dataType": "string",
       "condition": {
         "operator": "AND",
-        "pages": ["schoolAge"]
+        "pages": [
+          "schoolAge"
+        ]
       },
       "filter": {
         "default": "CSA",
@@ -63,7 +71,9 @@
       "dataType": "string",
       "condition": {
         "operator": "AND",
-        "pages": ["earlyChildhood"]
+        "pages": [
+          "earlyChildhood"
+        ]
       },
       "filter": {
         "default": "CSA",
@@ -96,11 +106,18 @@
       "dataType": "string",
       "condition": {
         "operator": "AND",
-        "pages": ["earlyChildhood"],
+        "pages": [
+          "earlyChildhood"
+        ],
         "conditions": [
           {
             "parent": "earlyChildhoodSection",
-            "value": ["CSA", "CSB", "CSC", "CSD"]
+            "value": [
+              "CSA",
+              "CSB",
+              "CSC",
+              "CSD"
+            ]
           }
         ]
       },
@@ -158,11 +175,18 @@
       "type": "multiselect",
       "condition": {
         "operator": "OR",
-        "pages": ["schoolAge"],
+        "pages": [
+          "schoolAge"
+        ],
         "conditions": [
           {
             "parent": "schoolAgeSection",
-            "value": ["CSB", "CSC", "CSD", "CSE"]
+            "value": [
+              "CSB",
+              "CSC",
+              "CSD",
+              "CSE"
+            ]
           }
         ]
       },
@@ -218,11 +242,16 @@
       "dataType": "string",
       "condition": {
         "operator": "AND",
-        "pages": ["allAges", "earlyChildhood"],
+        "pages": [
+          "allAges",
+          "earlyChildhood"
+        ],
         "conditions": [
           {
             "parent": "earlyChildhoodSection",
-            "value": ["CSA"]
+            "value": [
+              "CSA"
+            ]
           }
         ]
       },
@@ -257,11 +286,16 @@
       "dataType": "string",
       "condition": {
         "operator": "AND",
-        "pages": ["allAges", "schoolAge"],
+        "pages": [
+          "allAges",
+          "schoolAge"
+        ],
         "conditions": [
           {
             "parent": "schoolAgeSection",
-            "value": ["CSB"]
+            "value": [
+              "CSB"
+            ]
           }
         ]
       },
@@ -354,11 +388,19 @@
         "conditions": [
           {
             "parent": "schoolAgeSection",
-            "value": ["CSA", "CSB", "CSD", "CSE"]
+            "value": [
+              "CSA",
+              "CSB",
+              "CSD",
+              "CSE"
+            ]
           },
           {
             "parent": "earlyChildhoodSection",
-            "value": ["CSA", "CSB"]
+            "value": [
+              "CSA",
+              "CSB"
+            ]
           }
         ]
       },
@@ -437,11 +479,16 @@
         "conditions": [
           {
             "parent": "schoolAgeSection",
-            "value": ["CSA", "CSC"]
+            "value": [
+              "CSA",
+              "CSC"
+            ]
           },
           {
             "parent": "earlyChildhoodSection",
-            "value": ["CSB"]
+            "value": [
+              "CSB"
+            ]
           }
         ]
       },
@@ -495,11 +542,17 @@
         "conditions": [
           {
             "parent": "schoolAgeSection",
-            "value": ["CSA", "CSD", "CSE"]
+            "value": [
+              "CSA",
+              "CSD",
+              "CSE"
+            ]
           },
           {
             "parent": "earlyChildhoodSection",
-            "value": ["CSC"]
+            "value": [
+              "CSC"
+            ]
           }
         ]
       },
@@ -530,15 +583,22 @@
       "dataType": "string",
       "condition": {
         "operator": "OR",
-        "pages": ["schoolAge", "earlyChildhood"],
+        "pages": [
+          "schoolAge",
+          "earlyChildhood"
+        ],
         "conditions": [
           {
             "parent": "schoolAgeSection",
-            "value": ["CSE"]
+            "value": [
+              "CSE"
+            ]
           },
           {
             "parent": "earlyChildhoodSection",
-            "value": ["CSD"]
+            "value": [
+              "CSD"
+            ]
           }
         ]
       },
@@ -565,17 +625,51 @@
     "categoryField": "CategorySetCode",
     "categories": {
       "FS002": {
-        "CSA": ["RACE", "SEX", "IDEADISABILITYTYPE"],
-        "CSB": ["IDEADISABILITYTYPE", "AGE", "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"],
-        "CSC": ["RACE", "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"],
-        "CSD": ["SEX", "IDEADISABILITYTYPE", "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"],
-        "CSE": ["SEX", "IDEADISABILITYTYPE", "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE", "ENGLISHLEARNERSTATUS"]
+        "CSA": [
+          "RACE",
+          "SEX",
+          "IDEADISABILITYTYPE"
+        ],
+        "CSB": [
+          "IDEADISABILITYTYPE",
+          "AGE",
+          "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"
+        ],
+        "CSC": [
+          "RACE",
+          "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"
+        ],
+        "CSD": [
+          "SEX",
+          "IDEADISABILITYTYPE",
+          "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"
+        ],
+        "CSE": [
+          "SEX",
+          "IDEADISABILITYTYPE",
+          "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE",
+          "ENGLISHLEARNERSTATUS"
+        ]
       },
       "FS089": {
-        "CSA": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD", "IDEADISABILITYTYPE", "AGE"],
-        "CSB": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD", "IDEADISABILITYTYPE", "RACE"],
-        "CSC": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD", "SEX"],
-        "CSD": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD", "ENGLISHLEARNERSTATUS"]
+        "CSA": [
+          "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+          "IDEADISABILITYTYPE",
+          "AGE"
+        ],
+        "CSB": [
+          "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+          "IDEADISABILITYTYPE",
+          "RACE"
+        ],
+        "CSC": [
+          "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+          "SEX"
+        ],
+        "CSD": [
+          "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD",
+          "ENGLISHLEARNERSTATUS"
+        ]
       }
     }
   },
@@ -601,7 +695,10 @@
                     {
                       "field": "ReportCode",
                       "array": true,
-                      "value": ["c089", "c002"]
+                      "value": [
+                        "c089",
+                        "c002"
+                      ]
                     },
                     {
                       "field": "CategorySetCode",
@@ -625,7 +722,10 @@
                         {
                           "field": "ReportCode",
                           "array": true,
-                          "value": ["c089", "c002"]
+                          "value": [
+                            "c089",
+                            "c002"
+                          ]
                         },
                         {
                           "field": "CategorySetCode",
@@ -649,7 +749,10 @@
                         {
                           "field": "ReportCode",
                           "array": true,
-                          "value": ["c089", "c002"]
+                          "value": [
+                            "c089",
+                            "c002"
+                          ]
                         },
                         {
                           "field": "CategorySetCode",
@@ -698,12 +801,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["IDEADISABILITYTYPE"],
+                                "value": [
+                                  "IDEADISABILITYTYPE"
+                                ],
                                 "array": true
                               },
                               {
@@ -714,19 +821,26 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
                                 "type": "string",
                                 "array": true,
-                                "value": ["IDEADISABILITYTYPE"]
+                                "value": [
+                                  "IDEADISABILITYTYPE"
+                                ]
                               },
                               {
                                 "field": "ReportCode",
                                 "type": "string",
                                 "array": true,
-                                "value": ["c002", "c089"]
+                                "value": [
+                                  "c002",
+                                  "c089"
+                                ]
                               },
                               {
                                 "field": "CategorySetCode",
@@ -771,14 +885,18 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
                                 "type": "string",
                                 "array": true,
-                                "value": ["RACE"]
+                                "value": [
+                                  "RACE"
+                                ]
                               },
                               {
                                 "field": "limit",
@@ -788,7 +906,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -799,7 +919,10 @@
                                 "field": "ReportCode",
                                 "type": "string",
                                 "array": true,
-                                "value": ["c002", "c089"]
+                                "value": [
+                                  "c002",
+                                  "c089"
+                                ]
                               },
                               {
                                 "field": "CategorySetCode",
@@ -822,11 +945,15 @@
                         "variables": {
                           "var_1": {
                             "function": "context",
-                            "args": ["M"]
+                            "args": [
+                              "M"
+                            ]
                           },
                           "var_2": {
                             "function": "context",
-                            "args": ["F"]
+                            "args": [
+                              "F"
+                            ]
                           }
                         }
                       },
@@ -850,12 +977,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["SEX"],
+                                "value": [
+                                  "SEX"
+                                ],
                                 "array": true
                               },
                               {
@@ -866,7 +997,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -877,7 +1010,10 @@
                                 "field": "ReportCode",
                                 "type": "string",
                                 "array": true,
-                                "value": ["c002", "c089"]
+                                "value": [
+                                  "c002",
+                                  "c089"
+                                ]
                               },
                               {
                                 "field": "CategorySetCode",
@@ -980,7 +1116,10 @@
                       "conditions": [
                         {
                           "filterCode": "earlyChildhoodSection",
-                          "value": ["CSA", "CSB"]
+                          "value": [
+                            "CSA",
+                            "CSB"
+                          ]
                         }
                       ]
                     },
@@ -1009,12 +1148,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["IDEADISABILITYTYPE"],
+                                "value": [
+                                  "IDEADISABILITYTYPE"
+                                ],
                                 "array": true
                               },
                               {
@@ -1025,13 +1168,17 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
                                 "type": "string",
                                 "array": true,
-                                "value": ["IDEADISABILITYTYPE"]
+                                "value": [
+                                  "IDEADISABILITYTYPE"
+                                ]
                               },
                               {
                                 "field": "ReportCode",
@@ -1055,7 +1202,9 @@
                       "conditions": [
                         {
                           "filterCode": "earlyChildhoodSection",
-                          "value": ["CSD"]
+                          "value": [
+                            "CSD"
+                          ]
                         }
                       ]
                     },
@@ -1084,12 +1233,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["ENGLISHLEARNERSTATUS"],
+                                "value": [
+                                  "ENGLISHLEARNERSTATUS"
+                                ],
                                 "array": true
                               },
                               {
@@ -1100,7 +1253,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -1129,7 +1284,9 @@
                       "conditions": [
                         {
                           "filterCode": "earlyChildhoodSection",
-                          "value": ["CSC"]
+                          "value": [
+                            "CSC"
+                          ]
                         }
                       ]
                     },
@@ -1158,12 +1315,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["SEX"],
+                                "value": [
+                                  "SEX"
+                                ],
                                 "array": true
                               },
                               {
@@ -1174,7 +1335,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -1208,7 +1371,9 @@
                       "conditions": [
                         {
                           "filterCode": "earlyChildhoodSection",
-                          "value": ["CSB"]
+                          "value": [
+                            "CSB"
+                          ]
                         }
                       ]
                     },
@@ -1237,14 +1402,18 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
                                 "type": "string",
                                 "array": true,
-                                "value": ["RACE"]
+                                "value": [
+                                  "RACE"
+                                ]
                               },
                               {
                                 "field": "limit",
@@ -1254,7 +1423,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -1283,7 +1454,12 @@
                       "conditions": [
                         {
                           "filterCode": "schoolAgeSection",
-                          "value": ["CSA", "CSB", "CSC", "CSD"]
+                          "value": [
+                            "CSA",
+                            "CSB",
+                            "CSC",
+                            "CSD"
+                          ]
                         }
                       ]
                     },
@@ -1312,14 +1488,18 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
                                 "type": "string",
                                 "array": true,
-                                "value": ["IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD"]
+                                "value": [
+                                  "IDEAEDUCATIONALENVIRONMENTFOREARLYCHILDHOOD"
+                                ]
                               },
                               {
                                 "field": "limit",
@@ -1329,7 +1509,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -1449,7 +1631,12 @@
                       "conditions": [
                         {
                           "filterCode": "schoolAgeSection",
-                          "value": ["CSA", "CSB", "CSD", "CSE"]
+                          "value": [
+                            "CSA",
+                            "CSB",
+                            "CSD",
+                            "CSE"
+                          ]
                         }
                       ]
                     },
@@ -1478,12 +1665,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["IDEADISABILITYTYPE"],
+                                "value": [
+                                  "IDEADISABILITYTYPE"
+                                ],
                                 "array": true
                               },
                               {
@@ -1494,13 +1685,17 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
                                 "type": "string",
                                 "array": true,
-                                "value": ["IDEADISABILITYTYPE"]
+                                "value": [
+                                  "IDEADISABILITYTYPE"
+                                ]
                               },
                               {
                                 "field": "ReportCode",
@@ -1524,7 +1719,9 @@
                       "conditions": [
                         {
                           "filterCode": "schoolAgeSection",
-                          "value": ["CSE"]
+                          "value": [
+                            "CSE"
+                          ]
                         }
                       ]
                     },
@@ -1553,12 +1750,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["ENGLISHLEARNERSTATUS"],
+                                "value": [
+                                  "ENGLISHLEARNERSTATUS"
+                                ],
                                 "array": true
                               },
                               {
@@ -1569,7 +1770,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -1598,7 +1801,11 @@
                       "conditions": [
                         {
                           "filterCode": "schoolAgeSection",
-                          "value": ["CSA", "CSD", "CSE"]
+                          "value": [
+                            "CSA",
+                            "CSD",
+                            "CSE"
+                          ]
                         }
                       ]
                     },
@@ -1627,12 +1834,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["SEX"],
+                                "value": [
+                                  "SEX"
+                                ],
                                 "array": true
                               },
                               {
@@ -1643,7 +1854,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -1677,7 +1890,10 @@
                       "conditions": [
                         {
                           "filterCode": "schoolAgeSection",
-                          "value": ["CSA", "CSC"]
+                          "value": [
+                            "CSA",
+                            "CSC"
+                          ]
                         }
                       ]
                     },
@@ -1706,14 +1922,18 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
                                 "type": "string",
                                 "array": true,
-                                "value": ["RACE"]
+                                "value": [
+                                  "RACE"
+                                ]
                               },
                               {
                                 "field": "limit",
@@ -1723,7 +1943,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
@@ -1752,7 +1974,12 @@
                       "conditions": [
                         {
                           "filterCode": "schoolAgeSection",
-                          "value": ["CSB", "CSC", "CSD", "CSE"]
+                          "value": [
+                            "CSB",
+                            "CSC",
+                            "CSD",
+                            "CSE"
+                          ]
                         }
                       ]
                     },
@@ -1781,14 +2008,18 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["StudentCount"],
+                                "value": [
+                                  "StudentCount"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
                                 "type": "string",
                                 "array": true,
-                                "value": ["IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"]
+                                "value": [
+                                  "IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE"
+                                ]
                               },
                               {
                                 "field": "limit",
@@ -1798,7 +2029,9 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["StudentCount desc"]
+                                "value": [
+                                  "StudentCount desc"
+                                ]
                               },
                               {
                                 "field": "groupby",

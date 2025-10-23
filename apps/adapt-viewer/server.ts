@@ -1,8 +1,9 @@
 import 'zone.js/node';
 import '@angular/localize/init';
-(global as any)['window'] = { Element: { prototype: {} }, addEventListener: () => {} };
+(global as any)['window'] = {Element: {prototype: {}}, addEventListener: () => {}};
 
-(global as any)['localStorage'] = { getItem: () => {} };
+(global as any)['localStorage'] = {getItem: () => {}} ;
+
 
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';

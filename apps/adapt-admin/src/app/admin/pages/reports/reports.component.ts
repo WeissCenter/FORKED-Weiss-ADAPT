@@ -257,14 +257,13 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
                 }
               };
 
-              const sortResult =
-                this.activeSort === 'updated'
-                  ? sort(updatedA, updatedB, 'number', this.updatedSortDirection)
-                  : sort(alphaA, alphaB, 'string', this.alphaSortDirection);
+              const sortResult = this.activeSort === 'updated' ? 
+                sort(updatedA, updatedB, 'number', this.updatedSortDirection) : 
+                sort(alphaA, alphaB, 'string', this.alphaSortDirection);
 
               return sortResult;
             });
-
+            
             if (this.focusSortBtn) {
               const sortBtn = document.getElementById('sortButton');
               if (sortBtn) {
@@ -279,6 +278,7 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
             this.maxPages = Math.max(1, Math.ceil(this.reportsData.length / this.pageSize));
             this.totalItems = this.reportsData.length;
             this.loading = false;
+
 
             return filtered;
           })

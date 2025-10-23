@@ -1,52 +1,44 @@
 @let content = $content();
-
+  
 <div *ngIf="content" class="impact-analysis-widget display-flex flex-column gap-2">
-  <ng-container *ngIf="items | async | paginate: page : pageSize as itemsLoaded">
+  <ng-container *ngIf="items | async | paginate : page : pageSize as itemsLoaded">
     <div class="impact-analysis-heading display-flex flex-column gap-2">
-      <lib-adapt-h-element [level]="headingLevel"> {{ content['title'] || 'Impact analysis' }} </lib-adapt-h-element>
+      <lib-adapt-h-element [level]="headingLevel"> {{content['title'] || "Impact analysis"}} </lib-adapt-h-element>
 
       <ng-container *ngIf="dataViewCount > 0 || reportCount > 0">
+
         <ng-container [ngSwitch]="type">
           <p *ngSwitchCase="'DataSource'">
-            {{ content['dataSourceCountTemplate'] | parseStringTemplate: { dataViewCount, reportCount } }}
+            {{content['dataSourceCountTemplate'] | parseStringTemplate:  {dataViewCount,
+              reportCount } }}
 
             <!-- There are {{ dataViewCount }} data views(s) and {{ reportCount }} report(s) using this data source: -->
           </p>
 
           <p *ngSwitchCase="'DataView'">
-            {{
-              content['dataViewCountTemplate']
-                | parseStringTemplate
-                  : {
-                      reportCount,
-                    }
-            }}
+            {{content['dataViewCountTemplate'] | parseStringTemplate:  {
+              reportCount } }}
             <!-- There are {{ reportCount }} report(s) using this data view: -->
           </p>
 
           <p *ngSwitchCase="'Glossary'">
-            {{
-              content['glossaryCountTemplate']
-                | parseStringTemplate
-                  : {
-                      reportCount,
-                    }
-            }}
+            {{content['glossaryCountTemplate'] | parseStringTemplate:  {
+              reportCount } }}
             <!-- There are {{ reportCount }} report(s) using this glossary term: -->
           </p>
         </ng-container>
+
       </ng-container>
 
       <ng-container *ngIf="inAccordion && (reportCount > 0 || dataViewCount > 0)">
-        <button
-          [attr.aria-label]="'learn more about ' + name + ' impact analysis'"
-          class="flex-align-self-start usa-button usa-button--unstyled"
-          (click)="learnMore.emit(id)">
-          {{ content['learnMore'] || 'To learn more, please click here.' }}
+        <button [attr.aria-label]="'learn more about ' + name + ' impact analysis'"
+          class="flex-align-self-start usa-button usa-button--unstyled" (click)="learnMore.emit(id)">
+          {{content['learnMore'] || "To learn more, please click here."}}
         </button>
       </ng-container>
 
       <ng-container *ngIf="inAccordion && (reportCount <= 0 || dataViewCount <= 0)">
+
         <ng-container [ngSwitch]="type">
           <ng-container *ngSwitchCase="'DataSource'">
             <ng-container *ngIf="dataViewCount <= 0">
@@ -59,23 +51,17 @@
             </ng-container>
           </ng-container>
         </ng-container>
+
       </ng-container>
+
     </div>
 
     <div *ngIf="!inAccordion" class="impact-analysis-list display-flex flex-column gap-1">
-      <h4
-        *ngIf="totalItems > 0"
-        class="font-family-body margin-0 font-sm line-height-5 text-normal"
-        id="showing"
+      <h4 *ngIf="totalItems > 0" class="font-family-body margin-0 font-sm line-height-5 text-normal" id="showing"
         aria-live="polite">
         Showing up to
-        <select
-          [value]="pageSize"
-          (change)="onPageSizeChange($event)"
-          aria-labelledby="showing"
-          class="usa-select margin-x-1 width-auto display-inline"
-          name="options"
-          id="options">
+        <select [value]="pageSize" (change)="onPageSizeChange($event)" aria-labelledby="showing"
+          class="usa-select margin-x-1 width-auto display-inline" name="options" id="options">
           <option [value]="5">5</option>
           <option [value]="10">10</option>
           <option [value]="25">25</option>
@@ -86,9 +72,10 @@
 
       <ng-container [ngSwitch]="type">
         <ng-container *ngSwitchCase="'DataSource'">
+
           <ng-container *ngIf="itemsLoaded.length; else noDataViews">
-            <div
-              *ngFor="let item of itemsLoaded; let i = index"
+
+            <div *ngFor="let item of itemsLoaded; let i = index"
               class="impact-analysis-list-item display-flex flex-column gap-2">
               <div class="impact-analysis-item-heading display-flex flex-column gap-2">
                 <h4 class="margin-0">{{ item.view.name }}</h4>
@@ -99,12 +86,13 @@
                 <p>Created By: {{ item.view.author }}</p>
               </div>
 
+
               <table *ngIf="item.reports.length; else noReports" class="usa-table usa-table--borderless width-full">
                 <thead>
                   <tr>
-                    <th scope="col">{{ content['reportName'] || 'Report Name' }}</th>
-                    <th scope="col">{{ content['status'] || 'Status' }}</th>
-                    <th scope="col">{{ content['audience'] || 'Audience' }}</th>
+                    <th scope="col">{{ content['reportName'] || "Report Name"}}</th>
+                    <th scope="col">{{ content['status'] || "Status"}}</th>
+                    <th scope="col">{{ content['audience'] || "Audience"}}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -113,12 +101,16 @@
                       <a [routerLink]="['/admin', 'reports', row.reportID]">{{ row.name }}</a>
                     </td>
                     <td>{{ row.version | titlecase }}</td>
-                    <td>{{ row.visibility }}</td>
+                    <td>{{row.visibility}}</td>
                   </tr>
                 </tbody>
               </table>
+
+
             </div>
           </ng-container>
+
+
         </ng-container>
 
         <ng-container *ngSwitchCase="'DataView'">
@@ -136,9 +128,9 @@
           <table *ngIf="itemsLoaded?.length; else noReports" class="usa-table usa-table--borderless width-full">
             <thead>
               <tr>
-                <th scope="col">{{ content['reportName'] || 'Report Name' }}</th>
-                <th scope="col">{{ content['status'] || 'Status' }}</th>
-                <th scope="col">{{ content['audience'] || 'Audience' }}</th>
+                <th scope="col">{{ content['reportName'] || "Report Name"}}</th>
+                <th scope="col">{{ content['status'] || "Status"}}</th>
+                <th scope="col">{{ content['audience'] || "Audience"}}</th>
               </tr>
             </thead>
             <tbody>
@@ -147,25 +139,26 @@
                   <a [routerLink]="['/admin', 'reports', row.reportID]">{{ row.name }}</a>
                 </td>
                 <td>{{ row.version | titlecase }}</td>
-                <td>{{ row.visibility | titlecase }}</td>
+                <td>{{row.visibility | titlecase}}</td>
               </tr>
             </tbody>
           </table>
+
+
         </ng-container>
 
-        <lib-adapt-pagination
-          (pageChange)="onPageChange($event)"
-          [page]="page"
-          [maxPages]="maxPages"></lib-adapt-pagination>
+
+        <lib-adapt-pagination (pageChange)="onPageChange($event)" [page]="page" [maxPages]="maxPages"></lib-adapt-pagination>
       </ng-container>
     </div>
   </ng-container>
 </div>
 
+
 <ng-template #noDataViews>
-  <p>{{ content!['noDataViews'] || 'No data views or reports have been created with this data source.' }}</p>
+  <p>{{ content!['noDataViews'] || "No data views or reports have been created with this data source."}}</p>
 </ng-template>
 
 <ng-template #noReports>
-  <p>{{ content!['noReports'] || 'No reports have been created with this data view.' }}</p>
+  <p>{{ content!['noReports'] || "No reports have been created with this data view."}}</p>
 </ng-template>

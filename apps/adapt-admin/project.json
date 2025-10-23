@@ -77,21 +77,21 @@
             }
           ]
         },
-        "qa": {
-          "localize": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/adapt-admin/src/environments/environment.ts",
-              "with": "apps/adapt-admin/src/environments/environment.qa.ts"
-            }
-          ]
-        },
         "uat": {
           "localize": false,
           "fileReplacements": [
             {
               "replace": "apps/adapt-admin/src/environments/environment.ts",
               "with": "apps/adapt-admin/src/environments/environment.uat.ts"
+            }
+          ]
+        },
+        "qa": {
+          "localize": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-admin/src/environments/environment.ts",
+              "with": "apps/adapt-admin/src/environments/environment.qa.ts"
             }
           ]
         },
@@ -111,13 +111,7 @@
           "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
-          "namedChunks": true,
-          "fileReplacements": [
-            {
-              "replace": "apps/adapt-admin/src/environments/environment.ts",
-              "with": "apps/adapt-admin/src/environments/environment.ts"
-            }
-          ]
+          "namedChunks": true
         }
       },
       "defaultConfiguration": "local"

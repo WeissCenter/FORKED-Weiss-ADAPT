@@ -224,14 +224,16 @@ export class DataRepGroupedComponent implements OnInit {
           return this.$currentFilterIsAll() ? this.raw.allMap : `${this.raw.prefix || ''} ${this.$currentFilter()}`;
         }
         // handle dynamic variables; assume the format is in {variable-name}-{type} type can be total/percentage for now
-        return handleDynamicVariables(
-          code,
-          this.$sumValue(),
-          this.raw.chart.xAxisValue,
-          this.$data(),
-          this.$selectedTotal(),
-          this.suppressed,
-          this.content?.actions?.['suppressed'] || 'Suppressed'
+        return (
+          handleDynamicVariables(
+            code,
+            this.$sumValue(),
+            this.raw.chart.xAxisValue,
+            this.$data(),
+            this.$selectedTotal(),
+            this.suppressed,
+            this.content?.actions?.['suppressed'] || 'Suppressed'
+          )
         );
       });
     }
@@ -414,19 +416,16 @@ export class DataRepGroupedComponent implements OnInit {
       return [];
     }
 
-    return data.reduce(
-      (acc: any, item: any) => {
-        const key = item[groupBy];
+    return data.reduce((acc: any, item: any) => {
+      const key = item[groupBy];
 
-        if (!acc[key]) {
-          acc[key] = { ...item, [groupBy]: key, [sumValue]: 0 };
-        }
-        acc[key][sumValue] += item[sumValue];
-        // console.log(acc);
-        return acc;
-      },
-      {} as Record<string, any>
-    );
+      if (!acc[key]) {
+        acc[key] = { ...item, [groupBy]: key, [sumValue]: 0 };
+      }
+      acc[key][sumValue] += item[sumValue];
+      // console.log(acc);
+      return acc;
+    }, {} as Record<string, any>);
   }
 
   togglePlainLanguage() {
@@ -614,6 +613,6 @@ export class DataRepGroupedComponent implements OnInit {
       ('value' in item && item.value === 0) ||
       ('suppressed' in item && item.suppressed) ||
       ('percentage' in item && (item.percentage === 0 || isNaN(item.percentage)))
-    );
+    )
   }
 }

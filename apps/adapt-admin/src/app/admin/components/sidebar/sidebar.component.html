@@ -1,14 +1,8 @@
-<aside
-  class="display-flex minh-full height-viewport"
-  [ngClass]="{ collapsed: nav_collapsed }"
+<aside class="display-flex minh-full height-viewport" [ngClass]="{ collapsed: nav_collapsed }"
   aria-label="App Sidebar Menu">
   <section class="sidebar-content display-flex gap-1 bg-white flex-column width-full padding-1">
-    <button
-      [attr.aria-expanded]="!nav_collapsed"
-      type="button"
-      class="usa-button gap-0 flex-column usa-button--outline shadow-none"
-      id="expand-menu-button"
-      (click)="toggleNav()"
+    <button [attr.aria-expanded]="!nav_collapsed" type="button"
+      class="usa-button gap-0 flex-column usa-button--outline shadow-none" id="expand-menu-button" (click)="toggleNav()"
       i18n>
       <ng-container *ngIf="nav_collapsed">
         <i aria-hidden="true" class="fal fa-bars"></i>
@@ -23,43 +17,32 @@
 
     <div class="sidebar-header">
       <div class="display-flex width-full padding-1 gap-1 flex-align-center flex-justify-center">
-        <img *ngIf="logoURL" [src]="logoURL" class="logo" alt="ADAPT Instance Logo" />
+        <img *ngIf="!logoIsSvg" [src]="logoURL" class="logo" aria-hidden="true" />
+        <lib-adapt-inline-svg [src]="logoURL" [attr.aria-hidden]="true"
+          svgClass="maxw-6 display-none desktop:display-flex" *ngIf="logoIsSvg"></lib-adapt-inline-svg>
       </div>
     </div>
 
     <nav aria-label="primary" class="margin-top-1">
       <ul #navList role="menubar" aria-orientation="vertical" class="usa-icon-list display-flex flex-column gap-05">
         <li role="none">
-          <a
-            aria-describedby="home"
-            role="menuitem"
-            routerLink="/admin"
-            (click)="closeMenuOnNavigation()"
-            [routerLinkActiveOptions]="{ exact: true }"
-            routerLinkActive="active-nav hover:bg-primary-dark"
+          <a aria-describedby="home" role="menuitem" routerLink="/admin" (click)="closeMenuOnNavigation()"
+            [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-nav hover:bg-primary-dark"
             class="usa-icon-list__item site-nav">
             <i aria-hidden="true" class="fal fa-home"></i>
             <span id="home"> Home </span>
           </a>
         </li>
         <li role="none">
-          <a
-            role="menuitem"
-            routerLink="data-management"
-            (click)="closeMenuOnNavigation()"
-            routerLinkActive="active-nav hover:bg-primary-dark "
-            class="usa-icon-list__item site-nav">
+          <a role="menuitem" routerLink="data-management" (click)="closeMenuOnNavigation()"
+            routerLinkActive="active-nav hover:bg-primary-dark " class="usa-icon-list__item site-nav">
             <i aria-hidden="true" class="fal fa-database"></i>
             <span> Data </span>
           </a>
         </li>
         <li role="none">
-          <a
-            role="menuitem"
-            routerLink="reports"
-            (click)="closeMenuOnNavigation()"
-            routerLinkActive="active-nav hover:bg-primary-dark "
-            class="usa-icon-list__item site-nav">
+          <a role="menuitem" routerLink="reports" (click)="closeMenuOnNavigation()"
+            routerLinkActive="active-nav hover:bg-primary-dark " class="usa-icon-list__item site-nav">
             <i aria-hidden="true" class="fal fa-chart-line"></i>
             <span> Reports </span>
           </a>
@@ -79,11 +62,7 @@
           </a>
         </li> -->
         <li role="none" *ngIf="this.role.hasPermission('Tool Settings', 'Read')">
-          <a
-            routerLink="settings"
-            role="menuitem"
-            routerLinkActive="active-nav hover:bg-primary-dark"
-            id="settingsBtn"
+          <a routerLink="settings" role="menuitem" routerLinkActive="active-nav hover:bg-primary-dark" id="settingsBtn"
             class="usa-icon-list__item site-nav">
             <i aria-hidden="true" class="fal fa-cog"></i>
             <span> Settings </span>
@@ -98,25 +77,16 @@
         </li>
         <li role="none"></li>
         <li role="none">
-          <a
-            role="menuitem"
-            rel="noopener noreferrer"
-            href="https://github.com/WeissCenter/Weiss-ADAPT/issues"
-            target="_blank"
-            aria-label="Give Feedback (opens in a new tab)"
+          <a role="menuitem" rel="noopener noreferrer" href="https://github.com/WeissCenter/Weiss-ADAPT/issues"
+            target="_blank" aria-label="Give Feedback (opens in a new tab)"
             class="usa-icon-list__item site-nav width-full">
             <i aria-hidden="true" class="fal fa-comment-alt-exclamation"></i>
             <span aria-hidden="true">
-              Give Feedback <i aria-hidden="true" class="far fa-external-link margin-left-05"></i
-            ></span>
+              Give Feedback <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
           </a>
         </li>
         <li role="none">
-          <a
-            role="menuitem"
-            (keypress)="startSignout($event)"
-            (click)="startSignout($event)"
-            tabindex="0"
+          <a role="menuitem" (keypress)="startSignout($event)" (click)="startSignout($event)" tabindex="0"
             class="usa-icon-list__item site-nav">
             <i aria-hidden="true" class="fal fa-sign-out"></i>
             <span> Sign Out </span>
@@ -125,15 +95,9 @@
       </ul>
     </nav>
     <span class="margin-top-auto display-flex width-full flex-justify-center">
-      <lib-adapt-inline-svg
-        *ngIf="!nav_collapsed"
-        alt="ADAPT logo"
-        [src]="openLogo"
+      <lib-adapt-inline-svg *ngIf="!nav_collapsed" alt="ADAPT logo" [src]="openLogo"
         svgClass="display-flex width-15"></lib-adapt-inline-svg>
-      <lib-adapt-inline-svg
-        *ngIf="nav_collapsed"
-        alt="ADAPT logo"
-        [src]="collapsedLogo"
+      <lib-adapt-inline-svg *ngIf="nav_collapsed" alt="ADAPT logo" [src]="collapsedLogo"
         svgClass="display-flex width-5"></lib-adapt-inline-svg>
     </span>
   </section>
@@ -143,9 +107,7 @@
   <div class="confirm-modal-body display-flex flex-column gap-2 padding-1">
     <div class="confirm-modal-footer padding-1 display-flex gap-2">
       <button class="usa-button" (keydown.enter)="signOut($event)" (click)="signOut($event)">Sign out</button>
-      <button
-        class="usa-button usa-button--unstyled"
-        (keydown.enter)="cancelLogout($event)"
+      <button class="usa-button usa-button--unstyled" (keydown.enter)="cancelLogout($event)"
         (click)="cancelLogout($event)">
         Cancel
       </button>

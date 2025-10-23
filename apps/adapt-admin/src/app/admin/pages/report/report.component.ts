@@ -121,6 +121,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     { label: 'External public view', value: 'external' },
   ];
   showFilterButton: boolean;
+  beforeEditFormValue: any;
 
   @HostListener('window:beforeunload')
   canDeactivate(isRouter = false, nextState?: RouterStateSnapshot): boolean {
@@ -229,9 +230,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       })
     )
     .pipe(
-      distinctUntilChanged(
-        (a, b) => sameObjects(a.filtersUsed, b.filtersUsed) && a.suppressed === b.suppressed && a.title === b.title
-      ) // prevents unnecessary reloads
+      distinctUntilChanged((a, b) => sameObjects(a.filtersUsed, b.filtersUsed) && a.suppressed === b.suppressed && a.title === b.title) // prevents unnecessary reloads
     );
 
   // public $templateError = this.$template.pipe(
@@ -263,12 +262,12 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
   public $languageOptions = computed(() => {
     const englishReportPageContent = this.$englishReportPageContent();
-    const contentLanguageOptions = englishReportPageContent?.sections?.[0].questions?.[1].options || [
-      { label: 'English', localizedLabel: 'English', value: 'en' },
-    ];
+    const contentLanguageOptions = englishReportPageContent?.sections?.[0].questions?.[1].options || [{ label: 'English', localizedLabel: 'English', value: 'en' }];
     const supportedLanguages = this.settings.getSettingsSignal()().supportedLanguages || ['en'];
 
-    return contentLanguageOptions.filter((item) => supportedLanguages.includes(item.value as LanguageCode));
+    return contentLanguageOptions.filter((item) =>
+      supportedLanguages.includes(item.value as LanguageCode)
+    );
   });
 
   public dataModalOpen = false;
@@ -297,7 +296,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       this.filterFormGroup.reset();
       this.intialLoad ? (this.showResetFilters = false) : (this.showResetFilters = true);
     }
-
+    
     if (!this.intialLoad) this.onFilter.next(this.filterFormGroup.value);
 
     this.intialLoad = false;
@@ -620,7 +619,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
                 const supportedLangs = this.settings.getSettings().supportedLanguages || ['en'];
 
-                const maxLength = Math.min(reports.length, supportedLangs.length);
+                const maxLength = supportedLangs.length;
 
                 const texts: any[] = [];
 
@@ -672,10 +671,8 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
             )
           );
           this.report = (reportData as IReport[])[0];
-          this.reportTemplateHasSuppression =
-            Object.keys((reportData as IReport[])[0]?.template?.suppression || {}).length !== 0;
-          this.previewSuppress =
-            (reportData as IReport[])[0]?.visibility === 'external' && this.reportTemplateHasSuppression;
+          this.reportTemplateHasSuppression = Object.keys((reportData as IReport[])[0]?.template?.suppression || {}).length !== 0;
+          this.previewSuppress = (reportData as IReport[])[0]?.visibility === 'external' && this.reportTemplateHasSuppression;
           // resolve data view
 
           const state = this.location.getState() as any;
@@ -763,6 +760,9 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
   public editReport() {
     this.isEditMode() ? (this.mode = PageMode.VIEW) : (this.mode = PageMode.EDIT);
+    if (this.mode === PageMode.EDIT) {
+      this.beforeEditFormValue = this.editReportForm.value;
+    }
   }
 
   public isEditMode() {
@@ -771,18 +771,11 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
   public confirmCancel() {
     this.mode = PageMode.VIEW;
-    this.editReportForm.markAsPristine();
-    this.editReportForm.markAsUntouched();
+    this.editReportForm.reset(this.beforeEditFormValue);
   }
 
   public reset() {
-    this.editReportForm.setValue({
-      title: this.report?.template.title,
-      description: this.report?.template.description,
-      audience: this.report?.visibility,
-    });
-    this.editReportForm.markAsPristine();
-    this.editReportForm.markAsUntouched();
+    this.editReportForm.reset(this.beforeEditFormValue);
     this.resetModal?.close();
   }
 
@@ -881,6 +874,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
       const accumObject = {
         template: val,
+        name: val.title, // Keeping template title and name in sync
         visibility: audience,
         slug,
         lang,
@@ -990,7 +984,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   public getLangLabel(delta = 1) {
-    const languages = this.$languageOptions();
+    const languages = this.$languageOptions()
     const index = languages.findIndex((lang) => lang.value === this.$formLang());
 
     if (index === -1 || index + delta > languages.length - 1 || index + delta < 0) {
@@ -1001,12 +995,12 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   public showVerifcationErrors() {
-    const languages = this.$languageOptions();
+    const languages = this.$languageOptions()
     return languages.length > 1 && this.reportTexts.controls.some((ct) => ct.get('verified')!.hasError('required'));
   }
 
   public getLang(delta = 0) {
-    const languages = this.$languageOptions();
+    const languages = this.$languageOptions()
     const index = languages.findIndex((lang) => lang.value === this.$formLang());
     this.$formLang.set(languages[index + delta].value);
     this.langIndex = index + delta;

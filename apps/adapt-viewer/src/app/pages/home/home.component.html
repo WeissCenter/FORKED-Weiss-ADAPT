@@ -1,7 +1,7 @@
 @if (ready()) {
-  <!--<adapt-session-reload-banner></adapt-session-reload-banner>-->
-  <branding-header></branding-header>
-  <!-- <div class="padding-y-3 padding-x-5 width-full display-flex gap-2 flex-column">
+<!--<adapt-session-reload-banner></adapt-session-reload-banner>-->
+<branding-header></branding-header>
+<!-- <div class="padding-y-3 padding-x-5 width-full display-flex gap-2 flex-column">
 <lib-data-rep-comparison-trigger #comparisonTrigger [content]="comparisonContent.triggerButtonLabel"
   [controlPanel]="comparisonControls"></lib-data-rep-comparison-trigger>
 <lib-data-rep-comparison-controls (comparisonSubmit)="onComparisonSelection($event)"
@@ -12,45 +12,36 @@
 </ng-container>
 </div> -->
 
-  <!-- <ng-container *ngIf="!comparisonMode || !comparisonControls.isOpen"> -->
 
-  <section
-    *ngIf="$content()"
-    aria-label="Recent activities and common actions"
-    class="padding-top-3 tablet:padding-top-5">
+<!-- <ng-container *ngIf="!comparisonMode || !comparisonControls.isOpen"> -->
+
+  <section *ngIf="$content()" aria-label="Recent activities and common actions" class="padding-top-3 tablet:padding-top-5">
     <div class="grid-container padding-x-0 tablet:padding-x-5">
       <div class="display-flex margin-top-4 width-full padding-x-2 tablet:padding-x-0 flex-column">
-        <div
-          class="bg-white padding-2 tablet:padding-3 border-2px display-flex flex-column flex-1 border-base-lighter tablet:radius-lg">
+        <div class="bg-white padding-2 tablet:padding-3 border-2px display-flex flex-column flex-1 border-base-lighter tablet:radius-lg">
           <div class="usa-prose">
             <!-- What can you do here? -->
-            <h2>{{ $content().pages.home?.headingCard?.heading }}</h2>
-            <p>{{ $content().pages.home?.headingCard?.body }}</p>
+            <h2>{{$content().pages.home?.headingCard?.heading}}</h2>
+            <p>{{$content().pages.home?.headingCard?.body}}</p>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section
-    *ngIf="$content()"
-    [attr.aria-label]="$content().shared.frequentlyAskedQuestions.title"
+  <section *ngIf="$content()" [attr.aria-label]="$content().shared.frequentlyAskedQuestions.title"
     class="padding-y-4 desktop:padding-y-6">
     <div class="grid-container padding-x-0 tablet:padding-x-5">
       <div class="display-flex width-full padding-x-2 tablet:padding-x-0 flex-column">
+
         <div class="usa-prose">
           <h2>{{ $content().shared?.frequentlyAskedQuestions?.title }}</h2>
-          <p>
-            {{
-              $content().shared?.frequentlyAskedQuestions?.description +
-                ' ' +
-                $content().shared?.frequentlyAskedQuestions?.footNote
-            }}
-          </p>
+          <p>{{ $content().shared?.frequentlyAskedQuestions?.description + ' ' +
+            $content().shared?.frequentlyAskedQuestions?.footNote}}</p>
         </div>
 
+
         <div class="questions-layout gap-2 accessibility-layout display-flex padding-x-0 margin-top-4">
-          <article
-            *ngFor="let q of $selFreqAskedQuestions() | fieldLengthSort: 'answer'"
+          <article *ngFor="let q of $selFreqAskedQuestions() | fieldLengthSort : 'answer'"
             class="bg-white grid-col-6 padding-2 desktop:padding-3 gap-2 border-2px display-flex flex-column border-base-lighter tablet:radius-lg">
             <div class="usa-prose">
               <h3>{{ q.question }}</h3>
@@ -58,13 +49,13 @@
             </div>
             <lib-adapt-tag status="active">{{ q.categoryName }}</lib-adapt-tag>
           </article>
+
         </div>
         <div class="home-faqs-view-more margin-top-2">
-          <a
-            [routerLink]="['resources']"
-            [queryParams]="{ navigation: 'frequently-asked-questions' }"
+          <a [routerLink]="['resources']" [queryParams]="{'navigation': 'frequently-asked-questions'}"
             class="usa-button usa-button--outline">
-            <i aria-hidden="true" class="fal fa-folder"></i>{{ $content().shared.frequentlyAskedQuestions.button_text }}
+            <i aria-hidden="true" class="fal fa-folder"></i>{{ $content().shared.frequentlyAskedQuestions.button_text
+            }}
           </a>
         </div>
       </div>
@@ -82,20 +73,17 @@
         </div>
 
         <div class="home-reports-list display-flex flex-column gap-1">
-          <lib-adapt-expandable-list-item [expandable]="false" *ngFor="let report of $reports()">
+          <lib-adapt-expandable-list-item [expandable]="false" *ngFor="let report of reports$ | async">
             <div visible-content class="display-flex gap-105 flex-column">
               <lib-adapt-h-element [ngClass]="'usa-prose margin-0'" level="h3">
-                <a
-                  class="text-primary hover:primary-dark text-semibold text-no-underline cursor-pointer display-inline-flex width-auto"
-                  [routerLink]="['reports', report.slug]"
-                  >{{ report.template.title }}</a
-                >
+                <a class="text-primary hover:primary-dark text-semibold text-no-underline cursor-pointer display-inline-flex width-auto"
+                  [routerLink]="['reports', report.slug]">{{ report.template.title }}</a>
               </lib-adapt-h-element>
 
               <p class="text-normal font-sm line-height-5 text-ink">{{ report.template.description }}</p>
 
               <p class="text-normal font-sm line-height-4 text-ink">
-                <time [attr.datetime]="report.published | date: 'YYYY-MM-dd'">
+                <time [attr.datetime]="report.published | date : 'YYYY-MM-dd'">
                   {{ report.published | date }}
                 </time>
               </p>

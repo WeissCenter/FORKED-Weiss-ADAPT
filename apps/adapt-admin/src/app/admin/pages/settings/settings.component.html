@@ -7,14 +7,9 @@
       <h1 class="margin-0" i18n>{{ pageContent?.title }}</h1>
       <p class="margin-bottom-0 usa-prose measure-4" i18n>{{ pageContent?.description }}</p>
 
-      <a
-        href="https://weisscenter.gitbook.io/weisscenter/user-guide/settings"
-        target="_blank"
-        aria-label="Learn More (opens in a new tab)"
-        style="font-size: 0.8rem; margin-top: 8px">
-        <span aria-hidden="true"
-          >Learn More <i aria-hidden="true" class="far fa-external-link margin-left-05"></i
-        ></span>
+      <a href="https://weisscenter.gitbook.io/weisscenter/user-guide/settings" target="_blank"
+         aria-label="Learn More (opens in a new tab)" style="font-size: 0.8rem;margin-top: 8px;">
+        <span aria-hidden="true">{{pageContent?.learn_more_link}} <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
       </a>
     </section>
 
@@ -29,9 +24,7 @@
         selector=".settings-content-body">
       </adapt-in-page-navigation>
 
-      <div
-        *ngIf="categoriesContent?.sub_sections"
-        class="settings-content-body flex-12 width-full display-flex flex-column gap-1 border-top-2px border-base-lighter">
+      <div *ngIf="categoriesContent?.sub_sections" class="settings-content-body flex-12 width-full display-flex flex-column gap-1 border-top-2px border-base-lighter">
         <div class="settings-content-body-header margin-1">
           <!-- Categories -->
           <h2 class="font-xl margin-0">{{ categoriesContent?.title }}:</h2>

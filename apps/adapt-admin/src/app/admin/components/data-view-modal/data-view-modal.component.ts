@@ -6,9 +6,7 @@ import {
   OnInit,
   Output,
   ViewChild,
-  computed,
-  effect,
-  Signal,
+  computed, effect, Signal,
 } from '@angular/core';
 import { FullPageModalComponent } from '../full-page-modal/full-page-modal.component';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -121,7 +119,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     { value: 'other', label: 'Other' },
   ];
 
-  public typeOptions: Observable<{ label: any; value: any }[]>; //  = this.data.getTemplates('DataCollection').pipe(map((result => result.map((temp: any) => ({label: temp.name,  value: temp.id.replace("ID#", "")})))))
+  public typeOptions: Observable<{label: any, value: any}[]>; //  = this.data.getTemplates('DataCollection').pipe(map((result => result.map((temp: any) => ({label: temp.name,  value: temp.id.replace("ID#", "")})))))
 
   //
   // [
@@ -163,11 +161,12 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   public reloadData = false;
 
   // Input signal
-  $pageContentSignal: Signal<PageContentText | null>; // = this.pagesContentService.getPageContentSignal('data', 'en');
+  $pageContentSignal: Signal<PageContentText|null>; // = this.pagesContentService.getPageContentSignal('data', 'en');
   //$pageSectionsSignal: Signal<PageSectionContentText[]|undefined>;  //  = computed(() => this.$pageContentSignal()?.sections);
-  pageContent: PageContentText | null;
-  pageSections: PageSectionContentText[] | undefined;
+  pageContent: PageContentText|null;
+  pageSections:PageSectionContentText[]|undefined;
   pageContentLoaded: boolean = false;
+
 
   @HostListener('window:beforeunload')
   beforeUnload(event: any) {
@@ -187,6 +186,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     public pagesContentService: PagesContentService,
     private cdRef: ChangeDetectorRef
   ) {
+
     this.logger.debug('Inside data-view-modal component constructor');
 
     this.initializeComponentSignals();
@@ -195,9 +195,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   ngOnInit() {
     this.logger.debug('Inside data-view-modal component ngOnInit');
 
-    this.typeOptions = this.data
-      .getTemplates('DataCollection')
-      .pipe(map((result) => result.map((temp: any) => ({ label: temp.name, value: temp.id.replace('ID#', '') }))));
+    this.typeOptions = this.data.getTemplates('DataCollection').pipe(map((result => result.map((temp: any) => ({label: temp.name,  value: temp.id.replace("ID#", "")})))))
 
     this.createDataViewForm();
 
@@ -266,9 +264,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
       - Cancellation Effect: This is the defining characteristic of switchMap. It prioritizes the latest emission from the source observable, abandoning any ongoing work from previous inner observables. This is crucial for scenarios where only the most recent operation matters.
 
      */
-    const duplicateCheckSub = this.typeFields.valueChanges
-      .pipe(
-        switchMap((value) =>
+    const duplicateCheckSub = this.typeFields.valueChanges.pipe(switchMap((value) =>
           this.dataViews.pipe(
             switchMap((views) => {
               const dataView = views.find((view) => {
@@ -341,32 +337,37 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     this.$pageContentSignal = this.pagesContentService.getPageContentSignal('data', 'en');
     //this.$pageSectionsSignal = computed(() => this.$pageContentSignal()?.sections);
 
-    // after we got a signal that the pageContent was updated
+    // after we got a signal that the pageContent was loaded
     effect(() => {
+
       this.logger.debug('$pageContentSignal retrieved');
       this.pageContent = this.$pageContentSignal();
 
       this.logger.debug('pageContent: ', this.pageContent);
 
-      if (this.pageContent) {
+      if (this.pageContent){
+
         this.logger.debug('Have page content');
 
         this.pageSections = this.pageContent.sections;
 
-        if (!this.pageContent.title) {
+        if (!this.pageContent.title){
           this.logger.error('Invalid page title');
         }
 
-        if (!(this.pageContent.sections && this.pageContent?.sections?.length > 0)) {
+        if (!(this.pageContent.sections && this.pageContent?.sections?.length > 0)){
           this.logger.error('Invalid page sections');
-        } else {
+        }
+        else {
           this.logger.debug('Have page sections');
           this.pageContentLoaded = true;
         }
-      } else {
+      }
+      else {
         this.logger.debug('NO page content');
         this.pageContentLoaded = false;
       }
+
     });
 
     // after we got a signal that the pageSections was updated
@@ -474,11 +475,10 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
     if (this.currentTemplate) {
       for (const [index, field] of Object.keys(this.typeFields.controls).entries()) {
+
         const typeField = this.typeFields.get(field);
 
-        const templateField = this.currentTemplate.fields[index].options.find(
-          (option) => option.value === typeField?.value
-        );
+        const templateField = this.currentTemplate.fields[index].options.find(option => option.value === typeField?.value)
 
         defaultInput.data.fields.push({ id: field, label: templateField.label ?? '', value: typeField?.value });
       }
@@ -521,6 +521,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   public async onTypeChange([prev, next]: [string, string]) {
+
     this.logger.debug('Inside data-view-modal component onTypeChange, prev: ', prev, ', next: ', next);
     const { value } = this.type;
 
@@ -630,16 +631,15 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
       this.name.setValue(this.name.value + ` - ${value}`);
     }
 
+
+
     this.name.setValue(
       this.name.value +
-        ` - ${this.pageContent?.actions?.[this.source.value] ?? this.sourceValueNameMap[this.source.value]} - ${new Date().toLocaleDateString(
-          undefined,
-          {
-            month: '2-digit',
-            day: '2-digit',
-            year: 'numeric',
-          }
-        )}`
+        ` - ${this.pageContent?.actions?.[this.source.value] ?? this.sourceValueNameMap[this.source.value]} - ${new Date().toLocaleDateString(undefined, {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric',
+        })}`
     );
   }
 
@@ -737,32 +737,30 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     this.saving = false;
     this.saved = true;
 
-    if (
-      startDataPull &&
-      this.currentDataView?.status !== DataSetQueueStatus.MISSING_DATA &&
-      !this.baseDataViewForm.invalid
-    ) {
-      const name = this.name.value;
+    if(startDataPull && this.currentDataView?.status !== DataSetQueueStatus.MISSING_DATA && !this.baseDataViewForm.invalid){
 
-      this.data
-        .doDataPull(this.currentDataView!.dataViewID)
-        .pipe(
-          catchError((err) => {
-            this.alert.add({
-              type: 'error',
-              title: 'Data View Save Failed',
-              body: `Data View Save for ${name} failed: ${err}`,
-            });
-            return err;
-          })
-        )
-        .subscribe(() => {
+    const name = this.name.value;
+
+    this.data
+      .doDataPull(this.currentDataView!.dataViewID)
+      .pipe(
+        catchError((err) => {
           this.alert.add({
-            type: 'success',
-            title: 'Data View Save Complete',
-            body: `Data View ${name} has been saved successfully. You will receive a notification when data view is ready for use.`,
+            type: 'error',
+            title: 'Data View Save Failed',
+            body: `Data View Save for ${name} failed: ${err}`,
           });
+          return err;
+        })
+      )
+      .subscribe(() => {
+        this.alert.add({
+          type: 'success',
+          title: 'Data View Save Complete',
+          body: `Data View ${name} has been saved successfully. You will receive a notification when data view is ready for use.`,
         });
+      });
+
     }
 
     if (close) {
@@ -832,6 +830,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     this.logger.debug('Inside data-view-modal component open');
     if (!this.modal) return;
 
+
     this.opened = true;
 
     if (dataView) {
@@ -864,10 +863,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
         source: dataView.dataViewType,
         database: dataView.data.dataSource,
         files: dataView.data.files.map((file) => new File([], file.location)),
-        typeFields: dataView.data.fields.reduce(
-          (accum, val) => Object.assign(accum, { [val.id]: val.value, label: val.label }),
-          {}
-        ),
+        typeFields: dataView.data.fields.reduce((accum, val) => Object.assign(accum, { [val.id]: val.value, label: val.label }), {}),
         name: dataView.name,
         description: dataView.description,
       };
@@ -887,11 +883,16 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     this.stepsIndicator.setStep(pageIndex);
     this.reloadData = pageIndex === 1;
 
+
     this.handleCurrentStepNext(1);
 
     requestAnimationFrame(() => {
       this.source.setValue(dataView?.dataViewType || 'database');
-    });
+
+    })
+
+
+
   }
 
   public close() {
@@ -954,7 +955,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   public getDetailLabel(content: SectionQuestionContentText[] = [], id?: string) {
-    return content.find((question) => question.id === id)?.label;
+    return content.find(question => question.id === id)?.label;
   }
 
   private getEventMessage(event: HttpEvent<any>) {

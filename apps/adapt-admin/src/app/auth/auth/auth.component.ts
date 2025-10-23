@@ -14,11 +14,7 @@ export class AuthComponent implements OnInit {
   text = '';
   buttonLabel = 'Sign in';
 
-  constructor(
-    private user: UserService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private user: UserService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     // redirect user if already logged in

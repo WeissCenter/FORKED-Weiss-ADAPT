@@ -20,19 +20,19 @@ export class SecondaryNavigationItemComponent {
   constructor(
     @Host() public navigation: SecondaryNavigationComponent,
     private route: ActivatedRoute
-  ) {
-    //private cdRef: ChangeDetectorRef
+  ) //private cdRef: ChangeDetectorRef
+  {
     this.isSelected = this.selected;
   }
 
   public get selected() {
     const snapshotValues = Object.values(this.route.snapshot.queryParams);
 
+
+
     if (this.queryParams && snapshotValues.length > 0) {
       this.preSelected = false;
-      const selected = snapshotValues.every((param) =>
-        Object.values(this.queryParams as Record<string, string>).includes(param)
-      );
+      const selected = snapshotValues.every((param) => Object.values(this.queryParams as Record<string, string>).includes(param));
 
       return selected;
     }

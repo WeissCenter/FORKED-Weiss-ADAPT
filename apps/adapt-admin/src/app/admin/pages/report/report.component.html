@@ -224,9 +224,9 @@
         </div>
 
         <div class="heading-controls display-flex gap-3 flex-align-self-end flex-wrap">
-          <div class="flex-column">
+          <div class="flex-column" *ngIf="editAudience.value === 'external'">
             <label class="usa-label" for="options">{{$englishReportPageContent()?.sections![0].questions![1].label}}</label>
-            <select *ngIf="editAudience.value === 'external'" [(ngModel)]="$reportLang"
+            <select [(ngModel)]="$reportLang"
               (ngModelChange)="onReportLangChange($event)" aria-labelledby="options"
               class="usa-select width-auto display-inline" name="options" id="options">
               <option *ngFor="let langOption of $languageOptions()" [value]="langOption.value">

@@ -1,3 +1,4 @@
+
 import {
   Component,
   ElementRef,
@@ -35,10 +36,7 @@ export class ModalComponent implements OnDestroy {
 
   private closeRoute?: string;
 
-  constructor(
-    private router: Router,
-    @Inject(PLATFORM_ID) private platform: string
-  ) {}
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platform: string) {}
 
   public open(closeRoute?: string) {
     if (!this.dialog) return;
@@ -57,9 +55,12 @@ export class ModalComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    try {
+    try{
       this.dialog?.nativeElement.close();
-      // eslint-disable-next-line no-empty
-    } catch (err) {}
+    // eslint-disable-next-line no-empty
+    }catch(err){
+
+    }
+  
   }
 }
