@@ -1,23 +1,23 @@
 export interface AdminContentText {
   pages: PageContentText[];
-  shared: SharedContentText;
-  adaptListView: AdaptListViewContentText;
+  shared: SharedContentText,
+  adaptListView: AdaptListViewContentText
 }
 
-export interface SharedContentText {
-  multiSelect: MultiSelectContentText;
-  impactAnalysis: ImpactAnalysisContentText;
-  languageAccess: LanguageAccessContentText;
-  createUpdate: CreateUpdateContentText;
+export interface SharedContentText{
+  multiSelect: MultiSelectContentText,
+  impactAnalysis: ImpactAnalysisContentText,
+  languageAccess: LanguageAccessContentText,
+  createUpdate: CreateUpdateContentText
 }
 
-export interface CreateUpdateContentText {
-  lastUpdated: string;
-  createdBy: string;
+export interface CreateUpdateContentText{
+  lastUpdated: string,
+  createdBy: string
 }
 
-export interface LanguageAccessContentText {
-  supportedLanguages: SupportedLanguageOption[];
+export interface LanguageAccessContentText{
+  supportedLanguages: SupportedLanguageOption[]
 }
 export interface SupportedLanguageOption {
   label: string;
@@ -25,30 +25,31 @@ export interface SupportedLanguageOption {
   value: string;
 }
 
-export interface ImpactAnalysisContentText {
-  reportName: string;
-  dataSourceCountTemplate: string;
-  dataViewCountTemplate: string;
-  glossaryCountTemplate: string;
-  title: string;
-  status: string;
-  learnMore: string;
-  audience: string;
-  noDataViews: string;
-  noReports: string;
+export interface ImpactAnalysisContentText{
+  reportName: string
+  dataSourceCountTemplate: string
+  dataViewCountTemplate: string
+  glossaryCountTemplate: string
+  title: string
+  status: string
+  learnMore: string
+  audience: string
+  noDataViews: string
+  noReports: string
 }
 
-export interface MultiSelectContentText {
-  select_all: string;
-  expand: string;
-  collapse: string;
-  selected_template: string;
+export interface MultiSelectContentText{
+  select_all: string,
+  expand: string,
+  collapse: string,
+  selected_template: string
 }
 
 export interface PageContentText {
   name?: string;
   title?: string;
   description?: string;
+  learn_more_link?: string;  //"Learn More",
   sections?: PageSectionContentText[];
   tabs?: string[];
   loginContent?: loginContentText;
@@ -73,8 +74,8 @@ export interface loginContentText {
 }
 
 export interface PageSectionContentText {
-  disclaimer: any;
-  additional_info: any;
+disclaimer: any;
+additional_info: any;
   title: string; // page header
   name: string; // tab name
   header: string;
@@ -106,7 +107,7 @@ export interface SectionQuestionContentText {
   selected_option?: string;
   validation_messages?: MessagesContentText;
   options: QuestionOptionContentText[];
-  id?: string;
+  id?: string
 }
 
 export interface QuestionOptionContentText {
@@ -130,7 +131,7 @@ export interface ActionContentText {
   [name: string]: string;
 }
 
-export interface AdaptListViewContentText {
+export interface  AdaptListViewContentText {
   actions: string[];
 }
 
@@ -142,5 +143,5 @@ export interface DataRepComparisonControlsText {
   triggerButtonLabel: string;
   comparison1Label: string;
   comparison2Label: string;
-  validationMessages?: { [name: string]: string };
+  validationMessages?: { [name: string]: string;}
 }

@@ -22,10 +22,7 @@
 
     <ng-container [ngSwitch]="navigation | async">
       <ng-container *ngSwitchCase="'useful-links'">
-        <section
-          role="region"
-          [attr.aria-label]="$resourcesContent()?.usefulLinks?.headerSectionLabel"
-          class="usa-prose">
+        <section role="region" [attr.aria-label]="$resourcesContent()?.usefulLinks?.headerSectionLabel" class="usa-prose">
           <h2>{{ $resourcesContent()?.usefulLinks?.header }}</h2>
           <p>{{ $resourcesContent()?.usefulLinks?.description }}</p>
         </section>
@@ -35,7 +32,7 @@
           class="grid-row grid-gap-sm"
           [attr.aria-label]="$resourcesContent()?.usefulLinks?.listSectionLabel">
           <div
-            *ngFor="let link of $resourcesContent()?.usefulLinks?.links || [] | fieldLengthSort: 'description'"
+            *ngFor="let link of $resourcesContent()?.usefulLinks?.links || [] | fieldLengthSort : 'description'"
             class="useful-link-wrapper tablet:grid-col-6">
             <div
               class="bg-white padding-2 desktop:padding-3 margin-1 gap-1 border-2px display-flex flex-column border-base-lighter tablet:radius-lg">
@@ -64,20 +61,19 @@
         </section>
 
         <section
-          *ngIf="fragment | async as frag"
+        *ngIf="fragment | async as frag"
           role="region"
           class="display-flex tablet:flex-row-reverse flex-column gap-2"
           [attr.aria-label]="$resourcesContent()?.frequentlyAskedQuestions?.listSectionLabel">
           <aside
             #navigation
+
             class="usa-in-page-nav bg-base-lightest margin-left-0 margin-top-0"
             data-scroll-offset="0"
             data-root-margin="-999999px 0px -999999px 0px"
             data-threshold="1">
             <nav aria-label="FAQ Categories:" class="usa-in-page-nav__nav bg-base-lightest">
-              <h3 class="usa-in-page-nav__heading" tabindex="0">
-                {{ $sharedContent()?.frequentlyAskedQuestions?.tableHeading }}
-              </h3>
+              <h3 class="usa-in-page-nav__heading" tabindex="0">{{$sharedContent()?.frequentlyAskedQuestions?.tableHeading}}</h3>
               <ul class="usa-in-page-nav__list border-base-light">
                 <li
                   [attr.aria-current]="frag === link.fragment"
@@ -95,6 +91,9 @@
               </ul>
             </nav>
           </aside>
+
+
+      
 
           <ng-container *ngFor="let category of $sharedContent()?.frequentlyAskedQuestions?.categories">
             <div class="display-flex flex-column gap-2" *ngIf="frag === category?.fragment">

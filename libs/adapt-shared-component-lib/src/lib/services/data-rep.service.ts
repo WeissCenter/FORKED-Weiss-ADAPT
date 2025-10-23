@@ -15,9 +15,28 @@ export interface DataRepSettings {
 export class DataRepService {
   constructor(private glossary: GlossaryService) {}
 
-  public downloadData(what: 'csv' | 'xlsx', header: string, dataTable: HTMLTableElement): void {
+  public downloadData(
+    what: 'csv' | 'xlsx',
+    header: string,
+    dataTable: HTMLTableElement,
+    updatedLabels?: string[]
+  ): void {
+    // If updatedLabels are provided, update the table headers to replace "Item 1" with updatedLabels[0] and "Item 2" with updatedLabels[1]
+    // Need to make a shallow copy of the dataTable to avoid modifying the original table
+    const dataTableCopy = dataTable.cloneNode(true) as HTMLTableElement;
+    if (updatedLabels && updatedLabels.length === 2) {
+      const headers = dataTableCopy.querySelectorAll('thead th');
+      if (headers.length >= 5) {
+        // First column is the item name, second column is the count for item 1, third column is the percentage for item 1, fourth column is the count for item 2, and fifth column is the percentage for item 2
+        headers[1].textContent = updatedLabels[0] + ' Count';
+        headers[2].textContent = updatedLabels[0] + ' (%)';
+        headers[3].textContent = updatedLabels[1] + ' Count';
+        headers[4].textContent = updatedLabels[1] + ' (%)';
+      }
+    }
+
     const fileName = `${header}.${what}`;
-    const workbook = XLSX.utils.table_to_book(dataTable);
+    const workbook = XLSX.utils.table_to_book(dataTableCopy);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const range = XLSX.utils.decode_range(worksheet['!ref']!);
 
@@ -167,10 +186,7 @@ export class DataRepService {
   }
 
   public processChartData(rawData: any, id: string): { data: any[]; total: number; glossaryIdsString: string } {
-    let data =
-      rawData.chart.data.length === 1 && 'value' in rawData.chart.data[0]
-        ? rawData.chart.data[0].value
-        : rawData.chart.data;
+    let data = (rawData.chart.data.length === 1 && 'value' in rawData.chart.data[0]) ? rawData.chart.data[0].value : rawData.chart.data;
 
     if (!data || !Array.isArray(data) || data.length === 0) {
       data = [];

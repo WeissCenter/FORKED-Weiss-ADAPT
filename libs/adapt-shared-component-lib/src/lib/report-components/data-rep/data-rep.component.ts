@@ -1,16 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  computed,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, computed, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { GlossaryService } from '../../services/glossary.service';
 import {
   AdminContentText,
@@ -84,11 +72,7 @@ export class DataRepComponent implements OnInit, OnChanges {
   private focusableElementsString =
     'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable], li[tabindex="0"], li[tabindex="-1"], tr[tabindex="0"], tr[tabindex="-1"]';
 
-  constructor(
-    private glossary: GlossaryService,
-    private cd: ChangeDetectorRef,
-    public dataRepService: DataRepService
-  ) {
+  constructor(private glossary: GlossaryService, private cd: ChangeDetectorRef, public dataRepService: DataRepService) {
     const saved = JSON.parse(localStorage.getItem('adapt-data-rep-settings') || '{}');
     if (saved.showPlainLanguage || saved.showGlossary) this.dataRepSettings = saved;
     this.dataRepSettings = this.dataRepService.retreiveSettingsLocally();
@@ -370,7 +354,6 @@ export class DataRepComponent implements OnInit, OnChanges {
         this.lang
       );
       this.showGlossaryBtn = this.dataRepService.checkForDefinitions(this.data);
-      this.suppressed = this.data.some((d) => d['suppressed']);
       this.noDataSummary = this.dataRepService.generatePlainLanguageForZeroTotalItems(this.raw, this.lang);
     }
   }
@@ -385,21 +368,19 @@ export class DataRepComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.suppressed) {
       const totalSelect = Array.isArray(this.raw.chart.data[0]?.value) ? this.raw.chart.data[0] : this.raw.chart;
-
+      
       const totalSelectTotalIsZero = (totalSelect.total ?? 0) === 0;
       let totalSelectHasNoData = false;
 
       if (totalSelect && 'data' in totalSelect) {
         const totalSelectDataIsArray = Array.isArray(totalSelect.data);
-        const allDataValuesAreZero =
-          totalSelectDataIsArray && totalSelect.data.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
+        const allDataValuesAreZero = totalSelectDataIsArray && totalSelect.data.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
         const totalSelectDataIsEmpty = totalSelectDataIsArray && totalSelect.data.length <= 0;
 
         totalSelectHasNoData = totalSelectDataIsEmpty || allDataValuesAreZero;
       } else if ('value' in totalSelect) {
         const totalSelectValueIsArray = Array.isArray(totalSelect.value);
-        const totalSelectValueIsZero =
-          totalSelectValueIsArray && totalSelect.value.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
+        const totalSelectValueIsZero = totalSelectValueIsArray && totalSelect.value.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
         const totalSelectValueIsEmpty = totalSelectValueIsArray && totalSelect.value.length <= 0;
         totalSelectHasNoData = totalSelectValueIsEmpty || totalSelectValueIsZero;
       }

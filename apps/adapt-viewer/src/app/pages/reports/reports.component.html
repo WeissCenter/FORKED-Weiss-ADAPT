@@ -1,8 +1,8 @@
-<section *ngIf="$content" class="reports-container grid-container gap-4 display-flex flex-column">
+<section *ngIf="$content()" class="reports-container grid-container gap-4 display-flex flex-column">
   <header role="banner" class="reports-banner width-full display-flex usa-prose flex-column">
     <!-- TODO: This heading/description needs to dynamically change when the view is updated. Options are Draft Reports/Finalized Reports -->
-    <h1 class="margin-0">{{ $content()?.pages.reports?.header }}</h1>
-    <p class="measure-4 usa-prose margin-bottom-0">{{ $content()?.pages.reports?.body }}</p>
+    <h1 class="margin-0">{{$content()?.pages.reports?.header}}</h1>
+    <p class="measure-4 usa-prose margin-bottom-0">{{$content()?.pages.reports?.body}}</p>
   </header>
 
   <!-- <div class="reports-filtering bg-white width-full padding-3 margin-top-4 border-base-lighter border">
@@ -14,7 +14,7 @@
     id="reports"
     aria-label="list of available reports"
     class="reports-table display-flex flex-column gap-1 width-full">
-    <ng-container *ngIf="$reports | loading: 'Reports have loaded' | async as reportsLoaded">
+    <ng-container *ngIf="$reports | loading : 'Reports have loaded' | async as reportsLoaded">
       <div
         class="data-management-table-header display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full margin-bottom-3 gap-2">
         <!-- <span *ngIf="reports | async | paginate: page: pageSize as items" class="font-family-body font-xs" #recordsDisplay
@@ -24,10 +24,11 @@
         <h2
           class="font-family-body font-sm line-height-5 text-normal"
           id="showing"
-          *ngIf="reportsLoaded.value | paginate: page : pageSize as items"
+          *ngIf="reportsLoaded.value | paginate : page : pageSize as items"
           #recordsDisplay
           aria-live="polite">
-          {{ $content()?.shared.paginator.showingUpTo }}
+
+          {{$content()?.shared.paginator.showingUpTo}}
 
           <select
             [(ngModel)]="pageSize"
@@ -41,7 +42,7 @@
             <option [value]="25">25</option>
             <option [value]="50">50</option>
           </select>
-          {{ $content()?.shared.paginator.of }} {{ totalItems }} {{ $content()?.shared.paginator.items }}
+          {{$content()?.shared.paginator.of}} {{ totalItems }}   {{$content()?.shared.paginator.items}}
         </h2>
 
         <div class="display-flex gap-2 flex-wrap flex-align-center">
@@ -54,7 +55,7 @@
             <i
               class="fal {{ publishedSortDirection === 'asc' ? 'fa-sort-amount-up-alt' : 'fa-sort-amount-down-alt' }}"
               aria-hidden="true"></i>
-            {{ $content()?.shared.listControls.sort }}
+            {{$content()?.shared.listControls.sort}}
           </button>
 
           <!-- <button
@@ -83,15 +84,15 @@
       <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="reportsLoaded.loading">
         <div class="display-flex flex-align-center gap-1">
           <div class="loader"></div>
-          <p class="usa-prose" i18n>{{ $content()?.pages.reports?.loading }}</p>
+          <p class="usa-prose" i18n>{{$content()?.pages.reports?.loading}}</p>
         </div>
       </div>
 
       <ng-container *ngIf="reportsLoaded.value as reports">
-        <span *ngIf="reports.length" class="visually-hidden" aria-live="polite" id="report-load-notifier">{{
-          $content()?.pages.reports?.loaded
-        }}</span>
-        <lib-adapt-expandable-list-item [expandable]="false" *ngFor="let report of reports | paginate: page : pageSize">
+        <span *ngIf="reports.length" class="visually-hidden" aria-live="polite" id="report-load-notifier"
+          >{{$content()?.pages.reports?.loaded}}</span
+        >
+        <lib-adapt-expandable-list-item [expandable]="false" *ngFor="let report of reports | paginate : page : pageSize">
           <div visible-content>
             <h3 class="usa-prose margin-0">
               <a
@@ -101,11 +102,11 @@
               >
             </h3>
             <p class="text-normal font-sm margin-bottom-1 text-ink">
-              {{ report.template.description }}
+              {{report.template.description}}
             </p>
             <div class="display-flex flex-column width-full gap-1">
               <p class="text-normal font-sm text-ink">
-                <time [attr.datetime]="report.published | date: 'YYYY-MM-dd'">
+                <time [attr.datetime]="report.published | date : 'YYYY-MM-dd'">
                   {{ report.published | date }}
                 </time>
               </p>
@@ -131,11 +132,7 @@
     </ng-container>
 
     <div class="reports-table-pagination padding-top-2">
-      <lib-adapt-pagination
-        [page]="page"
-        [maxPages]="maxPages"
-        [previous]="$content().shared?.paginator?.previous"
-        [next]="$content().shared?.paginator?.next"></lib-adapt-pagination>
+      <lib-adapt-pagination [page]="page" [maxPages]="maxPages" [previous]="$content().shared?.paginator?.previous" [next]="$content().shared?.paginator?.next"></lib-adapt-pagination>
     </div>
   </section>
 </section>

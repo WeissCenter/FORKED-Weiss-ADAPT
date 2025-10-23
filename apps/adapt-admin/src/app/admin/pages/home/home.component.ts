@@ -1,5 +1,5 @@
 import { DataSet, DataSource } from '@adapt/types';
-import { Component, computed, OnInit } from '@angular/core';
+import { Component, computed, effect, OnInit, Signal } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../auth/services/user/user.service';
@@ -12,6 +12,8 @@ import {
   PageContentText,
 } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 import { RoleService } from '../../../auth/services/role/role.service';
+import { environment } from '@adapt-apps/adapt-admin/src/environments/environment';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'adapt-home',
@@ -33,11 +35,18 @@ export class HomeComponent implements OnInit {
 
   public recentActivity = this.recent.history;
 
-  $pageSections = computed<PageSectionContentText[]>(
-    () => this.pagesContentService.getPageContentSignal('home')()?.sections || []
-  );
+  organization = environment.organizationName || 'Your Organization';
+
+  // Input signal
+  $pageContentSignal: Signal<PageContentText | null>; // = this.pagesContentService.getPageContentSignal('home', 'en');
+  //$pageContent: Signal<PageContentText | null> = this.pagesContentService.getPageContentSignal('home');
+  //$pageSections = computed<PageSectionContentText[]>(() => this.pagesContentService.getPageContentSignal('home')()?.sections || []);
+  pageContent: PageContentText | null;
+  pageSections:PageSectionContentText[]|undefined;
+  pageContentLoaded: boolean = false;
 
   constructor(
+    private logger: NGXLogger,
     public user: UserService,
     public role: RoleService,
     public route: ActivatedRoute,
@@ -47,6 +56,10 @@ export class HomeComponent implements OnInit {
     private metaService: Meta,
     public pagesContentService: PagesContentService
   ) {
+    this.logger.debug('Inside HomeComponent constructor');
+
+    this.initializeComponentSignals();
+
     this.reportSubscription = this.reports.subscribe((reports) => {
       this.loadingReports = false;
       // sort by updated field, latest at top
@@ -60,6 +73,7 @@ export class HomeComponent implements OnInit {
       this.loadingDataViews = false;
       // sort by created field, latest at top
       this.$dataViews = views.sort((a, b) => {
+
         return new Date(b.created).getTime() - new Date(a.created).getTime();
       });
     });
@@ -108,5 +122,45 @@ export class HomeComponent implements OnInit {
     const description = 'A free tool for reporting IDEA data, fully accessible to individuals with disabilities.';
 
     this.metaService.updateTag({ name: 'description', content: description });
+  }
+
+  private initializeComponentSignals() {
+    this.logger.debug('Inside data-view-modal initializeComponentSignals');
+
+    this.$pageContentSignal = this.pagesContentService.getPageContentSignal('home');  //this.pagesContentService.getPageContentSignal('home', 'en');
+    //this.$pageSectionsSignal = computed(() => this.$pageContentSignal()?.sections);
+
+    // after we got a signal that the pageContent was loaded
+    effect(() => {
+
+      this.logger.debug('$pageContentSignal retrieved');
+      this.pageContent = this.$pageContentSignal();
+
+      this.logger.debug('pageContent: ', this.pageContent);
+
+      if (this.pageContent) {
+
+        this.logger.debug('Have page content');
+
+        this.pageSections = this.pageContent.sections;
+
+        if (!this.pageContent.title) {
+          this.logger.error('Invalid page title');
+        }
+
+        if (!(this.pageSections && this.pageSections?.length > 0)) {
+          this.logger.error('Invalid page sections');
+        }
+        else {
+          this.logger.debug('Have page sections');
+          this.pageContentLoaded = true;
+        }
+      }
+      else {
+        this.logger.debug('NO page content');
+        this.pageContentLoaded = false;
+      }
+
+    });
   }
 }

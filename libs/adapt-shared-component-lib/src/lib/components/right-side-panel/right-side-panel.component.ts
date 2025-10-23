@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './right-side-panel.component.html',
   styleUrls: ['./right-side-panel.component.scss'],
 })
-export class RightSidePanelComponent implements OnDestroy {
+export class RightSidePanelComponent implements OnDestroy{
   private subscription: Subscription;
 
   // @Input() show = false;

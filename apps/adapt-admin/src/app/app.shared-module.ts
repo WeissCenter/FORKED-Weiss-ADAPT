@@ -15,8 +15,9 @@ import { environment } from '@adapt-apps/adapt-admin/src/environments/environmen
     LoggerModule.forRoot({
       level: environment.logLevel,
       // THIS IS REQUIRED, to make "line-numbers" work in SourceMap Object definition (without evalSourceMap)
-      enableSourceMaps: environment.logLevel === NgxLoggerLevel.OFF ? false : true,
-    }),
+      enableSourceMaps: (environment.logLevel === NgxLoggerLevel.OFF ? false : true)
+    })
+
   ],
   exports: [WeissAccessibilityCenterModule],
 })

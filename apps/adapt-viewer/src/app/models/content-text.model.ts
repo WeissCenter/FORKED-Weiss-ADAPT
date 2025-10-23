@@ -34,7 +34,7 @@ export interface ReportPageContentText {
     description: string;
   };
   actions: {
-    share: any;
+share: any;
     close_button: string;
     explain: string;
     glossary: string;
@@ -69,8 +69,8 @@ export interface ReportPageContentText {
 
 export interface HomePageContentText {
   brandingHeader: {
-    heading: string;
-    subHeading: string;
+    heading: string,
+    subHeading: string
   };
   headingCard: {
     heading: string;
@@ -165,7 +165,7 @@ export interface SectionContentText {
   description: string;
   button_text: string;
   footNote: string;
-  tableHeading: string;
+  tableHeading: string,
   listAria: string;
   categories: CategoryContentText[];
 }
@@ -207,7 +207,7 @@ export interface LinkContent {
   link?: string;
   queryParams?: {
     navigation: string;
-  };
+  }; 
 }
 
 export interface A11yCenterContent {

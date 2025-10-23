@@ -3,7 +3,7 @@
   [ngClass]="{ 'is-visible': isVisible, 'is-hidden': !isVisible }"
   class="usa-modal-wrapper"
   [attr.aria-label]="title + ' Modal'">
-  <div #wrapper tabindex="-1" cdkTrapFocus="{{ isVisible }}" class="usa-modal-overlay">
+  <div #wrapper tabindex="-1" cdkTrapFocus="{{isVisible}}" class="usa-modal-overlay">
     <div class="usa-modal" [ngClass]="{ 'usa-modal--lg': large }" id="adapt-modal">
       <div class="usa-modal__content">
         <div class="usa-modal__main">

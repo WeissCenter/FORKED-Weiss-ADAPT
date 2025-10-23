@@ -74,12 +74,13 @@ export class InPageNavigationComponent implements AfterViewInit {
   // };
 
   private setupClickListeners() {
+
     this.logger.debug('Inside setupClickListeners', this.elementRef);
 
-    const navLinks = this.elementRef.nativeElement.querySelectorAll('.usa-in-page-nav__link');
-    navLinks.forEach((link: HTMLAnchorElement) => {
-      this.renderer.listen(link, 'click', (event: Event) => this.handleClick(event));
-    });
+      const navLinks = this.elementRef.nativeElement.querySelectorAll('.usa-in-page-nav__link');
+      navLinks.forEach((link: HTMLAnchorElement) => {
+        this.renderer.listen(link, 'click', (event: Event) => this.handleClick(event));
+      });
   }
 
   private handleClick(event: Event) {

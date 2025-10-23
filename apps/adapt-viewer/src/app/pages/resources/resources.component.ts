@@ -12,18 +12,14 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class ResourcesComponent implements OnInit {
   public navigation = this.route.queryParams.pipe(map((params) => params?.['navigation'] || 'useful-links'));
-  public fragment = this.route.fragment.pipe(
-    filter((val) => !!val),
-    startWith('general-understanding')
-  );
+  public fragment = this.route.fragment.pipe(filter(val => !!val), startWith('general-understanding'));
 
   $resourcesContent = this.viewerPagesContentService.$resourcesContent;
   $sharedContent = this.viewerPagesContentService.$sharedContent;
 
-  constructor(
-    public viewerPagesContentService: ViewerPagesContentService,
-    public route: ActivatedRoute
-  ) {}
+  constructor(public viewerPagesContentService: ViewerPagesContentService, public route: ActivatedRoute) {
+
+  }
 
   ngOnInit() {}
 }

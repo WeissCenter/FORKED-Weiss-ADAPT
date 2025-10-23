@@ -14,25 +14,18 @@ import { LanguageCode } from '@adapt/types';
 export class PagesContentService {
   readonly LOAD_LANGUAGES: LanguageCode[] = ['en', 'es-MX'];
   $adminContent = computed(() => {
-    return this.LOAD_LANGUAGES.reduce(
-      (acc, lang) => {
-        acc[lang] = this.contentService.getContentSignal(
-          environment.appDomain,
-          environment.contentRoot,
-          'admin-content-text.json',
-          lang
-        )();
-        return acc;
-      },
-      {} as Record<string, AdminContentText | null>
-    );
+    return this.LOAD_LANGUAGES.reduce((acc, lang) => {
+      acc[lang] = this.contentService.getContentSignal(
+        environment.appDomain,
+        environment.contentRoot,
+        'admin-content-text.json',
+        lang
+      )();
+      return acc;
+    }, {} as Record<string, AdminContentText | null>);
   });
 
-  constructor(
-    public contentService: ContentService,
-    public language: LanguageService,
-    public settings: SettingsService
-  ) {}
+  constructor(public contentService: ContentService, public language: LanguageService, public settings: SettingsService) {}
 
   getAdminContentSignal(lang = 'default') {
     const useLang = this.useLanguage(lang);

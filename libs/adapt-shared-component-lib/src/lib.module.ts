@@ -98,7 +98,7 @@ import { FilterMissingPropertyPipe } from './lib/pipes/filter-missing-property.p
     StripQuotesPipe,
     DataRepComparisonComponent,
     DataRepComparisonTriggerComponent,
-    DataRepComparisonControlsComponent,
+    DataRepComparisonControlsComponent
   ],
   exports: [
     HElementComponent,
@@ -145,7 +145,7 @@ import { FilterMissingPropertyPipe } from './lib/pipes/filter-missing-property.p
     PageAlertComponent,
     DataRepComparisonComponent,
     DataRepComparisonTriggerComponent,
-    DataRepComparisonControlsComponent,
+    DataRepComparisonControlsComponent
   ],
   providers: [AlertService, FilterPanelService, DecimalPipe, DataRepService],
   imports: [CommonModule, NgxMaskDirective, NgxMaskPipe, RouterModule, FormsModule, ReactiveFormsModule, A11yModule],

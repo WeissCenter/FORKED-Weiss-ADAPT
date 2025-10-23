@@ -1,12 +1,12 @@
 :host {
   display: flex;
   align-self: flex-start;
-
+  
   &.sidebar-fixed {
     position: sticky;
     top: 0;
   }
-
+  
   &.sidebar-absolute {
     position: absolute;
   }

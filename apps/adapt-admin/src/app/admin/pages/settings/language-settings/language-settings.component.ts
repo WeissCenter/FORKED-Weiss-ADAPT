@@ -18,8 +18,8 @@ export class LanguageSettingsComponent implements OnInit, OnDestroy {
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
   // Input signal
-  $pageContentSignal: Signal<PageContentText | null>;
-  pageContent: PageContentText | null;
+  $pageContentSignal: Signal<PageContentText|null>;
+  pageContent: PageContentText|null;
   pageContentLoaded: boolean = false;
 
   public editAccess = false;
@@ -29,9 +29,9 @@ export class LanguageSettingsComponent implements OnInit, OnDestroy {
 
   public $supportedLanguages = computed(() => {
     const defaultLang = this.settings.getDefaultLanguageSignal()();
-    const supportedLangs = this.pagesContentService.getSharedContentSignal()()?.languageAccess.supportedLanguages || [];
-    return supportedLangs.filter((lang) => lang.value !== defaultLang);
-  });
+    const supportedLangs = this.pagesContentService.getSharedContentSignal()()?.languageAccess.supportedLanguages || []
+    return supportedLangs.filter(lang => lang.value !== defaultLang);
+  })
 
   // public _availableDefaultLangOptions = new BehaviorSubject<SupportedLanguageOption[]>([]);
   // public $availableDefaultLangOptions = this._availableDefaultLangOptions.asObservable();
@@ -53,14 +53,14 @@ export class LanguageSettingsComponent implements OnInit, OnDestroy {
       this.pageContent = this.$pageContentSignal();
       this.pageContentLoaded = true;
 
-      if (!this.pageContent?.title) {
+      if (!this.pageContent?.title){
         this.logger.error('Invalid page title');
       }
 
-      if (!(this.pageContent?.sections && this.pageContent?.sections?.length > 0)) {
+      if (!(this.pageContent?.sections && this.pageContent?.sections?.length > 0)){
         this.logger.error('Invalid page sections');
       }
-    });
+    })
 
     this.langForm = this.fb.group({
       enabledLangs: this.fb.array([], [Validators.required]),
@@ -74,14 +74,16 @@ export class LanguageSettingsComponent implements OnInit, OnDestroy {
 
       for (const lang of this.$supportedLanguages()) {
         this.enabledLangs.push(
-          this.fb.control(!!this.settings.getSettings()?.supportedLanguages?.includes(lang.value as LanguageCode))
+          this.fb.control(!!(this.settings.getSettings()?.supportedLanguages?.includes(lang.value as LanguageCode)))
         );
       }
       // this.handleDefaultOptions(this.enabledLangs.value);
       // requestAnimationFrame(() => {
       //   this.default.setValue(this.settings.getSettings()?.defaultLanguage);
       // })
-    });
+    })
+
+
   }
 
   // private handleDefaultOptions(changes: any) {
@@ -102,29 +104,26 @@ export class LanguageSettingsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
+
   public onSubmit() {
     if (this.langForm.invalid) return;
-    const supportedLanguageCodes = this.$supportedLanguages()
-      .filter((lang, idx) => this.enabledLangs.value[idx])
-      .map((lang) => lang.value as LanguageCode);
-    this.data
-      .updateSettings({ supportedLanguages: [this.settings.getDefaultLanguage(), ...supportedLanguageCodes] })
-      .subscribe({
-        next: (res) => {
-          this.alert.add({
-            type: 'success',
-            title: 'Language Translation Options Saved',
-            body: 'Language Translation Options changes have been saved.',
-          });
-        },
-        error: (err) => {
-          this.alert.add({
-            type: 'error',
-            title: 'Error',
-            body: 'Failed to update settings',
-          });
-        },
-      });
+    const supportedLanguageCodes = this.$supportedLanguages().filter((lang, idx) => this.enabledLangs.value[idx]).map(lang => lang.value as LanguageCode);
+    this.data.updateSettings({ supportedLanguages: [this.settings.getDefaultLanguage(), ...supportedLanguageCodes] }).subscribe({
+      next: (res) => {
+        this.alert.add({
+          type: 'success',
+          title: 'Language Translation Options Saved',
+          body: 'Language Translation Options changes have been saved.',
+        });
+      },
+      error: (err) => {
+        this.alert.add({
+          type: 'error',
+          title: 'Error',
+          body: 'Failed to update settings',
+        });
+      },
+    });
   }
 
   // public get default() {

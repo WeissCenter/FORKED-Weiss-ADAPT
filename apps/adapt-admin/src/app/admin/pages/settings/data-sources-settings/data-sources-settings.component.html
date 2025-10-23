@@ -5,9 +5,9 @@
     role="region"
     class="data-sources-settings-banner width-full display-flex gap-2 flex-column">
     <div class="usa-prose">
-      <h1 class="margin-0" i18n>{{ pageContent?.title ? pageContent!.title : 'Data Sources' }}</h1>
+      <h1 class="margin-0" i18n>{{pageContent?.title ? pageContent!.title: 'Data Sources'}}</h1>
       <p class="margin-bottom-0 measure-4" i18n>
-        {{ pageContent?.description ? pageContent!.description : 'Manage data sources' }}
+        {{pageContent?.description ? pageContent!.description: 'Manage data sources'}}
       </p>
     </div>
   </section>
@@ -39,7 +39,7 @@
     <p *ngIf="item?.description?.length">{{ item.description }}</p>
     <div class="display-flex flex-column width-full gap-1">
       <p class="text-normal font-sm text-ink">
-        <span><strong>Last Updated:</strong> {{ item.updated | date: 'MM/dd/yyyy' }}, </span>
+        <span><strong>Last Updated:</strong> {{ item.updated | date : 'MM/dd/yyyy' }}, </span>
         <span><strong>Created By:</strong> {{ item.author }}</span>
       </p>
 
@@ -97,7 +97,7 @@
       (click)="dataSourceModal.open(item, PageMode.VIEW)"
       [id]="'view_' + item.dataSourceID + '_btn'"
       class="usa-button usa-button--outline shadow-none">
-      View
+ View
     </button>
   </div>
 </ng-template>

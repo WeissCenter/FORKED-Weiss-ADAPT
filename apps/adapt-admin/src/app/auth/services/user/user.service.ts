@@ -173,7 +173,7 @@ export class UserService {
         this.history.clearHistory();
         const errMsg = this.cognito.handleLogoutError(err);
 
-        return this.router.navigateByUrl('/auth/error');
+        return this.router.navigateByUrl('/auth/loggedout');
       },
     });
 

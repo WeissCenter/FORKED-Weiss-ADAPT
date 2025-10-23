@@ -37,9 +37,14 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
 .angular
+
+
 .env.local
+
 .nx
+
 **/suppress-layer/lib
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md

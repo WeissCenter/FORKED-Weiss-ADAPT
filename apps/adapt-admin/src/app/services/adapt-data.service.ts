@@ -71,17 +71,14 @@ export class AdaptDataService {
     map((items) => this.reduceOperations(items))
   );
 
-  constructor(
-    private http: HttpClient,
-    private user: UserService,
-    private settings: SettingsService
-  ) {
+  constructor(private http: HttpClient, private user: UserService, private settings: SettingsService) {
     // this.getDataFromDataSet$.pipe(switchMap(response => {
     //   return forkJoin(response.map((item: any) => from(this._tryCacheData(item.operations, item.dataSetID))))
     // }))
     // .subscribe((c: any) => this.getDataFromDataSetResultsSubject.next(c));
 
     // init data stores
+
 
     this.user.isLoggedIn$
       .pipe(
@@ -96,12 +93,10 @@ export class AdaptDataService {
 
         this.http
           .get<APIResponse<DataSource[]>>(`${environment.API_URL}data`)
-          .pipe(
-            map((result) => {
-              // console.log(result.data)
-              return result.data;
-            })
-          )
+          .pipe(map((result) => {
+            // console.log(result.data)
+            return result.data;
+          }))
           .subscribe((dataSources) => this._dataSources.next(dataSources));
 
         this.http
@@ -172,7 +167,7 @@ export class AdaptDataService {
     return this.http.request(req);
   }
 
-  public isUnique(type: string, name: string, field = 'name') {
+  public isUnique(type: string, name: string, field = "name") {
     return this.http
       .post<APIResponse<boolean>>(`${environment.API_URL}unique`, { type, name, field })
       .pipe(map((result) => result.data));
@@ -226,24 +221,23 @@ export class AdaptDataService {
       .pipe(map((result) => result.data));
   }
 
-  public editReport(report: { reportID: string; languages: { [lang: string]: IReport } }) {
+  public editReport(report: {reportID: string, languages: {[lang: string] : IReport}}) {
     return this.http
       .put<APIResponse<IReport>>(`${environment.API_URL}report/${report.reportID}`, report)
       .pipe(map((result) => result.data));
   }
 
-  public translateReportText(report: string, body: { title: string; description: string }, lang?: string) {
+  public translateReportText(report: string, body: {title: string, description: string}, lang?: string) {
+
     let params = new HttpParams();
 
-    if (lang) {
-      params = params.append('lang', lang);
+    if(lang){
+      params = params.append('lang', lang)
     }
 
-    return this.http
-      .post<
-        APIResponse<Record<LanguageCode, any>>
-      >(`${environment.API_URL}report/${report}/translate`, body, { params })
-      .pipe(map((result) => result.data));
+    return this.http.post<APIResponse<Record<LanguageCode, any>>>(`${environment.API_URL}report/${report}/translate`, body, {params})
+    .pipe(map((result) => result.data))
+    ;
   }
 
   public createDataSet(body: NewDataSetInput) {
@@ -258,18 +252,20 @@ export class AdaptDataService {
 
   public editDataView(body: DataView, justification?: string) {
     return this.http
-      .put<
-        APIResponse<DataView>
-      >(`${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`, body)
+      .put<APIResponse<DataView>>(
+        `${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`,
+        body
+      )
       .pipe(map((result) => result.data));
   }
 
   public editDataViewPromise(body: DataView, justification?: string) {
     return firstValueFrom(
       this.http
-        .put<
-          APIResponse<DataView>
-        >(`${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`, body)
+        .put<APIResponse<DataView>>(
+          `${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`,
+          body
+        )
         .pipe(map((result) => result.data))
     );
   }
@@ -329,19 +325,19 @@ export class AdaptDataService {
       .pipe(map((result) => result.data));
   }
 
-  public getReportData(id: string, version = 'draft', filters = {}, suppressed = false, lang = 'en', pageId?: string) {
+  public getReportData(id: string, version = 'draft', filters = {}, suppressed = false, lang = 'en', pageId?: string){
     let params = new HttpParams();
 
-    params = params.append('version', version);
+    params = params.append('version', version)
 
-    params = params.append('suppressed', suppressed);
-    params = params.append('lang', lang);
+    params = params.append('suppressed', suppressed)
+    params = params.append('lang', lang)
     if (pageId !== undefined) {
-      params = params.append('pageId', pageId);
+      params = params.append('pageId', pageId)
     }
     return this.http
-      .post<APIResponse<any>>(`${environment.API_URL}report/${id}/data`, filters, { params })
-      .pipe(map((result) => result.data));
+    .post<APIResponse<any>>(`${environment.API_URL}report/${id}/data`, filters, {params})
+    .pipe(map((result) => result.data));
   }
 
   public getDataFromDataViewPromise(
@@ -407,9 +403,11 @@ export class AdaptDataService {
 
     const resolveMissing = await firstValueFrom(
       this.http
-        .post<
-          APIResponse<GetDataFromDataSetOutput>
-        >(`${environment.API_URL}dataview/${dataViewID}/data`, { operations: missingCache, fileSpec, suppression }, { params })
+        .post<APIResponse<GetDataFromDataSetOutput>>(
+          `${environment.API_URL}dataview/${dataViewID}/data`,
+          { operations: missingCache, fileSpec, suppression },
+          { params }
+        )
         .pipe(map((result) => result.data))
     );
 
@@ -466,14 +464,15 @@ export class AdaptDataService {
   }
 
   public getReport(id: string, version = 'draft', lang?: string): Observable<IReport | IReport[] | undefined> {
+
     let params = new HttpParams().append('version', version);
 
-    if (lang) {
-      params = params.append('lang', lang);
+    if(lang){
+      params = params.append('lang', lang)
     }
 
     return this.http
-      .get<APIResponse<IReport>>(`${environment.API_URL}report/${id}`, { params })
+      .get<APIResponse<IReport>>(`${environment.API_URL}report/${id}`, { params})
       .pipe(map((result) => result.data));
   }
 

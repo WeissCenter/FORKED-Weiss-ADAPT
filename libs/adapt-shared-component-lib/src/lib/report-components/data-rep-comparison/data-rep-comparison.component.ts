@@ -93,7 +93,7 @@ export class DataRepComparisonComponent implements OnInit {
     this.dataRepService.saveSettingsLocally(this.dataRepSettings);
   }
 
-  openDataModal() {
+   openDataModal() {
     this.dataModal.nativeElement.hidden = false;
     this.dataModalCloseBtn.nativeElement.focus();
     this.dataModal.nativeElement.addEventListener('keydown', this.trapTabKey);

@@ -6,7 +6,7 @@ import { AdaptDataService } from '../../../services/adapt-data.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'adapt-session-reload-banner',
+  selector: 'adapt-session-reload-banner', 
   templateUrl: './session-reload-banner.component.html',
   styleUrl: './session-reload-banner.component.scss',
 })
@@ -19,11 +19,7 @@ export class SessionReloadBannerComponent {
 
   public review = '';
 
-  constructor(
-    private user: UserService,
-    private router: Router,
-    private data: AdaptDataService
-  ) {
+  constructor(private user: UserService, private router: Router, private data: AdaptDataService) {
     this.user.userActivity$.subscribe(async (activity) => {
       if (!activity || !activity.cache || Object.keys(activity.cache).length <= 0) return;
 

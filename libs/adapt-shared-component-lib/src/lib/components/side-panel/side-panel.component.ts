@@ -6,6 +6,7 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewC
   styleUrl: './side-panel.component.scss',
 })
 export class SidePanelComponent {
+
   public show = false;
   @ViewChild('sidePanel') panel!: ElementRef;
 
@@ -13,7 +14,7 @@ export class SidePanelComponent {
   @Input() description = 'Enter some descriptive content here.';
   @Input() selectorClose = 'Close';
 
-  @Input() direction: 'right' | 'left' = 'right';
+  @Input() direction : 'right' | 'left' = 'right'
 
   @Output() statusChange = new EventEmitter<boolean>();
 
@@ -22,7 +23,7 @@ export class SidePanelComponent {
     this.statusChange.emit(false);
   }
 
-  open() {
+  open(){
     this.show = true;
     this.statusChange.emit(true);
   }
@@ -34,4 +35,6 @@ export class SidePanelComponent {
       this.close();
     }
   }
+
+
 }
