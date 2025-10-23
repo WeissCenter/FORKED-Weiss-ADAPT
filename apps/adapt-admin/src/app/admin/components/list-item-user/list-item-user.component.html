@@ -10,7 +10,7 @@
     </lib-adapt-h-element>
 
     <p class="text-normal font-sm line-height-5 text-ink" *ngIf="user.lastLogin">
-      Last login {{ user.lastLogin | date: 'MM/dd/yyyy' }} at {{ user.lastLogin | date: 'hh:mm a' }}
+      Last login {{ user.lastLogin | date : 'MM/dd/yyyy' }} at {{ user.lastLogin | date : 'hh:mm a' }}
     </p>
 
     <p class="text-normal font-sm line-height-5 text-ink" *ngIf="user.attributes.email">
@@ -22,23 +22,20 @@
     <lib-adapt-toggle-switch
       [describedByID]="user.attributes.email + '-name'"
       [ngModel]="user.active"
-      *adaptAccessControl="'Users'; behavior: 'hide'; action: 'Write'"
+      *adaptAccessControl="'Users'; behavior: 'hide'; action: 'Write';"
       (ngModelChange)="onChangeState($event)"
       toggledLabel="Deactivate User"
       unToggledLabel="Activate User"></lib-adapt-toggle-switch>
-
-    <p class="usa-label" [id]="user.attributes.email + '-role'">Role:</p>
-    <select
-      #roleSelect
-      *adaptAccessControl="'Users'; behavior: 'hide'; action: 'Write'"
-      (ngModelChange)="onChangeRole($event)"
-      [ngModel]="user.role"
-      [attr.aria-labelledby]="user.attributes.email + '-role'"
-      class="usa-select width-auto display-inline"
-      name="role">
-      <option *ngFor="let role of roles" [value]="role.value">
-        {{ role.label }}
-      </option>
-    </select>
+    <div>
+      <p class="usa-label" [id]="user.attributes.email + '-role'">Role:</p>
+      <select #roleSelect *adaptAccessControl="'Users'; behavior: 'hide'; action: 'Write'"
+        (ngModelChange)="onChangeRole($event)" [ngModel]="user.role" [attr.aria-labelledby]="user.attributes.email + '-role'"
+        class="usa-select width-auto display-inline" name="role">
+        <option *ngFor="let role of roles" [value]="role.value">
+          {{ role.label }}
+        </option>
+      </select>
+    </div>
+    
   </div>
 </div>

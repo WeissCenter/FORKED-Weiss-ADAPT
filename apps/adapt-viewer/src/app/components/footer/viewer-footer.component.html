@@ -8,20 +8,19 @@
       aria-label="External link to Weiss homepage"
       href="http://weissta.org/">
       <lib-adapt-inline-svg
-        aria-hidden="true"
+      aria-hidden="true"
         alt=""
-        [src]="stackedLogoUrl"
+        src="assets/shared/logos/static/footer-logo__left.svg"
         svgClass="display-flex logo height-7"></lib-adapt-inline-svg>
     </a>
   </div>
 
+  
   <ng-container *ngIf="$settings()">
     <nav class="display-flex flex-column flex-justify-center gap-2 maxw-tablet" aria-label="Footer Links">
       <ul
         class="usa-list usa-list--unstyled display-flex gap-4 tablet:flex-row flex-justify-center flex-wrap text-center flex-column flex-wrap tablet:flex-align-center">
-        <li
-          *ngFor="let footerLink of $settings()?.footerLinks || [] | filterMissingProperty: 'url'"
-          [hidden]="!footerLink.url">
+        <li *ngFor="let footerLink of $settings()?.footerLinks  || [] | filterMissingProperty:'url'"  [hidden]="!footerLink.url || !footerLink.showPublic">
           <a
             class="font-xs display-flex flex-align-center text-no-underline text-center"
             [target]="footerLink.target === 'sameTab' ? '' : '_blank'"
@@ -31,21 +30,21 @@
           </a>
         </li>
       </ul>
-      <p class="font-xs text-ink text-center">© {{ year }} {{ $settings().copyright }}</p>
+      <p class="font-xs text-ink text-center">© {{ year }} {{ copyrightText }} All Rights Reserved.</p>
     </nav>
   </ng-container>
 
   <div class="display-flex flex-justify-center gap-1 flex-column">
-    <p class="font-2xs text-ink line-height-2 text-center">{{ $footerContent()?.technologyBy }}</p>
+    <p class="font-2xs text-ink line-height-2 text-center">{{$footerContent()?.technologyBy}}</p>
     <a
       target="_blank"
       class="display-flex flex-justify-center"
       aria-label="External link to AEM's homepage"
       href="https://www.aemcorp.com/">
       <lib-adapt-inline-svg
-        aria-hidden="true"
+         aria-hidden="true"
         alt=""
-        [src]="logoUrl"
+        src="assets/shared/logos/static/footer-logo__right.svg"
         svgClass="display-flex logo height-7"></lib-adapt-inline-svg>
     </a>
   </div>

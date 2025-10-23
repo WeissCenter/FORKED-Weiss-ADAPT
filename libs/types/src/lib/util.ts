@@ -203,18 +203,11 @@ export function getField(path: string, obj: any, separator = '.') {
   return properties.reduce((prev, curr) => prev?.[curr], obj);
 }
 
-export function handleDynamicVariables(
-  code: string,
-  sumValue: string,
-  xAxisValue: string,
-  data: any[],
-  total: number,
-  suppressed = false,
-  suppressedText = 'Suppressed'
-) {
-  const dynamicSplit = code.split('-');
 
-  if (dynamicSplit.length >= 2) {
+export function handleDynamicVariables(code: string, sumValue: string, xAxisValue: string, data: any[], total: number, suppressed = false, suppressedText = 'Suppressed') {
+  const dynamicSplit = code.split("-");
+
+  if(dynamicSplit.length >= 2){
     const [variable, type] = dynamicSplit;
 
     const filtered = data.filter((val: any) => val[xAxisValue].toLowerCase() === variable.toLowerCase());
@@ -234,21 +227,14 @@ export function handleDynamicVariables(
       }
       return total == 0 ? `0%` : `${percentage.toFixed(2)}%`;
     }
+
   }
 
   return '';
 }
 
-export function chartExplainTemplateParse(
-  xAxisValue: string,
-  total: number,
-  sumValue: string,
-  data: any[],
-  explainTemplate?: string,
-  plainLanguageItems: string[] = [],
-  suppressed = false,
-  suppressedText = 'Suppressed'
-) {
+
+export function chartExplainTemplateParse(xAxisValue: string, total: number, sumValue: string, data: any[], explainTemplate?: string, plainLanguageItems: string[] = [], suppressed = false, suppressedText = 'Suppressed') {
   if (explainTemplate) {
     const select = ['first', 'second', 'third'];
 
@@ -258,9 +244,10 @@ export function chartExplainTemplateParse(
       const idx = select.indexOf(code);
 
       if (idx === -1) {
-        return (
-          handleDynamicVariables(code, sumValue, xAxisValue, data, total, suppressed, suppressedText) || 'no data found'
-        );
+
+         return handleDynamicVariables(code, sumValue, xAxisValue, data, total, suppressed, suppressedText) || 'no data found';
+ 
+
       }
 
       return plainLanguageItems[idx];
@@ -291,3 +278,6 @@ export function chartExplainTemplateParse(
 
   return summary;
 }
+
+
+

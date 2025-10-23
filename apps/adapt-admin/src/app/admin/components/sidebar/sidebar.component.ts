@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, computed, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UserService } from '../../../auth/services/user/user.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { SettingsService } from '@adapt/adapt-shared-component-lib';
 import { ModalComponent } from '@adapt/adapt-shared-component-lib';
-import { environment } from 'apps/adapt-admin/src/environments/environment';
+import { environment } from '../../../../environments/environment';
 import { RoleService } from '../../../auth/services/role/role.service';
 
 @Component({
@@ -15,7 +15,8 @@ import { RoleService } from '../../../auth/services/role/role.service';
 export class SidebarComponent implements AfterViewInit {
   @ViewChild('confirmLogOut') confirmLogOutModal?: ModalComponent;
   @ViewChild('navList') navList!: ElementRef<HTMLUListElement>;
-  public logoURL = 'assets/shared/logos/state-nav-logo.svg'; //computed(() => {
+  //  public logoURL = 'assets/shared/logos/state-nav-logo.svg'
+    //computed(() => {
   //   const settingsLogo = this.settings.getSettingsSignal()().logo;
   //   return this.sanitzier.bypassSecurityTrustUrl(
   //     `https://${environment.s3PublicAssetsDomainName}.s3.amazonaws.com/${settingsLogo}`
@@ -24,11 +25,11 @@ export class SidebarComponent implements AfterViewInit {
   public skipTo: any;
 
   // magnifying glass logo
-  collapsedLogo = `https://${environment.appDomain}/assets/shared/svg/adapt-nav-logo.svg`;
-  openLogo = `https://${environment.appDomain}/assets/shared/svg/adapt-Title_Full.svg`;
+  collapsedLogo = 'assets/shared/logos/static/sidebar-bottom-logo__collapsed.svg';
+  openLogo = 'assets/shared/logos/static/sidebar-bottom-logo__expanded.svg';
 
-  // sidebar logo
-  sidebarLogo = `https://${environment.appDomain}/assets/shared/logos/state-nav-logo.svg`;
+  public logoURL = `${environment.logoPath ?? 'assets/logos/generic'}/state-nav-logo.${environment.logoExtension ?? 'svg'}`;
+  public logoIsSvg = this.logoURL.endsWith('.svg');
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +38,7 @@ export class SidebarComponent implements AfterViewInit {
     private sanitzier: DomSanitizer,
     public user: UserService,
     private settings: SettingsService
-  ) {
+  ) { 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         (document.querySelector('.skip-to')?.querySelector('button') as HTMLButtonElement)?.focus();

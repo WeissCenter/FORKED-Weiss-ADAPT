@@ -26,10 +26,7 @@ export class TextInputComponent implements ControlValueAccessor {
 
   public disabled = false;
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    @Self() @Optional() public parent?: NgControl
-  ) {
+  constructor(private cd: ChangeDetectorRef, @Self() @Optional() public parent?: NgControl) {
     if (this.parent) {
       this.parent.valueAccessor = this;
     }

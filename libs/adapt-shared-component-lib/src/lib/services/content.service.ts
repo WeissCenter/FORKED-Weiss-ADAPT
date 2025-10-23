@@ -14,26 +14,18 @@ export class ContentService {
   private $contentLanguages = computed(() => {
     return [...new Set([this.language.$language(), ...this.$requestedLanguages()])];
   });
-
-  constructor(
-    private http: HttpClient,
-    private language: LanguageService,
-    @Inject('appDomain') private appDomain: string,
-    @Inject('contentRoot') private contentRoot: string,
-    @Inject('contentFileName') private contentFileName: string
-  ) {
-    effect(
-      () => {
-        for (const lang of this.$contentLanguages()) {
-          const url = this.contentUrl(appDomain, contentRoot, contentFileName, lang);
-          // if we don't have content for this url, request it
-          if (!this.$content()[url]) {
-            this.requestContent(appDomain, contentRoot, contentFileName, lang);
-          }
+  
+  constructor(private http: HttpClient, private language: LanguageService, @Inject('appDomain') private appDomain: string, @Inject('contentRoot') private contentRoot: string, @Inject('contentFileName') private contentFileName: string) {
+    effect(() => {
+      for (const lang of this.$contentLanguages()) {
+        const url = this.contentUrl(appDomain, contentRoot, contentFileName, lang);
+        // if we don't have content for this url, request it
+        if (!this.$content()[url]) {
+          this.requestContent(appDomain, contentRoot, contentFileName, lang);
         }
-      },
-      { allowSignalWrites: true }
-    );
+      }
+    }, { allowSignalWrites: true });
+
   }
 
   private contentUrl(appDomain: string, defaultContentFilePath: string, file: string, lang: string) {
@@ -44,11 +36,11 @@ export class ContentService {
   requestContent(appDomain: string, defaultContentFilePath: string, file: string, lang: string) {
     const url = this.contentUrl(appDomain, defaultContentFilePath, file, lang);
     this.http.get(url).subscribe((response) => {
-      this.$content.update((prev) => ({ ...prev, [url]: response }));
+        this.$content.update((prev) => ({ ...prev, [url]: response }));
     });
   }
 
-  getContentSignal(appDomain: string, defaultContentFilePath: string, file: string, lang: string) {
+  getContentSignal(appDomain: string, defaultContentFilePath: string, file: string, lang: string)  {
     const url = this.contentUrl(appDomain, defaultContentFilePath, file, lang);
     return computed(() => {
       return this.$content()[url];

@@ -200,14 +200,14 @@
                       <table class="usa-table usa-table--borderless width-full">
                         <thead>
                           <tr>
-                            <th *ngFor="let row of queryResult.value.result[0] | keyvalue: originalOrder" scope="col">
+                            <th *ngFor="let row of queryResult.value.result[0] | keyvalue : originalOrder" scope="col">
                               {{ row.key }}
                             </th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let row of queryResult.value.result">
-                            <td *ngFor="let item of row | keyvalue: originalOrder">
+                            <td *ngFor="let item of row | keyvalue : originalOrder">
                               {{ item.value || 'null' }}
                             </td>
                           </tr>
@@ -363,12 +363,12 @@
           <table class="usa-table usa-table--borderless">
             <thead>
               <tr>
-                <th *ngFor="let row of preview[0] | keyvalue: originalOrder" scope="col">{{ row.key }}</th>
+                <th *ngFor="let row of preview[0] | keyvalue : originalOrder" scope="col">{{ row.key }}</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let row of preview">
-                <td *ngFor="let item of row | keyvalue: originalOrder">{{ item.value || 'null' }}</td>
+                <td *ngFor="let item of row | keyvalue : originalOrder">{{ item.value || 'null' }}</td>
               </tr>
             </tbody>
           </table>

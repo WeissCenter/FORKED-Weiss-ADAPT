@@ -430,52 +430,54 @@ export const disability_percentage = async function (
 export const percentage = async function (
   this: any,
   countColumn: string,
-  target: { field: string; extra?: string[]; value: any },
+  target: { field: string; extra?: string[], value: any },
   ...conditionFields: { field: string; value: any }[]
 ) {
   const dataService = this.dataService;
 
   const conditionFieldArguments: any[] = conditionFields.map((val) =>
-    Object.assign(val, { type: mapTypes(val.value) })
+    Object.assign(val, { type: mapTypes(val.value) }),
   );
 
-  const conditionFieldIDMapped = conditionFields.map((val) => `${val.field}-${val.value}`).join('_');
+  const conditionFieldIDMapped = conditionFields
+    .map((val) => `${val.field}-${val.value}`)
+    .join("_");
 
   const id = `percentage_${countColumn}_${target.field}-${target.value}_${conditionFieldIDMapped}`;
 
   const operation: DataSetOperation = {
     id: id,
-    function: 'GROUPBY',
+    function: "GROUPBY",
     arguments: [
       {
-        field: 'func',
-        type: 'string',
-        value: 'sum',
+        field: "func",
+        type: "string",
+        value: "sum",
       },
       {
-        field: 'columns',
+        field: "columns",
         value: [countColumn],
         array: true,
       },
       {
-        field: 'selectColumns',
-        type: 'string',
+        field: "selectColumns",
+        type: "string",
         array: true,
         value: [target.field, ...(target.extra || [])],
       },
       {
-        field: 'limit',
-        type: 'number',
+        field: "limit",
+        type: "number",
       },
       {
-        field: 'order',
-        type: 'string',
+        field: "order",
+        type: "string",
         array: true,
         value: [`${countColumn} desc`],
       },
       {
-        field: 'groupby',
-        type: 'string',
+        field: "groupby",
+        type: "string",
         array: true,
         value: [target.field, ...(target.extra || [])],
       },
@@ -483,36 +485,38 @@ export const percentage = async function (
     ],
   };
 
+
   const { operationResults } = await dataService.getDataFromDataViewPromise(
     this.dataViewID,
     this.fileSpec,
     [operation],
     this.template.suppression,
-    this.suppress
+    this.suppress,
   );
+
+
 
   const result = operationResults.find((item: any) => item.id === id);
 
-  const percentageTargetTotal = result?.value.reduce(
-    (accum: number, val: any) => (val[target.field] === target.value ? accum + val[countColumn] : accum),
-    0
-  );
+  const percentageTargetTotal = result?.value.reduce((accum: number, val: any) => val[target.field] === target.value ? accum + val[countColumn] : accum, 0);
+
 
   const isSuppressed = result.value.every((val: any) => {
-    if (val[target.field] === target.value && val?.suppressed !== true) return false;
+    if(val[target.field] === target.value && val?.suppressed !== true) return false;
     return true;
   });
 
   let total = 1;
-  if (!result.total) {
+  if(!result.total){
     total = result?.value.reduce((accum: number, val: any) => accum + val[countColumn], 0);
-  } else {
-    total = Math.max(result.total, 1); // prevent div by zero
+  }else{
+    total = Math.max(result.total, 1) // prevent div by zero
   }
 
-  const percent = (percentageTargetTotal / total) * 100 || 0;
 
-  return isSuppressed ? 'Suppressed' : `${percent.toFixed(2)}%`;
+  const percent = ((percentageTargetTotal / total) * 100) || 0;
+
+  return isSuppressed ?  'Suppressed' : `${percent.toFixed(2)}%`;
 };
 
 export const top_disabilities_percentages_edfacts = async function (
@@ -820,6 +824,7 @@ export const max = async function (
   fields: DataSetOperationArgument,
   ...conditionFields: DataSetOperationArgument[]
 ) {
+
   const dataService = this.dataService as AdaptDataService;
 
   const selectColumns = [fields.value].flat();

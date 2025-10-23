@@ -11,9 +11,9 @@ export class GlossaryPipe implements PipeTransform {
   transform(key: string, field: 'label' | 'definition' = 'label', lang: string = 'en', fileSpec?: string) {
     let term: IGlossaryTerm | undefined;
     if (fileSpec) {
-      term = this.glossary.getFileSpecTerm(fileSpec.toLowerCase(), key, lang as LanguageCode);
+      term = this.glossary.getFileSpecTerm(fileSpec.toLowerCase(), key, (lang as LanguageCode));
     } else {
-      term = this.glossary.getTerm(key, lang as LanguageCode);
+      term = this.glossary.getTerm(key, (lang as LanguageCode));
     }
     // return term ? term[field] : key;
     return new Promise<string>((resolve) => {

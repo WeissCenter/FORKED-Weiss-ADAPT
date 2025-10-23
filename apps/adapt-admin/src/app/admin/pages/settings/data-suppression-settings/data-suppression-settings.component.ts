@@ -44,12 +44,12 @@ export class DataSuppressionSettingsComponent {
 
     let nSize = this.nSize.getRawValue() || 30;
 
-    if (typeof nSize === 'string') {
-      try {
+    if(typeof nSize === 'string'){
+      try{
         nSize = parseInt(nSize);
 
-        if (isNaN(nSize)) nSize = 30;
-      } catch (err) {
+        if(isNaN(nSize)) nSize = 30;
+      }catch(err){
         nSize = 30;
       }
     }

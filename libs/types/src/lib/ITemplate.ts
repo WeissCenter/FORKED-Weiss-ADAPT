@@ -16,7 +16,7 @@ export interface ITemplate {
   conditionalFilters?: ITemplateFilters;
   pages?: ITemplatePage[];
   sections?: ISection[];
-  filtersUsed?: Record<string, any>;
+  filtersUsed?: Record<string, any>
 }
 
 export interface SortableCategory {
@@ -125,7 +125,7 @@ export interface IRenderedTemplate {
   sections?: Promise<ISection>[];
   pages?: Promise<ITemplatePage[]>;
   suppression?: ISuppression;
-  filtersUsed?: Record<string, any>;
+  filtersUsed?: Record<string, any>
 }
 
 export interface InfoField {

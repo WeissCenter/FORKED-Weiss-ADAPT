@@ -41,10 +41,7 @@ export class EditableDirective implements AfterViewInit, OnChanges, ControlValue
     return this.elementRef.nativeElement['innerHTML'];
   }
 
-  constructor(
-    private elementRef: ElementRef,
-    private renderer: Renderer2
-  ) {}
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
   writeValue(obj: string): void {
     this.value = obj;
 
@@ -63,6 +60,7 @@ export class EditableDirective implements AfterViewInit, OnChanges, ControlValue
   }
 
   private replaceNode(target: any, element: any) {
+
     const parent = this.renderer.parentNode(element);
 
     this.renderer.insertBefore(parent, target, element);
@@ -71,6 +69,7 @@ export class EditableDirective implements AfterViewInit, OnChanges, ControlValue
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     const { enabled } = changes;
 
     if (enabled.isFirstChange()) return;
@@ -93,6 +92,8 @@ export class EditableDirective implements AfterViewInit, OnChanges, ControlValue
       this.renderer.setAttribute(this.inputElement, 'id', this.id);
     };
 
+
+
     const element = this.elementRef.nativeElement as HTMLHeadingElement;
     this.oldElement = element;
     const styles = window.getComputedStyle(element);
@@ -114,6 +115,9 @@ export class EditableDirective implements AfterViewInit, OnChanges, ControlValue
       this.inputElement!.addEventListener('input', (event) => this.onChange(this.inputElement?.value || ''));
       this.inputElement!.addEventListener('blur', (event) => this.onTouched());
     } else if (this.elementRef.nativeElement instanceof HTMLParagraphElement) {
+
+
+
       this.inputElement = this.renderer.createElement('textarea');
       this.renderer.setProperty(this.inputElement, 'disabled', this.disabled);
       this.renderer.setProperty(this.inputElement, 'value', element.innerText);

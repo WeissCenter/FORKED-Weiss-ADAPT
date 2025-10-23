@@ -106,9 +106,18 @@
               "with": "apps/adapt-viewer/src/environments/environment.development.ts"
             }
           ]
+        },
+        "local": {
+          "localize": false,
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "local"
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
@@ -121,9 +130,12 @@
         },
         "development": {
           "browserTarget": "adapt-viewer:build:development"
+        },
+        "local": {
+          "browserTarget": "adapt-viewer:build:local"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "local"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -196,9 +208,16 @@
               "with": "apps/adapt-viewer/src/environments/environment.development.ts"
             }
           ]
+        },
+        "local": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "local"
     },
     "serve-ssr": {
       "executor": "@angular-devkit/build-angular:ssr-dev-server",

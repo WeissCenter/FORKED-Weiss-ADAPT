@@ -3,7 +3,7 @@ import { Observable, debounceTime, distinctUntilChanged, first, map, of, switchM
 import { AdaptDataService } from '../services/adapt-data.service';
 import { PageMode } from '@adapt/types';
 import * as xlsx from 'xlsx';
-export function uniqueNameValidator(type: string, data: AdaptDataService, pageMode = PageMode.CREATE, field = 'name') {
+export function uniqueNameValidator(type: string, data: AdaptDataService, pageMode = PageMode.CREATE, field='name') {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     if (pageMode === PageMode.VIEW || (pageMode === PageMode.EDIT && !control.dirty)) {
       return of(null);

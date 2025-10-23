@@ -16,10 +16,7 @@ export class UserSettingsComponent {
 
   public confirmEdit = new Subject<boolean>();
 
-  constructor(
-    private api: AdaptDataService,
-    public content: PagesContentService
-  ) {
+  constructor(private api: AdaptDataService, public content: PagesContentService) {
     this.api.getUsers().subscribe((users) => this._users.next(users));
   }
 }

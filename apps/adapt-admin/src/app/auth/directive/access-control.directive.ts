@@ -68,18 +68,14 @@ export class AccessControlDirective implements OnInit {
         this.container.clear();
         break;
       }
-      case 'setVar': {
+      case 'setVar':{
         this.container.createEmbeddedView(this.templateRef);
         requestAnimationFrame(() => {
-          if (
-            this.adaptAccessControlVarKey &&
-            this.adaptAccessControlVarValue &&
-            this.adaptAccessControlVarKey in this.adaptAccessControlComponent
-          ) {
+          if((this.adaptAccessControlVarKey && this.adaptAccessControlVarValue) && (this.adaptAccessControlVarKey in this.adaptAccessControlComponent)){
             this.adaptAccessControlComponent[this.adaptAccessControlVarKey] = this.adaptAccessControlVarValue;
             this.cd.detectChanges();
           }
-        });
+        })
         break;
       }
     }

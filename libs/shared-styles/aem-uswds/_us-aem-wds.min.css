@@ -17,22 +17,10 @@ html {
   box-sizing: inherit;
 }
 html {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
-  font-feature-settings:
-    'kern' 1,
-    'kern';
+  font-feature-settings: 'kern' 1, 'kern';
   font-kerning: normal;
   font-size: 16px;
   font-size: var(--usa-font-size-body);
@@ -74,13 +62,7 @@ var {
 }
 .usa-display {
   clear: both;
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 22px;
   font-size: var(--usa-font-size-lg);
@@ -103,13 +85,7 @@ var {
 @media (min-width: 30em) {
   .usa-display {
     clear: both;
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 40px;
     font-size: var(--usa-font-size-2xl);
@@ -134,13 +110,7 @@ var {
 @media (min-width: 40em) {
   .usa-display {
     clear: both;
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 48px;
     font-size: var(--usa-font-size-3xl);
@@ -279,18 +249,8 @@ var {
   margin-top: var(--usa-body-font-paragraph-spacing);
 }
 .usa-checklist {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -323,18 +283,8 @@ var {
   background-size: 1.5rem;
 }
 .usa-collection {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-collection-font-family);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -378,18 +328,8 @@ var {
   max-width: none;
 }
 .usa-prose .usa-collection {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-collection-font-family);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -525,18 +465,8 @@ var {
   }
 }
 .usa-footer {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-footer-font-family);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -897,13 +827,7 @@ var {
   margin-top: var(--usa-spacing-105);
 }
 .usa-sign-up__heading {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 22px;
   font-size: var(--usa-font-size-lg);
@@ -967,18 +891,8 @@ var {
   max-width: 5rem;
 }
 .usa-footer__logo-heading {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-footer-font-family);
   font-size: 22px;
   font-size: var(--usa-font-size-h3);
@@ -1003,18 +917,8 @@ var {
   }
 }
 .usa-footer__contact-heading {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-footer-font-family);
   font-size: 22px;
   font-size: var(--usa-font-size-h3);
@@ -1142,13 +1046,7 @@ var {
   }
 }
 .usa-footer--big .usa-footer__primary-link {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -1192,18 +1090,8 @@ var {
   }
 }
 .usa-form {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -1392,18 +1280,8 @@ var {
 .usa-form__note,
 .usa-graphic-list,
 .usa-show-password {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
 }
 .usa-graphic-list {
@@ -1434,13 +1312,7 @@ var {
 }
 .usa-graphic-list__heading {
   clear: both;
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 22px;
   font-size: var(--usa-font-size-lg);
@@ -1466,18 +1338,8 @@ var {
   background-color: var(--usa-base-darkest);
   color: var(--usa-color-white);
   color: var(--usa-white);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -3846,18 +3708,8 @@ var {
 .usa-pagination {
   color: var(--usa-pagination-text-color);
   display: flex;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-pagination-font-family);
   font-size: 16px;
   font-size: var(--usa-pagination-font-size);
@@ -4018,18 +3870,8 @@ var {
 }
 .usa-process-list {
   counter-reset: usa-numbered-list;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -4060,18 +3902,8 @@ var {
 }
 .usa-prose .usa-process-list {
   counter-reset: usa-numbered-list;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -4115,18 +3947,8 @@ var {
   counter-increment: usa-numbered-list;
   display: flex;
   flex-direction: row;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
   font-size: 1.38rem;
   font-weight: 700;
@@ -4159,18 +3981,8 @@ var {
 }
 .usa-process-list__heading {
   color: #1b1b1b;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
   font-size: 22px;
   font-size: var(--usa-font-size-lg);
@@ -4183,18 +3995,8 @@ var {
   margin-top: 0.25rem;
 }
 .usa-search {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-form-font-family);
   font-size: 15px;
   font-size: var(--usa-font-size-xs);
@@ -4427,18 +4229,8 @@ input[type='search'] {
   margin-top: var(--usa-spacing-2);
 }
 .usa-site-alert .usa-alert .usa-alert__body {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-alert-font-family);
   font-size: var(--usa-body-font-size);
   font-size: var(--usa-alert-font-size);
@@ -4467,18 +4259,8 @@ input[type='search'] {
   padding-top: var(--usa-spacing-0);
 }
 .usa-site-alert .usa-alert .usa-alert__heading {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-alert-font-family);
   font-size: 22px;
   font-size: var(--usa-alert-heading-font-size);
@@ -4657,18 +4439,8 @@ input[type='search'] {
   background: transparent;
   color: #3333a3;
   color: var(--usa-link-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -4725,18 +4497,8 @@ input[type='search'] {
   border-radius: var(--usa-summary-box-border-radius);
   color: var(--usa-body-ink);
   color: var(--usa-summary-box-text-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-summary-box-font-family);
   font-size: 16px;
   font-size: var(--usa-summary-box-font-size);
@@ -4753,18 +4515,8 @@ input[type='search'] {
   margin-top: var(--usa-spacing-2);
 }
 .usa-summary-box__heading {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-summary-box-font-family);
   font-size: 22px;
   font-size: var(--usa-summary-box-heading-font-size);
@@ -6285,96 +6037,38 @@ input[type='search'] {
   width: 10em;
 }
 [class*='font-mono-'] {
-  font-family:
-    Roboto Mono Web,
-    Bitstream Vera Sans Mono,
-    Consolas,
-    Courier,
-    monospace;
+  font-family: Roboto Mono Web, Bitstream Vera Sans Mono, Consolas, Courier, monospace;
   font-family: var(--usa-font-mono);
 }
 [class*='font-sans-'] {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-sans);
 }
 [class*='font-serif-'] {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-serif);
 }
 [class*='font-ui-'] {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
 }
 [class*='font-heading-'] {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
 }
 [class*='font-body-'] {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
 }
 [class*='font-code-'] {
-  font-family:
-    Roboto Mono Web,
-    Bitstream Vera Sans Mono,
-    Consolas,
-    Courier,
-    monospace;
+  font-family: Roboto Mono Web, Bitstream Vera Sans Mono, Consolas, Courier, monospace;
   font-family: var(--usa-font-code);
 }
 [class*='font-alt-'] {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-alt);
 }
 .add-aspect-9x16 {
@@ -13095,16 +12789,13 @@ input[type='search'] {
   --usa-font-icon: false;
   --usa-font-lang: false;
   --usa-font-mono: Roboto Mono Web, Bitstream Vera Sans Mono, Consolas, Courier, monospace;
-  --usa-font-sans:
-    Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+  --usa-font-sans: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --usa-font-serif: Merriweather Web, Georgia, Cambria, Times New Roman, Times, serif;
-  --usa-font-ui:
-    Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+  --usa-font-ui: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --usa-font-heading: Merriweather Web, Georgia, Cambria, Times New Roman, Times, serif;
-  --usa-font-body:
-    Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+  --usa-font-body: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --usa-font-code: Roboto Mono Web, Bitstream Vera Sans Mono, Consolas, Courier, monospace;
   --usa-font-alt: Merriweather Web, Georgia, Cambria, Times New Roman, Times, serif;
@@ -13817,15 +13508,13 @@ template {
   --usa-button-font-size: var(--usa-body-font-size);
   --usa-font-mono: 'Roboto Mono Web', 'Bitstream Vera Sans Mono', 'Consolas', 'Courier', monospace;
   --usa-font-serif: 'Public Sans Web', 'Georgia', 'Cambria', 'Times New Roman', 'Times', serif;
-  --usa-font-sans:
-    'Public Sans Web', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --usa-font-sans: 'Public Sans Web', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --usa-font-settings-stack-monospace: 'Bitstream Vera Sans Mono', 'Consolas', 'Courier', monospace;
   --usa-font-settings-stack-helvetica: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
   --usa-font-settings-stack-georgia: 'Georgia', 'Cambria', 'Times New Roman', 'Times', serif;
-  --usa-font-settings-stack-system:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol';
+  --usa-font-settings-stack-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --usa-font-lead: var(--usa-font-heading);
   --usa-font-prose: var(--usa-font-body);
   --usa-font-alt: var(--usa-font-serif);
@@ -15098,18 +14787,8 @@ iframe:focus {
 .usa-header {
   background-color: transparent;
   background-color: var(--usa-header-background-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-header-font-family);
   font-size: 16px;
   font-size: var(--usa-header-font-size);
@@ -15134,18 +14813,8 @@ iframe:focus {
   border-top: var(--usa-header-nav-border-width) solid var(--usa-header-nav-border-color);
   color: #3333a3;
   color: var(--usa-header-nav-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-header-font-family);
   font-size: 16px;
   font-size: var(--usa-header-font-size);
@@ -15681,18 +15350,8 @@ html.usa-js-loading .usa-nav__submenu.usa-megamenu {
   }
 }
 .usa-nav {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-navigation-font-family);
   font-size: 16px;
   font-size: var(--usa-header-font-size);
@@ -15734,18 +15393,8 @@ html.usa-js-loading .usa-nav__submenu.usa-megamenu {
   }
 }
 .usa-nav .usa-accordion {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-navigation-font-family);
   font-size: 16px;
   font-size: var(--usa-header-font-size);
@@ -16615,18 +16264,8 @@ html.usa-js-loading .usa-nav__submenu.usa-megamenu {
 }
 .usa-alert .usa-alert__body,
 .usa-alert .usa-alert__body > p {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-alert-font-family);
   font-size: var(--usa-body-font-size);
   font-size: var(--usa-alert-font-size);
@@ -16684,18 +16323,8 @@ html.usa-js-loading .usa-nav__submenu.usa-megamenu {
   padding-top: var(--usa-spacing-0);
 }
 .usa-alert .usa-alert__heading {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-alert-font-family);
   font-size: 22px;
   font-size: var(--usa-alert-heading-font-size);
@@ -16872,18 +16501,8 @@ html.usa-js-loading .usa-nav__submenu.usa-megamenu {
   background-size: cover;
   color: var(--usa-color-white);
   color: var(--usa-white);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: var(--usa-body-font-size);
   line-height: 1.62;
@@ -16911,13 +16530,7 @@ html.usa-js-loading .usa-nav__submenu.usa-megamenu {
   clear: both;
   color: #00bde3;
   color: var(--usa-accent-cool);
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 32px;
   font-size: var(--usa-font-size-xl);
@@ -17065,13 +16678,7 @@ html.usa-js-loading .usa-nav__submenu.usa-megamenu {
   padding-bottom: var(--usa-card-padding-perimeter);
 }
 .usa-card__heading {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 22px;
   font-size: var(--usa-font-size-lg);
@@ -17541,13 +17148,7 @@ article.data-rep-wrapper h1.title,
 article.data-rep-wrapper h2.title,
 article.data-rep-wrapper h3.title,
 article.data-rep-wrapper h4.title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-data-rep-title-font-family);
   font-size: 32px;
   font-size: var(--usa-data-rep-title-font-size);
@@ -17561,18 +17162,8 @@ article.data-rep-wrapper h4.title {
 }
 article.data-rep-wrapper .insight,
 article.data-rep-wrapper .total {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-insight-font-family);
   font-size: 16px;
   font-size: var(--usa-data-rep-insight-font-size);
@@ -17647,18 +17238,8 @@ article.data-rep-wrapper .action-bar button {
   color: var(--usa-data-rep-action-bar-button-color);
   cursor: pointer;
   display: flex;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-action-bar-item-font-family);
   font-size: 15px;
   font-size: var(--usa-data-rep-action-bar-item-font-size);
@@ -17771,18 +17352,8 @@ article.data-rep-wrapper .plain-language {
   border-bottom: var(--usa-data-rep-container-border-width) solid var(--usa-data-rep-container-border-color);
   color: var(--usa-body-ink);
   color: var(--usa-data-rep-plain-language-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-plain-language-font-family);
   font-size: 16px;
   font-size: var(--usa-data-rep-plain-language-font-size);
@@ -17799,13 +17370,7 @@ article.data-rep-wrapper .plain-language h3,
 article.data-rep-wrapper .plain-language h4,
 article.data-rep-wrapper .plain-language h5,
 article.data-rep-wrapper .plain-language h6 {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-data-rep-plain-language-title-font-family);
   font-size: 16px;
   font-size: var(--usa-data-rep-plain-language-title-font-size);
@@ -17830,18 +17395,8 @@ article.data-rep-wrapper ol.series li {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-series-item-font-family);
   gap: 0.5rem;
   gap: var(--usa-data-rep-series-item-gap);
@@ -17938,18 +17493,8 @@ article.data-rep-wrapper ol.series li .bar-wrapper .details .percentage {
 }
 article.data-rep-wrapper ol.series li .bar-wrapper .details .percentage,
 article.data-rep-wrapper ol.series li .bar-wrapper .details .value {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-numeral-font-family);
   margin: 0;
 }
@@ -18017,18 +17562,8 @@ article.data-rep-wrapper ul {
   color: var(--usa-data-rep-modal-content-ink);
   display: flex;
   flex-direction: column;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-modal-content-font-family);
   font-size: 1rem;
   font-size: var(--usa-data-rep-modal-content-font-size);
@@ -18064,18 +17599,8 @@ article.data-rep-wrapper ul {
   color: var(--usa-data-rep-modal-close-button-color);
   cursor: pointer;
   display: flex;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-modal-close-button-font-family);
   font-size: 15px;
   font-size: var(--usa-data-rep-modal-close-button-font-size);
@@ -18127,18 +17652,8 @@ article.data-rep-wrapper ul {
   border-radius: var(--usa-data-rep-table-border-radius);
   color: var(--usa-body-ink);
   color: var(--usa-data-rep-table-ink);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-table-font-family);
   font-size: 1rem;
   font-size: var(--usa-data-rep-table-font-size);
@@ -18184,18 +17699,8 @@ article.data-rep-wrapper ul {
 }
 .data-table .percentage,
 .data-table .value {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-table-numeral-font-family);
 }
 .data-table .value {
@@ -18215,18 +17720,8 @@ article.data-rep-wrapper ul {
   font-weight: var(--usa-data-rep-table-footer-font-weight);
 }
 .data-table tfoot tr strong {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-data-rep-table-numeral-font-family);
 }
 :root {
@@ -18299,18 +17794,8 @@ article.data-rep-wrapper ul {
 }
 .usa-accordion__heading,
 .usa-prose .usa-accordion__heading {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-accordion-button-font-family);
   font-size: var(--usa-body-font-size);
   font-size: var(--usa-accordion-button-font-size);
@@ -18551,18 +18036,8 @@ article.data-rep-wrapper ul {
 .usa-banner {
   background-color: #f0f0f0;
   background-color: var(--usa-banner-background);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-banner-font-family);
   font-size: 13px;
   font-size: var(--usa-banner-font-size);
@@ -18576,18 +18051,8 @@ article.data-rep-wrapper ul {
   }
 }
 .usa-banner .usa-accordion {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-banner-font-family);
   font-size: 13px;
   font-size: var(--usa-banner-font-size);
@@ -19239,18 +18704,8 @@ article.data-rep-wrapper ul {
   background-color: var(--usa-breadcrumb-background);
   color: var(--usa-body-ink);
   color: var(--usa-ink);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-breadcrumb-font-family);
   font-size: 16px;
   font-size: var(--usa-breadcrumb-font-size);
@@ -19606,18 +19061,8 @@ article.data-rep-wrapper ul {
   display: inline-flex;
   flex-direction: row;
   flex-direction: var(--usa-button-flex-direction);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-button-font-family);
   font-size: 15px;
   font-size: var(--usa-button-font-size);
@@ -20581,18 +20026,8 @@ article.data-rep-wrapper ul {
 }
 .usa-collection,
 .usa-prose .usa-collection {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-collection-font-family);
   font-size: 16px;
   font-size: var(--usa-collection-font-size);
@@ -20658,13 +20093,7 @@ article.data-rep-wrapper ul {
   gap: var(--usa-collection-item-content-gap);
 }
 .usa-collection__heading {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-collection-header-font-family);
   font-size: 17px;
   font-size: var(--usa-collection-header-font-size);
@@ -20724,18 +20153,8 @@ article.data-rep-wrapper ul {
 .usa-collection__calendar-date-day,
 .usa-collection__calendar-date-month {
   display: block;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
   font-size: 17px;
   font-size: var(--usa-font-size-md);
@@ -20865,18 +20284,8 @@ article.data-rep-wrapper ul {
 .usa-range,
 .usa-select,
 .usa-textarea {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-input-label-font-family);
   font-size: 15px;
   font-size: var(--usa-input-label-font-size);
@@ -20962,18 +20371,8 @@ textarea:not([disabled]):focus {
   color: #565c65;
   color: var(--usa-input-label-color);
   display: block;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-input-label-font-family);
   font-size: 15px;
   font-size: var(--usa-input-label-font-size);
@@ -21915,18 +21314,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
 .usa-radio__label {
   color: var(--usa-body-ink);
   color: var(--usa-radio-label-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-radio-font-family);
   font-size: var(--usa-body-font-size);
   font-size: var(--usa-radio-font-size);
@@ -22004,11 +21393,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   background-color: var(--usa-radio-disabled-background-color);
 }
 .usa-radio__input:checked + [class*='__label']:before {
-  box-shadow:
-    0 0 0 1px #3333a3,
-    inset 0 0 0 1px var(--usa-color-white);
-  box-shadow:
-    0 0 0 var(--usa-radio-border-width) var(--usa-radio-checked-background-color),
+  box-shadow: 0 0 0 1px #3333a3, inset 0 0 0 1px var(--usa-color-white);
+  box-shadow: 0 0 0 var(--usa-radio-border-width) var(--usa-radio-checked-background-color),
     inset 0 0 0 var(--usa-radio-border-width) var(--usa-radio-background-color);
 }
 @media (forced-colors: active) {
@@ -22059,14 +21445,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
 }
 @media print {
   .usa-radio__input:checked + [class*='__label']:before {
-    box-shadow:
-      inset 0 0 0 2px #fff,
-      inset 0 0 0 4px #3333a3,
-      0 0 0 2px #3333a3;
-    box-shadow:
-      inset 0 0 0 2px #fff,
-      inset 0 0 0 4px var(--usa-primary),
-      0 0 0 2px var(--usa-primary);
+    box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px #3333a3, 0 0 0 2px #3333a3;
+    box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px var(--usa-primary), 0 0 0 2px var(--usa-primary);
   }
 }
 .usa-radio__label {
@@ -22158,18 +21538,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding: var(--usa-in-page-nav-background-padding);
 }
 .usa-in-page-nav__heading {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-in-page-nav-font-family);
   font-size: 14px;
   font-size: var(--usa-in-page-nav-font-size);
@@ -22304,18 +21674,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
 }
 .usa-in-page-nav__item {
   border: none;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-in-page-nav-font-family);
   font-size: 14px;
   font-size: var(--usa-in-page-nav-font-size);
@@ -22330,18 +21690,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   font-weight: var(--usa-in-page-nav-sub-item-font-weight);
 }
 .usa-icon-list {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: var(--usa-body-font-size);
   line-height: 1.35;
@@ -22368,18 +21718,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-top: var(--usa-spacing-1);
 }
 .usa-prose .usa-icon-list {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: var(--usa-body-font-size);
   line-height: var(--usa-line-height-body);
@@ -22639,18 +21979,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
 .usa-icon-list__content > ol,
 .usa-icon-list__content > p,
 .usa-icon-list__content > ul {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -22675,13 +22005,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-micro .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 14px;
   font-size: var(--usa-font-size-2xs);
@@ -22701,13 +22025,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-05);
 }
 .usa-icon-list--size-1 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 15px;
   font-size: var(--usa-font-size-xs);
@@ -22727,13 +22045,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-05);
 }
 .usa-icon-list--size-2 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -22753,13 +22065,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-05);
 }
 .usa-icon-list--size-3 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 14px;
   font-size: var(--usa-type-scale-3);
@@ -22779,13 +22085,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-4 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 15px;
   font-size: var(--usa-font-size-xs);
@@ -22805,13 +22105,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-5 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -22831,13 +22125,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-6 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 17px;
   font-size: var(--usa-font-size-md);
@@ -22857,13 +22145,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-7 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 18px;
   font-size: var(--usa-type-scale-7);
@@ -22882,13 +22164,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-8 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 1.22rem;
 }
@@ -22907,13 +22183,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-9 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 22px;
   font-size: var(--usa-font-size-lg);
@@ -22933,13 +22203,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-105);
 }
 .usa-icon-list--size-10 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 24px;
   font-size: var(--usa-type-scale-10);
@@ -22957,13 +22221,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-105);
 }
 .usa-icon-list--size-11 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 28px;
   font-size: var(--usa-type-scale-11);
@@ -22981,13 +22239,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-105);
 }
 .usa-icon-list--size-12 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 32px;
   font-size: var(--usa-type-scale-12);
@@ -23005,13 +22257,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-2);
 }
 .usa-icon-list--size-13 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 36px;
   font-size: var(--usa-type-scale-13);
@@ -23031,13 +22277,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-2);
 }
 .usa-icon-list--size-14 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 40px;
   font-size: var(--usa-type-scale-14);
@@ -23057,13 +22297,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-205);
 }
 .usa-icon-list--size-15 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 48px;
   font-size: var(--usa-type-scale-15);
@@ -23081,13 +22315,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-3);
 }
 .usa-icon-list--size-16 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 56px;
   font-size: var(--usa-type-scale-16);
@@ -23105,13 +22333,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-3);
 }
 .usa-icon-list--size-17 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 64px;
   font-size: var(--usa-type-scale-17);
@@ -23129,13 +22351,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-3);
 }
 .usa-icon-list--size-18 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 80px;
   font-size: var(--usa-type-scale-18);
@@ -23153,13 +22369,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-4);
 }
 .usa-icon-list--size-19 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 120px;
   font-size: var(--usa-type-scale-19);
@@ -23177,13 +22387,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-5);
 }
 .usa-icon-list--size-20 .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 140px;
   font-size: var(--usa-type-scale-20);
@@ -23201,13 +22405,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-05);
 }
 .usa-icon-list--size-3xs .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 13px;
   font-size: var(--usa-font-size-3xs);
@@ -23227,13 +22425,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-05);
 }
 .usa-icon-list--size-2xs .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 14px;
   font-size: var(--usa-font-size-2xs);
@@ -23253,13 +22445,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-xs .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 15px;
   font-size: var(--usa-font-size-xs);
@@ -23279,13 +22465,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-sm .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -23305,13 +22485,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-md .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 17px;
   font-size: var(--usa-font-size-md);
@@ -23331,13 +22505,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-1);
 }
 .usa-icon-list--size-lg .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 22px;
   font-size: var(--usa-font-size-lg);
@@ -23355,13 +22523,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-105);
 }
 .usa-icon-list--size-xl .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 32px;
   font-size: var(--usa-font-size-xl);
@@ -23381,13 +22543,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-2);
 }
 .usa-icon-list--size-2xl .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 40px;
   font-size: var(--usa-font-size-2xl);
@@ -23407,13 +22563,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding-left: var(--usa-spacing-205);
 }
 .usa-icon-list--size-3xl .usa-icon-list__content .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 48px;
   font-size: var(--usa-font-size-3xl);
@@ -23434,13 +22584,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2px);
   }
   .mobile-lg\:usa-icon-list--size-micro .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 10px;
     font-size: var(--usa-type-scale-micro);
@@ -23460,13 +22604,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .mobile-lg\:usa-icon-list--size-1 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 12px;
     font-size: var(--usa-type-scale-1);
@@ -23484,13 +22622,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .mobile-lg\:usa-icon-list--size-2 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 13px;
     font-size: var(--usa-type-scale-2);
@@ -23510,13 +22642,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .mobile-lg\:usa-icon-list--size-3 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 14px;
     font-size: var(--usa-type-scale-3);
@@ -23536,13 +22662,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-4 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 15px;
     font-size: var(--usa-type-scale-4);
@@ -23562,13 +22682,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-5 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 16px;
     font-size: var(--usa-type-scale-5);
@@ -23588,13 +22702,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-6 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 17px;
     font-size: var(--usa-type-scale-6);
@@ -23614,13 +22722,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-7 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 18px;
     font-size: var(--usa-type-scale-7);
@@ -23640,13 +22742,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-8 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 20px;
     font-size: var(--usa-type-scale-8);
@@ -23666,13 +22762,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-9 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 22px;
     font-size: var(--usa-type-scale-9);
@@ -23692,13 +22782,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .mobile-lg\:usa-icon-list--size-10 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 24px;
     font-size: var(--usa-type-scale-10);
@@ -23716,13 +22800,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .mobile-lg\:usa-icon-list--size-11 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 28px;
     font-size: var(--usa-type-scale-11);
@@ -23740,13 +22818,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .mobile-lg\:usa-icon-list--size-12 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 32px;
     font-size: var(--usa-type-scale-12);
@@ -23764,13 +22836,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .mobile-lg\:usa-icon-list--size-13 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 36px;
     font-size: var(--usa-type-scale-13);
@@ -23788,13 +22854,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .mobile-lg\:usa-icon-list--size-14 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 40px;
     font-size: var(--usa-type-scale-14);
@@ -23814,13 +22874,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-205);
   }
   .mobile-lg\:usa-icon-list--size-15 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 48px;
     font-size: var(--usa-type-scale-15);
@@ -23838,13 +22892,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .mobile-lg\:usa-icon-list--size-16 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 56px;
     font-size: var(--usa-type-scale-16);
@@ -23862,13 +22910,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .mobile-lg\:usa-icon-list--size-17 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 64px;
     font-size: var(--usa-type-scale-17);
@@ -23886,13 +22928,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .mobile-lg\:usa-icon-list--size-18 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 80px;
     font-size: var(--usa-type-scale-18);
@@ -23910,13 +22946,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-4);
   }
   .mobile-lg\:usa-icon-list--size-19 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 120px;
     font-size: var(--usa-type-scale-19);
@@ -23934,13 +22964,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-5);
   }
   .mobile-lg\:usa-icon-list--size-20 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 140px;
     font-size: var(--usa-type-scale-20);
@@ -23958,13 +22982,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .mobile-lg\:usa-icon-list--size-3xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 13px;
     font-size: var(--usa-font-size-3xs);
@@ -23984,13 +23002,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .mobile-lg\:usa-icon-list--size-2xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 14px;
     font-size: var(--usa-font-size-2xs);
@@ -24010,13 +23022,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 15px;
     font-size: var(--usa-font-size-xs);
@@ -24036,13 +23042,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-sm .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 16px;
     font-size: var(--usa-font-size-sm);
@@ -24062,13 +23062,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-md .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 17px;
     font-size: var(--usa-font-size-md);
@@ -24088,13 +23082,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .mobile-lg\:usa-icon-list--size-lg .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 22px;
     font-size: var(--usa-font-size-lg);
@@ -24112,13 +23100,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .mobile-lg\:usa-icon-list--size-xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 32px;
     font-size: var(--usa-font-size-xl);
@@ -24138,13 +23120,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .mobile-lg\:usa-icon-list--size-2xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 40px;
     font-size: var(--usa-font-size-2xl);
@@ -24164,13 +23140,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-205);
   }
   .mobile-lg\:usa-icon-list--size-3xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 48px;
     font-size: var(--usa-font-size-3xl);
@@ -24192,13 +23162,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2px);
   }
   .tablet\:usa-icon-list--size-micro .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 10px;
     font-size: var(--usa-type-scale-micro);
@@ -24218,13 +23182,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .tablet\:usa-icon-list--size-1 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 12px;
     font-size: var(--usa-type-scale-1);
@@ -24242,13 +23200,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .tablet\:usa-icon-list--size-2 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 13px;
     font-size: var(--usa-type-scale-2);
@@ -24268,13 +23220,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .tablet\:usa-icon-list--size-3 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 14px;
     font-size: var(--usa-type-scale-3);
@@ -24294,13 +23240,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-4 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 15px;
     font-size: var(--usa-type-scale-4);
@@ -24320,13 +23260,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-5 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 16px;
     font-size: var(--usa-type-scale-5);
@@ -24346,13 +23280,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-6 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 17px;
     font-size: var(--usa-type-scale-6);
@@ -24372,13 +23300,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-7 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 18px;
     font-size: var(--usa-type-scale-7);
@@ -24398,13 +23320,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-8 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 20px;
     font-size: var(--usa-type-scale-8);
@@ -24424,13 +23340,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-9 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 22px;
     font-size: var(--usa-type-scale-9);
@@ -24450,13 +23360,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .tablet\:usa-icon-list--size-10 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 24px;
     font-size: var(--usa-type-scale-10);
@@ -24474,13 +23378,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .tablet\:usa-icon-list--size-11 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 28px;
     font-size: var(--usa-type-scale-11);
@@ -24498,13 +23396,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .tablet\:usa-icon-list--size-12 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 32px;
     font-size: var(--usa-type-scale-12);
@@ -24522,13 +23414,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .tablet\:usa-icon-list--size-13 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 36px;
     font-size: var(--usa-type-scale-13);
@@ -24548,13 +23434,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .tablet\:usa-icon-list--size-14 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 40px;
     font-size: var(--usa-type-scale-14);
@@ -24574,13 +23454,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-205);
   }
   .tablet\:usa-icon-list--size-15 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 48px;
     font-size: var(--usa-type-scale-15);
@@ -24598,13 +23472,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .tablet\:usa-icon-list--size-16 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 56px;
     font-size: var(--usa-type-scale-16);
@@ -24622,13 +23490,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .tablet\:usa-icon-list--size-17 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 64px;
     font-size: var(--usa-type-scale-17);
@@ -24646,13 +23508,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .tablet\:usa-icon-list--size-18 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 80px;
     font-size: var(--usa-type-scale-18);
@@ -24670,13 +23526,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-4);
   }
   .tablet\:usa-icon-list--size-19 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 120px;
     font-size: var(--usa-type-scale-19);
@@ -24694,13 +23544,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-5);
   }
   .tablet\:usa-icon-list--size-20 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 140px;
     font-size: var(--usa-type-scale-20);
@@ -24718,13 +23562,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .tablet\:usa-icon-list--size-3xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 13px;
     font-size: var(--usa-font-size-3xs);
@@ -24744,13 +23582,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .tablet\:usa-icon-list--size-2xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 14px;
     font-size: var(--usa-font-size-2xs);
@@ -24770,13 +23602,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 15px;
     font-size: var(--usa-font-size-xs);
@@ -24796,13 +23622,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-sm .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 16px;
     font-size: var(--usa-font-size-sm);
@@ -24822,13 +23642,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-md .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 17px;
     font-size: var(--usa-font-size-md);
@@ -24848,13 +23662,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .tablet\:usa-icon-list--size-lg .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 22px;
     font-size: var(--usa-font-size-lg);
@@ -24872,13 +23680,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .tablet\:usa-icon-list--size-xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 32px;
     font-size: var(--usa-font-size-xl);
@@ -24898,13 +23700,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .tablet\:usa-icon-list--size-2xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 40px;
     font-size: var(--usa-font-size-2xl);
@@ -24924,13 +23720,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-205);
   }
   .tablet\:usa-icon-list--size-3xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 48px;
     font-size: var(--usa-font-size-3xl);
@@ -24952,13 +23742,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2px);
   }
   .desktop\:usa-icon-list--size-micro .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 10px;
     font-size: var(--usa-type-scale-micro);
@@ -24978,13 +23762,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .desktop\:usa-icon-list--size-1 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 12px;
     font-size: var(--usa-type-scale-1);
@@ -25002,13 +23780,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .desktop\:usa-icon-list--size-2 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 13px;
     font-size: var(--usa-type-scale-2);
@@ -25028,13 +23800,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .desktop\:usa-icon-list--size-3 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 14px;
     font-size: var(--usa-type-scale-3);
@@ -25054,13 +23820,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-4 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 15px;
     font-size: var(--usa-type-scale-4);
@@ -25080,13 +23840,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-5 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 16px;
     font-size: var(--usa-type-scale-5);
@@ -25106,13 +23860,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-6 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 17px;
     font-size: var(--usa-type-scale-6);
@@ -25132,13 +23880,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-7 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 18px;
     font-size: var(--usa-type-scale-7);
@@ -25158,13 +23900,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-8 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 20px;
     font-size: var(--usa-type-scale-8);
@@ -25184,13 +23920,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-9 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 22px;
     font-size: var(--usa-type-scale-9);
@@ -25210,13 +23940,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .desktop\:usa-icon-list--size-10 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 24px;
     font-size: var(--usa-type-scale-10);
@@ -25234,13 +23958,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .desktop\:usa-icon-list--size-11 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 28px;
     font-size: var(--usa-type-scale-11);
@@ -25258,13 +23976,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .desktop\:usa-icon-list--size-12 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 32px;
     font-size: var(--usa-type-scale-12);
@@ -25282,13 +23994,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .desktop\:usa-icon-list--size-13 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 36px;
     font-size: var(--usa-type-scale-13);
@@ -25308,13 +24014,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .desktop\:usa-icon-list--size-14 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 40px;
     font-size: var(--usa-type-scale-14);
@@ -25334,13 +24034,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-205);
   }
   .desktop\:usa-icon-list--size-15 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 48px;
     font-size: var(--usa-type-scale-15);
@@ -25358,13 +24052,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .desktop\:usa-icon-list--size-16 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 56px;
     font-size: var(--usa-type-scale-16);
@@ -25382,13 +24070,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .desktop\:usa-icon-list--size-17 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 64px;
     font-size: var(--usa-type-scale-17);
@@ -25406,13 +24088,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-3);
   }
   .desktop\:usa-icon-list--size-18 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 80px;
     font-size: var(--usa-type-scale-18);
@@ -25430,13 +24106,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-4);
   }
   .desktop\:usa-icon-list--size-19 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 120px;
     font-size: var(--usa-type-scale-19);
@@ -25454,13 +24124,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-5);
   }
   .desktop\:usa-icon-list--size-20 .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 140px;
     font-size: var(--usa-type-scale-20);
@@ -25478,13 +24142,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .desktop\:usa-icon-list--size-3xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 13px;
     font-size: var(--usa-font-size-3xs);
@@ -25504,13 +24162,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-05);
   }
   .desktop\:usa-icon-list--size-2xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 14px;
     font-size: var(--usa-font-size-2xs);
@@ -25530,13 +24182,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-xs .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 15px;
     font-size: var(--usa-font-size-xs);
@@ -25556,13 +24202,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-sm .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 16px;
     font-size: var(--usa-font-size-sm);
@@ -25582,13 +24222,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-md .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 17px;
     font-size: var(--usa-font-size-md);
@@ -25608,13 +24242,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-1);
   }
   .desktop\:usa-icon-list--size-lg .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 22px;
     font-size: var(--usa-font-size-lg);
@@ -25632,13 +24260,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-105);
   }
   .desktop\:usa-icon-list--size-xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 32px;
     font-size: var(--usa-font-size-xl);
@@ -25658,13 +24280,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-2);
   }
   .desktop\:usa-icon-list--size-2xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 40px;
     font-size: var(--usa-font-size-2xl);
@@ -25684,26 +24300,14 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     padding-left: var(--usa-spacing-205);
   }
   .desktop\:usa-icon-list--size-3xl .usa-icon-list__content .usa-icon-list__title {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 48px;
     font-size: var(--usa-font-size-3xl);
   }
 }
 .usa-icon-list__title {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -25739,18 +24343,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   border-radius: var(--usa-border-radius-md);
   color: var(--usa-color-white);
   color: var(--usa-white);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
   font-size: 14px;
   font-size: var(--usa-font-size-2xs);
@@ -25863,18 +24457,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   color: var(--usa-body-ink);
   color: var(--usa-modal-text-color);
   display: inline-block;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: 16px;
   font-size: var(--usa-font-size-sm);
@@ -25936,13 +24520,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   width: var(--usa-modal-close-icon-size);
 }
 .usa-modal__heading {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
   font-size: 22px;
   font-size: var(--usa-font-size-lg);
@@ -25969,13 +24547,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
 }
 @media (min-width: 40em) {
   .usa-modal--lg .usa-modal__heading {
-    font-family:
-      Public Sans Web,
-      Georgia,
-      Cambria,
-      Times New Roman,
-      Times,
-      serif;
+    font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
     font-family: var(--usa-font-heading);
     font-size: 32px;
     font-size: var(--usa-font-size-xl);
@@ -26030,18 +24602,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   border-spacing: 0;
   color: var(--usa-body-ink);
   color: var(--usa-table-text-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-table-font-family);
   font-size: 16px;
   font-size: var(--usa-table-font-size);
@@ -26057,18 +24619,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
 }
 .usa-table thead th {
   background-clip: padding-box;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-table-header-font-family);
   font-size: 16px;
   font-size: var(--usa-table-header-font-size);
@@ -26103,18 +24655,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   padding: var(--usa-table-cell-padding-y) var(--usa-table-cell-padding-x);
 }
 .usa-table caption {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-table-caption-font-family);
   font-size: 16px;
   font-size: var(--usa-table-caption-font-size);
@@ -26688,18 +25230,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     background-color: var(--usa-table-header-background-color);
     color: var(--usa-body-ink);
     color: var(--usa-table-header-text-color);
-    font-family:
-      Public Sans Web,
-      -apple-system,
-      BlinkMacSystemFont,
-      Segoe UI,
-      Roboto,
-      Helvetica,
-      Arial,
-      sans-serif,
-      Apple Color Emoji,
-      Segoe UI Emoji,
-      Segoe UI Symbol;
+    font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+      Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
     font-family: var(--usa-font-body);
     font-size: 16px;
     font-size: var(--usa-font-size-h4);
@@ -26807,18 +25339,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   background-color: var(--usa-table-header-background-color);
   color: var(--usa-body-ink);
   color: var(--usa-table-header-text-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-body);
   font-size: 16px;
   font-size: var(--usa-font-size-h4);
@@ -26891,18 +25413,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   background-color: var(--usa-color-white);
   background-color: var(--usa-step-indicator-background-color);
   color: var(--usa-step-indicator-text-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-step-indicator-font-family);
   font-size: 16px;
   font-size: var(--usa-step-indicator-label-font-size);
@@ -27060,18 +25572,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   color: var(--usa-body-ink);
   color: var(--usa-step-indicator-heading-color);
   display: flex;
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-step-indicator-heading-font-family);
   font-size: 17px;
   font-size: var(--usa-step-indicator-heading-font-size-small);
@@ -27114,9 +25616,7 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
 }
 .usa-step-indicator__current-step,
 .usa-step-indicator__total-steps {
-  font-feature-settings:
-    'tnum' 1,
-    'kern' 1;
+  font-feature-settings: 'tnum' 1, 'kern' 1;
   font-feature-settings: var(--usa-step-indicator-heading-font-feature-settings);
   font-weight: 400;
   font-weight: var(--usa-font-weight-normal);
@@ -27142,19 +25642,15 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
     background-color: var(--usa-step-indicator-background-color);
     border-radius: 99rem;
     border-radius: var(--usa-border-radius-pill);
-    box-shadow:
-      inset 0 0 0 4px #dfe1e2,
-      0 0 0 4px var(--usa-color-white);
-    box-shadow:
-      inset 0 0 0 var(--usa-step-indicator-counter-border-width) var(--usa-step-indicator-segment-color-pending),
+    box-shadow: inset 0 0 0 4px #dfe1e2, 0 0 0 4px var(--usa-color-white);
+    box-shadow: inset 0 0 0 var(--usa-step-indicator-counter-border-width)
+        var(--usa-step-indicator-segment-color-pending),
       0 0 0 var(--usa-step-indicator-counter-gap) var(--usa-step-indicator-background-color);
     color: #565c65;
     color: var(--usa-step-indicator-text-pending-color);
     content: counter(usa-step-indicator);
     display: flex;
-    font-feature-settings:
-      'tnum' 1,
-      'kern' 1;
+    font-feature-settings: 'tnum' 1, 'kern' 1;
     font-feature-settings: var(--usa-step-indicator-heading-font-feature-settings);
     font-weight: 700;
     font-weight: var(--usa-font-weight-bold);
@@ -27361,18 +25857,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   border-right: 2px solid #a9aeb1;
   border-right: var(--usa-sidenav-border-width) solid var(--usa-sidenav-border-color);
   border-top: var(--usa-sidenav-item-border-width) solid var(--usa-sidenav-item-border-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-sidenav-item-font-family);
   font-size: 16px;
   font-size: var(--usa-sidenav-item-font-size);
@@ -27504,18 +25990,8 @@ button.usa-combo-box__toggle-list[aria-disabled='true'] {
   border-top: var(--usa-sidenav-sublist-border-width) solid var(--usa-sidenav-sublist-border-color);
   color: var(--usa-body-ink);
   color: var(--usa-sidenav-sublist-item-color);
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-sidenav-sublist-font-family);
   font-size: 14px;
   font-size: var(--usa-sidenav-sublist-font-size);
@@ -38477,9 +36953,7 @@ h6.usa-prose {
   line-height: var(--usa-line-height-6);
 }
 .text-tabular {
-  font-feature-settings:
-    'tnum' 1,
-    'kern' 1;
+  font-feature-settings: 'tnum' 1, 'kern' 1;
 }
 .text-no-tabular {
   font-feature-settings: 'kern' 1;
@@ -38519,84 +36993,36 @@ h6.usa-prose {
   font-weight: var(--usa-font-weight-heavy);
 }
 .font-family-mono {
-  font-family:
-    Roboto Mono Web,
-    Bitstream Vera Sans Mono,
-    Consolas,
-    Courier,
-    monospace;
+  font-family: Roboto Mono Web, Bitstream Vera Sans Mono, Consolas, Courier, monospace;
   font-family: var(--usa-font-mono);
 }
 .font-family-sans {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-sans);
 }
 .font-family-serif {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-serif);
 }
 .font-family-ui {
-  font-family:
-    Public Sans Web,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  font-family: Public Sans Web, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-family: var(--usa-font-ui);
 }
 .font-family-heading {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-heading);
 }
 .font-family-body {
   font-family: var(--usa-body-font-family);
 }
 .font-family-code {
-  font-family:
-    Roboto Mono Web,
-    Bitstream Vera Sans Mono,
-    Consolas,
-    Courier,
-    monospace;
+  font-family: Roboto Mono Web, Bitstream Vera Sans Mono, Consolas, Courier, monospace;
   font-family: var(--usa-font-code);
 }
 .font-family-alt {
-  font-family:
-    Public Sans Web,
-    Georgia,
-    Cambria,
-    Times New Roman,
-    Times,
-    serif;
+  font-family: Public Sans Web, Georgia, Cambria, Times New Roman, Times, serif;
   font-family: var(--usa-font-alt);
 }
 .text-ls-auto {

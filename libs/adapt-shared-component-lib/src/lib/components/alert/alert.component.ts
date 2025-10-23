@@ -14,6 +14,7 @@ export class AlertComponent {
   public alerts$: Observable<Alert>;
 
   constructor(@Inject(AlertService) private alert: AlertService) {
+    
     this.alerts$ = this.alert.alertQueue
       .pipe(concatMap((v) => concat(of(v), this.delayed$)))
       .pipe(filter((v) => v != null))

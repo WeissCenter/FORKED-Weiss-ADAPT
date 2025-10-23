@@ -53,10 +53,7 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
   };
   private onTouched?: () => void;
 
-  constructor(
-    private injector: Injector,
-    @Host() @Optional() checkboxGroup: MultiSelectComponent
-  ) {
+  constructor(private injector: Injector, @Host() @Optional() checkboxGroup: MultiSelectComponent) {
     // grab the group if present (no circular DI here)
     this.checkboxGroup = checkboxGroup ?? undefined;
   }
@@ -70,7 +67,7 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
       this.ngControl.valueAccessor = this;
     }
   }
-
+  
   writeValue(obj: any): void {
     this.checked = !!obj;
   }

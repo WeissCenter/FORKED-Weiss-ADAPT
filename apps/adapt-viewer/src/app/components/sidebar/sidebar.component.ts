@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, effect, ElementRef, HostBinding, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, HostBinding, Inject, Input, PLATFORM_ID, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -35,12 +35,14 @@ export class ViewerSidebarComponent implements AfterViewInit {
     return this.sidePanelOpen;
   }
 
-  // magnifying glass logo
-  collapsedLogo = `https://${environment.appDomain}/assets/shared/svg/adapt-nav-logo.svg`;
-  openLogo = `https://${environment.appDomain}/assets/shared/svg/adapt-Title_Full.svg`;
+  // 
 
-  // sidebar logo
-  sidebarLogo = `https://${environment.appDomain}/assets/shared/logos/state-nav-logo.svg`;
+  // magnifying glass logo
+  public collapsedLogo = 'assets/shared/logos/static/sidebar-bottom-logo__collapsed.svg';
+  public openLogo = 'assets/shared/logos/static/sidebar-bottom-logo__expanded.svg';
+
+  public logoURL = `${environment.logoPath ?? 'assets/logos/generic'}/state-nav-logo.${environment.logoExtension ?? 'svg'}`;
+  public logoIsSvg = this.logoURL.endsWith('.svg');
 
   public skipTo: any;
 
@@ -68,8 +70,6 @@ export class ViewerSidebarComponent implements AfterViewInit {
     public language: LanguageService,
     @Inject(DOCUMENT) private document: Document 
   ) {
-    // this.logoURL = this.sanitzier.bypassSecurityTrustUrl('https://dev-adapt-public-assets-bucket.s3.us-east-1.amazonaws.com/DOE-Hawaii-logo-512.png');
-    // this.logoURL = 'assets/shared/logos/weiss-logo.png';
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -106,6 +106,7 @@ export class ViewerSidebarComponent implements AfterViewInit {
         item.removeAttribute('aria-roledescription');
       });
     });
+    console.log(environment);
   }
 
   closeMenuOnNavigation() {

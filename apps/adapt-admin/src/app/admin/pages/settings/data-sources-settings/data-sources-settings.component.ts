@@ -49,11 +49,9 @@ export class DataSourcesSettingsComponent implements AfterViewInit {
     )
   );
 
-  constructor(
-    private data: AdaptDataService,
-    private location: LocationStrategy,
-    public pagesContentService: PagesContentService
-  ) {}
+  constructor(private data: AdaptDataService,
+              private location: LocationStrategy,
+              public pagesContentService: PagesContentService) {}
 
   public onSave(dataSource: DataSource) {
     this.data.addDataSource(dataSource);

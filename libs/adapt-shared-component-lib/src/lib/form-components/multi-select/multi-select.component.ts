@@ -244,7 +244,7 @@ export class MultiSelectComponent implements ControlValueAccessor, OnInit, OnCha
     }
   }
 
-  setDisabledState(isDisabled: boolean): void {
+    setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 

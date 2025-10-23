@@ -29,10 +29,11 @@ export class PaginationComponent {
     });
   }
 
-  public changePage(val: number) {
+  public changePage(val: number){
     this.page = val;
     this.pageChange.emit(this.page);
   }
+
 }
 
 export interface PaginationEvent {

@@ -174,12 +174,13 @@ const routes: Routes = [
       },
       {
         path: 'error',
-        component: ErrorComponent,
+        component: ErrorComponent
       },
       {
         path: '**',
         redirectTo: 'error',
-      },
+  
+      }
     ],
   },
 ];

@@ -7,6 +7,9 @@ import { ReportsComponent } from './pages/reports/reports.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { RouteBreadcrumbType } from 'libs/adapt-shared-component-lib/src/lib/components/breadcrumb/breadcrumb.component';
 
+
+
+
 export const appRoutes: Route[] = [
   // {
   //   path: '',
@@ -24,7 +27,7 @@ export const appRoutes: Route[] = [
       { path: 'share/:slug', title: 'ADAPT Admin - Home', component: HomeComponent },
       {
         path: 'reports',
-        data: { breadcrumbLabel: 'reports', breadcrumbType: RouteBreadcrumbType.CONTENT },
+        data: { breadcrumbLabel: 'reports', breadcrumbType: RouteBreadcrumbType.CONTENT  },
         children: [
           { path: '', component: ReportsComponent },
           { path: ':slug', component: ReportComponent },
@@ -34,16 +37,14 @@ export const appRoutes: Route[] = [
         path: 'resources',
         title: 'ADAPT Viewer - Resources',
         component: ResourcesComponent,
-        data: { breadcrumbLabel: 'resources', breadcrumbType: RouteBreadcrumbType.CONTENT },
+        data: { breadcrumbLabel: 'resources', breadcrumbType: RouteBreadcrumbType.CONTENT  },
       },
       {
-        path: '404',
-        component: ErrorComponent,
+        path: '404', component: ErrorComponent
       },
       {
-        path: '**',
-        redirectTo: '404',
-      },
+        path: '**', redirectTo: '404' 
+      }
     ],
   },
 ];

@@ -4,7 +4,7 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  OnInit,
+  OnInit, Signal,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -21,6 +21,7 @@ import { DataView } from '@adapt/types';
 import { LocationStrategy } from '@angular/common';
 import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
 import { NGXLogger } from 'ngx-logger';
+import { PageContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 
 interface DataViewFilter {
   dataSource: string[];
@@ -82,7 +83,7 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
   public currentDataList = new BehaviorSubject<DataView[]>([]);
   public $currentDataList = this.currentDataList.asObservable();
 
-  $pageContent = this.pagesContentService.getPageContentSignal('data');
+  $pageContent: Signal<PageContentText | null> = this.pagesContentService.getPageContentSignal('data');
 
   public search(query?: string) {
     this.router.navigate(['./'], {
@@ -177,7 +178,7 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    //console.log('Inside data component ngOnInit');
+    this.logger.debug('Inside DataComponent ngOnInit');
 
     this.data.getDataViews().subscribe((val) => {
       this.loadingViews = false;
@@ -234,8 +235,12 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
       }
     }
 
-    if ('dataSource' in state) {
+
+    if('dataSource' in state){
+
       this.dataViewModal.open(undefined, false, 0, state.dataSource);
+
     }
+
   }
 }

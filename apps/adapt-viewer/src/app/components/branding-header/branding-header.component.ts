@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, Input } from '@angular/core';
 import { ViewerPagesContentService } from '../../services/content/viewer-pages-content.service';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'branding-header',
   templateUrl: './branding-header.component.html',
@@ -10,13 +11,10 @@ export class BrandingHeaderComponent {
   @Input() role: string | null = 'User Role';
   @Input() organization: string | null = 'User Organization';
 
-  public svgLogo = true;
-  public logoURL;
+  public logoURL = `${environment.logoPath ?? 'assets/logos/generic'}/state-hero-logo.${environment.logoExtension ?? 'svg'}`;
+  public logoIsSvg = this.logoURL.endsWith('.svg');
 
   public $homeContent = this.content.$homeContent;
 
-  constructor(public content: ViewerPagesContentService) {
-    this.logoURL = 'assets/shared/svg/state-hero-logo.svg';
-    this.svgLogo = this.logoURL.toString().includes('.svg');
-  }
+  constructor(public content: ViewerPagesContentService) {}
 }

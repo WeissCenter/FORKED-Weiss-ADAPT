@@ -119,8 +119,7 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
       if (event.type === 'popstate') this.cancel();
     });
 
-    this.dataViews = this.data
-      .getDataViews()
+    this.dataViews = this.data.getDataViews()
       .pipe(map((views) => views.filter((view) => view.status === DataSetQueueStatus.AVAILABLE)));
 
     this.logger.debug('dataViews: ', this.dataViews);
@@ -152,7 +151,7 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
     //   )
     // );
 
-    this.filteredReportTemplates$ = this.reportTemplatesAsync; //this.filterReportTemplates('');
+    this.filteredReportTemplates$ = this.reportTemplatesAsync;  //this.filterReportTemplates('');
 
     // this.filteredReportTemplates$ = this.reportingLevel.valueChanges.pipe(
     //   startWith(this.reportingLevel.value),
@@ -183,24 +182,27 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
 
   ngOnInit() {
     // Can update these variables with dynamical content pulled from the database if needed
+
     // console.log('Inside report-modal component ngOnInit');
   }
 
   private filterDataViews(reportingLevelLabel: string): Observable<DataView[]> {
+
     this.logger.debug('Inside filteredDataViews, reportingLevelLabel: ', reportingLevelLabel);
 
-    return this.dataViews.pipe(
-      map((items) => {
+    return this.dataViews.pipe(map((items) => {
+
         const filtered = items.filter((item) => {
+
           const rl = item.data.fields.find((f) => f.id === 'reportingLevel');
           return rl?.label === reportingLevelLabel || rl === undefined;
+
         }); // Filtered created as const so that we can sort it before returning it
 
-        this.logger.debug('filtered: ', filtered);
+      this.logger.debug('filtered: ', filtered);
 
-        return filtered
-          .slice() // Using slice() to avoid mutating the source array
-          .sort((a, b) => b.updated! - a.updated!); // Sorted in descending order by 'updated' field before returning
+        return filtered.slice() // Using slice() to avoid mutating the source array
+                        .sort((a, b) => b.updated! - a.updated!); // Sorted in descending order by 'updated' field before returning
       })
     );
   }
@@ -208,19 +210,19 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
   private filterReportTemplates(reportingLevelLabel: string): Observable<{ label: string; value: ITemplate }[]> {
     this.logger.debug('Inside filterReportTemplates, reportingLevelLabel: ', reportingLevelLabel);
 
-    return this.reportTemplatesAsync.pipe(
-      map((items) => {
+    return this.reportTemplatesAsync.pipe(map((items) => {
         this.logger.debug('Inside filteredReportTemplates, reportingLevelLabel: ', reportingLevelLabel);
 
-        const filtered = items.filter(
-          (item) =>
-            item.value.reportingLevels === undefined || item.value.reportingLevels?.includes(reportingLevelLabel)
+        const filtered = items.filter((item) =>
+          item.value.reportingLevels === undefined ||
+          item.value.reportingLevels?.includes(reportingLevelLabel)
         );
 
         this.logger.debug('filtered: ', filtered);
         return filtered;
       })
-    );
+    )
+
   }
 
   public next() {
@@ -401,7 +403,7 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
       dataView: this.dataView.value.dataViewID,
       template: this.currentReportTemplate!,
       slug: this.slug.value,
-      //  reportingLevel: this.reportingLevel.value.value,
+    //  reportingLevel: this.reportingLevel.value.value,
     };
 
     this.data

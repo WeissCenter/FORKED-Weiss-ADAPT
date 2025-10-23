@@ -84,7 +84,7 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
   public reports = this.data.getReports();
 
   $pageContent = this.pagesContentService.getPageContentSignal('data-sources', 'en');
-  $pageSections = computed(() => this.$pageContent()?.sections || []);
+  $pageSections = computed(() => this.$pageContent()?.sections || [])
 
   constructor(
     private fb: FormBuilder,
@@ -166,6 +166,7 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
     // Can update these variables with dynamical content pulled from the database if needed
 
     console.log('Inside report-modal component ngOnInit');
+
   }
 
   public open(
@@ -177,11 +178,15 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
     this.opened = true;
     this.mode = mode;
 
+  
+
     if (dataSource) {
       this.currentDataSource = dataSource;
 
       if (!dirty) {
+
         this.data.getDataSource(dataSource!.dataSourceID!, true).subscribe((result) => {
+
           this.dataSourceForm.patchValue({
             name: dataSource?.name,
             description: dataSource?.description,
@@ -192,7 +197,10 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
             username: (result as DataSourceConnectionInfo).username,
             password: '',
           });
-        });
+
+        })
+   
+
       }
 
       if (this.mode === PageMode.EDIT) {
@@ -295,15 +303,17 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
   }
 
   public async doSave(close = false, confirmed = false) {
+
     const handleClose = () => {
       if (close) {
         this.modal.close();
       }
-
+  
       this.reset();
-    };
+    }
 
-    if (!this.dataSourceForm.dirty) {
+
+    if(!this.dataSourceForm.dirty){
       handleClose();
       return;
     }
@@ -332,26 +342,24 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
       delete body.connectionInfo.password;
     }
 
-    try {
+    try{
+
       if (this.mode === PageMode.EDIT && this.currentDataSource) {
         const editedDataSource = await this.data.editDataSourcePromise(
           this.currentDataSource.dataSourceID as string,
           body
         );
-
-        this.alert.add({ type: 'success', title: 'Edit save success', body: 'Data Source edits were saved' });
+  
+        this.alert.add({type: 'success', title: 'Edit save success', body: 'Data Source edits were saved'})
         this.save.emit(editedDataSource);
       } else if (this.mode === PageMode.CREATE) {
         const newDataSource = await this.data.createDataSourcePromise(body);
         this.save.emit(newDataSource);
-        this.alert.add({
-          type: 'success',
-          title: 'Data source created successfully',
-          body: 'Data Source was successfully created',
-        });
+        this.alert.add({type: 'success', title: 'Data source created successfully', body: 'Data Source was successfully created'})
       }
-    } catch (err) {
-      this.alert.add({ type: 'error', title: 'Failed to create data source', body: 'Failed to create data source' });
+
+    }catch(err){
+      this.alert.add({type: 'error', title: 'Failed to create data source', body: 'Failed to create data source'})
       return;
     }
 
@@ -361,9 +369,8 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
   public next() {
     this.dataSourceForm.markAllAsTouched();
 
-    if (
-      (this.dataSourceForm.dirty && this.dataSourceForm.invalid) ||
-      (this.currentStep === 1 && this.editPassword && this.connectionTestState !== ConnectionTestState.SUCCESS)
+    if ( this.dataSourceForm.dirty && this.dataSourceForm.invalid ||
+         (this.currentStep === 1 && this.editPassword && this.connectionTestState !== ConnectionTestState.SUCCESS)
     ) {
       return;
     }
@@ -437,10 +444,12 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
     this.editPassword ? this.password.enable() : this.password.disable();
   }
 
-  public switchToEditMode() {
+  public switchToEditMode(){
     this.mode = PageMode.EDIT;
 
-    this.loadConnectionData(this.currentDataSource!, false);
+
+    this.loadConnectionData(this.currentDataSource!, false)
+
   }
 
   get type() {

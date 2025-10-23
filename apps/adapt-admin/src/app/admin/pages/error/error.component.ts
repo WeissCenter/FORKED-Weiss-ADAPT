@@ -18,17 +18,21 @@ export class ErrorComponent {
     const params = this.queryParamsSignal();
     let what = params['what'] || '404';
     const errorContent = this.page.getPageContentSignal('error');
-    let section = errorContent()?.sections?.find((sect) => sect?.name === what);
-    if (!section) section = errorContent()?.sections?.find((sect) => sect?.name === '404');
+    let section = errorContent()?.sections?.find(sect => sect?.name === what);
+    if (!section) section = errorContent()?.sections?.find(sect => sect?.name === '404');
     return { actions: errorContent()!.actions, ...(section as any) };
   });
 
-  constructor(
-    public page: PagesContentService,
-    public route: ActivatedRoute
-  ) {
-    this.route.queryParams.subscribe((params) => {
+  constructor(public page: PagesContentService, public route: ActivatedRoute){
+    this.route.queryParams.subscribe(params => {
       this.queryParamsSignal.set(params);
     });
+
+
   }
+
+
+
 }
+
+
