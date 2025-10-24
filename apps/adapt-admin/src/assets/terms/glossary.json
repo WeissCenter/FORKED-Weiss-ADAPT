@@ -353,15 +353,15 @@
     "label": "Locally-selected high school assessment with accommodations",
     "definition": "Locally-selected, nationally recognized high school assessment taken with accommodations."
   },
-  "byAssessmentType": {
+  "byAssessmentType":{
     "label": "By Assessment Type",
     "definition": ""
   },
-  "byRaceEthnicity": {
+  "byRaceEthnicity":{
     "label": "By Race/Ethnicity",
     "definition": ""
   },
-  "byGradeLevel": {
+  "byGradeLevel":{
     "label": "By Grade Level",
     "definition": ""
   },
@@ -569,114 +569,114 @@
     "label": "Medical exemption",
     "definition": "The student did not participate in the state assessments due to significant medical emergencies."
   },
-  "REMDW": {
-    "label": "Removed to an IAES by school personnel",
-    "definition": "A student with disabilities is moved to a temporary educational setting away from the student's current placement by school staff because they have drugs, weapons, or have caused serious injury to someone else."
-  },
-  "REMHO": {
-    "label": "Removed to an IAES by a hearing officer",
-    "definition": "A student with disabilities is moved to a temporary educational setting away from the student's current placement by school staff because they have drugs, weapons, or have caused serious injury to someone else."
-  },
-  "INSCHOOL": {
-    "label": "In-School Suspensions",
-    "definition": "A student with disabilities is temporarily taken out of their classroom for discipline but is still supervised by school staff."
-  },
-  "OUTOFSCHOOL": {
-    "label": "Out-of-School Suspensions/Expulsions",
-    "definition": "A student with disabilities is removed from regular school for discipline temporarily, for the rest of the school year, or longer depending on school district policy."
-  },
-  "LTOREQ10": {
-    "label": "Less than 10 days",
-    "definition": "The number of school days a disciplinary action lasts."
-  },
-  "GREATER10": {
-    "label": "Greater than 10 days",
-    "definition": "The number of school days a disciplinary action lasts."
-  },
-  "W": {
-    "label": "Weapons",
-    "definition": "A student with disabilities is removed from their current educational setting to a temporary educational setting for possession of a weapon on school premises."
-  },
-  "SBI": {
-    "label": "Serious bodily injury",
-    "definition": "A student with disabilities is removed from their current educational setting to a temporary educational setting for causing serious bodily injury that can lead to death or cause severe pain. It may also result in lasting changes in appearance or body functions."
-  },
-  "LTOREQ1": {
-    "label": "1 day or less",
-    "definition": "The number of school days a disciplinary action lasts."
-  },
-  "2TO10": {
-    "label": "2 through 10 days",
-    "definition": "The number of school days a disciplinary action lasts."
-  },
-  "SERVPROV": {
-    "label": "Received educational services",
-    "definition": "A student with disabilities recieved educational services while they were removed from the regular school program for discipline reasons."
-  },
-  "SERVNOTPROV": {
-    "label": "Did not receive educational services",
-    "definition": "A student with disabilities did not recieve educational services while they were removed from the regular school program for discipline reasons."
-  },
-  "SPEDTCHFULCRT": {
-    "label": "Fully certified",
-    "definition": "This means a teacher is certified to provide special education to students with disabilities."
-  },
-  "SPEDTCHNFULCRT": {
-    "label": "Not fully certified",
-    "definition": "This means a teacher is not certifed to provide special education to students with disabilities."
-  },
-  "AUDIO": {
-    "label": "Audiologists",
-    "definition": "This means a person who is qualified to assess and support students who have hearing problems, including the use of hearing aids and educating students, families, and other school staff about the student's hearing problems."
-  },
-  "SPEECHPATH": {
-    "label": "Speech-language pathologists",
-    "definition": "This means a person who is qualified to assess and support students with speech or language problems to improve the student's communication skills and/or make communication accessible at school."
-  },
-  "INTERPRET": {
-    "label": "Interpreters",
-    "definition": "This means a person who is qualified to assess and support students who are deaf or hard of hearing by providing sign language and/or other types of translation to  make communication accessible at school."
-  },
-  "PSYCH": {
-    "label": "Psychologists",
-    "definition": "This means a person who is qualified to assess and support students with cognitive, behavioral, mental, social, and/or emotional issues, including educating students, families, and other school staff about the student's strengths and needs. They work with teachers, parents, and students to support those facing learning challenges or emotional difficulties in the school setting."
-  },
-  "OCCTHERAP": {
-    "label": "Occupational therapists",
-    "definition": "This means a person who is qualified to assess and support students who need help with everyday activities at school, including tasks like self-care, using school tools, learning school routines, playing, and making friends."
-  },
-  "PHYSTHERAP": {
-    "label": "Physical therapists",
-    "definition": "This means a person who is qualified to assess and support students who need help with movement at school (walking, running, playing, sitting, etc.), including teaching students, families, and other school staff how to use mobility supports (walkers, wheelchairs, standers, etc.)."
-  },
-  "PEANDREC": {
-    "label": "Physical education teachers and recreation specialists",
-    "definition": "This means a person who is qualified to assess and support students who need adapted teaching, environments, and/or equipment for physical activity at school, including physical, leisure, and recreation education."
-  },
-  "SOCIALWORK": {
-    "label": "Social workers",
-    "definition": "This means a person who is qualified to assess and support students with behavioral, social, and/or emotional needs, including counseling with students and families and coordinating school and community supports."
-  },
-  "MEDNURSE": {
-    "label": "Medical/nursing service staff",
-    "definition": "This means a person who is qualified to assess and support students with medical conditions, including giving medication, responding to medical emergencies, and working with teachers and parents to meet students'  medical needs at school."
-  },
-  "COUNSELOR": {
-    "label": "Counselors and rehabilitation counselors",
-    "definition": "This means a person who is qualified to assess and support students who need help planning  personal, educational, and career paths, including coordinating activities with vocational rehabilitation programs."
-  },
-  "ORIENTMOBIL": {
-    "label": "Orientation and mobility specialists",
-    "definition": "This means a person who is qualified to support students who are blind or have difficulty seeing, teaching them how to move safely and confidently in their surroundings. They teach skills like getting around school and the community, using a cane for help, and staying aware of where they are."
-  },
-  "Q": {
-    "label": "Qualified",
-    "definition": "This means a staff person has the necessary training to provide academic and functional support for students with disabilities, under the direction of other certified or qualified staff."
-  },
-  "NQ": {
-    "label": "Not qualified",
-    "definition": "This means a staff person does not have the necessary training to provide academic and functional support for students with disabilities, under the direction of other certified or qualified staff."
-  },
+    "REMDW": {
+      "label": "Removed to an IAES by school personnel",
+      "definition": "A student with disabilities is moved to a temporary educational setting away from the student's current placement by school staff because they have drugs, weapons, or have caused serious injury to someone else."
+    },
+    "REMHO": {
+      "label": "Removed to an IAES by a hearing officer",
+      "definition": "A student with disabilities is moved to a temporary educational setting away from the student's current placement by school staff because they have drugs, weapons, or have caused serious injury to someone else."
+    },
+    "INSCHOOL": {
+      "label": "In-School Suspensions",
+      "definition": "A student with disabilities is temporarily taken out of their classroom for discipline but is still supervised by school staff."
+    },
+    "OUTOFSCHOOL": {
+      "label": "Out-of-School Suspensions/Expulsions",
+      "definition": "A student with disabilities is removed from regular school for discipline temporarily, for the rest of the school year, or longer depending on school district policy."
+    },
+    "LTOREQ10": {
+      "label": "Less than 10 days",
+      "definition": "The number of school days a disciplinary action lasts."
+    },
+    "GREATER10": {
+      "label": "Greater than 10 days",
+      "definition": "The number of school days a disciplinary action lasts."
+    },
+    "W": {
+      "label": "Weapons",
+      "definition": "A student with disabilities is removed from their current educational setting to a temporary educational setting for possession of a weapon on school premises."
+    },
+    "SBI": {
+      "label": "Serious bodily injury",
+      "definition": "A student with disabilities is removed from their current educational setting to a temporary educational setting for causing serious bodily injury that can lead to death or cause severe pain. It may also result in lasting changes in appearance or body functions."
+    },
+    "LTOREQ1": {
+      "label": "1 day or less",
+      "definition": "The number of school days a disciplinary action lasts."
+    },
+    "2TO10": {
+      "label": "2 through 10 days",
+      "definition": "The number of school days a disciplinary action lasts."
+    },
+    "SERVPROV": {
+      "label": "Received educational services",
+      "definition": "A student with disabilities recieved educational services while they were removed from the regular school program for discipline reasons."
+    },
+    "SERVNOTPROV": {
+      "label": "Did not receive educational services",
+      "definition": "A student with disabilities did not recieve educational services while they were removed from the regular school program for discipline reasons."
+    },
+    "SPEDTCHFULCRT": {
+      "label": "Fully certified",
+      "definition": "This means a teacher is certified to provide special education to students with disabilities."
+    },
+    "SPEDTCHNFULCRT": {
+      "label": "Not fully certified",
+      "definition": "This means a teacher is not certifed to provide special education to students with disabilities."
+    },
+    "AUDIO": {
+      "label": "Audiologists",
+      "definition": "This means a person who is qualified to assess and support students who have hearing problems, including the use of hearing aids and educating students, families, and other school staff about the student's hearing problems."
+    },
+    "SPEECHPATH": {
+      "label": "Speech-language pathologists",
+      "definition": "This means a person who is qualified to assess and support students with speech or language problems to improve the student's communication skills and/or make communication accessible at school."
+    },
+    "INTERPRET": {
+      "label": "Interpreters",
+      "definition": "This means a person who is qualified to assess and support students who are deaf or hard of hearing by providing sign language and/or other types of translation to  make communication accessible at school."
+    },
+    "PSYCH": {
+      "label": "Psychologists",
+      "definition": "This means a person who is qualified to assess and support students with cognitive, behavioral, mental, social, and/or emotional issues, including educating students, families, and other school staff about the student's strengths and needs. They work with teachers, parents, and students to support those facing learning challenges or emotional difficulties in the school setting."
+    },
+    "OCCTHERAP": {
+      "label": "Occupational therapists",
+      "definition": "This means a person who is qualified to assess and support students who need help with everyday activities at school, including tasks like self-care, using school tools, learning school routines, playing, and making friends."
+    },
+    "PHYSTHERAP": {
+      "label": "Physical therapists",
+      "definition": "This means a person who is qualified to assess and support students who need help with movement at school (walking, running, playing, sitting, etc.), including teaching students, families, and other school staff how to use mobility supports (walkers, wheelchairs, standers, etc.)."
+    },
+    "PEANDREC": {
+      "label": "Physical education teachers and recreation specialists",
+      "definition": "This means a person who is qualified to assess and support students who need adapted teaching, environments, and/or equipment for physical activity at school, including physical, leisure, and recreation education."
+    },
+    "SOCIALWORK": {
+      "label": "Social workers",
+      "definition": "This means a person who is qualified to assess and support students with behavioral, social, and/or emotional needs, including counseling with students and families and coordinating school and community supports."
+    },
+    "MEDNURSE": {
+      "label": "Medical/nursing service staff",
+      "definition": "This means a person who is qualified to assess and support students with medical conditions, including giving medication, responding to medical emergencies, and working with teachers and parents to meet students'  medical needs at school."
+    },
+    "COUNSELOR": {
+      "label": "Counselors and rehabilitation counselors",
+      "definition": "This means a person who is qualified to assess and support students who need help planning  personal, educational, and career paths, including coordinating activities with vocational rehabilitation programs."
+    },
+    "ORIENTMOBIL": {
+      "label": "Orientation and mobility specialists",
+      "definition": "This means a person who is qualified to support students who are blind or have difficulty seeing, teaching them how to move safely and confidently in their surroundings. They teach skills like getting around school and the community, using a cane for help, and staying aware of where they are."
+    },
+    "Q": {
+      "label": "Qualified",
+      "definition": "This means a staff person has the necessary training to provide academic and functional support for students with disabilities, under the direction of other certified or qualified staff."
+    },
+    "NQ": {
+      "label": "Not qualified",
+      "definition": "This means a staff person does not have the necessary training to provide academic and functional support for students with disabilities, under the direction of other certified or qualified staff."
+    },
   "c009-D": {
     "label": "Died",
     "definition": "The child who was in early intervention at the beginning of the reporting period is no longer in early intervention at the end of the period because they passed away."

@@ -75,6 +75,11 @@
             "name": "Protecting Student Privacy - Privacy Technical Assistance Center (PTAC)",
             "description": "The Privacy Technical Assistance Center (PTAC) is a one-stop resource for education stakeholders to learn about privacy, confidentiality, and security practices related to student-level data systems and other uses of student data.",
             "link": "https://studentprivacy.ed.gov/"
+          },
+           {
+            "name": "Arkansas Office of Special Education",
+            "description": "The Arkansas Division of Elementary and Secondary Education, Office of Special Education, partners with schools and agencies to ensure students with disabilities (ages 3–21) receive a free, appropriate education and supports schools through training, data, funding oversight, and dispute resolution to improve outcomes.",
+            "link": "https://dese.ade.arkansas.gov/Offices/special-education"
           }
         ]
       },
@@ -89,7 +94,7 @@
       "body": "View a list of the published reports.",
       "loading": "Loading reports.",
       "loaded": "Reports have loaded.",
-      "sortApplied": "Sort has been applied.",
+      "sortApplied" : "Sort has been applied.",
       "filterApplied": "Filters have been applied."
     },
     "report": {

@@ -1,13 +1,23 @@
 {
   "id": "childCountAndSettings",
   "title": "Cuenta de niños de IDEA y configuración",
-  "metaTags": ["Parte C", "Recuento y configuración de niños"],
+  "metaTags": [
+    "Parte C",
+    "Recuento y configuración de niños"
+  ],
   "suppression": {
     "required": true,
     "parentOrganization": "file",
     "childOrganization": "section",
-    "sensitiveColumns": ["setting", "race", "gender", "age"],
-    "frequencyColumns": ["value"]
+    "sensitiveColumns": [
+      "setting",
+      "race",
+      "gender",
+      "age"
+    ],
+    "frequencyColumns": [
+      "value"
+    ]
   },
   "multiFile": false,
   "description": "Este informe representa el número no duplicado de niños con un Plan Individualizado de Servicio Familiar (IFSP) activo en función de la fecha de conteo de niños del estado, de acuerdo con la edad del niño y los entornos primarios.",
@@ -33,12 +43,17 @@
                     {
                       "field": "section",
                       "array": true,
-                      "value": ["A.1", "A.2"]
+                      "value": [
+                        "A.1",
+                        "A.2"
+                      ]
                     },
                     {
                       "field": "setting",
                       "array": true,
-                      "value": ["total"]
+                      "value": [
+                        "total"
+                      ]
                     },
                     {
                       "field": "setting",
@@ -65,12 +80,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.1", "A.2"]
+                          "value": [
+                            "A.1",
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -85,12 +107,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.1", "A.2"]
+                              "value": [
+                                "A.1",
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -107,12 +136,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.1", "A.2"]
+                          "value": [
+                            "A.1",
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -127,12 +163,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.1", "A.2"]
+                              "value": [
+                                "A.1",
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -149,12 +192,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.1", "A.2"]
+                          "value": [
+                            "A.1",
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -169,12 +219,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.1", "A.2"]
+                              "value": [
+                                "A.1",
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -199,12 +256,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.1", "B.2"]
+                          "value": [
+                            "B.1",
+                            "B.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -219,12 +283,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.1", "B.2"]
+                              "value": [
+                                "B.1",
+                                "B.2"
+                              ]
                             }
                           ]
                         }
@@ -241,12 +312,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.1", "B.2"]
+                          "value": [
+                            "B.1",
+                            "B.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -261,12 +339,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.1", "B.2"]
+                              "value": [
+                                "B.1",
+                                "B.2"
+                              ]
                             }
                           ]
                         }
@@ -283,12 +368,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.1", "B.2"]
+                          "value": [
+                            "B.1",
+                            "B.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -303,12 +395,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.1", "B.2"]
+                              "value": [
+                                "B.1",
+                                "B.2"
+                              ]
                             }
                           ]
                         }
@@ -333,7 +432,10 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["C.1", "C.2"]
+                          "value": [
+                            "C.1",
+                            "C.2"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -348,7 +450,10 @@
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["C.1", "C.2"]
+                              "value": [
+                                "C.1",
+                                "C.2"
+                              ]
                             }
                           ]
                         }
@@ -365,7 +470,10 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["C.1", "C.2"]
+                          "value": [
+                            "C.1",
+                            "C.2"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -380,7 +488,10 @@
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["C.1", "C.2"]
+                              "value": [
+                                "C.1",
+                                "C.2"
+                              ]
                             }
                           ]
                         }
@@ -433,12 +544,17 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["setting", "age"],
+                      "value": [
+                        "setting",
+                        "age"
+                      ],
                       "array": true
                     },
                     {
@@ -449,25 +565,37 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["setting", "age"]
+                      "value": [
+                        "setting",
+                        "age"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["A.1", "A.2"]
+                      "value": [
+                        "A.1",
+                        "A.2"
+                      ]
                     },
                     {
                       "field": "setting",
                       "type": "string",
                       "array": true,
-                      "value": ["home", "community", "other"]
+                      "value": [
+                        "home",
+                        "community",
+                        "other"
+                      ]
                     }
                   ]
                 }
@@ -516,12 +644,17 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["race", "setting"],
+                      "value": [
+                        "race",
+                        "setting"
+                      ],
                       "array": true
                     },
                     {
@@ -532,25 +665,37 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["setting", "race"]
+                      "value": [
+                        "setting",
+                        "race"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["B.1", "B.2"]
+                      "value": [
+                        "B.1",
+                        "B.2"
+                      ]
                     },
                     {
                       "field": "setting",
                       "type": "string",
                       "array": true,
-                      "value": ["home", "community", "other"]
+                      "value": [
+                        "home",
+                        "community",
+                        "other"
+                      ]
                     }
                   ]
                 }
@@ -585,7 +730,10 @@
                     {
                       "field": "section",
                       "array": true,
-                      "value": ["C.1", "C.2"]
+                      "value": [
+                        "C.1",
+                        "C.2"
+                      ]
                     }
                   ]
                 }
@@ -609,12 +757,16 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["gender"],
+                      "value": [
+                        "gender"
+                      ],
                       "array": true
                     },
                     {
@@ -625,19 +777,26 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["gender"]
+                      "value": [
+                        "gender"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["C.1", "C.2"]
+                      "value": [
+                        "C.1",
+                        "C.2"
+                      ]
                     }
                   ]
                 }
@@ -729,12 +888,16 @@
                     {
                       "field": "section",
                       "array": true,
-                      "value": ["A.1"]
+                      "value": [
+                        "A.1"
+                      ]
                     },
                     {
                       "field": "setting",
                       "array": true,
-                      "value": ["total"]
+                      "value": [
+                        "total"
+                      ]
                     },
                     {
                       "field": "setting",
@@ -761,12 +924,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.1", "A.2"]
+                          "value": [
+                            "A.1",
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -781,12 +951,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.1", "A.2"]
+                              "value": [
+                                "A.1",
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -803,12 +980,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.1", "A.2"]
+                          "value": [
+                            "A.1",
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -823,12 +1007,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.1", "A.2"]
+                              "value": [
+                                "A.1",
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -845,12 +1036,19 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.1", "A.2"]
+                          "value": [
+                            "A.1",
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -865,12 +1063,19 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.1", "A.2"]
+                              "value": [
+                                "A.1",
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -895,12 +1100,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.1"]
+                          "value": [
+                            "B.1"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -915,12 +1126,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.1"]
+                              "value": [
+                                "B.1"
+                              ]
                             }
                           ]
                         }
@@ -937,12 +1154,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.1"]
+                          "value": [
+                            "B.1"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -957,12 +1180,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.1"]
+                              "value": [
+                                "B.1"
+                              ]
                             }
                           ]
                         }
@@ -979,12 +1208,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.1"]
+                          "value": [
+                            "B.1"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -999,12 +1234,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.1"]
+                              "value": [
+                                "B.1"
+                              ]
                             }
                           ]
                         }
@@ -1029,7 +1270,9 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["C.1"]
+                          "value": [
+                            "C.1"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -1044,7 +1287,9 @@
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["C.1"]
+                              "value": [
+                                "C.1"
+                              ]
                             }
                           ]
                         }
@@ -1061,7 +1306,9 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["C.1"]
+                          "value": [
+                            "C.1"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -1076,7 +1323,9 @@
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["C.1"]
+                              "value": [
+                                "C.1"
+                              ]
                             }
                           ]
                         }
@@ -1129,12 +1378,17 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["setting", "age"],
+                      "value": [
+                        "setting",
+                        "age"
+                      ],
                       "array": true
                     },
                     {
@@ -1145,25 +1399,36 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["age", "setting"]
+                      "value": [
+                        "age",
+                        "setting"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["A.1"]
+                      "value": [
+                        "A.1"
+                      ]
                     },
                     {
                       "field": "setting",
                       "type": "string",
                       "array": true,
-                      "value": ["home", "community", "other"]
+                      "value": [
+                        "home",
+                        "community",
+                        "other"
+                      ]
                     }
                   ]
                 }
@@ -1238,12 +1503,17 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["race", "setting"],
+                      "value": [
+                        "race",
+                        "setting"
+                      ],
                       "array": true
                     },
                     {
@@ -1254,25 +1524,36 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["race", "setting"]
+                      "value": [
+                        "race",
+                        "setting"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["B.1"]
+                      "value": [
+                        "B.1"
+                      ]
                     },
                     {
                       "field": "setting",
                       "type": "string",
                       "array": true,
-                      "value": ["home", "community", "other"]
+                      "value": [
+                        "home",
+                        "community",
+                        "other"
+                      ]
                     }
                   ]
                 }
@@ -1333,12 +1614,17 @@
                     {
                       "field": "section",
                       "array": true,
-                      "value": ["C.1"]
+                      "value": [
+                        "C.1"
+                      ]
                     },
                     {
                       "field": "gender",
                       "array": true,
-                      "value": ["Male", "Female"]
+                      "value": [
+                        "Male",
+                        "Female"
+                      ]
                     }
                   ]
                 }
@@ -1363,12 +1649,16 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["gender"],
+                      "value": [
+                        "gender"
+                      ],
                       "array": true
                     },
                     {
@@ -1379,19 +1669,25 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["gender"]
+                      "value": [
+                        "gender"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["C.1"]
+                      "value": [
+                        "C.1"
+                      ]
                     }
                   ]
                 }
@@ -1460,7 +1756,9 @@
                               {
                                 "field": "section",
                                 "array": true,
-                                "value": ["D.1"]
+                                "value": [
+                                  "D.1"
+                                ]
                               }
                             ]
                           }
@@ -1484,12 +1782,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["value"],
+                                "value": [
+                                  "value"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["race"],
+                                "value": [
+                                  "race"
+                                ],
                                 "array": true
                               },
                               {
@@ -1500,25 +1802,33 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["value desc"]
+                                "value": [
+                                  "value desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
                                 "type": "string",
                                 "array": true,
-                                "value": ["race"]
+                                "value": [
+                                  "race"
+                                ]
                               },
                               {
                                 "field": "section",
                                 "type": "string",
                                 "array": true,
-                                "value": ["D.1"]
+                                "value": [
+                                  "D.1"
+                                ]
                               },
                               {
                                 "field": "setting",
                                 "type": "string",
                                 "array": true,
-                                "value": ["total"]
+                                "value": [
+                                  "total"
+                                ]
                               }
                             ]
                           }
@@ -1549,7 +1859,9 @@
                               {
                                 "field": "section",
                                 "array": true,
-                                "value": ["D.1"]
+                                "value": [
+                                  "D.1"
+                                ]
                               }
                             ]
                           }
@@ -1573,12 +1885,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["value"],
+                                "value": [
+                                  "value"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["age"],
+                                "value": [
+                                  "age"
+                                ],
                                 "array": true
                               },
                               {
@@ -1589,26 +1905,34 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["value desc"]
+                                "value": [
+                                  "value desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
                                 "type": "string",
                                 "array": true,
-                                "value": ["age"]
+                                "value": [
+                                  "age"
+                                ]
                               },
                               {
                                 "field": "section",
                                 "type": "string",
                                 "array": true,
-                                "value": ["D.1"]
+                                "value": [
+                                  "D.1"
+                                ]
                               },
                               {
                                 "field": "age",
                                 "operator": "NOT",
                                 "type": "string",
                                 "array": true,
-                                "value": ["total"]
+                                "value": [
+                                  "total"
+                                ]
                               }
                             ]
                           }
@@ -1710,7 +2034,9 @@
                               {
                                 "field": "section",
                                 "array": true,
-                                "value": ["E.1"]
+                                "value": [
+                                  "E.1"
+                                ]
                               }
                             ]
                           },
@@ -1758,12 +2084,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["value"],
+                                "value": [
+                                  "value"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["race"],
+                                "value": [
+                                  "race"
+                                ],
                                 "array": true
                               },
                               {
@@ -1774,19 +2104,25 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["value desc"]
+                                "value": [
+                                  "value desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
                                 "type": "string",
                                 "array": true,
-                                "value": ["race"]
+                                "value": [
+                                  "race"
+                                ]
                               },
                               {
                                 "field": "section",
                                 "type": "string",
                                 "array": true,
-                                "value": ["E.1"]
+                                "value": [
+                                  "E.1"
+                                ]
                               }
                             ]
                           }
@@ -1817,7 +2153,9 @@
                               {
                                 "field": "section",
                                 "array": true,
-                                "value": ["E.2"]
+                                "value": [
+                                  "E.2"
+                                ]
                               }
                             ]
                           },
@@ -1865,12 +2203,16 @@
                               },
                               {
                                 "field": "columns",
-                                "value": ["value"],
+                                "value": [
+                                  "value"
+                                ],
                                 "array": true
                               },
                               {
                                 "field": "selectColumns",
-                                "value": ["race"],
+                                "value": [
+                                  "race"
+                                ],
                                 "array": true
                               },
                               {
@@ -1881,19 +2223,25 @@
                                 "field": "order",
                                 "type": "string",
                                 "array": true,
-                                "value": ["value desc"]
+                                "value": [
+                                  "value desc"
+                                ]
                               },
                               {
                                 "field": "groupby",
                                 "type": "string",
                                 "array": true,
-                                "value": ["race"]
+                                "value": [
+                                  "race"
+                                ]
                               },
                               {
                                 "field": "section",
                                 "type": "string",
                                 "array": true,
-                                "value": ["E.2"]
+                                "value": [
+                                  "E.2"
+                                ]
                               }
                             ]
                           }
@@ -2016,12 +2364,16 @@
                     {
                       "field": "section",
                       "array": true,
-                      "value": ["A.2"]
+                      "value": [
+                        "A.2"
+                      ]
                     },
                     {
                       "field": "setting",
                       "array": true,
-                      "value": ["total"]
+                      "value": [
+                        "total"
+                      ]
                     },
                     {
                       "field": "setting",
@@ -2048,12 +2400,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.2"]
+                          "value": [
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -2068,12 +2426,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.2"]
+                              "value": [
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -2090,12 +2454,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.2"]
+                          "value": [
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -2110,12 +2480,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.2"]
+                              "value": [
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -2132,12 +2508,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["A.2"]
+                          "value": [
+                            "A.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -2152,12 +2534,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["A.2"]
+                              "value": [
+                                "A.2"
+                              ]
                             }
                           ]
                         }
@@ -2182,12 +2570,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.2"]
+                          "value": [
+                            "B.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -2202,12 +2596,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.2"]
+                              "value": [
+                                "B.2"
+                              ]
                             }
                           ]
                         }
@@ -2224,12 +2624,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.2"]
+                          "value": [
+                            "B.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -2244,12 +2650,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.2"]
+                              "value": [
+                                "B.2"
+                              ]
                             }
                           ]
                         }
@@ -2266,12 +2678,18 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["B.2"]
+                          "value": [
+                            "B.2"
+                          ]
                         },
                         {
                           "field": "setting",
                           "array": true,
-                          "value": ["home", "community", "other"]
+                          "value": [
+                            "home",
+                            "community",
+                            "other"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -2286,12 +2704,18 @@
                             {
                               "field": "setting",
                               "array": true,
-                              "value": ["home", "other", "community"]
+                              "value": [
+                                "home",
+                                "other",
+                                "community"
+                              ]
                             },
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["B.2"]
+                              "value": [
+                                "B.2"
+                              ]
                             }
                           ]
                         }
@@ -2316,7 +2740,9 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["C.2"]
+                          "value": [
+                            "C.2"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -2331,7 +2757,9 @@
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["C.2"]
+                              "value": [
+                                "C.2"
+                              ]
                             }
                           ]
                         }
@@ -2348,7 +2776,9 @@
                         {
                           "field": "section",
                           "array": true,
-                          "value": ["C.2"]
+                          "value": [
+                            "C.2"
+                          ]
                         }
                       ],
                       "dependents": {
@@ -2363,7 +2793,9 @@
                             {
                               "field": "section",
                               "array": true,
-                              "value": ["C.2"]
+                              "value": [
+                                "C.2"
+                              ]
                             }
                           ]
                         }
@@ -2416,12 +2848,17 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["setting", "age"],
+                      "value": [
+                        "setting",
+                        "age"
+                      ],
                       "array": true
                     },
                     {
@@ -2432,25 +2869,36 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["setting", "age"]
+                      "value": [
+                        "setting",
+                        "age"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["A.2"]
+                      "value": [
+                        "A.2"
+                      ]
                     },
                     {
                       "field": "setting",
                       "type": "string",
                       "array": true,
-                      "value": ["home", "community", "other"]
+                      "value": [
+                        "home",
+                        "community",
+                        "other"
+                      ]
                     }
                   ]
                 }
@@ -2525,12 +2973,17 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["race", "setting"],
+                      "value": [
+                        "race",
+                        "setting"
+                      ],
                       "array": true
                     },
                     {
@@ -2541,25 +2994,36 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["race", "setting"]
+                      "value": [
+                        "race",
+                        "setting"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["B.2"]
+                      "value": [
+                        "B.2"
+                      ]
                     },
                     {
                       "field": "setting",
                       "type": "string",
                       "array": true,
-                      "value": ["home", "community", "other"]
+                      "value": [
+                        "home",
+                        "community",
+                        "other"
+                      ]
                     }
                   ]
                 }
@@ -2620,7 +3084,9 @@
                     {
                       "field": "section",
                       "array": true,
-                      "value": ["C.2"]
+                      "value": [
+                        "C.2"
+                      ]
                     }
                   ]
                 }
@@ -2644,12 +3110,16 @@
                     },
                     {
                       "field": "columns",
-                      "value": ["value"],
+                      "value": [
+                        "value"
+                      ],
                       "array": true
                     },
                     {
                       "field": "selectColumns",
-                      "value": ["gender"],
+                      "value": [
+                        "gender"
+                      ],
                       "array": true
                     },
                     {
@@ -2660,19 +3130,25 @@
                       "field": "order",
                       "type": "string",
                       "array": true,
-                      "value": ["value desc"]
+                      "value": [
+                        "value desc"
+                      ]
                     },
                     {
                       "field": "groupby",
                       "type": "string",
                       "array": true,
-                      "value": ["gender"]
+                      "value": [
+                        "gender"
+                      ]
                     },
                     {
                       "field": "section",
                       "type": "string",
                       "array": true,
-                      "value": ["C.2"]
+                      "value": [
+                        "C.2"
+                      ]
                     }
                   ]
                 }

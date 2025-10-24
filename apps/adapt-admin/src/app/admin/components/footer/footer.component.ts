@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SettingsService } from '@adapt/adapt-shared-component-lib';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'adapt-footer',
@@ -8,6 +9,7 @@ import { SettingsService } from '@adapt/adapt-shared-component-lib';
 })
 export class FooterComponent {
   public year = new Date().getFullYear();
+  public copyrightText = environment.copyrightText || 'AEM Corporation.';
 
   public $settings = this.settings.getSettingsSignal();
 

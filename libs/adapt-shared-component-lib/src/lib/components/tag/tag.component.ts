@@ -25,16 +25,13 @@ export class TagComponent implements OnInit, OnChanges {
         this.status.toLowerCase() === 'pending approval' ||
         this.status.toLowerCase() === 'processing' ||
         this.status.toLowerCase() === 'requested',
-      'bg-error-darker text-white':
-        this.status.toLowerCase() === 'rejected' ||
-        this.status.toLowerCase() === 'missing data' ||
-        this.status.toLowerCase() === 'failed',
+      'bg-error-darker text-white': this.status.toLowerCase() === 'rejected' || this.status.toLowerCase() === 'missing data' || this.status.toLowerCase() === 'failed',
       'bg-success-darker text-white':
         this.status.toLowerCase() === 'approved' || this.status.toLowerCase() === 'available',
       'bg-primary-darker text-white': this.status.toLowerCase() === 'finalized',
       'bg-black text-white': this.status.toLowerCase() === 'external',
       'bg-base-darker text-white': this.status.toLowerCase() === 'internal' || this.status.toLowerCase() === 'inactive',
-      'bg-primary-dark text-white': this.status.toLowerCase() === 'active',
+      'bg-primary-dark text-white': this.status.toLowerCase() === 'active'
     };
   }
 }

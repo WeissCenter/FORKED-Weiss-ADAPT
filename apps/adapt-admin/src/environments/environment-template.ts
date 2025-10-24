@@ -22,5 +22,8 @@ export const environment = {
   },
   loginContent: 'assets/content-labels.json',
   pagesContent: 'assets/text/admin-content-text.json',
-  organizationName: ''
+  organizationName: 'User Organization',
+  logoPath: 'assets/shared/logos/generic',
+  logoExtension: 'svg',
+  copyrightText: 'AEM Corporation.',
 };

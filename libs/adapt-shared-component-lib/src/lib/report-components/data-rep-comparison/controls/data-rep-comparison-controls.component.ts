@@ -108,7 +108,10 @@ export class DataRepComparisonControlsComponent {
         return;
       }
 
-      this.comparisonSubmit.emit([selectedComparison1, selectedComparison2]);
+      this.comparisonSubmit.emit([
+        selectedComparison1,
+        selectedComparison2,
+      ]);
     } else {
       // Handle validation errors
       Object.keys(this.form.controls).forEach((key) => {

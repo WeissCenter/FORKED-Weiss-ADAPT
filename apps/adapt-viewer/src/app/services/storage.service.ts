@@ -26,7 +26,7 @@ export class StorageService {
   public setItem(storage: 'session' | 'local', key: string, data: string) {
     if (!this._isBrowser) {
       storage === 'session' ? this._sessionStorage.set(key, data) : this._localStorage.set(key, data);
-      return;
+      return
     }
 
     storage === 'session' ? sessionStorage.setItem(key, data) : localStorage.setItem(key, data);
@@ -39,4 +39,5 @@ export class StorageService {
 
     return storage === 'session' ? sessionStorage.getItem(key) : localStorage.getItem(key);
   }
+
 }

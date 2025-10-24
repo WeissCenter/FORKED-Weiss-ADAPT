@@ -151,7 +151,8 @@ body:has(dialog[open]) {
   scrollbar-gutter: stable;
 }
 
-html[data-weiss-accessibility-theme='high-contrast'] {
+html[data-weiss-accessibility-theme="high-contrast"] {
+
   --adapt-logo-secondary: var(--high-contrast-foreground) !important;
   --adapt-logo-primary: var(--high-contrast-foreground) !important;
 }

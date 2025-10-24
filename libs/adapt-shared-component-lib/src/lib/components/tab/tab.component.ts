@@ -11,8 +11,5 @@ export class TabComponent {
   @Input() name = 'Tab';
 
   public show = true;
-  constructor(
-    @Host() tabView: TabViewComponent,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(@Host() tabView: TabViewComponent, private cd: ChangeDetectorRef) {}
 }

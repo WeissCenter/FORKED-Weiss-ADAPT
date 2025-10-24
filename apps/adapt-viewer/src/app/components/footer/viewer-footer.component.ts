@@ -10,15 +10,12 @@ import { SettingsService } from '@adapt/adapt-shared-component-lib';
 })
 export class ViewerFooterComponent {
   public year = new Date().getFullYear();
+  public copyrightText = environment.copyrightText || 'AEM Corporation.';
 
-  logoUrl: string = `https://${environment.appDomain}/assets/shared/logos/aem-logo.svg`;
-  stackedLogoUrl: string = `https://${environment.appDomain}/assets/shared/logos/weiss-logo-text-stacked.svg`;
   $footerContent = computed(() => this.content.$sharedContent()?.footer);
 
   public $settings = this.settings.getSettingsSignal();
 
-  constructor(
-    public content: ViewerPagesContentService,
-    public settings: SettingsService
-  ) {}
+  constructor(public content: ViewerPagesContentService, public settings: SettingsService) {}
 }
+

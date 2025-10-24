@@ -38,13 +38,7 @@ import {
   take,
   tap,
 } from 'rxjs';
-import {
-  AlertService,
-  ContentService,
-  FilterPanelService,
-  LanguageService,
-  ModalComponent,
-} from '@adapt/adapt-shared-component-lib';
+import { AlertService, ContentService, FilterPanelService, LanguageService, ModalComponent } from '@adapt/adapt-shared-component-lib';
 import { LocationStrategy } from '@angular/common';
 import { ViewerPagesContentService } from '../../services/content/viewer-pages-content.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -74,9 +68,7 @@ export class ReportComponent {
 
   showFilterButton: boolean;
   public filterFormGroup: FormGroup;
-  public $report = this.route.params.pipe(
-    switchMap((params) => this.data.getReport(params['slug'], this.language.$language()))
-  );
+  public $report = this.route.params.pipe(switchMap((params) => this.data.getReport(params['slug'], this.language.$language())));
 
   public templateSubject = new BehaviorSubject<(ViewerTemplate & { slug: string }) | null>(null);
 
@@ -201,16 +193,16 @@ export class ReportComponent {
     private location: LocationStrategy,
     public content: ViewerPagesContentService,
     private alert: AlertService
-  ) {
-    // private loc: Location
+  ) // private loc: Location
+  {
     this.filterFormGroup = this.fb.group({});
     this.$report.subscribe({
       next: (rpt) => {
         this.templateSubject.next({ ...rpt.template, slug: rpt.slug } as ViewerTemplate & { slug: string });
       },
       error: (err) => {
-        if (err instanceof HttpErrorResponse && err.status === 404) this.router.navigate(['404']);
-      },
+        if(err instanceof HttpErrorResponse && err.status === 404) this.router.navigate(['404'])
+      }
     });
     this.filterPanelService.currentFilterPanelState.subscribe((state) => {
       this.showFilterPanel = state;
@@ -371,9 +363,9 @@ export class ReportComponent {
       this.intialLoad ? (this.showResetFilters = false) : (this.showResetFilters = true);
     }
 
-    if (!this.intialLoad) {
+    if (!this.intialLoad){
       this.onFilter.next(this.filterFormGroup.value);
-    }
+    } 
 
     this.intialLoad = false;
   }
@@ -456,6 +448,7 @@ export class ReportComponent {
           }
         } else {
           if (this.filterFormGroup.value[key] !== null) {
+
             const pageID = this._template.pages?.[this.reportTabIndex].id;
 
             if (!tempFilterParent.condition?.pages?.length || tempFilterParent?.condition?.pages?.includes(pageID!)) {
@@ -513,10 +506,6 @@ export class ReportComponent {
   public copy(text: string) {
     navigator.clipboard.writeText(text);
     this.shareModal?.close();
-    this.alert.add({
-      type: 'success',
-      title: 'Success',
-      body: 'The URL has been successfully copied to your clipboard.',
-    });
+    this.alert.add({type: 'success', title: 'Success', body: 'The URL has been successfully copied to your clipboard.'})
   }
 }

@@ -5,12 +5,9 @@
     <h1 class="margin-0">{{ pageContent.title }}</h1>
     <p class="measure-4 usa-prose margin-bottom-0">{{ pageContent.description }}</p>
 
-    <a
-      href="https://weisscenter.gitbook.io/weisscenter/user-guide/reports"
-      target="_blank"
-      aria-label="Learn More (opens in a new tab)"
-      style="font-size: 0.8rem; margin-top: 8px">
-      <span aria-hidden="true">Learn More <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
+    <a href="https://weisscenter.gitbook.io/weisscenter/user-guide/reports" target="_blank"
+       aria-label="Learn More (opens in a new tab)" style="font-size: 0.8rem;margin-top: 8px;">
+      <span aria-hidden="true">{{pageContent.learn_more_link}} <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
     </a>
   </header>
 
@@ -18,9 +15,7 @@
         <h2 class="margin-0">Filters</h2>
     </div> -->
 
-  <div
-    *ngIf="pageContent?.tabs"
-    role="tablist"
+  <div *ngIf="pageContent?.tabs" role="tablist"
     aria-label="Reporting Controls"
     class="reports-controls display-flex gap-4">
     <!-- TODO: Hardcoding the tabs for the demo on 11/13/23; needs to be updated to switch between "draft reports" and "finalized reports" with a corresponding active class for the tab that is active -->
@@ -136,7 +131,7 @@
     id="reports"
     [attr.aria-label]="(status.value[0] | titlecase) + ' Reports'"
     class="reports-table display-flex flex-column gap-1 width-full">
-    <ng-container *ngIf="$reports | loading: 'Reports have loaded' | async as reportsLoaded">
+    <ng-container *ngIf="$reports | loading : 'Reports have loaded' | async as reportsLoaded">
       <div
         class="data-management-table-header display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full margin-bottom-3 gap-2">
         <!-- <span *ngIf="reports | async | paginate: page: pageSize as items" class="font-family-body font-xs" #recordsDisplay
@@ -146,7 +141,7 @@
         <h2
           class="font-family-body font-sm line-height-5 text-normal"
           id="showing"
-          *ngIf="reports | async | paginate: page : pageSize as items"
+          *ngIf="reports | async | paginate : page : pageSize as items"
           #recordsDisplay
           aria-live="polite">
           Showing up to
@@ -214,12 +209,12 @@
         </div>
       </div>
 
-      <ng-container *ngIf="reportsLoaded.value | paginate: page : pageSize as reports">
+      <ng-container *ngIf="reportsLoaded.value | paginate : page : pageSize as reports">
         <span *ngIf="reports.length" class="visually-hidden" aria-live="polite" id="report-load-notifier"
           >Reports have loaded</span
         >
         <adapt-list-item-report
-          (publish)="selectedReport = $event; publishConfirmationModal.open()"
+          (publish)="selectedReport = $event;  publishConfirmationModal.open()"
           (unPublish)="startUnPublish(report)"
           *ngFor="let report of reports"
           [report]="report"

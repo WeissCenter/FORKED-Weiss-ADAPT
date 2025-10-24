@@ -1,12 +1,13 @@
 import { SettingsService } from '@adapt/adapt-shared-component-lib';
 import { DOCUMENT } from '@angular/common';
 import { computed, effect, Inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { WeissAccessibilityCenterService } from 'weiss-accessibility-center';
+import {WeissAccessibilityCenterService} from 'weiss-accessibility-center'
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class LanguageService {
+
   $_selectedLanguage: WritableSignal<string | null> = signal(null);
 
   public $language = computed(() => {
@@ -27,19 +28,17 @@ export class LanguageService {
     return 'en';
   });
 
-  constructor(
-    private settings: SettingsService,
-    @Inject(DOCUMENT) private document: Document,
-    private weiss: WeissAccessibilityCenterService
-  ) {}
 
-  public changeLanguage(lang: string) {
+  constructor(private settings: SettingsService, @Inject(DOCUMENT) private document: Document, private weiss: WeissAccessibilityCenterService) {}
+
+  public changeLanguage(lang: string){
     this.$_selectedLanguage.set(lang);
     this.document.documentElement.lang = lang;
-    this.weiss.updateSettings({ language: lang });
+    this.weiss.updateSettings({language: lang})
   }
 
-  public getLang() {
+  public getLang(){
     return this.$language();
   }
+
 }

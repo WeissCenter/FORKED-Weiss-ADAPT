@@ -66,43 +66,41 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
 
   public compareFunc = this.compareByID.bind(this);
 
-  constructor(
-    @Inject(PLATFORM_ID) platform: string,
-    @Self() @Optional() private parentControl?: NgControl
-  ) {
+  constructor(@Inject(PLATFORM_ID) platform: string, @Self() @Optional() private parentControl?: NgControl) {
     if (this.parentControl) {
       this.parentControl.valueAccessor = this;
     }
 
     afterRender(() => {
       import('@uswds/uswds/js').then((lib) => {
-        comboBox = lib.comboBox;
+        comboBox = lib.comboBox
 
         if (this.options) {
           this.options.changes.subscribe(() => this.writeValue(this.value));
         }
-
+    
         if (this.comboBoxContainer && comboBox) {
           comboBox.init(this.comboBoxContainer.nativeElement);
-
+    
           if (this.disabled || this.readonly) {
             comboBox.disable(this.parent!.nativeElement);
           }
-
+    
           if (this.disableClear)
             this.comboBoxContainer.nativeElement
               .getElementsByClassName('usa-combo-box__clear-input__wrapper')
               .item(0)
               ?.setAttribute('hidden', 'true');
-
+    
           this.parent?.nativeElement.addEventListener('focusout', (event) => {
             if (!event.isTrusted) return;
-
+    
             this.markAsTouched();
           });
         }
       });
-    });
+    })
+    
   }
 
   compareByID(itemOne: any, itemTwo: any) {
@@ -114,27 +112,36 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
   }
 
   ngAfterViewInit(): void {
+
     // import('@uswds/uswds/js').then((lib) => {
     //   comboBox = lib.comboBox
+
     //   if (this.options) {
     //     this.options.changes.subscribe(() => this.writeValue(this.value));
     //   }
+  
     //   if (this.comboBoxContainer && comboBox) {
     //     comboBox.init(this.comboBoxContainer.nativeElement);
+  
     //     if (this.disabled || this.readonly) {
     //       comboBox.disable(this.parent!.nativeElement);
     //     }
+  
     //     if (this.disableClear)
     //       this.comboBoxContainer.nativeElement
     //         .getElementsByClassName('usa-combo-box__clear-input__wrapper')
     //         .item(0)
     //         ?.setAttribute('hidden', 'true');
+  
     //     this.parent?.nativeElement.addEventListener('focusout', (event) => {
     //       if (!event.isTrusted) return;
+  
     //       this.markAsTouched();
     //     });
     //   }
     // })
+
+
   }
 
   ngOnDestroy(): void {
@@ -151,8 +158,10 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
   }
 
   writeValue(obj: any): void {
+   
     setTimeout(() => {
-      if (this.delayedSet) this.value = obj;
+
+      if(this.delayedSet)   this.value = obj;
 
       if (this.parent && comboBox) {
         const { comboBoxEl } = comboBox.getComboBoxContext(this.parent.nativeElement);
@@ -161,10 +170,14 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
 
         comboBoxEl.dispatchEvent(event);
         this.updateDisabledState();
+      
       }
     }, 100);
 
-    if (!this.delayedSet) this.value = obj;
+    if(!this.delayedSet)  this.value = obj;
+
+  
+ 
   }
 
   registerOnChange(fn: any): void {

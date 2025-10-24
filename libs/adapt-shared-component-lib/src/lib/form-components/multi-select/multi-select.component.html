@@ -6,13 +6,7 @@
     </label>
     <ng-content select="[hint]"></ng-content>
 
-    <p aria-live="polite" class="usa-prose">
-      {{
-        content?.selected_template
-          ? (content!.selected_template | parseStringTemplate: { selectedCount: _model.length, total: items.length })
-          : '(' + _model.length + ' of ' + items.length + ' selected)'
-      }}
-    </p>
+    <p aria-live="polite" class="usa-prose">{{content?.selected_template ? (content!.selected_template | parseStringTemplate : {selectedCount: _model.length , total: items.length}) :  '(' + _model.length + ' of ' + items.length  + ' selected)' }}   </p>
   </legend>
 
   <ul class="usa-list--unstyled" id="options-list" role="group" aria-labelledby="multi-select-label">
@@ -26,18 +20,15 @@
           type="checkbox"
           [checked]="getSelectAllState()"
           [name]="name ? name + '_select_all' : label + '-select-all-checkbox'"
-          [attr.aria-label]="'Select all ' + items.length + ' items'"
-          [disabled]="disabled || readonly" />
-        <label class="usa-checkbox__label" [for]="label + '-select-all-checkbox'">
-          {{ content?.select_all || 'Select All' }}
-        </label>
+          [attr.aria-label]="'Select all ' + items.length + ' items'" [disabled]="disabled || readonly" />
+        <label class="usa-checkbox__label" [for]="label + '-select-all-checkbox'"> {{content?.select_all || 'Select All'}} </label>
       </div>
       <button
         class="usa-button usa-button--unstyled"
         (click)="toggleExpand()"
         [attr.aria-expanded]="showOptions"
         aria-controls="options-list">
-        {{ showOptions ? content?.collapse || 'Collapse' : content?.expand || 'Expand' }}
+        {{ showOptions ? ( content?.collapse || 'Collapse' ): content?.expand || 'Expand' }}
       </button>
     </li>
     <ng-container *ngIf="showOptions">
@@ -61,10 +52,9 @@
           [ngStyle]="{ visibility: isOnlyButtonVisible(item[itemAccessor] || item) ? 'visible' : 'hidden' }"
           (click)="selectOnly(item[itemAccessor] || item)"
           class="usa-button usa-button--unstyled"
-          [attr.aria-label]="'Select only ' + (item[itemLabel] || item)"
-          [attr.aria-expanded]="showOptions"
-          [disabled]="disabled || readonly"
-          aria-controls="options-list">
+          [attr.aria-label]="'Select only ' + (item[itemLabel] || item)"   [attr.aria-expanded]="showOptions"
+  [disabled]="disabled || readonly"
+  aria-controls="options-list">
           Only
         </button>
       </li>
@@ -72,11 +62,7 @@
   </ul>
   <div class="display-flex flex-align-center flex-justify gap-2" *ngIf="changeCount > 0">
     <p aria-live="polite" class="usa-prose">{{ changeCount + (changeCount === 1 ? ' item' : ' items') }} changed</p>
-    <button
-      [disabled]="disabled || readonly"
-      class="usa-button usa-button--unstyled"
-      (click)="onApplyFn()"
-      aria-label="Apply changes and close">
+    <button [disabled]="disabled || readonly" class="usa-button usa-button--unstyled" (click)="onApplyFn()" aria-label="Apply changes and close">
       Apply
     </button>
   </div>

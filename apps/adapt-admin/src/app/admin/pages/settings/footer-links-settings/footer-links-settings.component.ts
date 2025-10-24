@@ -17,7 +17,7 @@ import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/servic
   templateUrl: './footer-links-settings.component.html',
   styleUrls: ['./footer-links-settings.component.scss'],
 })
-export class FooterLinksSettingsComponent implements OnInit {
+export class FooterLinksSettingsComponent {
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
   public editLinks = false;
 
@@ -25,8 +25,8 @@ export class FooterLinksSettingsComponent implements OnInit {
   $pageContent = this.pagesContentService.getPageContentSignal('footer-links');
 
   public targetOptions = [
-    { label: 'Same Tab', value: 'sameTab' },
-    { label: 'New Tab', value: 'newTab' },
+    { label: 'Open in same tab', value: 'sameTab' },
+    { label: 'Open in new tab', value: 'newTab' },
   ];
 
   public subscriptions: Subscription[] = [];
@@ -63,14 +63,14 @@ export class FooterLinksSettingsComponent implements OnInit {
               external: this.fb.control(link.external),
               target: this.fb.control(link.target),
               icon: this.fb.control(link.icon),
+              showAdmin: this.fb.control(link.showAdmin ?? true),
+              showPublic: this.fb.control(link.showPublic ?? true),
             })
           );
         }
       }
     });
   }
-
-  ngOnInit(): void {}
 
   public onSave() {
     if (this.footerLinksForm.invalid) return;
@@ -101,6 +101,9 @@ export class FooterLinksSettingsComponent implements OnInit {
         url: this.fb.control(''),
         external: this.fb.control(false),
         target: this.fb.control(''),
+        icon: this.fb.control(''),
+        showAdmin: this.fb.control(true),
+        showPublic: this.fb.control(true),
       })
     );
   }

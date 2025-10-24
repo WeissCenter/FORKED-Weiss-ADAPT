@@ -8,32 +8,25 @@ import { API_URL, SettingsService } from '../../index';
   providedIn: 'root',
 })
 export class GlossaryService {
-  private $glossary = signal<{ [lang: string]: { [key: string]: IGlossaryTerm } }>({});
+  private $glossary = signal<{[lang: string]: { [key: string]: IGlossaryTerm }}>({});
 
-  constructor(
-    private http: HttpClient,
-    @Inject(API_URL) api: string,
-    private settings: SettingsService
-  ) {
-    effect(
-      () => {
-        const settingsSignal = this.settings.getSettingsSignal();
-        const langs = settingsSignal().supportedLanguages;
-        if (!langs || langs.length === 0) return;
+  constructor(private http: HttpClient, @Inject(API_URL) api: string, private settings: SettingsService) {
+    effect(() => {
+      const settingsSignal = this.settings.getSettingsSignal();
+      const langs = settingsSignal().supportedLanguages;
+      if (!langs || langs.length === 0) return;
 
-        this.getGlossaryLanguagesFromApi(api, langs).then((results) => {
-          this.$glossary.set(results);
-        });
-      },
-      { allowSignalWrites: true }
-    );
+      this.getGlossaryLanguagesFromApi(api, langs).then((results) => {
+        this.$glossary.set(results);
+      });
+    }, { allowSignalWrites: true });
   }
 
   private async getGlossaryLanguagesFromApi(api: string, languages: LanguageCode[]) {
     const results: { [lang: string]: { [key: string]: IGlossaryTerm } } = {};
     const responses = await Promise.allSettled(
       languages.map((lang) => {
-        return this.getGlossaryFromApi(api, lang);
+        return this.getGlossaryFromApi(api, lang)
       })
     );
     responses.forEach((result, index) => {
@@ -47,9 +40,8 @@ export class GlossaryService {
   }
 
   private async getGlossaryFromApi(api: string, lang: LanguageCode) {
-    const response = await firstValueFrom(
-      this.http.get<Response<any>>(`${api}/settings/glossary`.replace(/([^:]\/)\/+/g, '$1'), { params: { lang } })
-    );
+    const response = await firstValueFrom(this.http
+      .get<Response<any>>(`${api}/settings/glossary`.replace(/([^:]\/)\/+/g, "$1"), { params: { lang } }))
     return response.data.terms as { [key: string]: IGlossaryTerm };
   }
 

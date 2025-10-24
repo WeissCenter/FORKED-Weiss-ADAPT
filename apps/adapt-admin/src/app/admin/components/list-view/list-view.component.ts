@@ -85,6 +85,7 @@ export class ListViewComponent implements OnDestroy, OnInit {
     private filterPanelService: FilterPanelService,
     public pagesContentService: PagesContentService
   ) {
+
     this.logger.debug('Inside ListViewComponent constructor');
     this.subscriptions = [];
     this.subscriptions[0] = this.filterPanelService.currentFilterPanelState.subscribe((state) => {
@@ -103,6 +104,7 @@ export class ListViewComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+
     this.listViewContent = this.pagesContentService.getListViewContentSignal()();
 
     this.dataListTap = this.dataList?.pipe(

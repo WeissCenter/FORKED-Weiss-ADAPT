@@ -12,7 +12,7 @@ import { IReport } from '@adapt/types';
   selector: 'adapt-viewer-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush, 
 })
 export class HomeComponent implements OnInit {
   $content = this.viewerPagesContentService.$viewerContent;
@@ -25,26 +25,22 @@ export class HomeComponent implements OnInit {
       const qList = c.questions.filter((q) => q.addToLanding === true);
 
       return qList.map((q) => {
-        return {
+        return ({
           ...q,
           categoryName: c.name,
-        } as QuestionContentText;
+        } as QuestionContentText);
       });
     });
   });
 
-  $reports = signal<IReport[] | null>(null);
-
-  ready = computed(
-    () =>
-      this.$content() !== null &&
-      this.$content() !== undefined &&
-      this.$selFreqAskedQuestions() !== null &&
-      this.$selFreqAskedQuestions() !== undefined &&
-      this.$reports() !== null
+  reports$ = this.data.reports.pipe(
+    map((reports) => reports.slice(0, 5))
   );
 
-  public reports$: Observable<IReport[]>;
+  ready = computed(() => 
+    this.$content() !== null && this.$content() !== undefined &&
+    this.$selFreqAskedQuestions() !== null && this.$selFreqAskedQuestions() !== undefined
+  );
 
   constructor(
     public viewerPagesContentService: ViewerPagesContentService,
@@ -62,20 +58,6 @@ export class HomeComponent implements OnInit {
         });
       }
     });
-
-    effect(
-      () => {
-        const lang = this.language.$language();
-        firstValueFrom(this.data.getReports(lang)).then((reports) => {
-          if (reports) {
-            this.$reports.set(reports.slice(0, 5));
-          } else {
-            this.$reports.set([]);
-          }
-        });
-      },
-      { allowSignalWrites: true }
-    );
   }
 
   comparisonContent = {
@@ -114,246 +96,248 @@ export class HomeComponent implements OnInit {
     {
       label: 'Bentonville School District',
       value: 'bentonville',
-      raw: {
-        dataLabel: 'Education Environment',
-        description:
-          'The following shows the distribution of children, 5-21, with disabilities in various Educational Environments in your State.',
-        explainTemplate:
-          'In the reported data, the top three Educational Environments categories students are in with disabilities in your State are, {{first}}, {{second}}, and {{third}}.',
-        noDataDescription:
-          "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
-        title: 'Educational Environments',
-        chart: {
-          yAxisLabel: 'Child Count',
-          xAxisLabel: 'IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE',
-          filterOn: 'x',
-          xAxisValue: 'IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE',
-          yAxisValue: 'StudentCount',
-          data: [
-            {
-              StudentCount: 0,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC39',
-              suppressed: false,
-              percentage: 12.711279124713752,
-              largest: true,
-              flexAmount: 1,
-            },
-            {
-              StudentCount: 3483,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'HH',
-              suppressed: false,
-              percentage: 12.660390389298826,
-              largest: false,
-              flexAmount: 0.9959965684872748,
-            },
-            {
-              StudentCount: 3470,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC80',
-              suppressed: false,
-              percentage: 12.613136563556395,
-              largest: false,
-              flexAmount: 0.9922790963683157,
-            },
-            {
-              StudentCount: 3446,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'CF',
-              suppressed: false,
-              percentage: 12.525898731416524,
-              largest: false,
-              flexAmount: 0.9854160709179296,
-            },
-            {
-              StudentCount: 3421,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'SS',
-              suppressed: false,
-              percentage: 12.435025989604158,
-              largest: false,
-              flexAmount: 0.9782670860737775,
-            },
-            {
-              StudentCount: 3412,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC79TO40',
-              suppressed: false,
-              percentage: 12.402311802551706,
-              largest: false,
-              flexAmount: 0.9756934515298827,
-            },
-            {
-              StudentCount: 3392,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RF',
-              suppressed: false,
-              percentage: 12.329613609101814,
-              largest: false,
-              flexAmount: 0.9699742636545611,
-            },
-            {
-              StudentCount: 3390,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'PPPS',
-              suppressed: false,
-              percentage: 12.322343789756825,
-              largest: false,
-              flexAmount: 0.9694023448670289,
-            },
-          ],
-          total: 27511,
-          subTotals: [
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC39',
-              sum: 0,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'HH',
-              sum: 3483,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC80',
-              sum: 3470,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'CF',
-              sum: 3446,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'SS',
-              sum: 3421,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC79TO40',
-              sum: 3412,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RF',
-              sum: 3392,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'PPPS',
-              sum: 3390,
-            },
-          ],
+      raw:
+        {
+          dataLabel: 'Education Environment',
+          description:
+            'The following shows the distribution of children, 5-21, with disabilities in various Educational Environments in your State.',
+          explainTemplate:
+            'In the reported data, the top three Educational Environments categories students are in with disabilities in your State are, {{first}}, {{second}}, and {{third}}.',
+          noDataDescription:
+            "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+          title: 'Educational Environments',
+          chart: {
+            yAxisLabel: 'Child Count',
+            xAxisLabel: 'IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE',
+            filterOn: 'x',
+            xAxisValue: 'IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE',
+            yAxisValue: 'StudentCount',
+            data: [
+              {
+                StudentCount: 0,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC39',
+                suppressed: false,
+                percentage: 12.711279124713752,
+                largest: true,
+                flexAmount: 1,
+              },
+              {
+                StudentCount: 3483,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'HH',
+                suppressed: false,
+                percentage: 12.660390389298826,
+                largest: false,
+                flexAmount: 0.9959965684872748,
+              },
+              {
+                StudentCount: 3470,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC80',
+                suppressed: false,
+                percentage: 12.613136563556395,
+                largest: false,
+                flexAmount: 0.9922790963683157,
+              },
+              {
+                StudentCount: 3446,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'CF',
+                suppressed: false,
+                percentage: 12.525898731416524,
+                largest: false,
+                flexAmount: 0.9854160709179296,
+              },
+              {
+                StudentCount: 3421,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'SS',
+                suppressed: false,
+                percentage: 12.435025989604158,
+                largest: false,
+                flexAmount: 0.9782670860737775,
+              },
+              {
+                StudentCount: 3412,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC79TO40',
+                suppressed: false,
+                percentage: 12.402311802551706,
+                largest: false,
+                flexAmount: 0.9756934515298827,
+              },
+              {
+                StudentCount: 3392,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RF',
+                suppressed: false,
+                percentage: 12.329613609101814,
+                largest: false,
+                flexAmount: 0.9699742636545611,
+              },
+              {
+                StudentCount: 3390,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'PPPS',
+                suppressed: false,
+                percentage: 12.322343789756825,
+                largest: false,
+                flexAmount: 0.9694023448670289,
+              },
+            ],
+            total: 27511,
+            subTotals: [
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC39',
+                sum: 0,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'HH',
+                sum: 3483,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC80',
+                sum: 3470,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'CF',
+                sum: 3446,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'SS',
+                sum: 3421,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC79TO40',
+                sum: 3412,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RF',
+                sum: 3392,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'PPPS',
+                sum: 3390,
+              },
+            ],
+          },
         },
-      },
     },
     {
       label: 'Fayetteville School District',
       value: 'fayetteville',
-      raw: {
-        dataLabel: 'Education Environment',
-        description:
-          'The following shows the distribution of children, 5-21, with disabilities in various Educational Environments in your State.',
-        explainTemplate:
-          'In the reported data, the top three Educational Environments categories students are in with disabilities in your State are, {{first}}, {{second}}, and {{third}}.',
-        noDataDescription:
-          "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
-        title: 'Educational Environments',
-        chart: {
-          yAxisLabel: 'Child Count',
-          xAxisLabel: 'IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE',
-          filterOn: 'x',
-          xAxisValue: 'IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE',
-          yAxisValue: 'StudentCount',
-          data: [
-            {
-              StudentCount: 6497,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC39',
-              suppressed: false,
-              percentage: 12.711279124713752,
-              largest: true,
-              flexAmount: 1,
-            },
-            {
-              StudentCount: 7483,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'HH',
-              suppressed: false,
-              percentage: 12.660390389298826,
-              largest: false,
-              flexAmount: 0.9959965684872748,
-            },
-            {
-              StudentCount: 7470,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC80',
-              suppressed: false,
-              percentage: 12.613136563556395,
-              largest: false,
-              flexAmount: 0.9922790963683157,
-            },
-            {
-              StudentCount: 6446,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'CF',
-              suppressed: false,
-              percentage: 12.525898731416524,
-              largest: false,
-              flexAmount: 0.9854160709179296,
-            },
-            {
-              StudentCount: 7421,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'SS',
-              suppressed: false,
-              percentage: 12.435025989604158,
-              largest: false,
-              flexAmount: 0.9782670860737775,
-            },
-            {
-              StudentCount: 6412,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC79TO40',
-              suppressed: false,
-              percentage: 12.402311802551706,
-              largest: false,
-              flexAmount: 0.9756934515298827,
-            },
-            {
-              StudentCount: 6392,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RF',
-              suppressed: false,
-              percentage: 12.329613609101814,
-              largest: false,
-              flexAmount: 0.9699742636545611,
-            },
-            {
-              StudentCount: 5390,
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'PPPS',
-              suppressed: false,
-              percentage: 12.322343789756825,
-              largest: false,
-              flexAmount: 0.9694023448670289,
-            },
-          ],
-          total: 27511,
-          subTotals: [
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC39',
-              sum: 6497,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'HH',
-              sum: 7483,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC80',
-              sum: 7470,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'CF',
-              sum: 6446,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'SS',
-              sum: 7421,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC79TO40',
-              sum: 6412,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RF',
-              sum: 6392,
-            },
-            {
-              IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'PPPS',
-              sum: 5390,
-            },
-          ],
+      raw:
+        {
+          dataLabel: 'Education Environment',
+          description:
+            'The following shows the distribution of children, 5-21, with disabilities in various Educational Environments in your State.',
+          explainTemplate:
+            'In the reported data, the top three Educational Environments categories students are in with disabilities in your State are, {{first}}, {{second}}, and {{third}}.',
+          noDataDescription:
+            "Unfortunately, there is no data to display for this section. This is due to how the Office of Special Education Programs (OSEP) requires the State's data to be organized.",
+          title: 'Educational Environments',
+          chart: {
+            yAxisLabel: 'Child Count',
+            xAxisLabel: 'IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE',
+            filterOn: 'x',
+            xAxisValue: 'IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE',
+            yAxisValue: 'StudentCount',
+            data: [
+              {
+                StudentCount: 6497,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC39',
+                suppressed: false,
+                percentage: 12.711279124713752,
+                largest: true,
+                flexAmount: 1,
+              },
+              {
+                StudentCount: 7483,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'HH',
+                suppressed: false,
+                percentage: 12.660390389298826,
+                largest: false,
+                flexAmount: 0.9959965684872748,
+              },
+              {
+                StudentCount: 7470,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC80',
+                suppressed: false,
+                percentage: 12.613136563556395,
+                largest: false,
+                flexAmount: 0.9922790963683157,
+              },
+              {
+                StudentCount: 6446,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'CF',
+                suppressed: false,
+                percentage: 12.525898731416524,
+                largest: false,
+                flexAmount: 0.9854160709179296,
+              },
+              {
+                StudentCount: 7421,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'SS',
+                suppressed: false,
+                percentage: 12.435025989604158,
+                largest: false,
+                flexAmount: 0.9782670860737775,
+              },
+              {
+                StudentCount: 6412,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC79TO40',
+                suppressed: false,
+                percentage: 12.402311802551706,
+                largest: false,
+                flexAmount: 0.9756934515298827,
+              },
+              {
+                StudentCount: 6392,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RF',
+                suppressed: false,
+                percentage: 12.329613609101814,
+                largest: false,
+                flexAmount: 0.9699742636545611,
+              },
+              {
+                StudentCount: 5390,
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'PPPS',
+                suppressed: false,
+                percentage: 12.322343789756825,
+                largest: false,
+                flexAmount: 0.9694023448670289,
+              },
+            ],
+            total: 27511,
+            subTotals: [
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC39',
+                sum: 6497,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'HH',
+                sum: 7483,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC80',
+                sum: 7470,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'CF',
+                sum: 6446,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'SS',
+                sum: 7421,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RC79TO40',
+                sum: 6412,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'RF',
+                sum: 6392,
+              },
+              {
+                IDEAEDUCATIONALENVIRONMENTFORSCHOOLAGE: 'PPPS',
+                sum: 5390,
+              },
+            ],
+          },
         },
-      },
     },
     {
       label: 'Springdale School District',
@@ -467,8 +451,8 @@ export class HomeComponent implements OnInit {
     const comparison2Data = this.comparisonData.find(
       (item) => item.value === this.comparisonSelection.comparison2.value
     );
-    this.comparisonSelection.comparison1.data = comparison1Data ? comparison1Data.raw : null;
-    this.comparisonSelection.comparison2.data = comparison2Data ? comparison2Data.raw : null;
+     this.comparisonSelection.comparison1.data = comparison1Data ? comparison1Data.raw : null;
+     this.comparisonSelection.comparison2.data = comparison2Data ? comparison2Data.raw : null;
     console.log('Comparison selection changed:', event);
     console.log('Comparison selection:', this.comparisonSelection);
   }

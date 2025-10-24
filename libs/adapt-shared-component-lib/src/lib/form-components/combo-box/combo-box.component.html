@@ -4,14 +4,10 @@
   >
   <ng-content select="[hint]"></ng-content>
 
-  <p *ngIf="readonly">{{ value }}</p>
 
-  <div
-    *ngIf="!readonly"
-    #parent
-    [attr.data-placeholder]="placeholder"
-    [ngStyle]="comboBoxStyle"
-    class="usa-combo-box margin-top-1">
+  <p *ngIf="readonly">  {{value}}</p>
+
+  <div *ngIf="!readonly" #parent [attr.data-placeholder]="placeholder" [ngStyle]="comboBoxStyle" class="usa-combo-box margin-top-1">
     <select
       [id]="comboID"
       [compareWith]="compareFunc"
@@ -25,10 +21,7 @@
         *ngFor="let item of items; let isFirst = first"
         [selected]="isFirst"
         [ngValue]="itemAccessor ? item[itemAccessor] : item">
-        {{ item[itemLabel] || item }}
-        {{
-          itemLocalizedLabel && item[itemLabel] !== item[itemLocalizedLabel] ? '(' + item[itemLocalizedLabel] + ')' : ''
-        }}
+        {{ item[itemLabel] || item }} {{itemLocalizedLabel && item[itemLabel] !== item[itemLocalizedLabel]  ? '(' + item[itemLocalizedLabel] + ')' : ''}}
       </option>
     </select>
   </div>

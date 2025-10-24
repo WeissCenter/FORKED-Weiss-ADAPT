@@ -19,10 +19,7 @@ export class InactivityBannerComponent implements OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    public idle: Idle,
-    public settings: SettingsService
-  ) {
+  constructor(public idle: Idle, public settings: SettingsService) {
     idle.onTimeoutWarning.subscribe((seconds) => {
       this.countdown = seconds * 1000;
       this.secondsSinceIdle++;

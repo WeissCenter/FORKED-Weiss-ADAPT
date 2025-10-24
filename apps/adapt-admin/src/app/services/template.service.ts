@@ -30,11 +30,13 @@ import { BUILT_IN_FUNCTIONS } from './template-functions/template-functions';
 import { firstValueFrom, tap } from 'rxjs';
 import { GlossaryService } from '@adapt/adapt-shared-component-lib';
 
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class TemplateService {
-  private readonly DATA_VIEW_SELECTOR = 'dataView';
+  private readonly DATA_VIEW_SELECTOR = "dataView";
   private templateFunctions: { [funcName: string]: (...args: any[]) => Promise<string> | string } = {};
 
   constructor(
@@ -57,37 +59,39 @@ export class TemplateService {
     return firstValueFrom(this.getTemplate(name, isURL));
   }
 
-  private async handleDataViewSelect(code: string, context: TemplateContext) {
-    const select = code.split('.');
+  private async handleDataViewSelect(code: string, context: TemplateContext){
+
+    const select = code.split(".");
 
     const field = select[1];
 
-    const dataView = (await firstValueFrom(this.dataService.$dataViews)).find(
-      (item) => item.dataViewID === context.dataViewID
-    );
+    const dataView = (await firstValueFrom(this.dataService.$dataViews)).find(item => item.dataViewID === context.dataViewID);
 
-    if (!dataView) {
+    if(!dataView){
       throw new Error(`Data view ${context.dataViewID} not found`);
     }
 
-    switch (field) {
-      case 'fields': {
+
+    switch(field){
+      case 'fields':{
         const fieldSelect = select[2];
 
-        if (!fieldSelect) {
+        if(!fieldSelect){
           throw new Error(`Field ${select[2]} not found`);
         }
 
-        const dataViewField = dataView.data.fields.find((item) => item.id === fieldSelect);
+        const dataViewField = dataView.data.fields.find(item => item.id === fieldSelect);
 
         return dataViewField?.label ?? '';
       }
       default: {
         // just try and grab whatever field for now
-        return `${(dataView as any).data[field] ?? ''}`;
+        return `${(dataView as any).data[field] ?? ''}`
       }
     }
-  }
+
+
+  } 
 
   public async parseString(string: StringTemplate | string, context: TemplateContext) {
     if (typeof string === 'string') {
@@ -115,11 +119,12 @@ export class TemplateService {
 
     for (const [variable, functions] of Object.entries(variables)) {
       template.replaceAll(parseRegex, (match, code) => {
-        if (code.startsWith(this.DATA_VIEW_SELECTOR)) {
+
+        if(code.startsWith(this.DATA_VIEW_SELECTOR)){
           const promise = this.handleDataViewSelect(code, context);
 
-          promiseMap[code] = promise;
-
+          promiseMap[code] = promise
+          
           return '';
         }
 
@@ -143,6 +148,7 @@ export class TemplateService {
       });
     }
 
+    
     await Promise.all(extraPromises);
     const mapPromises = Object.entries(promiseMap).map(async ([key, promise]) => ({ key, promise: await promise }));
     const awaitedMapPromises = await Promise.all(mapPromises);
@@ -176,7 +182,7 @@ export class TemplateService {
     code: string
   ) {
     let funcDecl = `${functions.function}(${functions.args.map((arg) => JSON.stringify(arg)).join(',')}`;
-    if (hasFilters && !functions.function.startsWith('unfiltered')) {
+    if (hasFilters && !functions.function.startsWith("unfiltered")) {
       for (const [code, value] of Object.entries(context.appliedFilters)) {
         const templateFilter = context!.templateFilters?.[code];
 
@@ -715,11 +721,11 @@ export class TemplateService {
       )
       .then((result) => result.operationResults);
 
-    content.chart.data = dataServiceResult;
+     content.chart.data = dataServiceResult;
     //  content.chart.subTotals = dataServiceResult.map((data) => ({id: data.id}));
 
     if (content.chart.total && typeof content.chart.total === 'object') {
-      const total = dataServiceResult.pop();
+      const total = dataServiceResult.pop()
       content.chart.total = total?.value ?? 0;
     }
 
@@ -789,4 +795,14 @@ export class TemplateService {
     const dependentRegex = new RegExp(/(\w+\.)+\w+/g);
     return dependentRegex.test(code);
   }
+
+
+
+
+
+  
+
+
 }
+
+

@@ -27,13 +27,7 @@ export class ReportsComponent {
   public reportsData: IReport[] = [];
   $content = this.content.$viewerContent;
 
-  constructor(
-    public data: AdaptDataService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public content: ViewerPagesContentService,
-    private lang: LanguageService
-  ) {}
+  constructor(public data: AdaptDataService, private route: ActivatedRoute, private router: Router, public content: ViewerPagesContentService, private lang: LanguageService) {}
 
   fetchReports() {
     return this.route.queryParams.pipe(
@@ -68,10 +62,9 @@ export class ReportsComponent {
                 }
               };
 
-              let sortResult =
-                this.activeSort === 'updated'
-                  ? sort(updatedA, updatedB, 'number', this.publishedSortDirection)
-                  : sort(alphaA, alphaB, 'string', this.alphaSortDirection);
+              let sortResult = this.activeSort === 'updated' ? 
+                sort(updatedA, updatedB, 'number', this.publishedSortDirection) : 
+                sort(alphaA, alphaB, 'string', this.alphaSortDirection);
 
               return sortResult;
             });
@@ -127,6 +120,7 @@ export class ReportsComponent {
     }
 
     const content = this.content.$reportsContent();
+
 
     this.filterStatusMessage = content?.sortApplied || '';
     this.focusSortBtn = true;

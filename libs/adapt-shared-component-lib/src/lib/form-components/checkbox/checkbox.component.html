@@ -12,7 +12,8 @@
     (blur)="onInputBlur($event)"
     (focus)="focused.emit($event)"
     [attr.aria-checked]="isChecked()"
-    [attr.aria-disabled]="disabled" />
+    [attr.aria-disabled]="disabled"
+  />
 
   <label class="usa-checkbox__label" [for]="id + '-' + idSafeLabel">
     {{ label }}

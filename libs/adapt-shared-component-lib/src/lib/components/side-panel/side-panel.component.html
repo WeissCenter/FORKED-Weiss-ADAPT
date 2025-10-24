@@ -2,16 +2,11 @@
 <div
   [hidden]="!show"
   #sidePanel
-  class="adapt-side-panel position-fixed overflow-auto top-0 {{
-    direction
-  }}-0 height-viewport width-full border-base-lighter  maxw-mobile display-flex flex-column gap-05 z-200 bg-base-lightest shadow-2"
+  class="adapt-side-panel position-fixed overflow-auto top-0 {{direction}}-0 height-viewport width-full border-base-lighter  maxw-mobile display-flex flex-column gap-05 z-200 bg-base-lightest shadow-2"
   role="dialog"
   aria-modal="true"
-  cdkTrapFocus="{{ show }}"
-  [ngClass]="{
-    'border-left-1px radius-left-lg': direction === 'right',
-    'border-right-1px radius-right-lg': direction === 'left',
-  }"
+  cdkTrapFocus="{{show}}"
+  [ngClass]="{'border-left-1px radius-left-lg': direction === 'right', 'border-right-1px radius-right-lg': direction === 'left'}"
   aria-labelledby="adaptSidePanelTitle">
   <div class="display-flex margin-y-1 padding-x-2 flex-align-start gap-2 flex-justify">
     <h2 id="adaptSidePanelTitle" class="font-lg text-semibold margin-x-0 margin-bottom-0 margin-top-1">{{ title }}</h2>

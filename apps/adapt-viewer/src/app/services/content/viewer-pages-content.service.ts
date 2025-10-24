@@ -2,15 +2,7 @@ import { computed, Injectable } from '@angular/core';
 import { map, Observable, ReplaySubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ContentService, LanguageService, SettingsService } from '@adapt/adapt-shared-component-lib';
-import {
-  ViewerContentText,
-  ResourcePageContentText,
-  HomePageContentText,
-  SharedContentText,
-  ErrorPageContentText,
-  ReportPageContentText,
-  ReportsPageContentText,
-} from '../../models/content-text.model';
+import { ViewerContentText, ResourcePageContentText, HomePageContentText, SharedContentText, ErrorPageContentText, ReportPageContentText, ReportsPageContentText } from '../../models/content-text.model'
 import { StorageService } from '../storage.service';
 
 @Injectable({
@@ -21,20 +13,15 @@ export class ViewerPagesContentService {
   viewerContent: ViewerContentText;
 
   public readonly $viewerContent = computed(() => {
-    return this.contentService.getContentSignal(
-      environment.appDomain,
-      environment.contentRoot,
-      environment.contentFileName,
-      this.language.$language()
-    )();
-  });
+    return this.contentService.getContentSignal(environment.appDomain, environment.contentRoot, environment.contentFileName, this.language.$language())();
+  })
 
   public readonly $sharedContent = computed(() => {
     const viewerContent = this.$viewerContent();
     if (!viewerContent) {
       return null;
     }
-    return viewerContent?.shared as SharedContentText;
+    return (viewerContent?.shared as SharedContentText);
   });
 
   public readonly $resourcesContent = computed(() => {
@@ -42,7 +29,7 @@ export class ViewerPagesContentService {
     if (!viewerContent) {
       return null;
     }
-    return viewerContent?.pages?.resources as ResourcePageContentText;
+    return (viewerContent?.pages?.resources as ResourcePageContentText);
   });
 
   public readonly $homeContent = computed(() => {
@@ -50,7 +37,7 @@ export class ViewerPagesContentService {
     if (!viewerContent) {
       return null;
     }
-    return viewerContent?.pages?.home as HomePageContentText;
+    return (viewerContent?.pages?.home as HomePageContentText);
   });
 
   public readonly $errorContent = computed(() => {
@@ -58,7 +45,7 @@ export class ViewerPagesContentService {
     if (!viewerContent) {
       return null;
     }
-    return viewerContent?.pages?.error as ErrorPageContentText;
+    return (viewerContent?.pages?.error as ErrorPageContentText);
   });
 
   public readonly $reportContent = computed(() => {
@@ -66,7 +53,7 @@ export class ViewerPagesContentService {
     if (!viewerContent) {
       return null;
     }
-    return viewerContent?.pages?.report as ReportPageContentText;
+    return (viewerContent?.pages?.report as ReportPageContentText);
   });
 
   public readonly $reportsContent = computed(() => {
@@ -74,12 +61,8 @@ export class ViewerPagesContentService {
     if (!viewerContent) {
       return null;
     }
-    return viewerContent?.pages?.reports as ReportsPageContentText;
+    return (viewerContent?.pages?.reports as ReportsPageContentText);
   });
 
-  constructor(
-    public contentService: ContentService,
-    private storage: StorageService,
-    private language: LanguageService
-  ) {}
+  constructor(public contentService: ContentService, private storage: StorageService, private language: LanguageService) {}
 }

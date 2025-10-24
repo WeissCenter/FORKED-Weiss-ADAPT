@@ -24,7 +24,7 @@
     max-width: 100%;
     padding: var(--usa-spacing-105) 0;
     --usa-data-rep-series-group-padding-x: var(--usa-spacing-05);
-
+ 
     .insight {
       padding: 0;
     }
@@ -34,7 +34,7 @@
     }
     .action-bar {
       --usa-data-rep-action-bar-padding-x: 0;
-      flex-basis: unset;
+      flex-basis:unset;
       width: 100%;
     }
 
@@ -95,7 +95,7 @@
   background-color: var(--usa-black) !important;
 }
 
-.usa-button {
+.usa-button{
   text-transform: none !important;
 }
 

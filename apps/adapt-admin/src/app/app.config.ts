@@ -14,7 +14,7 @@ import { CognitoService } from './auth/services/cognito/cognito.service';
 import { AuthInterceptor } from './auth/interceptors/auth-interceptor';
 import { provideAPIURL, provideContentServiceConfig } from '@adapt/adapt-shared-component-lib';
 import { environment } from '../environments/environment';
-import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { provideEnvironmentNgxMask } from 'ngx-mask'
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
   anchorScrolling: 'enabled',
@@ -22,11 +22,7 @@ const scrollConfig: InMemoryScrollingOptions = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideContentServiceConfig({
-      appDomain: environment.appDomain,
-      contentRoot: environment.contentRoot,
-      contentFileName: environment.contentFileName,
-    }),
+    provideContentServiceConfig({appDomain: environment.appDomain, contentRoot: environment.contentRoot, contentFileName: environment.contentFileName}),
     provideAPIURL(environment.API_URL),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation(), withInMemoryScrolling(scrollConfig)),
     provideNgIdleKeepalive(), // use provideNgIdle() if not using keepalive

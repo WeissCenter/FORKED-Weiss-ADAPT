@@ -42,7 +42,7 @@ export class SecuritySettingsComponent implements OnInit, OnDestroy {
         });
       }
     });
-  }
+}
 
   ngOnInit(): void {}
 

@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <tr height="25px" *ngFor="let item of data">
-        <ng-container *ngFor="let keyValue of item | keyvalue: originalOrder; let isFirst = first">
+        <ng-container *ngFor="let keyValue of item | keyvalue : originalOrder; let isFirst = first">
           <th *ngIf="isFirst" scope="row">{{ keyValue.value }}</th>
           <td *ngIf="!isFirst">{{ keyValue.value }}</td>
         </ng-container>

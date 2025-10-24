@@ -23,14 +23,12 @@ export class SettingsService {
 
   private $_settings = signal<AdaptSettings>(this.DEFAULT_SETTINGS);
 
-  constructor(
-    private http: HttpClient,
-    @Inject(API_URL) api: string
-  ) {
+  constructor(private http: HttpClient, @Inject(API_URL) api: string) {
     this.getSettingsApi(api).subscribe((settings) => {
       this.next(settings);
     });
   }
+
 
   public getSettingsApi(api: string) {
     return this.http.get<{ data: AdaptSettings }>(`${api}settings`).pipe(map((resp) => resp.data));
@@ -43,7 +41,7 @@ export class SettingsService {
   public getSettings() {
     return this.$_settings();
   }
-
+  
   public getSettingsSignal() {
     return this.$_settings.asReadonly();
   }

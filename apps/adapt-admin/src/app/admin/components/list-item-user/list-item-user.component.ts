@@ -1,13 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AppRole, AppRolePermissions, appRolePermissions } from '@adapt/types';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { AlertService, ContentService } from '@adapt/adapt-shared-component-lib';
@@ -35,20 +26,15 @@ export class ListItemUserComponent implements OnDestroy, OnInit {
   private confirmEditSub?: Subscription;
 
   private alertContent: any;
+  
 
-  constructor(
-    private data: AdaptDataService,
-    private alert: AlertService,
-    private cd: ChangeDetectorRef
-  ) {
+  constructor(private data: AdaptDataService, private alert: AlertService, private cd: ChangeDetectorRef) {
     // this.content.$content.subscribe(ctn => {
     // })
   }
 
   ngOnInit(): void {
-    this.confirmEditSub = this.confirmEdit?.subscribe((confirmedChange: boolean) =>
-      this.handleLastEvent(confirmedChange)
-    );
+    this.confirmEditSub = this.confirmEdit?.subscribe((confirmedChange: boolean) => this.handleLastEvent(confirmedChange));
   }
 
   private handleLastEvent(confirmedChange: boolean) {

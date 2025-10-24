@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {  Component, computed, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
 import {
   PageSectionContentText,
@@ -21,10 +21,9 @@ export class SettingsComponent implements OnInit {
     return null;
   });
 
-  constructor(
-    private elementRef: ElementRef,
-    public pagesContentService: PagesContentService
-  ) {}
+
+  constructor(private elementRef: ElementRef,
+              public pagesContentService: PagesContentService) {}
 
   ngOnInit(): void {
     //console.log('Inside settings component ngOnInit');

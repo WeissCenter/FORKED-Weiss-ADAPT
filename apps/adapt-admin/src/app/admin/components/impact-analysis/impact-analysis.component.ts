@@ -22,7 +22,7 @@ export class ImpactAnalysisComponent implements OnInit {
 
   public $content = computed(() => {
     return this.contentService.getSharedContentSignal()()?.impactAnalysis;
-  });
+  })
 
   public dataViewCount = 0;
   public reportCount = 0;
@@ -37,10 +37,7 @@ export class ImpactAnalysisComponent implements OnInit {
 
   public items?: Observable<any[]>;
 
-  constructor(
-    private data: AdaptDataService,
-    private contentService: PagesContentService
-  ) {}
+  constructor(private data: AdaptDataService, private contentService: PagesContentService) {}
 
   ngOnInit(): void {
     switch (this.type) {
@@ -53,8 +50,8 @@ export class ImpactAnalysisComponent implements OnInit {
 
             return zip(dataViews.map((vt) => this.getImpactAnalysisForView(vt))).pipe(
               map((val) => {
-                ((this.dataViewCount = dataViews.length),
-                  (this.reportCount = val.reduce((accum, item) => accum + item.reports.length, 0)));
+                (this.dataViewCount = dataViews.length),
+                  (this.reportCount = val.reduce((accum, item) => accum + item.reports.length, 0));
 
                 return val;
               })
@@ -82,7 +79,7 @@ export class ImpactAnalysisComponent implements OnInit {
     }
   }
 
-  public onPageChange(page: number) {
+  public onPageChange(page: number){
     this.page = page;
   }
 
