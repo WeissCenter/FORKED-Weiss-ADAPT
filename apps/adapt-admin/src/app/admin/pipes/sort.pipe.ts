@@ -4,6 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'sort',
   pure: false,
+  standalone: false,
 })
 export class SortPipe implements PipeTransform {
   transform(dt: any[], way: 'asc' | 'desc', field?: string): any[] {

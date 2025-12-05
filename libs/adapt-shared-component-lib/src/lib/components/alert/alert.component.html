@@ -1,13 +1,12 @@
-<section
+<div
   *ngIf="alerts$ | async as alert"
   class="usa-alert usa-alert--{{ alert.type }} position-fixed pin-right top-2 z-top"
   role="alert"
-  aria-live="assertive"
-  aria-label="Site alert">
+  aria-live="assertive">
   <div class="usa-alert__body">
     <h3 class="usa-alert__heading">{{ alert.title }}</h3>
     <p class="usa-alert__text">
       {{ alert.body }}
     </p>
   </div>
-</section>
+</div>

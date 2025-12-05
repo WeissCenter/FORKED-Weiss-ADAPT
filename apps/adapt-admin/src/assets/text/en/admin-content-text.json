@@ -23,6 +23,7 @@
       "name": "home",
       "title": "Home Page",
       "description": "Home Page Description",
+      "learn_more_link": "Learn More",
       "sections": [
         {
           "title": "What can you do here?",
@@ -35,7 +36,10 @@
             {
               "title": "Common Actions",
               "description": "Here is a list of the common actions you can perform, making it easy to quickly access and manage your routine tasks.",
-              "items": ["Create New Report", "Create New Data View"]
+              "items": [
+                "Create New Report",
+                "Create New Data View"
+              ]
             }
           ]
         },
@@ -46,12 +50,16 @@
             {
               "title": "View Reports",
               "description": "See the most recently updated reports here. To view the full list of reports with filtering options, you may select the View All button below. If you wish to create a new report, you may select the Create New Report button below.",
-              "items": ["Create New Report"]
+              "items": [
+                "Create New Report"
+              ]
             },
             {
               "title": "Data Views",
               "description": "See the most recently updated data views here. To view the full list of data views with filtering options, you may select the View All button below. If you wish to create a new data view, you may select the Create New Data View button below.",
-              "items": ["Create New Data View"]
+              "items": [
+                "Create New Data View"
+              ]
             }
           ]
         }
@@ -61,6 +69,7 @@
       "name": "data",
       "title": "Data Views",
       "description": "Manage your data views here for report creation. You can create new data views from your connected data sources or by uploading a file. You can also edit existing data views by either expanding on a data view or selecting the title for a data view.",
+      "learn_more_link": "Learn More",
       "sections": [
         {
           "name": "Define",
@@ -143,7 +152,7 @@
             },
             "error": {
               "message": "Something went wrong",
-              "details": "This data is required to load."
+              "details": "Data is required to load. Please try again, or if you need additional help, please reach out to your system administrator."
             },
             "required": {
               "message": "This file is required for upload."
@@ -173,7 +182,7 @@
               "id": "dataView"
             },
             {
-              "label": "Reporting year",
+              "label": "Fiscal year",
               "id": "reportingYear"
             },
             {
@@ -227,7 +236,13 @@
       "name": "reports",
       "title": "Reports List",
       "description": "Create reports using your selected data views and report templates or edit existing reports. When creating a report, you can choose to create internal reports for private use or external reports that can be finalized and published for public access.",
-      "tabs": ["All Reports", "Draft Reports", "Finalized Reports", "Archived Reports"],
+      "learn_more_link": "Learn More",
+      "tabs": [
+        "All Reports",
+        "Draft Reports",
+        "Finalized Reports",
+        "Archived Reports"
+      ],
       "sections": [
         {
           "name": "Define",
@@ -368,6 +383,7 @@
     {
       "name": "settings",
       "title": "Settings",
+      "learn_more_link": "Learn More",
       "description": "Tailor key aspects of your application to meet your specific needs. You can easily create and manage your data sources, configure your data suppression rules, control user management, and more.",
       "sections": [
         {
@@ -560,12 +576,13 @@
     {
       "name": "footer-links",
       "title": "Footer Links",
-      "description": "To customize what links show up in your footer, click the edit button and you will be able to create and update the footer links. You can name the link with the Link Label field, and add a URL in the Link URL field. You may also select if it is an External Link by selecting the box, and then you can specify how the link should open (e.g., new tab or same tab). You can also assign an icon to the link by copying an icon from https://fontawesome.com/v5/search and pasting it in the Link Icon field. If you need to add additional fields, you can select the Add Footer Links button, or you may save your changes by selecting the Save button.",
+      "description": "To customize what links show up in your footer, click the edit button and you will be able to create and update the footer links.",
       "sections": [
         {
           "name": "links",
           "header": "Links",
           "description": "Configure your footer links.",
+          "instructions": "You can name the link with the Link Label field, and add a URL in the Link URL field. You may also select if it is an External Link by selecting the box, and then you can specify how the link should open (e.g., new tab or same tab). You can also assign an icon to the link by copying an icon class from <a href=\"https://fontawesome.com/v5/search\" target=\"_blank\">https://fontawesome.com/v5/search<span class=\"sr-only\">opens in new tab</span></a> and pasting it in the Link Icon field. If you need to add additional fields, you can select the Add Footer Links button, or you may save your changes by selecting the Save button.<br><br>If you do not include both a label and a URL, the link will not be displayed in the footer.",
           "questions": [
             {
               "label": "Link Label"
@@ -574,13 +591,19 @@
               "label": "Link URL"
             },
             {
-              "label": "External Link"
+              "label": "This is an external link"
             },
             {
-              "label": "Action"
+              "label": "External Link Tab Action"
             },
             {
               "label": "Link Icon"
+            },
+            {
+              "label": "Show on Admin site"
+            },
+            {
+              "label": "Show on Public Viewer site"
             }
           ]
         }
@@ -829,14 +852,14 @@
       "description": "Manage your ADAPT users effectively. View user details, assign user roles, and deactivate users."
     }
   ],
-  "shared": {
+  "shared":{
     "multiSelect": {
       "select_all": "Select All",
       "expand": "Expand",
       "collapse": "Collapse",
       "selected_template": "({{ selectedCount }} of {{ total }} selected)"
     },
-    "impactAnalysis": {
+    "impactAnalysis":{
       "reportName": "Report Name",
       "dataSourceCountTemplate": "There are {{ dataViewCount }} data views(s) and {{ reportCount }} report(s) using this data source:",
       "dataViewCountTemplate": "There are {{ reportCount }} report(s) using this data view:",
@@ -849,7 +872,7 @@
       "noReports": "No reports have been created with this data view."
     },
     "languageAccess": {
-      "supportedLanguages": [
+      "supportedLanguages":     [
         {
           "label": "English",
           "localizedLabel": "English",
@@ -868,6 +891,10 @@
     }
   },
   "adaptListView": {
-    "actions": ["Sort", "Filter", "Create"]
+    "actions": [
+      "Sort",
+      "Filter",
+      "Create"
+    ]
   }
 }

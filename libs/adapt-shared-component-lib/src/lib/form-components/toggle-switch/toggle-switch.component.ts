@@ -3,6 +3,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'lib-adapt-toggle-switch',
+  standalone: false,
   templateUrl: './toggle-switch.component.html',
   styleUrl: './toggle-switch.component.scss',
 })

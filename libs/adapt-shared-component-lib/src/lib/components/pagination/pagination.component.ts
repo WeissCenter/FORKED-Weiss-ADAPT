@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 
 @Component({
   selector: 'lib-adapt-pagination',
+  standalone: false,
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })

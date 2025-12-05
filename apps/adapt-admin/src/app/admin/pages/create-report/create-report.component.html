@@ -61,7 +61,7 @@
             comboID="dataSet"
             [label]="view"
             [required]="true"
-            [items]="dataViewsList | async"
+            [items]="$dataViews | async"
             itemLabel="name">
             <ng-container hint>
               <!-- <p class="usa-hint margin-top-05">What data will drive report tab {{view}}?</p> -->

@@ -134,8 +134,8 @@
             <div class="impact-body padding-3 padding-left-5 border-2px border-base-lighter radius-lg bg-white">
               <adapt-impact-analysis
                 type="DataSource"
-                [dataViews]="dataViews"
-                [reports]="reports"
+                [dataViews]="$dataViews"
+                [reports]="$reports"
                 [id]="$any(currentDataSource!.dataSourceID)"></adapt-impact-analysis>
             </div>
           </div>
@@ -231,7 +231,7 @@
             </ul>
           </section>
 
-          <adapt-impact-analysis type="DataSource" [dataViews]="dataViews" [reports]="reports" [id]="$any(currentDataSource!.dataSourceID)"></adapt-impact-analysis>
+          <adapt-impact-analysis type="DataSource" [dataViews]="$dataViews" [reports]="$reports" [id]="$any(currentDataSource!.dataSourceID)"></adapt-impact-analysis>
         </div>
       </div>
     </ng-template>

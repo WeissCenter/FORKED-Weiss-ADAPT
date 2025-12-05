@@ -144,7 +144,7 @@
               <p class="usa-prose" i18n>Loading reports...</p>
             </div>
           </div> -->
-        <ng-container *ngIf="reports | loading : 'Reports have loaded' | async as reportsLoaded">
+        <ng-container *ngIf="$reports | loading : 'Reports have loaded' | async as reportsLoaded">
           <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="reportsLoaded.loading">
             <div class="display-flex flex-align-center gap-1">
               <div class="loader"></div>
@@ -195,7 +195,7 @@
         </div>
 
         <div class="display-flex flex-column margin-top-1 gap-1 width-full">
-          <ng-container *ngIf="dataViews | loading : 'Data views have loaded' | async as viewsLoaded">
+          <ng-container *ngIf="$dataViews | loading : 'Data views have loaded' | async as viewsLoaded">
             <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="viewsLoaded.loading">
               <div class="display-flex flex-align-center gap-1">
                 <div class="loader"></div>
@@ -207,7 +207,7 @@
               <ng-container *ngIf="viewsLoaded.value.length; else noViews">
                 <span class="visually-hidden" aria-live="polite" id="views-load-notifier">Data views have loaded</span>
                 <adapt-list-item-data
-                  [$reports]="reports"
+                  [$reports]="$reports"
                   [dataViewModal]="dataViewModal"
                   [reportModal]="reportModal"
                   *ngFor="let view of viewsLoaded.value | limitTo : 5"

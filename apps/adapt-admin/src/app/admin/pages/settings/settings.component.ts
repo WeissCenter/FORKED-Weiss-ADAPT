@@ -7,6 +7,7 @@ import {
 
 @Component({
   selector: 'adapt-settings',
+  standalone: false,
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })

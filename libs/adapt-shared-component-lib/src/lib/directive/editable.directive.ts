@@ -13,6 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
   selector: '[libAdaptEditable]',
+  standalone: false,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EditableDirective), multi: true }],
 })
 export class EditableDirective implements AfterViewInit, OnChanges, ControlValueAccessor {

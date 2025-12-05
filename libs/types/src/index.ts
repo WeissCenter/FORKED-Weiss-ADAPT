@@ -1,4 +1,4 @@
-export * from './lib/IReport';
+export * from './lib/i-report.model';
 export * from './lib/IDataSource';
 export * from './lib/ISection';
 export * from './lib/ITemplate';
@@ -48,7 +48,7 @@ export * from './lib/PageMode';
 export * from './lib/IDataCollectionTemplate';
 export * from './lib/backend/NewDataViewInput';
 export * from './lib/backend/StartUploadDataViewInput';
-export * from './lib/DataView';
+export * from './lib/data-view.model';
 export * from './lib/Permissions';
 export * from './lib/sections/CommentBlock';
 export * from './lib/backend/ReportVersion';

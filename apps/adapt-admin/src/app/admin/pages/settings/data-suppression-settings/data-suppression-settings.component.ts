@@ -9,6 +9,7 @@ import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/servic
 
 @Component({
   selector: 'adapt-data-suppression-settings',
+  standalone: false,
   templateUrl: './data-suppression-settings.component.html',
   styleUrl: './data-suppression-settings.component.scss',
 })

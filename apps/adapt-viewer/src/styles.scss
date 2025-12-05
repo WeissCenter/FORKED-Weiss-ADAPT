@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '@angular/cdk';
+@use '@angular/cdk'; //@import '@angular/cdk';
 
 ::selection {
   background: var(--usa-color-mint-vivid-10);

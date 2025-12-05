@@ -1,9 +1,8 @@
-import { IReport } from '@adapt/types';
+import { IReportModel } from '@adapt/types';
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { AdaptDataService } from '../../../services/adapt-data.service';
-import { tap } from 'rxjs';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
 
-export const reportsResolver: ResolveFn<IReport[]> = (route, state, dataService = inject(AdaptDataService)) => {
-  return dataService.getReports();
+export const reportsResolver: ResolveFn<IReportModel[]> = (route, state, adaptReportService = inject(AdaptReportService)) => {
+  return adaptReportService.getReportsListener();
 };

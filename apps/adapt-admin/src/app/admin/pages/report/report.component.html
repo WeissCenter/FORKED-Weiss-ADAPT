@@ -1,5 +1,4 @@
-<section *ngIf="$reportPageContent() as content"
-  class="report-container grid-container position-relative gap-4 display-flex flex-column"
+<section *ngIf="$reportPageContent() as content" class="report-container grid-container position-relative gap-4 display-flex flex-column"
   [class.z-100]="!showFilterPanel && !dataModalOpen" [class.z-200]="showFilterPanel || dataModalOpen"
   [ngClass]="{ 'padding-x-0': preview }">
   <!--
@@ -47,18 +46,13 @@
 
                     <ng-container *ngIf="ctrl.hasError('required')">
 
-
-
                       <ng-container *ngIf="$languageOptions() as opts">
-
-
 
                         <li>{{opts[i].label}}</li>
 
                       </ng-container>
 
                     </ng-container>
-
 
                   </ng-container>
 
@@ -70,36 +64,31 @@
 
         </div>
 
-
-
       </ng-container>
       <form (ngSubmit)="onEditSave()" class="display-flex flex-column gap-2" [formGroup]="editReportForm">
         <!-- Form Version of Header -->
         <ng-container *ngIf="isEditMode()">
-          <div formArrayName="reportTexts" class="report-header width-full display-flex usa-prose flex-column">
-        
+          <div *ngIf="report" formArrayName="reportTexts" class="report-header width-full display-flex usa-prose flex-column">
+
             <ng-container *ngFor="let grp of reportTexts.controls; let i = index" [formGroupName]="i">
               <div class="report-header-controls display-flex flex-column gap-2" *ngIf="i === langIndex">
                 <lib-adapt-toggle-switch class="flex-align-self-start" *ngIf="i > 0 && report.visibility === 'external'"
                   [unToggledLabel]="$englishReportPageContent()?.actions!['verify_translations']" [toggledLabel]="$englishReportPageContent()?.actions!['verified']"
                   formControlName="verified"></lib-adapt-toggle-switch>
-        
+
                 <lib-adapt-h-element [formGroup]="$any(grp)" controlName="title" [editable]="true"
-                  [level]="preview ? 'h2' : 'h1'" ngClass="margin-0 usa-prose">{{
-                  editTitle.value
-                  }}</lib-adapt-h-element>
-        
-                <div role="alert" *ngIf="editTitle?.invalid && (editTitle?.dirty || editTitle?.touched)"
-                  class="form-errors margin-top-1 text-emergency">
-        
+                  [level]="preview ? 'h2' : 'h1'" ngClass="margin-0 usa-prose">{{ editTitle.value }}</lib-adapt-h-element>
+
+                <div role="alert" *ngIf="editTitle?.invalid && (editTitle?.dirty || editTitle?.touched)" class="form-errors margin-top-1 text-emergency">
+
                   <div *ngIf="editTitle?.errors?.['required']" i18n>Report title is required.</div>
                   <div *ngIf="editTitle?.errors?.['uniqueName']" i18n>Report title needs to unique.</div>
                 </div>
-        
+
                 <p formControlName="description" [libAdaptEditable]="true" ariaLabel="Report Description">
                   {{ editDescription.value }}
                 </p>
-        
+
                 <div role="alert" *ngIf="editDescription?.invalid && (editDescription?.dirty || editDescription?.touched)"
                   class="form-errors margin-top-1 text-emergency">
                   <div *ngIf="editDescription?.errors?.['required']" i18n>Report description is required.</div>
@@ -109,12 +98,12 @@
           </div>
           <lib-adapt-radio-select display="row" [required]="true" legend="Who is the audience for the report?"
             formControlName="audience" [items]="radioSelectItems"></lib-adapt-radio-select>
-        
+
           <div role="alert" *ngIf="editAudience?.invalid && (editAudience?.dirty || editAudience?.touched)"
             class="form-errors margin-top-1 text-emergency">
             <div *ngIf="editAudience?.errors?.['required']" i18n>Report audience is required.</div>
           </div>
-        
+
           <ng-container *ngIf="editAudience.value === 'external'">
             <!-- [label]="pageSections[1].questions![1].label" [hint]="pageSections[1].questions![1].comment" -->
             <lib-adapt-text-input [patterns]="{ 'A': { pattern: slugPattern } }" mask="A*" label="Public report identifier"
@@ -135,8 +124,7 @@
           </p>
         </ng-container>
 
-        <div
-          class="report-updated-global-controls display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center border-bottom-05 border-base-lighter padding-bottom-2 width-full gap-2">
+        <div *ngIf="report" class="report-updated-global-controls display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center border-bottom-05 border-base-lighter padding-bottom-2 width-full gap-2">
           <p class="usa-prose display-flex gap-2 measure-4 margin-bottom-0">
             <span class="display-flex gap-1">
               <span *ngIf="preview"><span class="usa-tag bg-accent-warm-lighter text-ink">Preview</span></span>
@@ -159,11 +147,15 @@
 
           <div class="display-flex gap-2 flex-align-center flex-wrap">
             <ng-container *ngIf="mode === PageMode.VIEW">
+              <!-- TODO: need to fix the ngControl error -->
 
               <lib-adapt-checkbox *ngIf="report.visibility === 'external' && reportTemplateHasSuppression" [(checked)]="previewSuppress"
-                (checkedChange)="onSuppress($any($event))" label="Suppress Data"
+                 formControlName="suppressData"
+                (checkedChange)="onSuppress($any($event))"
+                label="Suppress Data"
                 classes="border-2px border-secondary {{ previewSuppress ? 'bg-secondary-lighter' : '' }}">
               </lib-adapt-checkbox>
+
 
               <ng-container *ngIf="!preview">
 

@@ -3,7 +3,7 @@ import {
   IFilter,
   ICondition,
   ViewerTemplate,
-  IReport,
+  IReportModel,
   SelectFilter,
   RadialFilter,
   IFilterGroup,
@@ -50,6 +50,7 @@ interface ReportFilter {
 
 @Component({
   selector: 'adapt-viewer-report',
+  standalone: false,
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
 })
@@ -60,7 +61,7 @@ export class ReportComponent {
   public reportTabIndex = 0;
   public shareURL?: Observable<string>;
 
-  public _report: IReport;
+  public _report: IReportModel;
   public _template: ViewerTemplate;
 
   $reportContent = this.content.$reportContent;
@@ -365,7 +366,7 @@ export class ReportComponent {
 
     if (!this.intialLoad){
       this.onFilter.next(this.filterFormGroup.value);
-    } 
+    }
 
     this.intialLoad = false;
   }

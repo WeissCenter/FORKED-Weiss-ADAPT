@@ -19,6 +19,7 @@ import {
 
 @Component({
   selector: 'lib-adapt-breadcrumb',
+  standalone: false,
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss'],
 })
@@ -52,15 +53,15 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
   showBreadcrumb = true;
 
   ngOnChanges(changes: SimpleChanges): void {
-   
+
     const contentMapChanges = changes['contentMap'];
 
     if(contentMapChanges && !contentMapChanges.firstChange) {
      this.lastNavigationEvent.next(this.lastNavigationEvent.getValue())
     }
-  
 
-  } 
+
+  }
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.router.events.pipe(

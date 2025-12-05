@@ -4,6 +4,7 @@ import { PageContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/ad
 
 @Component({
   selector: 'lib-data-rep-comparison',
+  standalone: false,
   templateUrl: './data-rep-comparison.component.html',
   styleUrl: './data-rep-comparison.component.scss',
 })

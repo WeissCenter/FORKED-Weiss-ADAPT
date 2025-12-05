@@ -3,6 +3,7 @@ import { ISection } from './ISection';
 export type TemplateType = 'DataCollection' | 'ReportTemplate' | 'ValidationTemplate';
 
 export type ITemplateFilters = Record<string, IFilter<unknown> | IFilterGroup>;
+
 export interface ITemplate {
   id: string;
   title: string;

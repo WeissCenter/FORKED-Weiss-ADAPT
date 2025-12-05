@@ -5,6 +5,7 @@ import { CognitoService } from '../services/cognito/cognito.service';
 
 @Component({
   selector: 'adapt-auth',
+  standalone: false,
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
   encapsulation: ViewEncapsulation.None,

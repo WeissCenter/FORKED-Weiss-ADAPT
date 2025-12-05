@@ -1,14 +1,15 @@
-import { DataView, IReport, ReportVersion } from '@adapt/types';
+import { DataViewModel, IReportModel, ReportFilterCriteriaModel, ReportVersion } from '@adapt/types';
 import {
   AfterViewChecked,
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  effect,
   OnDestroy,
+  OnInit, Signal,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription, map, switchMap, of, BehaviorSubject } from 'rxjs';
 import { RoleService } from '../../../auth/services/role/role.service';
 import { FilterPanelService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/filterpanel.service';
@@ -19,28 +20,24 @@ import { AlertService } from '../../../../../../../libs/adapt-shared-component-l
 import { LocationStrategy } from '@angular/common';
 import { ModalComponent } from '@adapt/adapt-shared-component-lib';
 import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
-import { PageContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
+import { NGXLogger } from 'ngx-logger';
+import { PageContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 
-interface ReportsFilter {
-  search: string;
-  status: string[];
-  visibility: string[];
-}
+
 
 @Component({
   selector: 'adapt-reports',
+  standalone: false,
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss'],
 })
-export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewInit {
+export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, AfterViewInit {
   ReportStatus = ReportVersion;
 
   Math = Math;
-  reportsData: IReport[] = [];
-  loading = true;
-
-  public selectedReport?: IReport;
+    public selectedReport?: IReportModel;
 
   @ViewChild(ReportModalComponent) reportModal?: ReportModalComponent;
   @ViewChild('unPublishModal') unPublishModal?: ModalComponent;
@@ -55,60 +52,22 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
     { label: 'External', value: 'external' },
   ];
 
-  // public reports: Observable<IReport[]> = this.route.queryParams.pipe(
-  //   switchMap((params) => {
-  //     const search = params['search'] || '';
-  //     this.page = parseInt(params['page'] || '1');
-  //     const status = params['status'];
-  //     const visibility = params['visibility'];
-  //     this.sortDirection = params['sort'] || 'asc'
+  private routeChangeListener: Subscription;
 
-  //     this.reportFilters.setValue({search: search || '', status: status || '', visibility: visibility || '' })
-
-  //     return this.route.data.pipe(
-  //       map(
-  //         (result) =>
-  //         {
-
-  //           const filtered = result['reportsResolver'].filter((item: IReport) => {
-  //             const statusMatch = !status || item.version === status;
-  //             const visibilityMatch = !visibility || item.visibility === visibility;
-  //             const searchMatch =
-  //               !search.length ||
-  //               item.name.toLowerCase().includes(search) ||
-  //               item.version.toLowerCase().includes(search) ||
-  //               item.author.toLowerCase().includes(search);
-
-  //             return statusMatch && searchMatch && visibilityMatch;
-  //           }) as IReport[]
-
-  //           filtered.sort((a, b) => this.sortDirection === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name))
-
-  //           return filtered;
-  //         }
-  //       )
-  //     );
-  //   })
-  // );
-
-  // public statusCounts: Observable<[number, number, number, number]> =
-  //   this.route.data.pipe(
-  //     map((data) => {
-  //       const items = data['reportsResolver'];
-  //       this.maxPages = Math.max(1, Math.ceil(items.length / this.pageSize));
-  //       return this._getStatusAndApprovalCounts(items);
-  //     })
-  //   );
-
-  public reportFilters: FormGroup;
+  public reportFiltersForm: FormGroup;
 
   public page = 1;
   public pageSize = 5;
   public maxPages = 1;
   public totalItems = 0;
 
-  public reports = new BehaviorSubject<IReport[]>([]);
-  public $reports: Observable<IReport[]> = this.reports.asObservable();
+  public $reportsBehaviorSubject = new BehaviorSubject<IReportModel[]>([]);
+
+  listOfAllReports: IReportModel[] = [];
+  listOfFilteredReports: IReportModel[] = [];
+  reportFilterCriteria: ReportFilterCriteriaModel;
+  reportsLoadedComplete: boolean = false;
+  filterChanged: boolean = false;
 
   public updatedSortDirection: 'asc' | 'desc' = 'desc';
   public alphaSortDirection: 'asc' | 'desc' = 'desc';
@@ -126,33 +85,128 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
     },
   ];
 
-  public visibilities = [
-    {
-      label: 'Internal',
-      value: 'internal',
-    },
-    {
-      label: 'External',
-      value: 'external',
-    },
-  ];
+  // public visibilities = [
+  //   {
+  //     label: 'Internal',
+  //     value: 'internal',
+  //   },
+  //   {
+  //     label: 'External',
+  //     value: 'external',
+  //   },
+  // ];
+
+  // Filter panel toggle service logic
+  private subscription: Subscription;
+  public showFilterPanel = false;
+  filterStatusMessage = '';
+  filterStateMessage = '';
+  originalFilters!: ReportFilterCriteriaModel;
+  //#################################
 
   public unPublishJustificationForm: FormGroup;
-  $pageContent = this.pagesContentService.getPageContentSignal('reports');
+  // Input signal
+  $pageContentSignal: Signal<PageContentText|null>;
+  pageContent: PageContentText|null;
+  pageContentLoaded: boolean = false;
 
   constructor(
+    private logger: NGXLogger,
     public router: Router,
     public route: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
-    private announcer: LiveAnnouncer,
     public role: RoleService,
     private location: LocationStrategy,
     public alert: AlertService,
     private filterPanelService: FilterPanelService,
-    private dataService: AdaptDataService,
+    private adaptReportService: AdaptReportService,
     public pagesContentService: PagesContentService
   ) {
+    this.logger.debug('Inside ReportsComponent constructor');
+
+    this.initializeFilterPanel();
+    this.initializeRouteChangeListener();
+    this.initializeComponentSignals();
+  }
+
+  ngOnInit(): void {
+    this.logger.debug('ReportsComponent ngOnInit');
+
+    //this.initializeReportFilterListener();
+    this.subscribeToReportsListener();
+  }
+
+  private initializeRouteChangeListener() {
+    this.logger.debug('Inside initializeRouteChangeListener');
+
+    // this is called when the tabs are changed
+    this.routeChangeListener = this.route.queryParams.subscribe((params) => {
+      this.logger.debug('Inside ReportsComponent tab change, params: ', params);
+
+      // Update component state based on params if needed
+      // TODO: conditional views for filtered state and active search, etc.
+
+      const navigation = this.router.getCurrentNavigation();
+
+      this.logger.debug('navigation: ', navigation);
+
+      if (navigation?.extras.state?.['dataView']) {
+        setTimeout(() => this.openModal(navigation?.extras.state?.['dataView']));
+      }
+
+      this.readRouteQueryParams(params);
+
+      // notify filter listener to filter and sort new results. See filterAndSortReports()
+      this.$reportsBehaviorSubject.next(this.listOfAllReports);
+
+      // We need to check to see if we need to pull the latest data views from the server
+      if (this.adaptReportService.isPolling()){
+        this.logger.debug('Polling is ongoing');
+      }
+      else {
+        this.adaptReportService.startPollingReportStatuses(); // force a refresh of the data views
+      }
+
+
+    });
+  }
+
+  private initializeComponentSignals() {
+    this.logger.debug('Inside ReportComponent initializeComponentSignals');
+
+    this.$pageContentSignal = this.pagesContentService.getPageContentSignal('reports');
+
+    // after we got a signal that the pageContent was loaded
+    effect(() => {
+
+      this.logger.debug('$pageContentSignal retrieved');
+      this.pageContent = this.$pageContentSignal();
+
+      this.logger.debug('pageContent: ', this.pageContent);
+
+      if (this.pageContent){
+
+        this.logger.debug('Have page content');
+
+        if (!this.pageContent.title){
+          this.logger.error('Invalid page title');
+        }
+
+        this.pageContentLoaded = true;
+      }
+      else {
+        this.logger.debug('NO page content');
+        this.pageContentLoaded = false;
+      }
+
+    });
+
+  }
+
+  private initializeFilterPanel(){
+    this.logger.debug('Inside ReportsComponent initializeFilterPanel');
+
     this.subscription = this.filterPanelService.currentFilterPanelState.subscribe((state) => {
       this.showFilterPanel = state;
     });
@@ -161,172 +215,241 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
       justification: this.fb.control('', [Validators.required]),
     });
 
-    this.reportFilters = this.fb.group({
+    this.reportFiltersForm = this.fb.group({
       search: this.fb.control(''),
-      status: this.fb.control([]),
+      version: this.fb.control([]),
       visibility: this.fb.control(''),
     });
   }
 
-  private routeSub = this.route.queryParams.subscribe((params) => {
-    // Update component state based on params if needed
-    // TODO: conditional views for filtered state and active search, etc.
+  private readRouteQueryParams(params: Params): void {
+    this.logger.debug('Inside ReportsComponent readRouteQueryParams, params: ', params);
 
-    const navigation = this.router.getCurrentNavigation();
+    this.filterChanged = true;
 
-    if (navigation?.extras.state?.['dataView']) {
-      setTimeout(() => this.openModal(navigation?.extras.state?.['dataView']));
+    // Extract parameters
+    const search = params['search'] || '';
+    this.page = parseInt(params['page'] || '1');
+    let version = params['status'];
+    let visibility = params['visibility'];
+    this.updatedSortDirection = params['updatedSort'] || 'desc';
+    this.alphaSortDirection = params['alphaSort'] || 'desc';
+    // if single status or visibility, convert to array
+
+    this.logger.debug('version: ', version, ', visibility: ', visibility);
+
+    if (version) {
+      if (!Array.isArray(version)) {
+        version = [version];
+      }
+    }
+    if (visibility) {
+      if (!Array.isArray(visibility)) {
+        visibility = [visibility];
+      }
     }
 
-    this.fetchReports();
-  });
+    this.reportFiltersForm.setValue({
+      search: search || '',
+      version: version || [],
+      visibility: visibility || [],
+    });
+
+    this.reportFilterCriteria = {
+      visibility: visibility,
+      search: search,
+      version: version
+    }
+
+    this.logger.debug('reportFilterCriteria: ', this.reportFilterCriteria);
+
+  }
+
+  ngAfterViewInit(): void {
+    this.logger.debug('Inside ReportsComponent ngAfterViewInit');
+
+    const state = this.location.getState() as any;
+    if ('report' in state) {
+      this.reportModal?.open(undefined, state.report, state.report.page);
+    }
+  }
 
   public onPageSizeChange() {
     this.maxPages = Math.ceil(this.totalItems / this.pageSize);
   }
 
-  fetchReports() {
-    this.loading = true;
+  private subscribeToReportsListener() {
+    this.logger.debug('Inside subscribeToReportsListener');
 
-    this.dataService.getReports().subscribe((reports) => this.reports.next(reports));
+    this.setReportsLoadingStatus(false);
 
-    this.$reports = this.route.queryParams.pipe(
-      switchMap((params) => {
-        // Extract parameters
-        const search = params['search'] || '';
-        this.page = parseInt(params['page'] || '1');
-        let status = params['status'];
-        let visibility = params['visibility'];
-        this.updatedSortDirection = params['updatedSort'] || 'desc';
-        this.alphaSortDirection = params['alphaSort'] || 'desc';
-        // if single status or visibility, convert to array
+    this.adaptReportService.getReportsListener().subscribe((reports) => {
+      this.logger.debug('Getting notification of updated reports from service',reports?.length);
 
-        if (status) {
-          if (!Array.isArray(status)) {
-            status = [status];
-          }
-        }
-        if (visibility) {
-          if (!Array.isArray(visibility)) {
-            visibility = [visibility];
-          }
-        }
-        this.reportFilters.setValue({
-          search: search || '',
-          status: status || [],
-          visibility: visibility || [],
-        });
+      this.listOfAllReports = reports;
 
-        return this.reports.asObservable().pipe(
-          map((reports) => {
-            // Filter reports based on the status and visibility
-            const filtered = reports.filter((item: IReport) => {
-              const statusMatch = this.handleFilterParam(status, item.version);
-              const visibilityMatch = this.handleFilterParam(visibility, item.visibility);
-              const searchMatch =
-                !search.length ||
-                item.name.toLowerCase().includes(search) ||
-                item.version.toLowerCase().includes(search) ||
-                item.author.toLowerCase().includes(search);
-              return statusMatch && searchMatch && visibilityMatch;
-            }) as IReport[];
+      // notify filter listener to filter and sort new results. See filterAndSortReports()
+      this.$reportsBehaviorSubject.next(reports);
+    });
 
-            // filtered.sort((a, b) =>
-            //   this.sortDirection === 'asc'
-            //     ? a.name.localeCompare(b.name)
-            //     : b.name.localeCompare(a.name)
-            // );
+    // this will lister for any changes from the BehaviorSubject $reportsBehaviorSubject
+    // we do this because we need to trigger a new fiter and update when the route query parameters change in
+    // the method initializeRouteChangeListener() as well as in the getReportsListener() above
+    this.$reportsBehaviorSubject.asObservable().subscribe({
 
-            filtered.sort((a, b) => {
-              const updatedA = parseInt(a.updated, 10); // Convert the string to an integer
-              const updatedB = parseInt(b.updated, 10);
-              const alphaA = a.name;
-              const alphaB = b.name;
+      next: (latestReports) => {
 
-              const sort = (a: any, b: any, type: string, direction: 'asc' | 'desc') => {
-                const left = direction === 'asc' ? a : b;
-                const right = direction === 'asc' ? b : a;
+        this.logger.debug('latestReports: ', latestReports?.length);
+        this.filterAndSortReports();
 
-                switch (type) {
-                  case 'string': {
-                    return left.localeCompare(right);
-                  }
-                  case 'number': {
-                    return left - right;
-                  }
-                }
-              };
+      },
+      error: () => {
+        this.alert.add({type: 'error', title: 'Reports listener Failed', body: 'Reports listener failed.' });
+      },
+    });
 
-              const sortResult = this.activeSort === 'updated' ? 
-                sort(updatedA, updatedB, 'number', this.updatedSortDirection) : 
-                sort(alphaA, alphaB, 'string', this.alphaSortDirection);
-
-              return sortResult;
-            });
-            
-            if (this.focusSortBtn) {
-              const sortBtn = document.getElementById('sortButton');
-              if (sortBtn) {
-                sortBtn.focus();
-                sessionStorage.removeItem('focusSortBtn');
-              }
-            }
-
-            // Store the processed data for later use
-            this.reportsData = filtered;
-            // Update maxPages for pagination
-            this.maxPages = Math.max(1, Math.ceil(this.reportsData.length / this.pageSize));
-            this.totalItems = this.reportsData.length;
-            this.loading = false;
-
-
-            return filtered;
-          })
-        );
-      })
-    );
+    // this.$reportsBehaviorSubject.asObservable().pipe(map((reports) => {
+    //
+    //     this.logger.debug('Start filtering and sorting');
+    //
+    //     return this.filterAndSortReports();
+    //
+    //   })
+    // );
   }
 
-  // Filter panel toggle service logic
-  private subscription: Subscription;
-  public showFilterPanel = false;
-  filterStatusMessage = '';
-  filterStateMessage = '';
-  originalFilters!: ReportsFilter;
+  private filterAndSortReports() {
+    this.logger.debug('Inside filterAndSortReports, reportFilterCriteria: ', this.reportFilterCriteria);
+
+    if (this.listOfAllReports?.length > 0) {
+
+      let visibility: any
+      let search: any;
+      let version: any;
+
+      if (this.reportFilterCriteria){
+        visibility = this.reportFilterCriteria.visibility;
+        search = this.reportFilterCriteria.search;
+        version = this.reportFilterCriteria.version;
+      }
+      else {
+        this.logger.debug('No filter criteria found');
+      }
+
+      // Filter reports based on the status and visibility
+      const filtered = this.listOfAllReports.filter((item: IReportModel) => {
+
+        const versionMatch = this.handleFilterParam(version, item.version);
+        const visibilityMatch = this.handleFilterParam(visibility, item.visibility);
+        const searchMatch =  !search?.length ||
+          item.name.toLowerCase().includes(search) ||
+          item.version.toLowerCase().includes(search) ||
+          item.author.toLowerCase().includes(search);
+
+        return versionMatch && searchMatch && visibilityMatch;
+
+      }) as IReportModel[];
+
+      // filtered.sort((a, b) =>
+      //   this.sortDirection === 'asc'
+      //     ? a.name.localeCompare(b.name)
+      //     : b.name.localeCompare(a.name)
+      // );
+
+      filtered.sort((a, b) => {
+        const updatedA = parseInt(a.updated, 10); // Convert the string to an integer
+        const updatedB = parseInt(b.updated, 10);
+        const alphaA = a.name;
+        const alphaB = b.name;
+
+        const sort = (a: any, b: any, type: string, direction: 'asc' | 'desc') => {
+          const left = direction === 'asc' ? a : b;
+          const right = direction === 'asc' ? b : a;
+
+          switch (type) {
+            case 'string': {
+              return left.localeCompare(right);
+            }
+            case 'number': {
+              return left - right;
+            }
+          }
+        };
+
+        const sortResult = this.activeSort === 'updated' ?
+          sort(updatedA, updatedB, 'number', this.updatedSortDirection) :
+          sort(alphaA, alphaB, 'string', this.alphaSortDirection);
+
+        return sortResult;
+      });
+
+      if (this.focusSortBtn) {
+        const sortBtn = document.getElementById('sortButton');
+        if (sortBtn) {
+          sortBtn.focus();
+          sessionStorage.removeItem('focusSortBtn');
+        }
+      }
+
+      // Store the processed data for later use
+      this.listOfFilteredReports = filtered;
+      // Update maxPages for pagination
+      this.maxPages = Math.max(1, Math.ceil(this.listOfFilteredReports.length / this.pageSize));
+      this.totalItems = this.listOfFilteredReports.length;
+
+      this.setReportsLoadingStatus(true);
+
+      return filtered;
+    }
+    else {
+      this.logger.debug('nothing to filter');
+      return [];
+    }
+
+  }
+
+  private setReportsLoadingStatus(reportsLoadedStatus: boolean) {
+    this.logger.debug('Inside setReportsLoadingStatus: ', reportsLoadedStatus);
+    //setTimeout(() => {
+      this.reportsLoadedComplete = reportsLoadedStatus;
+   // }, 1); // Adjust this delay as needed
+  }
 
   toggleFilterPanel(close = false) {
+    this.logger.debug('Toggle filter panel');
+
     this.showFilterPanel = !this.showFilterPanel;
-    if (close) this.showFilterPanel = false;
+    if (close){
+      this.showFilterPanel = false;
+    }
+
     if (this.showFilterPanel) {
-      this.originalFilters = this.reportFilters.getRawValue();
+      this.originalFilters = this.reportFiltersForm.getRawValue();
       this.filterStateMessage = 'Filter panel opened.';
     } else this.filterStateMessage = 'Filter panel closed.';
+
     this.filterPanelService.changeFilterPanelState(this.showFilterPanel);
   }
 
   public applyFilters(announce = false) {
+    this.logger.debug('Applying filters');
+
     sessionStorage.setItem('focusSortBtn', true.toString());
+
     this.toggleFilterPanel(true);
+
     this.router.navigate(['./'], {
       queryParams: {
         updatedSort: this.updatedSortDirection,
         alphaSort: this.alphaSortDirection,
-        ...this.reportFilters.getRawValue(),
+        ...this.reportFiltersForm.getRawValue(),
       },
       relativeTo: this.route,
       queryParamsHandling: 'merge',
     });
-    if (announce) this.filterStatusMessage = 'Filters have been applied.';
-  }
 
-  ngOnInit(): void {
-    //console.log('Inside reports component ngOnInit');
-  }
-
-  ngAfterViewInit(): void {
-    const state = this.location.getState() as any;
-    if ('report' in state) {
-      this.reportModal?.open(undefined, state.report, state.report.page);
+    if (announce){
+      this.filterStatusMessage = 'Filters have been applied.';
     }
   }
 
@@ -382,7 +505,7 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
     this.cd.detectChanges();
   }
 
-  public openModal(dataView?: DataView) {
+  public openModal(dataView?: DataViewModel) {
     if (!this.reportModal) return;
     this.reportModal.open(dataView);
   }
@@ -397,25 +520,29 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
     return param === value;
   }
 
-  public get status() {
-    return this.reportFilters.get('status') as FormControl;
-  }
+  // public get version() {
+  //   return this.reportFilters.get('version') as FormControl;
+  // }
 
   ngOnDestroy() {
     // Close filter panel if open and the user navigates away
     this.filterPanelService.changeFilterPanelState(false);
     this.subscription.unsubscribe();
-    this.routeSub.unsubscribe();
+    this.routeChangeListener.unsubscribe();
   }
 
-  public startUnPublish(report: IReport) {
+  public startUnPublish(report: IReportModel) {
+    this.logger.debug('Inside ReportsComponent startUnPublish');
+
     this.unPublishModal?.open();
     this.selectedReport = report;
   }
 
   public publishReport() {
+    this.logger.debug('Inside ReportsComponent publishReport');
+
     this.publishConfirmationModal?.close();
-    this.dataService.startReportPublish(this.selectedReport!).subscribe({
+    this.adaptReportService.startReportPublish(this.selectedReport!).subscribe({
       next: () => {
         this.alert.add({
           type: 'success',
@@ -434,10 +561,12 @@ export class ReportsComponent implements AfterViewChecked, OnDestroy, AfterViewI
   }
 
   public confirmUnPublish() {
+    this.logger.debug('Inside ReportsComponent confirmUnPublish');
+
     if (!this.selectedReport) return;
+
     this.unPublishModal?.close();
-    this.dataService
-      .unPublishReport(this.selectedReport, this.unPublishJustificationForm.get('justification')?.value)
+    this.adaptReportService.unPublishReport(this.selectedReport, this.unPublishJustificationForm.get('justification')?.value)
       .subscribe({
         next: () => {
           this.alert.add({

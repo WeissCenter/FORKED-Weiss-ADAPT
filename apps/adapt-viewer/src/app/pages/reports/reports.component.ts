@@ -2,12 +2,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdaptDataService } from '../../services/adapt-data.service';
 import { Component } from '@angular/core';
 import { map, Observable, of, switchMap } from 'rxjs';
-import { IReport } from '@adapt/types';
+import { IReportModel } from '@adapt/types';
 import { ViewerPagesContentService } from '../../services/content/viewer-pages-content.service';
 import { LanguageService } from '@adapt/adapt-shared-component-lib';
 
 @Component({
   selector: 'adapt-viewer-reports',
+  standalone: false,
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',
 })
@@ -24,7 +25,7 @@ export class ReportsComponent {
 
   public $reports = this.fetchReports();
 
-  public reportsData: IReport[] = [];
+  public reportsData: IReportModel[] = [];
   $content = this.content.$viewerContent;
 
   constructor(public data: AdaptDataService, private route: ActivatedRoute, private router: Router, public content: ViewerPagesContentService, private lang: LanguageService) {}
@@ -42,7 +43,7 @@ export class ReportsComponent {
           map((reports) => {
             // Filter reports based on the status and visibility
 
-            const sorted = reports.toSorted((a: IReport, b: IReport) => {
+            const sorted = reports.toSorted((a: IReportModel, b: IReportModel) => {
               const updatedA = parseInt(a.published, 10); // Convert the string to an integer
               const updatedB = parseInt(b.published, 10);
               const alphaA = a.name;
@@ -62,8 +63,8 @@ export class ReportsComponent {
                 }
               };
 
-              let sortResult = this.activeSort === 'updated' ? 
-                sort(updatedA, updatedB, 'number', this.publishedSortDirection) : 
+              let sortResult = this.activeSort === 'updated' ?
+                sort(updatedA, updatedB, 'number', this.publishedSortDirection) :
                 sort(alphaA, alphaB, 'string', this.alphaSortDirection);
 
               return sortResult;

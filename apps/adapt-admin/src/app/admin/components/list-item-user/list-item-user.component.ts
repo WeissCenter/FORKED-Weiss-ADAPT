@@ -8,6 +8,7 @@ import { ToggleSwitchComponent } from 'libs/adapt-shared-component-lib/src/lib/f
 
 @Component({
   selector: 'adapt-list-item-user',
+  standalone: false,
   templateUrl: './list-item-user.component.html',
   styleUrl: './list-item-user.component.scss',
 })
@@ -26,7 +27,7 @@ export class ListItemUserComponent implements OnDestroy, OnInit {
   private confirmEditSub?: Subscription;
 
   private alertContent: any;
-  
+
 
   constructor(private data: AdaptDataService, private alert: AlertService, private cd: ChangeDetectorRef) {
     // this.content.$content.subscribe(ctn => {

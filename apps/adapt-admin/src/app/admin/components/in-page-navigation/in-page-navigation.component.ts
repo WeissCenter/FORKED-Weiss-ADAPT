@@ -17,6 +17,7 @@ import { fromEvent, skip, Subscription, take, throttle, throttleTime } from 'rxj
 import { NGXLogger } from 'ngx-logger';
 @Component({
   selector: 'adapt-in-page-navigation',
+  standalone: false,
   templateUrl: './in-page-navigation.component.html',
   styleUrls: ['./in-page-navigation.component.scss'],
 })

@@ -9,6 +9,7 @@ import { AlertService } from '@adapt/adapt-shared-component-lib';
 
 @Component({
   selector: 'adapt-branding-settings',
+  standalone: false,
   templateUrl: './branding-settings.component.html',
   styleUrls: ['./branding-settings.component.scss'],
 })

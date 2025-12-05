@@ -1,19 +1,15 @@
 import {
   GetDataFromDataSetOutput,
-  IReport,
+  IReportModel,
   AddDataInput,
   DataSource,
-  CreateReportInput,
   NewDataSetInput,
   DataSet,
-  NewDataViewInput,
   QueryDataSourceInput,
   QueryDataSourceOutput,
   TestDBConnectionInput,
-  StartUploadDataViewInput,
   DataSetOperation,
   ISuppression,
-  DataView,
   IDataCollectionTemplate,
   DataViewOperation,
   GetDataFromDataViewOutput,
@@ -21,14 +17,13 @@ import {
   AdaptSettings,
   UpdateAdaptSettingsInput,
   TemplateType,
-  EventType,
   ShareReport,
   AppRolePermissions,
   LanguageCode,
 } from '@adapt/types';
-import { FileValidation } from '@adapt/validation';
+import { ValidationTemplate } from '@adapt/validation';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import { Injectable, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Subject,
   debounceTime,
@@ -37,8 +32,6 @@ import {
   firstValueFrom,
   Observable,
   from,
-  throwError,
-  BehaviorSubject,
   filter,
   take,
   ReplaySubject,
@@ -48,6 +41,7 @@ import { environment } from '../../environments/environment';
 import { Response as APIResponse } from '@adapt/types';
 import { UserService } from '../auth/services/user/user.service';
 import { SettingsService } from '@adapt/adapt-shared-component-lib';
+import { NGXLogger } from 'ngx-logger';
 @Injectable({
   providedIn: 'root',
 })
@@ -58,12 +52,12 @@ export class AdaptDataService {
   private debouceGetDataFromDataSet$ = this.getDataFromDataSetSubject.pipe(debounceTime(75));
   private getDataFromDataSetResultsSubject = new Subject<GetDataFromDataSetOutput[]>();
 
-  private _reports = new ReplaySubject<IReport[]>();
-  private _dataViews = new ReplaySubject<DataView[]>();
+  //private _reports = new ReplaySubject<IReport[]>();
+  //private _dataViews = new ReplaySubject<DataView[]>();
   private _dataSources = new ReplaySubject<DataSource[]>();
 
-  public $reports = this._reports.asObservable();
-  public $dataViews = this._dataViews.asObservable();
+  //public $reports = this._reports.asObservable();
+  //public $dataViews = this._dataViews.asObservable();
   public $dataSources = this._dataSources.asObservable();
 
   private getDataFromDataSet$ = this.getDataFromDataSetSubject.pipe(
@@ -71,25 +65,22 @@ export class AdaptDataService {
     map((items) => this.reduceOperations(items))
   );
 
-  constructor(private http: HttpClient, private user: UserService, private settings: SettingsService) {
-    // this.getDataFromDataSet$.pipe(switchMap(response => {
-    //   return forkJoin(response.map((item: any) => from(this._tryCacheData(item.operations, item.dataSetID))))
-    // }))
-    // .subscribe((c: any) => this.getDataFromDataSetResultsSubject.next(c));
+  constructor(private logger: NGXLogger,
+              private http: HttpClient,
+              private user: UserService,
+              private settings: SettingsService) {
 
-    // init data stores
+    this.logger.debug('Inside AdaptDataService service constructor');
 
 
-    this.user.isLoggedIn$
-      .pipe(
-        filter((val) => val),
-        take(1)
-      )
-      .subscribe(() => {
-        this.http
-          .get<APIResponse<DataView[]>>(`${environment.API_URL}dataview`)
-          .pipe(map((result) => result.data))
-          .subscribe((dataViews) => this._dataViews.next(dataViews));
+    this.user.isLoggedIn$.pipe(filter((val) => val),take(1)).subscribe(() => {
+
+        //this.adaptDataViewService.loadDataViewList();
+
+        // this.http
+        //   .get<APIResponse<DataView[]>>(`${environment.API_URL}dataview`)
+        //   .pipe(map((result) => result.data))
+        //   .subscribe((dataViews) => this._dataViews.next(dataViews));
 
         this.http
           .get<APIResponse<DataSource[]>>(`${environment.API_URL}data`)
@@ -99,23 +90,16 @@ export class AdaptDataService {
           }))
           .subscribe((dataSources) => this._dataSources.next(dataSources));
 
-        this.http
-          .get<APIResponse<IReport[]>>(`${environment.API_URL}report`)
-          .pipe(map((result) => result.data))
-          .subscribe((reports) => this._reports.next(reports));
+        // this.http
+        //   .get<APIResponse<IReport[]>>(`${environment.API_URL}report`)
+        //   .pipe(map((result) => result.data))
+        //   .subscribe((reports) => this._reports.next(reports));
 
         this.http
           .get<APIResponse<AdaptSettings>>(`${environment.API_URL}settings`)
           .pipe(map((result) => result.data))
           .subscribe((settings) => this.settings.next(settings));
       });
-  }
-
-  public refreshReports() {
-    this.http
-      .get<APIResponse<IReport[]>>(`${environment.API_URL}report`)
-      .pipe(map((result) => result.data))
-      .subscribe((reports) => this._reports.next(reports));
   }
 
   private reduceOperations(items: any[]) {
@@ -149,17 +133,9 @@ export class AdaptDataService {
     return reducedItems;
   }
 
-  public startReportPublish(report: IReport) {
-    return this.http.post<APIResponse<string>>(`${environment.API_URL}report/${report.reportID}/publish`, {});
-  }
-
-  public unPublishReport(report: IReport, justification = '') {
-    return this.http.post<APIResponse<string>>(`${environment.API_URL}report/${report.reportID}/unpublish`, {
-      justification,
-    });
-  }
-
   public uploadFile(url: string, file: File) {
+    this.logger.debug('Inside uploadFile, url: ', url);
+
     const req = new HttpRequest('PUT', url, file, {
       reportProgress: true,
     });
@@ -167,9 +143,17 @@ export class AdaptDataService {
     return this.http.request(req);
   }
 
-  public isUnique(type: string, name: string, field = "name") {
-    return this.http
-      .post<APIResponse<boolean>>(`${environment.API_URL}unique`, { type, name, field })
+  /**
+   * This is linked to the lambda function: isUniqueHandler: isUnique.ts
+   * It checks if a report or data view or data set name is unique so that we do not create duplicate report names
+   * @param type: Report, DataView, DataSet
+   * @param name
+   * @param field: name or slug
+   */
+  public isNameUnique(type: string, name: string, field = "name") {
+    this.logger.debug('Inside isNameUnique, type: ', type, ', field: ', field, ', name: ', name);
+
+    return this.http.post<APIResponse<boolean>>(`${environment.API_URL}unique`, { type, name, field })
       .pipe(map((result) => result.data));
   }
 
@@ -179,6 +163,7 @@ export class AdaptDataService {
   }
 
   public validateFile(dataSourceID: string, originFile?: string) {
+    console.error('DEPRECATED: AdaptDataService.validateFile - use ValidationService.validateFile instead');
     return this.http.get<APIResponse<any>>(
       originFile
         ? `${environment.API_URL}validate-file/${dataSourceID}?originFile=${originFile}`
@@ -202,6 +187,8 @@ export class AdaptDataService {
   }
 
   public createDataSource(dataSource: AddDataInput) {
+    this.logger.debug('Inside createDataSource, dataSource: ', dataSource);
+
     return this.http
       .post<APIResponse<DataSource>>(`${environment.API_URL}data`, dataSource)
       .pipe(map((result) => result.data));
@@ -211,24 +198,8 @@ export class AdaptDataService {
     return this.http.post<APIResponse<any>>(`${environment.API_URL}notifications`, { id, subscription });
   }
 
-  public doDataPull(dataSetID: string) {
-    return this.http.post<APIResponse<any>>(`${environment.API_URL}dataview/${dataSetID}/pull`, '');
-  }
-
-  public createReport(report: CreateReportInput) {
-    return this.http
-      .post<APIResponse<string>>(`${environment.API_URL}report`, report)
-      .pipe(map((result) => result.data));
-  }
-
-  public editReport(report: {reportID: string, languages: {[lang: string] : IReport}}) {
-    return this.http
-      .put<APIResponse<IReport>>(`${environment.API_URL}report/${report.reportID}`, report)
-      .pipe(map((result) => result.data));
-  }
-
   public translateReportText(report: string, body: {title: string, description: string}, lang?: string) {
-
+    this.logger.debug('Inside translateReportText, report: ', report);
     let params = new HttpParams();
 
     if(lang){
@@ -241,36 +212,13 @@ export class AdaptDataService {
   }
 
   public createDataSet(body: NewDataSetInput) {
+    this.logger.debug('Inside createDataSet, body: ', body);
     return this.http.post<APIResponse<DataSet>>(`${environment.API_URL}dataset`, body);
   }
 
-  public createDataView(body: NewDataViewInput) {
-    return this.http
-      .post<APIResponse<DataView>>(`${environment.API_URL}dataview`, body)
-      .pipe(map((result) => result.data));
-  }
-
-  public editDataView(body: DataView, justification?: string) {
-    return this.http
-      .put<APIResponse<DataView>>(
-        `${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`,
-        body
-      )
-      .pipe(map((result) => result.data));
-  }
-
-  public editDataViewPromise(body: DataView, justification?: string) {
-    return firstValueFrom(
-      this.http
-        .put<APIResponse<DataView>>(
-          `${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`,
-          body
-        )
-        .pipe(map((result) => result.data))
-    );
-  }
-
   public queryDataSource(dataSourceID: string, body?: QueryDataSourceInput) {
+
+    this.logger.debug('Inside queryDataSource dataSourceID: ', dataSourceID, ' body: ' + body);
     return this.http
       .post<APIResponse<QueryDataSourceOutput>>(`${environment.API_URL}data/${dataSourceID}/query`, body ?? {})
       .pipe(map((result) => result.data));
@@ -297,15 +245,6 @@ export class AdaptDataService {
       .post<APIResponse<DataSource[]>>(`${environment.API_URL}data/${dataSourceID}/upload/${filename}`, {})
       .pipe(map((result) => result.data));
   }
-  public getDataViewUploadURL(input: StartUploadDataViewInput) {
-    return this.http
-      .post<APIResponse<string>>(`${environment.API_URL}dataview/upload`, input)
-      .pipe(map((result) => result.data));
-  }
-
-  public getDataViewUploadURLPromise(input: StartUploadDataViewInput) {
-    return firstValueFrom(this.getDataViewUploadURL(input));
-  }
 
   public getDataSources() {
     return this.$dataSources;
@@ -315,29 +254,14 @@ export class AdaptDataService {
     return this.http.get<APIResponse<DataSet[]>>(`${environment.API_URL}dataset`).pipe(map((result) => result.data));
   }
 
-  public getDataViews() {
-    return this.$dataViews;
-  }
+  // public getDataViews() {
+  //   return this.adaptDataViewService.getDataViews();  // this.$dataViews;
+  // }
 
   public getDataSet(dataSetID: string) {
     return this.http
       .get<APIResponse<DataSet>>(`${environment.API_URL}dataset/${dataSetID}`)
       .pipe(map((result) => result.data));
-  }
-
-  public getReportData(id: string, version = 'draft', filters = {}, suppressed = false, lang = 'en', pageId?: string){
-    let params = new HttpParams();
-
-    params = params.append('version', version)
-
-    params = params.append('suppressed', suppressed)
-    params = params.append('lang', lang)
-    if (pageId !== undefined) {
-      params = params.append('pageId', pageId)
-    }
-    return this.http
-    .post<APIResponse<any>>(`${environment.API_URL}report/${id}/data`, filters, {params})
-    .pipe(map((result) => result.data));
   }
 
   public getDataFromDataViewPromise(
@@ -463,25 +387,9 @@ export class AdaptDataService {
       .pipe(map((res) => res.data));
   }
 
-  public getReport(id: string, version = 'draft', lang?: string): Observable<IReport | IReport[] | undefined> {
-
-    let params = new HttpParams().append('version', version);
-
-    if(lang){
-      params = params.append('lang', lang)
-    }
-
-    return this.http
-      .get<APIResponse<IReport>>(`${environment.API_URL}report/${id}`, { params})
-      .pipe(map((result) => result.data));
-  }
-
-  public getReports(): Observable<IReport[]> {
-    return this.$reports;
-  }
-
   public getValidationJSON(name: string, isURL = false) {
-    return this.http.get<FileValidation>(isURL ? name : `assets/validation/${name}.json`);
+    console.error('DEPRECATED: AdaptDataService.getValidationJSON - use ValidationService.getValidationTemplate instead');
+    return this.http.get<ValidationTemplate>(isURL ? name : `assets/validation/${name}.json`);
   }
 
   public getDataCollectionTemplate(id: string) {
@@ -489,10 +397,6 @@ export class AdaptDataService {
   }
   public getDataCollectionTemplatePromise(id: string) {
     return firstValueFrom(this.getDataCollectionTemplate(id));
-  }
-
-  public deleteDataView(id: string) {
-    return this.http.delete(`${environment.API_URL}dataview/${id}`);
   }
 
   public updateSettings(settings: UpdateAdaptSettingsInput) {
@@ -529,13 +433,16 @@ export class AdaptDataService {
     this._dataSources.next(currValue);
   }
 
-  public async addDataView(dataView: DataView) {
-    const currValue = ((await firstValueFrom(this._dataViews)) || []).filter(
-      (view) => view.dataViewID !== dataView.dataViewID
-    );
-    currValue.push(dataView);
-    this._dataViews.next(currValue);
-  }
+  // public async addDataView(dataView: DataView) {
+  //
+  //   await this.adaptDataViewService.addDataView(dataView);
+  //
+  //   // const currValue = ((await firstValueFrom(this._dataViews)) || []).filter(
+  //   //   (view) => view.dataViewID !== dataView.dataViewID
+  //   // );
+  //   // currValue.push(dataView);
+  //   // this._dataViews.next(currValue);
+  // }
 
   public getUsers() {
     return this.http.get<APIResponse<any>>(`${environment.API_URL}users`).pipe(map((result) => result.data));

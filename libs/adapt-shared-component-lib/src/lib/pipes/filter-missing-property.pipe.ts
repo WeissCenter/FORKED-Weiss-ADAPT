@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'filterMissingProperty',
+  standalone: false,
 })
 export class FilterMissingPropertyPipe implements PipeTransform {
   transform(items?: any[], propertyName?: string): any[] {

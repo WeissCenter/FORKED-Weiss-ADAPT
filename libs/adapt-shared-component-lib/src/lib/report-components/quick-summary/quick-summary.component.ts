@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'lib-adapt-quick-summary',
+  standalone: false,
   templateUrl: './quick-summary.component.html',
   styleUrls: ['./quick-summary.component.scss'],
 })

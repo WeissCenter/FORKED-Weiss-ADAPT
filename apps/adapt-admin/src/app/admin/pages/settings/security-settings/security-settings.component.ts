@@ -8,6 +8,7 @@ import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/servic
 
 @Component({
   selector: 'adapt-security-settings',
+  standalone: false,
   templateUrl: './security-settings.component.html',
   styleUrl: './security-settings.component.scss',
 })

@@ -12,9 +12,11 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { MultiSelectComponent } from '../multi-select/multi-select.component';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'lib-adapt-checkbox',
+  standalone: false,
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
   providers: [
@@ -53,21 +55,31 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
   };
   private onTouched?: () => void;
 
-  constructor(private injector: Injector, @Host() @Optional() checkboxGroup: MultiSelectComponent) {
+  constructor(private logger: NGXLogger,
+              private injector: Injector,
+              @Host() @Optional() checkboxGroup: MultiSelectComponent) {
     // grab the group if present (no circular DI here)
     this.checkboxGroup = checkboxGroup ?? undefined;
   }
 
   ngOnInit() {
+    this.logger.debug('Inside CheckboxComponent ngOnInit');
     // sanitize label for ID usage
     this.idSafeLabel = this.label ? this.label.replace(/[^a-zA-Z0-9]/g, '_') : '';
 
-    this.ngControl = this.injector.get(NgControl, undefined);
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
+    try {
+      this.ngControl = this.injector.get(NgControl, undefined);
+      if (this.ngControl) {
+        this.logger.debug('Found ngControl');
+        this.ngControl.valueAccessor = this;
+      }
     }
+    catch (err) {
+      this.logger.error('Error getting NgControl from injector, error: ', err);
+    }
+
   }
-  
+
   writeValue(obj: any): void {
     this.checked = !!obj;
   }

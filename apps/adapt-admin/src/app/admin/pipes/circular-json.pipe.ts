@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'circularJson',
+  standalone: false,
 })
 export class CircularJsonPipe implements PipeTransform {
   transform(value: any): unknown {

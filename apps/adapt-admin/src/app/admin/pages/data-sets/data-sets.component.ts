@@ -8,9 +8,11 @@ import { RoleService } from '../../../auth/services/role/role.service';
 import { NotificationsService } from '../../../services/notifications.service';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
 import { TemplateService } from '../../../services/template.service';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
 
 @Component({
   selector: 'adapt-data-sets',
+  standalone: false,
   templateUrl: './data-sets.component.html',
   styleUrls: ['./data-sets.component.scss'],
 })
@@ -50,6 +52,7 @@ export class DataSetsComponent {
   constructor(
     private route: ActivatedRoute,
     public data: AdaptDataService,
+    private adaptDataViewService: AdaptDataViewService,
     public role: RoleService,
     private alert: AlertService
   ) {}
@@ -59,9 +62,7 @@ export class DataSetsComponent {
       return;
     }
     this.modal?.close();
-    this.data
-      .doDataPull(dataSet.dataSetID)
-      .pipe(
+    this.adaptDataViewService.doDataPull(dataSet.dataSetID).pipe(
         catchError((err) => {
           this.alert.add({
             type: 'error',
