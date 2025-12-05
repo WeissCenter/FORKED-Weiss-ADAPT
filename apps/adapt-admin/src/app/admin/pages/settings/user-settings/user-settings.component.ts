@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'adapt-user-settings',
+  standalone: false,
   templateUrl: './user-settings.component.html',
   styleUrl: './user-settings.component.scss',
 })

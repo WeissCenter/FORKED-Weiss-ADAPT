@@ -1,4 +1,7 @@
-@import '@angular/cdk';
+//Angular's approach to styling for accessibility (a11y) primarily leverages the @angular/cdk/a11y package, which is part
+// of the Angular Component Dev Kit (CDK). This package provides a set of tools, including Sass mixins,
+// to help developers create accessible styles.
+@use '@angular/cdk'; //@import '@angular/cdk';
 
 // @include cdk-a11y();
 

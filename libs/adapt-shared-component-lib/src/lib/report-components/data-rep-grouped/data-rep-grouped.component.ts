@@ -27,6 +27,7 @@ interface ChartDataItem {
 
 @Component({
   selector: 'lib-adapt-data-rep-grouped',
+  standalone: false,
   templateUrl: './data-rep-grouped.component.html',
   styleUrls: ['./data-rep-grouped.component.scss'],
   encapsulation: ViewEncapsulation.None,

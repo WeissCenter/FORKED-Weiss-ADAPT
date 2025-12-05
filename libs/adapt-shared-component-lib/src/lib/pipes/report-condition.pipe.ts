@@ -3,6 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'reportCondition',
+  standalone: false,
 })
 export class ReportConditionPipe implements PipeTransform {
   transform(

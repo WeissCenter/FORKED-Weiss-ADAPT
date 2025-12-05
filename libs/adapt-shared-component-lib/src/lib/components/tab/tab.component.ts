@@ -3,6 +3,7 @@ import { TabViewComponent } from '../tab-view/tab-view.component';
 
 @Component({
   selector: 'adapt-tab',
+  standalone: false,
   templateUrl: './tab.component.html',
   styleUrls: ['./tab.component.scss'],
 })

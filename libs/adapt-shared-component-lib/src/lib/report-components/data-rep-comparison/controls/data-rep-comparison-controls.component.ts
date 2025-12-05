@@ -33,6 +33,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
  */
 @Component({
   selector: 'lib-data-rep-comparison-controls',
+  standalone: false,
   templateUrl: './data-rep-comparison-controls.component.html',
   styleUrls: ['./data-rep-comparison-controls.component.scss'],
 })

@@ -4,8 +4,8 @@ import { InlineSvgService } from './inline-svg.service';
 
 @Component({
   selector: 'lib-adapt-inline-svg',
-  template:
-    '<span role="img" [attr.aria-label]="!hidden && label ? label : \'\'" [innerHTML]="svgContent" [hidden]="hidden" [class]="svgClass"></span>',
+  standalone: false,
+  template: '<span role="img" [attr.aria-label]="!hidden && label ? label : \'\'" [innerHTML]="svgContent" [hidden]="hidden" [class]="svgClass"></span>',
   providers: [InlineSvgService],
 })
 export class InlineSvgComponent implements OnInit, OnChanges {
@@ -52,7 +52,7 @@ export class InlineSvgComponent implements OnInit, OnChanges {
       this.hidden = true;
       return;
     }
-    
+
     this.svgService.getSvg(this.src).subscribe({
       next: (svg) => {
         this.hidden = false;

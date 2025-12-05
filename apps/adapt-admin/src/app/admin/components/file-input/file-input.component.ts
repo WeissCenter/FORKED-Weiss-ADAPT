@@ -14,6 +14,7 @@ import { fileInput } from '@uswds/uswds/js';
 
 @Component({
   selector: 'adapt-file-input',
+  standalone: false,
   templateUrl: './file-input.component.html',
   styleUrls: ['./file-input.component.scss'],
   providers: [

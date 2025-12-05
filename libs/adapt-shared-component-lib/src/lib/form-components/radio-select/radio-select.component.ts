@@ -11,6 +11,7 @@ import {
 
 @Component({
   selector: 'lib-adapt-radio-select',
+  standalone: false,
   templateUrl: './radio-select.component.html',
   providers: [
     {

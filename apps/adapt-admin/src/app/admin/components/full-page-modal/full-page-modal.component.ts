@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'adapt-full-page-modal',
+  standalone: false,
   templateUrl: './full-page-modal.component.html',
   styleUrls: ['./full-page-modal.component.scss'],
 })

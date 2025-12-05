@@ -1,5 +1,5 @@
 <section *ngIf="$content()" class="reports-container grid-container gap-4 display-flex flex-column">
-  <header role="banner" class="reports-banner width-full display-flex usa-prose flex-column">
+  <header class="reports-banner width-full display-flex usa-prose flex-column">
     <!-- TODO: This heading/description needs to dynamically change when the view is updated. Options are Draft Reports/Finalized Reports -->
     <h1 class="margin-0">{{$content()?.pages.reports?.header}}</h1>
     <p class="measure-4 usa-prose margin-bottom-0">{{$content()?.pages.reports?.body}}</p>

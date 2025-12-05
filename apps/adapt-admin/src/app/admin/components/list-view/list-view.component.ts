@@ -28,6 +28,7 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'adapt-list-view',
+  standalone: false,
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

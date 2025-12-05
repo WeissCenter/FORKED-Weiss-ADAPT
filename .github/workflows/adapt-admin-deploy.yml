@@ -8,6 +8,7 @@ on:
       - 'libs/adapt-shared-component-lib/**'
       - 'libs/shared-assets/**'
       - 'libs/shared-styles/**'
+      - 'libs/validation/**'
     branches:
       - 'dev'
       - 'qa'

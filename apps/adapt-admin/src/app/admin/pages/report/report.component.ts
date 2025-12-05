@@ -2,7 +2,7 @@ import {
   ICondition,
   IFilter,
   IFilterGroup,
-  IReport,
+  IReportModel,
   IReportPreview,
   ISummaryTemplate,
   ITemplate,
@@ -23,7 +23,7 @@ import {
   EventEmitter,
   HostListener,
   Input,
-  OnDestroy,
+  OnDestroy, OnInit,
   Output,
   signal,
   ViewChild,
@@ -58,7 +58,6 @@ import { FilterPanelService } from '../../../../../../../libs/adapt-shared-compo
 import { TabViewComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/tab-view/tab-view.component';
 import { FocusService } from '../../services/focus.service';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../../auth/services/user/user.service';
 import { Idle } from '@ng-idle/core';
 import { IdleStates } from '../../../auth/auth-model';
@@ -69,16 +68,20 @@ import { TemplateService } from '../../../services/template.service';
 import { PagesContentService } from '../../../auth/services/content/pages-content.service';
 import { getFormErrors, uniqueNameValidator } from '../../../util';
 import slugify from 'slugify';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
+import { NGXLogger } from 'ngx-logger';
 interface ReportFilter {
   [key: string]: any;
 }
 
 @Component({
   selector: 'adapt-report',
+  standalone: false,
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
 })
-export class ReportComponent implements AfterViewInit, OnDestroy {
+export class ReportComponent implements OnInit, AfterViewInit, OnDestroy {
   getFormErrors = getFormErrors;
   PageMode = PageMode;
   ReportVersion = ReportVersion;
@@ -136,102 +139,8 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
   public templateSubject = new BehaviorSubject<ITemplate | ISummaryTemplate | null>(null);
   public templateErrorSubject = new ReplaySubject();
-  public $template = this.templateSubject
-    .asObservable()
-    .pipe(filter((temp) => !!temp))
-    .pipe(
-      tap((template) => {
-        this.loading = false;
-        const reportTemplate = template as ITemplate;
-        if (!this.preview) this.buildFilterFormGroup(reportTemplate.filters);
-        //   this.onFilter.next(this.filterFormGroup.value);
-        this.announcer.announce('Loading Report Preview');
-        this.startTime = Date.now();
-      })
-    )
-    .pipe(
-      switchMap((temp) =>
-        this.$onFilter
-          .pipe(
-            map((obj) => {
-              return flattenObject(obj);
-            })
-          )
-          .pipe(
-            switchMap((changes) => {
-              this.loading = true;
-              if (!this.preview) {
-                if (this.intialLoad) this.applyFilterChanges(true);
-                this.existingFilters = this.buildExistingFilters();
-              }
-              const filters =
-                changes !== undefined && Object.keys(cleanObject(changes)).length
-                  ? cleanObject(changes)
-                  : { ...this.existingFilters };
+  public $template: Observable<any>;  //Observable<ITemplate | ISummaryTemplate | null>;
 
-              this.filtered = changes !== undefined && Object.keys(cleanObject(changes)).length > 0;
-
-              const pageId = (temp as ITemplate).pages?.[this.reportTabIndex]?.id || undefined;
-              if (!this.preview) {
-                return this.dataService.getReportData(
-                  this.report.reportID,
-                  this.report.version,
-                  filters,
-                  this.previewSuppress,
-                  this.$reportLang(),
-                  pageId
-                );
-              }
-              // assume new data view structure
-              return this.temp.renderTemplateWithMultipleViews(
-                structuredClone(temp) as ITemplate,
-                this.report.dataView,
-                filters,
-                this.previewSuppress
-              );
-            })
-          )
-      )
-    )
-    .pipe(
-      tap((temp) => {
-        if (temp.filters) {
-          this.showFilterButton = Object.values(temp.filters).some((filter) => {
-            const typedFilter = filter as IFilter<unknown>;
-            const pageId = (temp as ITemplate).pages?.[this.reportTabIndex]?.id || undefined;
-            if (!pageId) return false; // no pageId, no filter condition
-            return typedFilter?.condition?.pages?.includes(pageId) ?? true;
-          });
-        } else {
-          // When creating a preview, there are no previews
-          this.showFilterButton = false;
-        }
-
-        if (temp.filtersUsed) {
-          this.filterFormGroup.reset(temp.filtersUsed);
-          // function to determine if the onFilter value is the same as the temp.filtersUsed
-          // check if the onFilter value is the same as the temp.filtersUsed
-          // if not, emit the new filters temp.filtersUsed is the source of truth
-          if (!sameObjects(this.onFilter.value, temp.filtersUsed)) {
-            this.onFilter.next(temp.filtersUsed);
-          }
-        }
-        this.loading = false;
-        this.loaded.emit(true);
-
-        // this.editTitle.setValue(temp.title);
-        // this.editDescription.setValue(temp.description);
-      }),
-      catchError((err) => {
-        console.log('err', err);
-        this.templateErrorSubject.next({ success: false, err });
-        this.loaded.emit(false);
-        return of();
-      })
-    )
-    .pipe(
-      distinctUntilChanged((a, b) => sameObjects(a.filtersUsed, b.filtersUsed) && a.suppressed === b.suppressed && a.title === b.title) // prevents unnecessary reloads
-    );
 
   // public $templateError = this.$template.pipe(
   //   catchError((err) => of({ success: false, err })),
@@ -296,7 +205,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       this.filterFormGroup.reset();
       this.intialLoad ? (this.showResetFilters = false) : (this.showResetFilters = true);
     }
-    
+
     if (!this.intialLoad) this.onFilter.next(this.filterFormGroup.value);
 
     this.intialLoad = false;
@@ -341,6 +250,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   };
 
   constructor(
+    private logger: NGXLogger,
     private temp: TemplateService,
     private router: Router,
     private user: UserService,
@@ -351,7 +261,9 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     private alert: AlertService,
     private location: LocationStrategy,
     private announcer: LiveAnnouncer,
-    private dataService: AdaptDataService,
+    private adaptDataService: AdaptDataService,
+    private adaptDataViewService: AdaptDataViewService,
+    private adaptReportService: AdaptReportService,
     private recentActivity: RecentActivityService,
     private filterPanelService: FilterPanelService,
     private focusService: FocusService,
@@ -359,10 +271,127 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     public pages: PagesContentService,
     public content: ContentService
   ) {
+    this.logger.debug('Inside ReportComponent constructor');
+
+    this.initializeReportTemplateListener();
+    this.initializeFormAndChangeListeners();
+
+    //Idle Detection: It monitors user interactions like mouse movements, keyboard inputs, and potentially other
+    // application-specific activities (e.g., active HTTP requests).
+    this.initializeUserSessionIdleTimeoutListener();
+
+  }
+
+  ngOnInit(): void {
+    this.logger.debug('ReportComponent ngOnInit');
+  }
+
+  private initializeReportTemplateListener(): void {
+    this.logger.debug('Inside initializeReportTemplateListener');
+
+    this.$template = this.templateSubject.asObservable().pipe(filter((temp) => !!temp))
+      .pipe(tap((template) => {
+          this.loading = false;
+          const reportTemplate = template as ITemplate;
+          if (!this.preview) this.buildFilterFormGroup(reportTemplate.filters);
+          //   this.onFilter.next(this.filterFormGroup.value);
+          this.announcer.announce('Loading Report Preview');
+          this.startTime = Date.now();
+        })
+      ).pipe(switchMap((temp) =>
+          this.$onFilter.pipe(map((obj) => {
+                return flattenObject(obj);
+              })
+            ).pipe(switchMap((changes) => {
+
+                this.loading = true;
+
+                if (!this.preview) {
+                  if (this.intialLoad) this.applyFilterChanges(true);
+                  this.existingFilters = this.buildExistingFilters();
+                }
+
+                const filters = changes !== undefined && Object.keys(cleanObject(changes)).length ? cleanObject(changes) : { ...this.existingFilters };
+
+                this.filtered = changes !== undefined && Object.keys(cleanObject(changes)).length > 0;
+
+                const pageId = (temp as ITemplate).pages?.[this.reportTabIndex]?.id || undefined;
+
+                if (!this.preview) {
+
+                  return this.adaptReportService.getReportData(
+                    this.report.reportID,
+                    this.report.version,
+                    filters,
+                    this.previewSuppress,
+                    this.$reportLang(),
+                    pageId
+                  );
+                }
+                // assume new data view structure
+                return this.temp.renderTemplateWithMultipleViews(
+                  structuredClone(temp) as ITemplate,
+                  this.report.dataView,
+                  filters,
+                  this.previewSuppress
+                );
+              })
+            )
+        )
+      ).pipe(tap((temp) => {
+
+          if (temp.filters) {
+
+            this.showFilterButton = Object.values(temp.filters).some((filter) => {
+
+              const typedFilter = filter as IFilter<unknown>;
+              const pageId = (temp as ITemplate).pages?.[this.reportTabIndex]?.id || undefined;
+              if (!pageId) return false; // no pageId, no filter condition
+
+              return typedFilter?.condition?.pages?.includes(pageId) ?? true;
+            });
+
+          } else {
+            // When creating a preview, there are no previews
+            this.showFilterButton = false;
+          }
+
+          if (temp.filtersUsed) {
+
+            this.filterFormGroup.reset(temp.filtersUsed);
+            // function to determine if the onFilter value is the same as the temp.filtersUsed
+            // check if the onFilter value is the same as the temp.filtersUsed
+            // if not, emit the new filters temp.filtersUsed is the source of truth
+            if (!sameObjects(this.onFilter.value, temp.filtersUsed)) {
+              this.onFilter.next(temp.filtersUsed);
+            }
+          }
+          this.loading = false;
+          this.loaded.emit(true);
+
+          // this.editTitle.setValue(temp.title);
+          // this.editDescription.setValue(temp.description);
+        }),
+        catchError((err) => {
+
+          this.logger.error('templateSubject, err: ', err);
+          this.templateErrorSubject.next({ success: false, err });
+          this.loaded.emit(false);
+          return of();
+        })
+      ).pipe(distinctUntilChanged((a, b) => sameObjects(a!.filtersUsed, b!.filtersUsed) && a!.suppressed === b!.suppressed && a!.title === b!.title)); // prevents unnecessary reloads
+
+
+  }
+
+  private initializeFormAndChangeListeners(): void {
+    this.logger.debug('Inside initializeFormAndChangeListeners');
+
     this.editReportForm = this.fb.group({
       reportTexts: this.fb.array([], [Validators.required]),
       audience: this.fb.control('internal', [Validators.required]),
       slug: this.fb.control('', [Validators.required]),
+      suppressData: this.fb.control(false), // dummy only used to drive checkbox for suppression that is not saved
     });
 
     this.editSlug.disable();
@@ -396,25 +425,11 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       this.showFilterPanel = state;
     });
 
-    this.idle.onTimeout.subscribe(() => {
-      if (this.editReportForm.dirty) {
-        this.user.userInactivitySave({
-          action: 'EDIT',
-          type: 'Report',
-          body: {
-            reportID: this.report.reportID,
-            version: this.route?.snapshot?.queryParams['version'] ?? 'draft',
-            ...this.editReportForm.getRawValue(),
-          },
-        });
-      }
-    });
-
     const filterFormChangesSub = this.filterFormGroup.valueChanges.subscribe((changes) => {
-      // console.groupCollapsed('Filter Form Group Changes');
+      this.logger.debug('Filter Form Group Changes');
       const templateFilters = (this.templateSubject.value as ITemplate).filters;
       const pageId = (this.templateSubject.value as ITemplate).pages?.[this.reportTabIndex]?.id || undefined;
-      // console.log('Changes:', changes);
+      this.logger.debug('Changes:', changes);
       // console.log('formGroup:', this.filterFormGroup);
       // console.log('Template Filters:', templateFilters);
       // console.log('PageId:', pageId);
@@ -427,21 +442,21 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
           templateFilters[key].type === 'select' &&
           this.validateFilterCondition(key, pageId, changes, this.templateSubject.value as ITemplate)
       );
-      // console.log(`Select Filter: ${selectFilter}`);
+      this.logger.debug(`Select Filter: ${selectFilter}`);
 
       if (!selectFilter) {
-        console.warn('No select filter found in the filterFormGroup');
+        this.logger.warn('No select filter found in the filterFormGroup');
       }
 
       if (selectFilter && selectFilter in changes && changes[selectFilter] !== this.filterGroupSelection) {
-        // console.log(`Filter ${selectFilter} has changed from ${this.filterGroupSelection} to ${changes[selectFilter]}`);
+        // this.logger.debug(`Filter ${selectFilter} has changed from ${this.filterGroupSelection} to ${changes[selectFilter]}`);
         // set all values in changes to null except the selectFilter
         const resetFormValues: Record<string, any> = {};
         for (const filterKey in changes) {
           resetFormValues[filterKey] = filterKey === selectFilter ? changes[filterKey] : null;
         }
         this.loadingAvailableFilters = true;
-        // console.log(`Resetting filter form group with values:`, resetFormValues);
+        // this.logger.debug(`Resetting filter form group with values:`, resetFormValues);
         const defaultFilterGroupSelection = changes[selectFilter] === '' ? '' : null;
         this.filterGroupSelection = changes[selectFilter] || defaultFilterGroupSelection;
         this.filterFormGroup.reset(resetFormValues);
@@ -455,6 +470,29 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     });
 
     this.subscriptions.push(filterFormChangesSub);
+
+  }
+
+  private initializeUserSessionIdleTimeoutListener(): void {
+    this.logger.debug('Inside InitializeUserSessionIdleTimeoutListener');
+
+    // see the user.service for more info
+    this.idle.onTimeout.subscribe(() => {
+
+      this.logger.debug('Handle idle.onTimeout event to save any dirty values while the user was editing a report');
+
+      if (this.editReportForm.dirty) {
+        this.user.userInactivitySave({
+          action: 'EDIT',
+          type: 'Report',
+          body: {
+            reportID: this.report.reportID,
+            version: this.route?.snapshot?.queryParams['version'] ?? 'draft',
+            ...this.editReportForm.getRawValue(),
+          },
+        });
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -463,7 +501,10 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   private buildFilterFormGroup(filters: ITemplateFilters, group?: string) {
+    this.logger.debug('Inside ReportComponent buildFilterFormGroup');
+
     if (!filters) return;
+
     const targetGroup = group?.length ? (this.filterFormGroup.get(group)! as FormGroup) : this.filterFormGroup;
     Object.keys(filters).forEach((key) => {
       if ('code' in filters[key]) {
@@ -584,6 +625,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   public onTemplateChange(template: ITemplate) {
     this.templateUpdate.emit(template);
   }
+
   public onSuppress(toggle: boolean) {
     this.filterClass = toggle ? 'suppressed' : 'filtered';
 
@@ -591,6 +633,9 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   async ngAfterViewInit() {
+
+    this.logger.debug('Inside ReportComponent ngAfterViewInit, preview: ', this.preview);
+
     if (this.preview) {
       const reportPreview = this.report as IReportPreview;
 
@@ -608,17 +653,20 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     // this.report = data['reportResolver'];
     this.routeSub = combineLatest([this.route.params, this.route.queryParams]).subscribe(
       async ([params, queryParams]) => {
+
         try {
+          this.logger.debug('routeSub getReport: ', params['id'], queryParams['version']);
+
           const reportData = await firstValueFrom(
-            this.dataService.getReport(params['id'], queryParams['version']).pipe(
-              tap((reports) => {
-                reports = reports as IReport[];
+            this.adaptReportService.getReport(params['id'], queryParams['version']).pipe(tap((reports) => {
+
+              this.logger.debug('reload reports:', reports);
+              reports = reports as IReportModel[];
 
                 const result = reports[0];
                 this.recentActivity.addRecentActivity(params['id'], 'Report', reports[0]);
 
                 const supportedLangs = this.settings.getSettings().supportedLanguages || ['en'];
-
                 const maxLength = supportedLangs.length;
 
                 const texts: any[] = [];
@@ -637,10 +685,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
 
                 for (const _ of texts) {
                   const newGrp = this.fb.group({
-                    title: this.fb.control(
-                      '',
-                      [Validators.required],
-                      [uniqueNameValidator('Report', this.dataService, PageMode.EDIT)]
+                    title: this.fb.control('', [Validators.required], [uniqueNameValidator('Report', this.adaptDataService, PageMode.EDIT)]
                     ),
                     description: this.fb.control('', [Validators.required]),
                     verified: this.fb.control(false, [Validators.requiredTrue]),
@@ -666,13 +711,19 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
                   reportTexts: texts,
                   audience: result?.visibility,
                   slug: result?.slug ?? '',
+                  suppressData: this.fb.control(this.previewSuppress||false),
                 });
               })
             )
           );
-          this.report = (reportData as IReport[])[0];
-          this.reportTemplateHasSuppression = Object.keys((reportData as IReport[])[0]?.template?.suppression || {}).length !== 0;
-          this.previewSuppress = (reportData as IReport[])[0]?.visibility === 'external' && this.reportTemplateHasSuppression;
+          this.report = (reportData as IReportModel[])[0];
+
+          this.logger.debug('Read report: ', this.report.name);
+
+          this.reportTemplateHasSuppression = Object.keys((reportData as IReportModel[])[0]?.template?.suppression || {}).length !== 0;
+          this.previewSuppress = (reportData as IReportModel[])[0]?.visibility === 'external' && this.reportTemplateHasSuppression;
+
+          this.logger.debug('previewSuppress: ', this.previewSuppress);
           // resolve data view
 
           const state = this.location.getState() as any;
@@ -680,9 +731,8 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
           if (state?.['editMode']) this.mode = PageMode.EDIT;
 
           this.report.dataView = await firstValueFrom(
-            this.dataService
-              .getDataViews()
-              .pipe(map((views) => views.find((view) => view.dataViewID === this.report.dataView)))
+            this.adaptDataViewService.getDataViews().pipe(
+              map((views) => views.find((view) => view.dataViewID === this.report.dataView)))
           );
 
           this.templateSubject.next(this.report.template);
@@ -754,11 +804,15 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   public onTabChange() {
+    this.logger.debug('Inside ReportComponent onTabChange');
+
     this.filterFormGroup.reset();
     this.onFilter.next(this.filterFormGroup.value);
   }
 
   public editReport() {
+    this.logger.debug('Inside ReportComponent editReport');
+
     this.isEditMode() ? (this.mode = PageMode.VIEW) : (this.mode = PageMode.EDIT);
     if (this.mode === PageMode.EDIT) {
       this.beforeEditFormValue = this.editReportForm.value;
@@ -785,6 +839,8 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   public publishReport() {
+    this.logger.debug('Inside ReportComponent publishReport');
+
     //  (this.editAudience.value === 'external' && this.defaultReportText.dirty && !this.translationsGenerated)
 
     // verify stuff
@@ -793,7 +849,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       if (!text.verified) return;
     }
 
-    this.dataService.startReportPublish(this.report).subscribe({
+    this.adaptReportService.startReportPublish(this.report).subscribe({
       next: () => {
         this.publishConfirmationModal?.close();
         this.alert.add({
@@ -814,9 +870,10 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   public confirmUnPublish() {
+    this.logger.debug('Inside ReportComponent confirmUnPublish');
+
     this.unPublishModal?.close();
-    this.dataService
-      .unPublishReport(this.report, this.unPublishJustificationForm.get('justification')?.value)
+    this.adaptReportService.unPublishReport(this.report, this.unPublishJustificationForm.get('justification')?.value)
       .subscribe({
         next: () => {
           this.alert.add({
@@ -853,6 +910,9 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   public onEditSave(confirmed = false) {
+
+    this.logger.debug('Inside ReportComponent onEditSave');
+
     if (!confirmed) {
       this.editConfirmationModal?.open();
       return;
@@ -865,7 +925,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
     const { reportTexts, audience, slug } = this.editReportForm.getRawValue();
     // const reportEdit = structuredClone(this.report) as IReport;
 
-    const editObject = (reportTexts as any[]).reduce((accum, val, index) => {
+    const multipleLanguageReports = (reportTexts as any[]).reduce((accum, val, index) => {
       const lang = (this.settings.getSettings().supportedLanguages || ['en'])[index];
 
       if (!lang) {
@@ -884,14 +944,20 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       return Object.assign({ [lang]: accumObject }, accum);
     }, {});
 
-    this.dataService.editReport({ reportID: this.report.reportID, languages: editObject }).subscribe({
+    this.logger.debug('Calling editReport, editObject: ', multipleLanguageReports);
+
+    this.adaptReportService.editReport({ reportID: this.report.reportID, languages: multipleLanguageReports }).subscribe({
       next: (report) => {
+
+        this.logger.debug('Report edits saved');
+
         this.alert.add({ type: 'success', title: 'Report Save Complete', body: `Your report edits have been saved` });
         this.mode = PageMode.VIEW;
 
         // this.templateSubject.next(this.report.template);
 
-        this.dataService.refreshReports();
+        // we need to load the reports again as the status of the reports can be changed back to unpublished and we need to show it on the screen
+        this.adaptReportService.loadReportList();
         this.langIndex = 0;
 
         const languages = this.$englishReportPageContent()!.sections![0].questions![1].options;
@@ -899,8 +965,32 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
         this.translationsGenerated = false;
         this.reportTexts.markAsPristine();
 
-        this.dataService.getReport(this.report.reportID, this.report.version).subscribe((reportData) => {
-          if (reportData) this.report = (reportData as IReport[])[0];
+        //this.logger.debug('next calling getReport for report: ', JSON.stringify(this.report, null, 4));
+        // we need to load the draft because we remove the finalized version on a successful edit
+        // this.adaptReportService.getReport(this.report.reportID, 'draft').subscribe((reportData) => {
+        //
+        //   this.logger.debug('next getReport response: ', reportData);
+        //   if (reportData && reportData?.length > 0){
+        //     this.report = (reportData as IReportModel[])[0];
+        //   }
+        // });
+
+        // this.router.navigate(['admin', 'reports', this.report.reportID], {
+        //   queryParams: { version: 'draft' },
+        //   queryParamsHandling: 'merge' // Merges new query params with existing ones
+        // });
+
+        // this.router.navigate([], {
+        //relativeTo: this.route,
+        //   queryParams: { version: 'draft' },
+        //   queryParamsHandling: 'merge' // Merges new query params with existing ones
+        // });
+
+        this.logger.debug('Navigate back to draft version of the report');
+        // Navigate to parent (reports) and pass report id for child (report) and reload the report page for this report
+        this.router.navigate(['..', this.report.reportID], {
+          relativeTo: this.route, // need this when navigating from a relative path
+          queryParams: { version: 'draft' },
         });
       },
       error: (err) => {
@@ -916,7 +1006,7 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   }
 
   public generateTranslations() {
-    this.dataService
+    this.adaptDataService
       .translateReportText(this.report.reportID, {
         title: this.reportTexts.at(0).value['title'],
         description: this.reportTexts.at(0).value['description'],

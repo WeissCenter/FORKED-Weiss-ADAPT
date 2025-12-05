@@ -17,7 +17,8 @@ import { NotificationsService } from '../../../services/notifications.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getFormErrors, uniqueNameValidator } from '../../../util';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FileValidation, validate } from '@adapt/validation';
+import { ValidationTemplate, validate, ValidationError } from '@adapt/validation';
+import { ValidationService } from '../../../services/validation.service';
 
 function fileSizeValidator(maxSize: number) {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -29,7 +30,7 @@ function fileSizeValidator(maxSize: number) {
   };
 }
 
-function validateFile(service: AdaptDataService) {
+function validateFile(validationService: ValidationService) {
   return async (control: AbstractControl): Promise<any> => {
     // return null
 
@@ -43,23 +44,22 @@ function validateFile(service: AdaptDataService) {
       return null;
     }
 
-    const validationJson = await firstValueFrom(service.getValidationJSON(fileSpec));
+    const validationTemplate = await validationService.getValidationTemplate(fileSpec);
 
-    return fileValidate(file, validationJson);
+    return fileValidate(file, validationTemplate);
   };
 }
 
-function fileValidate(file: File, validationJson: FileValidation) {
+async function fileValidate(file: File, validationTemplate: ValidationTemplate) {
   const fileReader = new FileReader();
   fileReader.readAsArrayBuffer(file);
 
-  return new Promise((resolve, reject) => {
-    fileReader.onload = (e: any) => {
+  return new Promise<ValidationError[]>((resolve, reject) => {
+    fileReader.onload = async (e: any) => {
       const bufferArray = e?.target.result;
       const wb = xlsx.read(bufferArray, { type: 'buffer' });
 
-      const errors = validate(wb, validationJson);
-
+      const errors = await validate(wb, validationTemplate);
       if (errors.length) {
         return resolve(errors);
       }
@@ -73,6 +73,7 @@ function fileValidate(file: File, validationJson: FileValidation) {
 
 @Component({
   selector: 'adapt-upload-data',
+  standalone: false,
   templateUrl: './upload-data.component.html',
   styleUrls: ['./upload-data.component.scss'],
 })
@@ -95,7 +96,8 @@ export class UploadDataComponent {
     private data: AdaptDataService,
     private alert: AlertService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private validation: ValidationService
   ) {
     this.uploadDataFormGroup = this.fb.group({
       name: this.fb.control(
@@ -109,7 +111,7 @@ export class UploadDataComponent {
       path: this.fb.control(
         '',
         [Validators.required, fileSizeValidator(this.MAX_FILE_SIZE)],
-        [validateFile(this.data)]
+        [validateFile(this.validation)]
       ),
       connectionInfo: this.fb.group({
         type: this.fb.control('', [Validators.required]),
@@ -278,7 +280,7 @@ export class UploadDataComponent {
   private async handleFileProcess(createResult: DataSource | { dataSourceID: string; uploadURL: string }, file: any) {
     await this.handleFileUpload(createResult, file);
 
-    this.data
+    this.validation
       .validateFile(createResult.dataSourceID!)
       .pipe(
         repeat({ delay: 1000 }),

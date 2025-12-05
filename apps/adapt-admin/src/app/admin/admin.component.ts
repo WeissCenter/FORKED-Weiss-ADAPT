@@ -3,6 +3,7 @@ import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/servic
 
 @Component({
   selector: 'adapt-admin',
+  standalone: false,
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
 })

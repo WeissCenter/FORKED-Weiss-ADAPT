@@ -21,7 +21,7 @@
             class="font-xs display-flex flex-align-center text-no-underline text-center"
             [target]="footerLink.target === 'sameTab' ? '' : '_blank'"
             [href]="footerLink.url"
-            >{{ footerLink.label }}
+            ><span *ngIf="footerLink.external" class="visually-hidden">External link to </span>{{ footerLink.label }}
             <i *ngIf="footerLink.icon" aria-hidden="true" class="margin-left-05" [ngClass]="footerLink.icon"></i>
           </a>
         </li>

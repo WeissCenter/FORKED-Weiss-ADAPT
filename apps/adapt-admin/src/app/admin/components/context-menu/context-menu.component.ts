@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'adapt-context-menu',
+  standalone: false,
   templateUrl: './context-menu.component.html',
   styleUrls: ['./context-menu.component.scss'],
 })

@@ -2,7 +2,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable, from, isObservable, of, switchMap, catchError, map, startWith, delay } from 'rxjs';
 
-@Pipe({ name: 'loading' })
+@Pipe({ standalone: false, name: 'loading' })
 export class LoadingPipe implements PipeTransform {
   constructor(private announcer: LiveAnnouncer) {}
   transform(val: any, liveAnnounce?: string): Observable<any> {

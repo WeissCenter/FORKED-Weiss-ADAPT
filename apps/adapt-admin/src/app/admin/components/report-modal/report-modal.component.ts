@@ -1,33 +1,25 @@
-import {
-  AfterContentChecked,
-  ChangeDetectorRef,
-  Component,
-  computed,
-  HostListener,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, computed, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { StepsIndicatorComponent } from '../steps-indicator/steps-indicator.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, firstValueFrom, map, Observable, startWith, Subscription, switchMap, take } from 'rxjs';
+import { catchError, map, Observable, Subscription } from 'rxjs';
 import { AdaptDataService } from '../../../services/adapt-data.service';
-import { CreateReportInput, DataSetQueueStatus, DataView, IRenderedTemplate, ITemplate, PageMode } from '@adapt/types';
+import { CreateReportInput, DataSetQueueStatus, DataViewModel, IRenderedTemplate, ITemplate, PageMode } from '@adapt/types';
 import { FullPageModalComponent } from '../full-page-modal/full-page-modal.component';
-import { getFormErrors, uniqueNameValidator } from '../../../util';
+import { uniqueNameValidator } from '../../../util';
 import { ModalComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/modal/modal.component';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Idle } from '@ng-idle/core';
 import { UserService } from '../../../auth/services/user/user.service';
-import { TemplateService } from '../../../services/template.service';
 import { LocationStrategy } from '@angular/common';
 import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
 import slugify from 'slugify';
 import { NGXLogger } from 'ngx-logger';
-import { QuestionOptionContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
 @Component({
   selector: 'adapt-report-modal',
+  standalone: false,
   templateUrl: './report-modal.component.html',
   styleUrls: ['./report-modal.component.scss'],
 })
@@ -52,8 +44,8 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
 
   public reportFormGroup: FormGroup;
 
-  public dataViews: Observable<DataView[]>;
-  public filteredDataViews$: Observable<DataView[]>;
+  public dataViews: Observable<DataViewModel[]>;
+  public filteredDataViews$: Observable<DataViewModel[]>;
 
   public subscriptions: Subscription[] = [];
 
@@ -82,12 +74,12 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
   constructor(
     private logger: NGXLogger,
     private fb: FormBuilder,
-    //private route: ActivatedRoute,
-    public data: AdaptDataService,
+    public adaptDataService: AdaptDataService,
+    private adaptDataViewService: AdaptDataViewService,
+    private adaptReportService: AdaptReportService,
     private idle: Idle,
     private cdRef: ChangeDetectorRef,
     private user: UserService,
-    //private template: TemplateService,
     private alert: AlertService,
     private location: LocationStrategy,
     private router: Router,
@@ -100,11 +92,8 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
       dataView: this.fb.control('', [Validators.required]),
       template: this.fb.control('', [Validators.required]),
       visibility: this.fb.control('internal', [Validators.required]),
-      title: this.fb.control('', [Validators.required], [uniqueNameValidator('Report', this.data, PageMode.CREATE)]),
-      slug: this.fb.control(
-        '',
-        [Validators.required],
-        [uniqueNameValidator('Report', this.data, PageMode.CREATE, 'slug')]
+      title: this.fb.control('', [Validators.required], [uniqueNameValidator('Report', this.adaptDataService, PageMode.CREATE)]),
+      slug: this.fb.control('', [Validators.required], [uniqueNameValidator('Report', this.adaptDataService, PageMode.CREATE, 'slug')]
       ),
       description: this.fb.control('', [Validators.required]),
       preview: this.fb.control(undefined, [Validators.required]),
@@ -119,12 +108,12 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
       if (event.type === 'popstate') this.cancel();
     });
 
-    this.dataViews = this.data.getDataViews()
+    this.dataViews = this.adaptDataViewService.getDataViews()
       .pipe(map((views) => views.filter((view) => view.status === DataSetQueueStatus.AVAILABLE)));
 
     this.logger.debug('dataViews: ', this.dataViews);
 
-    this.reportTemplatesAsync = this.data
+    this.reportTemplatesAsync = this.adaptDataService
       .getTemplates<ITemplate>('ReportTemplate')
       .pipe(map((result) => result.map((temp: ITemplate) => ({ label: temp.title, value: temp }))));
 
@@ -186,7 +175,7 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
     // console.log('Inside report-modal component ngOnInit');
   }
 
-  private filterDataViews(reportingLevelLabel: string): Observable<DataView[]> {
+  private filterDataViews(reportingLevelLabel: string): Observable<DataViewModel[]> {
 
     this.logger.debug('Inside filteredDataViews, reportingLevelLabel: ', reportingLevelLabel);
 
@@ -270,7 +259,7 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
     }
   }
 
-  public open(dataView?: DataView, report?: Report, page = 0) {
+  public open(dataView?: DataViewModel, report?: Report, page = 0) {
     if (!this.modal) return;
     this.modal.open();
 
@@ -406,10 +395,7 @@ export class ReportModalComponent implements OnInit, OnDestroy, AfterContentChec
     //  reportingLevel: this.reportingLevel.value.value,
     };
 
-    this.data
-      .createReport(newReportItem)
-      .pipe(
-        catchError((err) => {
+    this.adaptReportService.createReport(newReportItem).pipe(catchError((err) => {
           this.saved = false;
           this.saving = false;
           this.failed = true;

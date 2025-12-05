@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'adapt-hero-banner',
+  standalone: false,
   templateUrl: './hero-banner.component.html',
   styleUrls: ['./hero-banner.component.scss'],
 })
@@ -13,5 +14,5 @@ export class HeroBannerComponent {
 
   public logoURL = `${environment.logoPath ?? 'assets/logos/generic'}/state-hero-logo.${environment.logoExtension ?? 'svg'}`;
   public logoIsSvg = this.logoURL.endsWith('.svg');
-  
+
 }

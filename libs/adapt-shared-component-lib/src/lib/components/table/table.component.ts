@@ -3,6 +3,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@ang
 
 @Component({
   selector: 'adapt-table',
+  standalone: false,
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })

@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subscription } from 'rxjs';
 import { RoleService } from '../../../auth/services/role/role.service';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -17,11 +17,13 @@ import { FilterPanelService } from '../../../../../../../libs/adapt-shared-compo
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
 import { RightSidePanelComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/right-side-panel/right-side-panel.component';
 import { DataViewModalComponent } from '../../components/data-view-modal/data-view-modal.component';
-import { DataView } from '@adapt/types';
+import { DataViewModel, IReportModel } from '@adapt/types';
 import { LocationStrategy } from '@angular/common';
 import { PagesContentService } from '@adapt-apps/adapt-admin/src/app/auth/services/content/pages-content.service';
 import { NGXLogger } from 'ngx-logger';
 import { PageContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
 
 interface DataViewFilter {
   dataSource: string[];
@@ -30,6 +32,7 @@ interface DataViewFilter {
 
 @Component({
   selector: 'adapt-data',
+  standalone: false,
   templateUrl: './data.component.html',
   styleUrls: ['./data.component.scss'],
 })
@@ -74,14 +77,20 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
   loadingViews = true;
   loadingSources = true;
 
-  public $dataViews = this.data.$dataViews;
+  public $dataViews: Observable<DataViewModel[]>;
+  public $reports: Observable<IReportModel[]>;
 
-  public $reports = this.data.$reports;
+  public totalCurrentDataList = new BehaviorSubject<DataViewModel[]>([]);
 
-  public totalCurrentDataList = new BehaviorSubject<DataView[]>([]);
-
-  public currentDataList = new BehaviorSubject<DataView[]>([]);
+  public currentDataList = new BehaviorSubject<DataViewModel[]>([]);
   public $currentDataList = this.currentDataList.asObservable();
+
+  // #### Filter panel toggle service logic ##########
+  private subscriptions: Subscription[] = [];
+  public showFilterPanel = false;
+  filterStateMessage = '';
+  originalFilters!: DataViewFilter;
+  //#########################################
 
   $pageContent: Signal<PageContentText | null> = this.pagesContentService.getPageContentSignal('data');
 
@@ -99,14 +108,17 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
     private location: LocationStrategy,
     private logger: NGXLogger,
     public role: RoleService,
-    private data: AdaptDataService,
-    //private alert: AlertService,
+    private adaptDataViewService: AdaptDataViewService,
+    private adaptReportService: AdaptReportService,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private filterPanelService: FilterPanelService,
     public pagesContentService: PagesContentService
   ) {
     this.logger.debug('Inside DataComponent constructor');
+
+    this.$dataViews = this.adaptDataViewService.getDataViews(); //  this.adaptDataService.$dataViews;
+    this.$reports = this.adaptReportService.getReportsListener();
 
     this.viewFilterGroup = this.fb.group({
       status: this.fb.control(''),
@@ -127,11 +139,31 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
     this.subscriptions.push(filterPanelSub);
   }
 
-  // Filter panel toggle service logic
-  private subscriptions: Subscription[] = [];
-  public showFilterPanel = false;
-  filterStateMessage = '';
-  originalFilters!: DataViewFilter;
+  ngOnInit(): void {
+    this.logger.debug('Inside DataComponent ngOnInit');
+
+    // We need to check to see if we need to pull the latest data views from the server
+    if (this.adaptDataViewService.isPolling()){
+      this.logger.debug('Polling is ongoing');
+    }
+    else {
+      this.adaptDataViewService.startPollingDataViewStatuses(); // force a refresh of the data views
+    }
+
+    this.adaptDataViewService.getDataViews().subscribe((val) => {
+      this.loadingViews = false;
+    });
+
+    this.outletViewsSub = this.$dataViews.subscribe((views) => {
+      const sorted = views.sort((a, b) => b.updated! - a.updated!);
+      this.originalFilters = this.viewFilterGroup.getRawValue();
+
+      this.currentDataList.next(sorted);
+      this.totalCurrentDataList.next(sorted);
+    });
+
+    // this.outletCreateClickSub = event.createButtonClick.subscribe(evt => this.dataViewModal?.open())
+  }
 
   toggleFilterPanel(close = false) {
     this.showFilterPanel = !this.showFilterPanel;
@@ -147,7 +179,7 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
     let currValue = this.totalCurrentDataList.value;
     this.toggleFilterPanel(true);
 
-    const views = currValue as DataView[];
+    const views = currValue as DataViewModel[];
 
     const { status } = this.viewFilterGroup.getRawValue();
 
@@ -177,38 +209,21 @@ export class DataComponent implements OnDestroy, OnInit, AfterViewInit {
     this.handleResume();
   }
 
-  ngOnInit(): void {
-    this.logger.debug('Inside DataComponent ngOnInit');
-
-    this.data.getDataViews().subscribe((val) => {
-      this.loadingViews = false;
-    });
-
-    this.outletViewsSub = this.$dataViews.subscribe((views) => {
-      const sorted = views.sort((a, b) => b.updated! - a.updated!);
-      this.originalFilters = this.viewFilterGroup.getRawValue();
-
-      this.currentDataList.next(sorted);
-      this.totalCurrentDataList.next(sorted);
-    });
-
-    // this.outletCreateClickSub = event.createButtonClick.subscribe(evt => this.dataViewModal?.open())
-  }
-
-  public editDataView(dataView: DataView, pageIndex = 0) {
+  public editDataView(dataView: DataViewModel, pageIndex = 0) {
     this.logger.debug('Inside editDataView');
     this.dataViewModal?.open(dataView, false, pageIndex);
   }
 
-  public viewDataView(dataView: DataView) {
+  public viewDataView(dataView: DataViewModel) {
     this.logger.debug('Inside viewDataView');
     this.dataViewModal?.open(dataView, true);
   }
 
-  public onClose(view?: DataView) {
+  public onClose(view?: DataViewModel) {
+    this.logger.debug('Inside onClose');
     if (!view) return;
 
-    this.data.addDataView(view);
+    this.adaptDataViewService.addDataView(view);
 
     // this.currentDataList.value.push(view as any)
     // this.currentDataList.next(this.currentDataList.value)

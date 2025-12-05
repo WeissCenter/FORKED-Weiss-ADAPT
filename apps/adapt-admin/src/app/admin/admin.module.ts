@@ -41,7 +41,6 @@ import { ReportModalComponent } from './components/report-modal/report-modal.com
 import { ListItemReportComponent } from './components/list-item-report/list-item-report.component';
 import { ListItemDataComponent } from './components/list-item-data/list-item-data.component';
 import { FooterComponent } from './components/footer/footer.component';
-//import { SharedModule } from '../app.shared-module';
 import { DataSourcesSettingsComponent } from './pages/settings/data-sources-settings/data-sources-settings.component';
 import { DataSourceModalComponent } from './components/data-source-modal/data-source-modal.component';
 import { BrandingSettingsComponent } from './pages/settings/branding-settings/branding-settings.component';
@@ -56,11 +55,15 @@ import { SecuritySettingsComponent } from './pages/settings/security-settings/se
 import { SessionReloadBannerComponent } from './components/session-reload-banner/session-reload-banner.component';
 import { LibModule } from '@adapt/adapt-shared-component-lib';
 import { WeissAccessibilityCenterModule } from 'weiss-accessibility-center';
-import { environment } from '../../environments/environment';
 import { AccessControlDirective } from '../auth/directive/access-control.directive';
 import { DataSuppressionSettingsComponent } from './pages/settings/data-suppression-settings/data-suppression-settings.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { LanguageSettingsComponent } from './pages/settings/language-settings/language-settings.component';
+import { AdaptDataService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data.service';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
+import { TemplateService } from '@adapt-apps/adapt-admin/src/app/services/template.service';
+import { ValidationService } from '../services/validation.service';
 
 @NgModule({
   declarations: [
@@ -131,6 +134,13 @@ import { LanguageSettingsComponent } from './pages/settings/language-settings/la
     ComponentsModule,
     LibModule,
     WeissAccessibilityCenterModule,
+  ],
+  providers: [
+    AdaptDataService,
+    AdaptDataViewService,
+    AdaptReportService,
+    TemplateService,
+    ValidationService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

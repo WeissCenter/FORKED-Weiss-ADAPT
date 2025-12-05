@@ -1,21 +1,24 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdaptDataService } from '../../../services/adapt-data.service';
-import { CreateReportInput, ISummaryTemplate, ITemplate } from '@adapt/types';
+import { CreateReportInput, DataViewModel, ISummaryTemplate, ITemplate } from '@adapt/types';
 import { catchError, firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
 import { TemplateService } from '../../../services/template.service';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
 
 @Component({
   selector: 'adapt-create-report',
+  standalone: false,
   templateUrl: './create-report.component.html',
   styleUrls: ['./create-report.component.scss'],
 })
 export class CreateReportComponent {
   public createReportForm: FormGroup;
 
-  public dataViewsList = this.dataService.getDataViews();
+  public $dataViews: Observable<DataViewModel[]>;
 
   public viewPreview = false;
 
@@ -31,12 +34,16 @@ export class CreateReportComponent {
 
   constructor(
     private fb: FormBuilder,
-    public dataService: AdaptDataService,
+    public adaptDataService: AdaptDataService,
+    private adaptDataViewService: AdaptDataViewService,
+    private adaptReportService: AdaptReportService,
     public templateService: TemplateService,
     private router: Router,
     private route: ActivatedRoute,
     private alert: AlertService
   ) {
+
+    this.$dataViews = this.adaptDataViewService.getDataViews();
     this.createReportForm = this.fb.group({
       name: this.fb.control('', { validators: [Validators.required] }),
       template: this.fb.control('', { validators: [Validators.required] }),
@@ -45,7 +52,7 @@ export class CreateReportComponent {
       dataViews: this.fb.array([]),
     });
 
-    this.reportTemplates = this.dataService
+    this.reportTemplates = this.adaptDataService
       .getTemplates<ITemplate>('ReportTemplate')
       .pipe(map((items) => items.map((item) => ({ label: item.title, value: item.id.replace('ID#', '') }))));
 
@@ -104,9 +111,7 @@ export class CreateReportComponent {
       template: templateDef as any,
     };
 
-    this.dataService
-      .createReport(newReportItem)
-      .pipe(
+    this.adaptReportService.createReport(newReportItem).pipe(
         catchError((err) => {
           throw this.alert.add({ type: 'error', title: 'Report Creation failed', body: err.error.err });
         })

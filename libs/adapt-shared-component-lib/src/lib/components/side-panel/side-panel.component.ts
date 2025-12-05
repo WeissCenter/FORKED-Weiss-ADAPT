@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewC
 
 @Component({
   selector: 'lib-adapt-side-panel',
+  standalone: false,
   templateUrl: './side-panel.component.html',
   styleUrl: './side-panel.component.scss',
 })

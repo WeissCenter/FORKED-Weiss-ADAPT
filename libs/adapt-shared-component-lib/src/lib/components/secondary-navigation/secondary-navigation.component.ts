@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'lib-adapt-secondary-navigation',
+  standalone: false,
   templateUrl: './secondary-navigation.component.html',
   styleUrl: './secondary-navigation.component.scss',
 })

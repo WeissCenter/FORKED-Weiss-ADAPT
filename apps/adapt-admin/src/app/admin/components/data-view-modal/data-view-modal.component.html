@@ -52,7 +52,7 @@
                   <strong>{{ type.value | valueLabel : typOptions }}</strong>
                 </div>
 
-                <!-- For what reporting year? -->
+                <!-- For what reporting year? For what fiscal year? -->
                 <ng-container [formGroup]="typeFields" *ngIf="currentTemplate">
                   <ng-container *ngFor="let field of currentTemplate.fields">
                     <ng-container *ngIf="mode === PageMode.CREATE; else viewOnly">
@@ -72,10 +72,12 @@
                       </ng-container>
                     </ng-container>
 
+                    <!-- EDIT mode: For what reporting year? For what fiscal year? -->
                     <ng-template #viewOnly>
                       <div class="view-only-preview display-flex gap-2 flex-column">
                         <label>{{ field.label }}</label>
-                        <strong> {{ typeFields.get(field.id)?.value }}</strong>
+                        <!-- {{ typeFields.get(field.id)?.value }} -->
+                       <strong>{{getFieldValue(field)}} </strong>
                       </div>
                     </ng-template>
                   </ng-container>
@@ -170,37 +172,40 @@
                             (currentDataView?.dataViewType === 'collection' &&
                               mode !== PageMode.CREATE &&
                               fileControlStates[i] === FileControlState.EMPTY) ||
-                            (fileControl.invalid && fileControl?.dirty && fileControl?.touched),
+                            (fileControl.invalid && fileControl?.dirty),
                           'text-black': true,
                           'bg-primary-lighter':
                             fileControlStates[i] === FileControlState.UPLOADING ||
                             fileControlStates[i] === FileControlState.VALIDATION
                         }" *ngIf="showFileAccordion(i)" [header]="file.name">
                         <div aria-live="polite"
-                          *ngIf="fileControl.invalid && fileControl?.dirty && fileControl?.touched"
+                          *ngIf="fileControl.invalid && fileControl?.dirty"
                           class="file-accordion-errors display-flex gap-2 bg-secondary-lighter padding-2">
                           <div class="errors-icon">
                             <i class="fal text-secondary font-xl fa-exclamation-circle"></i>
                           </div>
-                          <div class="errors-body">
-                            <!-- Something went wrong. -->
-                            <strong>{{ pageSections[1].messages!['error'].message }}</strong>
 
-                            <ng-container *ngIf="fileControl.errors?.['validateFiles'] as filesErrors">
-                              <ul class="usa-list">
-                                <li *ngFor="let error of filesErrors">
-                                  {{ error.error }}
-                                </li>
-                              </ul>
-                              <!-- Please review the file and re-upload. -->
-                              <p>{{ pageSections[1].messages!['error'].details }}</p>
-                            </ng-container>
+                          <div class="errors-body" *ngIf="fileControl.errors as fileErrors">
+                              <!-- Something went wrong. -->
+                              <strong>{{ pageSections[1].messages!['error'].message }}</strong>
 
+                              <ng-container *ngIf="fileErrors?.['validateFiles'] as validationErrors">
+                                <ul class="usa-list">
+                                  <li *ngFor="let error of validationErrors">
+                                    {{ error.message }}
+                                  </li>
+                                </ul>
+                                <!-- Please review the file and re-upload. -->
+                                <p>{{ pageSections[1].messages!['error'].details }}</p>
+                              </ng-container>
+                              <ng-container *ngIf="fileErrors?.['apiError'] as apiError">
+                                  <p>The system has encountered an error: {{ apiError }}</p>
+                              </ng-container>
 
-                            <ng-container *ngIf="fileControl.errors?.['required'] && source.value !== 'database'">
-                              <!-- This file is required for upload. -->
-                              <p>{{ pageSections[1].messages!['required'].message }} </p>
-                            </ng-container>
+                              <ng-container *ngIf="fileErrors?.['required'] && source.value !== 'database'">
+                                <!-- This file is required for upload. -->
+                                <p>{{ pageSections[1].messages!['required'].message }} </p>
+                              </ng-container>
                           </div>
                         </div>
 
@@ -345,11 +350,13 @@
                 </ul>
               </li>
 
+              <!-- Review summary question:  pageSections[2].question: Fiscal Year-->
               <li *ngFor="let field of currentTemplate?.fields">
                   <span>{{ getDetailLabel(pageSections[2].questions, field.id) }}</span>
                 <ul class="usa-list">
                   <li>
-                    <strong>{{ this.typeFields.get(field.id)?.value }}</strong>
+                    <!-- {{ this.typeFields.get(field.id)?.value }} -->
+                    <strong>{{ getFieldValue(field) }}</strong>
                   </li>
                 </ul>
               </li>
@@ -391,6 +398,7 @@
               </li>
 
               <li  *ngIf="source.value === 'database'">
+
                 <span>{{ getDetailLabel(pageSections[2].questions, 'dataLoadStatus') || 'Expected data and load status' }}</span>
                 <ul class="usa-list">
                   <li class="margin-0 load-status-li maxw-full" *ngFor="let data of this.currentTemplate?.files; let i = index">
@@ -504,7 +512,7 @@
                 <li>
                  Fiscal Year
                   <ul class="usa-list">
-                    <li><strong>{{reportingYear}}</strong></li>
+                    <li><strong>{{ getFieldOptionLabelForField('reportingYear', reportingYear) }} </strong></li>
                     <!-- <li *ngFor="let field of currentTemplate?.fields">
                       {{ field.shortLabel }}
                       <ul class="usa-list">
@@ -527,8 +535,6 @@
                   </li>
                 </ul>
               </li>
-
-
 
               <li *ngIf="source.value === 'collection'">
                 <span>Expected data and load status</span>
@@ -579,7 +585,7 @@
         pageContent.actions!['back_button']: 'Back'}}</button>
       <button (click)="next()" *ngIf="stepsIndicator && currentStep + 1 < stepsIndicator.length" class="usa-button">
         {{pageContent.actions!['next_button'] ? pageContent.actions!['next_button']: 'Next: '}} {{
-        stepsIndicator.getStepName(currentStep + 1) }}
+         stepsIndicator.getStepName(currentStep + 1) }}
       </button>
 
       <button (click)="doSave(currentStep >= 3, mode === PageMode.CREATE, true)"
@@ -629,70 +635,6 @@
     </ng-template>
   </div>
 </lib-adapt-modal>
-
-<!-- <lib-adapt-modal closeText="Close" heading="Proceed with caution" #refreshModal>
-
-    <div class="confirm-modal-body display-flex flex-column gap-2 padding-1">
-
-        <p>Refreshing this data may impact existing reports. Please provide a justification for this action.</p>
-
-
-        <form (ngSubmit)="confirmRefresh()" class=" display-flex flex-column gap-2" [formGroup]="refreshDataJustificationForm">
-
-            <div class="refresh-modal-field">
-                <lib-adapt-combo-box [required]="true" *ngIf="mode === PageMode.CREATE" formControlName="reason" placeholder=""
-                    [comboBoxStyle]="{'max-width': '60%'}" label="Reason:" [items]="refreshReasonOptions"
-                    itemAccessor="value" itemLabel="label">
-
-                    <ng-container errors>
-
-
-                        <div *ngIf="refreshReason?.invalid && (refreshReason?.dirty || refreshReason?.touched)"
-                            class="form-errors margin-top-1 text-emergency">
-
-                            <div *ngIf="refreshReason?.errors?.['required']" i18n>
-                                Refresh reason is required.
-                            </div>
-
-                        </div>
-
-
-                    </ng-container>
-
-                </lib-adapt-combo-box>
-            </div>
-
-            <div class="refresh-modal-field">
-                <label for="noteBox">Note: <span *ngIf="refreshNote?.hasValidator(Validators.required)" class="text-emergency">(Required)</span></label>
-                <textarea formControlName="note" id="noteBox" rows="10" class="usa-textarea"></textarea>
-
-
-                <div *ngIf="refreshNote?.invalid && (refreshNote?.dirty || refreshNote?.touched)"
-                    class="form-errors margin-top-1 text-emergency">
-
-                    <div *ngIf="refreshNote?.errors?.['required']" i18n>
-                        Refresh Note is required.
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="refresh-modal-controls display-flex gap-3">
-                <button type="submit" class="usa-button">Refresh Data</button>
-                <button type="button" class="usa-button usa-button--unstyled">Cancel</button>
-            </div>
-
-
-        </form>
-
-
-
-
-
-    </div>
-
-</lib-adapt-modal> -->
 
 <lib-adapt-modal closeText="Close" heading="Please provide a reason." #confirmModal>
   <div class="confirm-modal-body width-tablet-lg display-flex flex-column gap-2 padding-1">

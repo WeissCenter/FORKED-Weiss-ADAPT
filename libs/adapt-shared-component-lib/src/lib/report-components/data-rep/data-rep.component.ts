@@ -14,6 +14,7 @@ import { xlsx_delete_row } from '../../util';
 
 @Component({
   selector: 'lib-adapt-data-rep',
+  standalone: false,
   templateUrl: './data-rep.component.html',
   styleUrls: ['./data-rep.component.scss'],
 })
@@ -368,7 +369,7 @@ export class DataRepComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.suppressed) {
       const totalSelect = Array.isArray(this.raw.chart.data[0]?.value) ? this.raw.chart.data[0] : this.raw.chart;
-      
+
       const totalSelectTotalIsZero = (totalSelect.total ?? 0) === 0;
       let totalSelectHasNoData = false;
 

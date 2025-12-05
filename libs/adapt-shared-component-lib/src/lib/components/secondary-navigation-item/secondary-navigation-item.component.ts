@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'lib-adapt-secondary-navigation-item',
+  standalone: false,
   templateUrl: './secondary-navigation-item.component.html',
   styleUrl: './secondary-navigation-item.component.scss',
 })

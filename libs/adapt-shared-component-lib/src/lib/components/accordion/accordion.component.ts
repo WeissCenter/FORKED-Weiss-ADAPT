@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'lib-adapt-accordion',
+  standalone: false,
   templateUrl: './accordion.component.html',
   styleUrls: ['./accordion.component.scss'],
 })

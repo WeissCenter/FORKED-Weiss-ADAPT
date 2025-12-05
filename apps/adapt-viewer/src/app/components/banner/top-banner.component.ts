@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'adapt-top-banner',
+  standalone: false,
   templateUrl: './top-banner.component.html',
   styleUrls: ['./top-banner.component.scss'],
   encapsulation: ViewEncapsulation.None,

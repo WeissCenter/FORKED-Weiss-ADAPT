@@ -1,15 +1,15 @@
 import { LanguageService, SettingsService } from '@adapt/adapt-shared-component-lib';
 import { environment } from '../../environments/environment';
-import { AdaptSettings, IReport, Response, ShareReport, ViewerTemplate } from '@adapt/types';
+import { AdaptSettings, IReportModel, Response, ShareReport, ViewerTemplate } from '@adapt/types';
 import { HttpClient } from '@angular/common/http';
 import { effect, Injectable } from '@angular/core';
-import { BehaviorSubject, map, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdaptDataService {
-  private _reports = new ReplaySubject<IReport[]>();
+  private _reports = new BehaviorSubject<IReportModel[]>([]); //ReplaySubject<IReportModel[]>();
   private $reports = this._reports.asObservable();
 
   constructor(private http: HttpClient, private settings: SettingsService, private language: LanguageService) {
@@ -28,7 +28,7 @@ export class AdaptDataService {
     sortDirection: 'asc' | 'desc' = 'desc'
   ) {
     console.log(`inside getReports with lang=${lang}`);
-    return this.http.get<Response<IReport[]>>(`${environment.API_URL}reports?lang=${lang}`).pipe(
+    return this.http.get<Response<IReportModel[]>>(`${environment.API_URL}reports?lang=${lang}`).pipe(
       map((resp) => resp.data),
       tap((reports) => console.log('fetched reports index 0:', reports[0])),
       map((reports) =>
@@ -49,7 +49,7 @@ export class AdaptDataService {
 
   public getReport(slug: string, lang = 'en') {
     return this.http
-      .get<Response<IReport>>(`${environment.API_URL}reports/${slug}?lang=${lang}`)
+      .get<Response<IReportModel>>(`${environment.API_URL}reports/${slug}?lang=${lang}`)
       .pipe(map((resp) => resp.data));
   }
 
@@ -69,6 +69,11 @@ export class AdaptDataService {
     return this.http
       .get<Response<ShareReport>>(`${environment.API_URL}reports/share/${shareSlug}`)
       .pipe(map((result) => result.data));
+  }
+
+  public getReportsListener(): Observable<IReportModel[]> {
+    //this.logger.debug('Inside getReportsListener');
+    return  this._reports.asObservable();  //this.$reports;
   }
 
   public get reports() {

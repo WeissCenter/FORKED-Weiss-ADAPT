@@ -1,10 +1,11 @@
-import { IReport, getPercentage } from '@adapt/types';
+import { IReportModel, getPercentage } from '@adapt/types';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 
 @Component({
   selector: 'adapt-count-breakdown',
+  standalone: false,
   templateUrl: './count-breakdown.component.html',
   styleUrls: ['./count-breakdown.component.scss'],
 })

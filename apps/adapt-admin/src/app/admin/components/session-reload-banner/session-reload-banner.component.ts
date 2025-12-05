@@ -6,7 +6,8 @@ import { AdaptDataService } from '../../../services/adapt-data.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'adapt-session-reload-banner', 
+  selector: 'adapt-session-reload-banner',
+  standalone: false,
   templateUrl: './session-reload-banner.component.html',
   styleUrl: './session-reload-banner.component.scss',
 })

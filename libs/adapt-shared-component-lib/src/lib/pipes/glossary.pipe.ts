@@ -4,6 +4,7 @@ import { IGlossaryTerm, LanguageCode } from '@adapt/types';
 
 @Pipe({
   name: 'glossary',
+  standalone: false,
 })
 export class GlossaryPipe implements PipeTransform {
   constructor(private glossary: GlossaryService) {}

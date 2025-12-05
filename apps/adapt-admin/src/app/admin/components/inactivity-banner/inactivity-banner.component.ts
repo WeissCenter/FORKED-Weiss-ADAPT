@@ -5,6 +5,7 @@ import { SettingsService } from '@adapt/adapt-shared-component-lib';
 
 @Component({
   selector: 'adapt-inactivity-banner',
+  standalone: false,
   templateUrl: './inactivity-banner.component.html',
   styleUrl: './inactivity-banner.component.scss',
 })

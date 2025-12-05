@@ -1,7 +1,7 @@
-import { DataSet, DataSource } from '@adapt/types';
+import { DataSet, DataSource, DataViewModel, IReportModel } from '@adapt/types';
 import { Component, computed, effect, OnInit, Signal } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from '../../../auth/services/user/user.service';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { RecentActivityService } from '../../../services/recent-activity.service';
@@ -14,18 +14,23 @@ import {
 import { RoleService } from '../../../auth/services/role/role.service';
 import { environment } from '@adapt-apps/adapt-admin/src/environments/environment';
 import { NGXLogger } from 'ngx-logger';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
 
 @Component({
   selector: 'adapt-home',
+  standalone: false,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public dataSources = this.data.getDataSources();
-  public dataViews = this.data.getDataViews();
-  public reports = this.data.getReports();
-  private $reports: any[] = [];
-  private $dataViews: any[] = [];
+  public dataSources = this.adaptDataService.getDataSources();
+
+  public $dataViews: Observable<DataViewModel[]>;
+  public $reports: Observable<IReportModel[]>;
+
+  private $reportsSorted: any[] = [];
+  private $dataViewsSorted: any[] = [];
 
   loadingReports = true;
   loadingDataViews = true;
@@ -51,28 +56,33 @@ export class HomeComponent implements OnInit {
     public role: RoleService,
     public route: ActivatedRoute,
     private router: Router,
-    public data: AdaptDataService,
+    public adaptDataService: AdaptDataService,
+    private adaptDataViewService: AdaptDataViewService,
+    private adaptReportService: AdaptReportService,
     public recent: RecentActivityService,
     private metaService: Meta,
     public pagesContentService: PagesContentService
   ) {
     this.logger.debug('Inside HomeComponent constructor');
 
+  this.$dataViews = this.adaptDataViewService.getDataViews();
+  this.$reports = this.adaptReportService.getReportsListener();
+
     this.initializeComponentSignals();
 
-    this.reportSubscription = this.reports.subscribe((reports) => {
+    this.reportSubscription = this.$reports.subscribe((reports) => {
       this.loadingReports = false;
       // sort by updated field, latest at top
-      this.$reports = reports.sort((a, b) => {
+      this.$reportsSorted = reports.sort((a, b) => {
         const updatedA = parseInt(a.updated, 10); // Convert the string to an integer
         const updatedB = parseInt(b.updated, 10);
         return updatedB - updatedA;
       });
     });
-    this.dataViewSubscription = this.dataViews.subscribe((views) => {
+    this.dataViewSubscription = this.$dataViews.subscribe((views) => {
       this.loadingDataViews = false;
       // sort by created field, latest at top
-      this.$dataViews = views.sort((a, b) => {
+      this.$dataViewsSorted = views.sort((a, b) => {
 
         return new Date(b.created).getTime() - new Date(a.created).getTime();
       });
@@ -80,7 +90,7 @@ export class HomeComponent implements OnInit {
 
     this.route.params.subscribe((params) => {
       if ('slug' in params) {
-        this.data.loadSharedReport(params['slug'] as string).subscribe((result) => {
+        this.adaptDataService.loadSharedReport(params['slug'] as string).subscribe((result) => {
           this.router.navigate(['admin', 'reports', result.reportID], {
             queryParams: { ...result.filters, version: 'draft' },
           });
@@ -90,16 +100,16 @@ export class HomeComponent implements OnInit {
   }
 
   public getImpactAnalysisForView(view: DataSet) {
-    return this.$reports.filter((report) => report.dataSetID === view.dataSetID).length;
+    return this.$reportsSorted.filter((report) => report.dataSetID === view.dataSetID).length;
   }
 
   public getImpactAnalysisForSource(source: DataSource) {
-    const dataViews = this.$dataViews.filter((item: DataSet) =>
+    const dataViewsSorted = this.$dataViewsSorted.filter((item: DataSet) =>
       item?.dataSources?.some((dataSourceItem) => dataSourceItem.dataSource === source.dataSourceID)
     );
     return {
-      dataViewCount: dataViews.length,
-      reportCount: this.$reports.filter((report) => dataViews.some((dataset) => dataset.dataSetID === report.dataSetID))
+      dataViewCount: dataViewsSorted.length,
+      reportCount: this.$reportsSorted.filter((report) => dataViewsSorted.some((dataset) => dataset.dataSetID === report.dataSetID))
         .length,
     };
     //

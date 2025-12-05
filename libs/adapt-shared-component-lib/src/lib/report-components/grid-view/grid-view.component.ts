@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'lib-adapt-grid-view',
+  standalone: false,
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
 })

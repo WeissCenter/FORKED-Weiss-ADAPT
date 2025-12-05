@@ -9,6 +9,7 @@ import { RoleService } from '../../../auth/services/role/role.service';
 
 @Component({
   selector: 'adapt-sidebar',
+  standalone: false,
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
@@ -38,7 +39,7 @@ export class SidebarComponent implements AfterViewInit {
     private sanitzier: DomSanitizer,
     public user: UserService,
     private settings: SettingsService
-  ) { 
+  ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         (document.querySelector('.skip-to')?.querySelector('button') as HTMLButtonElement)?.focus();

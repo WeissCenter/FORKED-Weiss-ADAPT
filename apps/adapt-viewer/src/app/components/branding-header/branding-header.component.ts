@@ -3,6 +3,7 @@ import { ViewerPagesContentService } from '../../services/content/viewer-pages-c
 import { environment } from '../../../environments/environment';
 @Component({
   selector: 'branding-header',
+  standalone: false,
   templateUrl: './branding-header.component.html',
   styleUrls: ['./branding-header.component.scss'],
 })
