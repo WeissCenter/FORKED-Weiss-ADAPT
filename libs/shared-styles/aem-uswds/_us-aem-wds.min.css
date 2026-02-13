@@ -14065,7 +14065,7 @@ template {
   --usa-reverse-white-black: var(--usa-color-global-white);
   --usa-reverse-black-white: var(--usa-color-global-black);
   --usa-body-background: var(--usa-white);
-  --usa-focus-color: var(--usa-color-mint-vivid-30);
+  --usa-focus-color: var(--usa-color-mint-vivid-40);
   --usa-base-ink: var(--usa-color-gray-90);
   --usa-base-darkest: var(--usa-color-gray-90);
   --usa-base-darker: var(--usa-color-gray-cool-70);

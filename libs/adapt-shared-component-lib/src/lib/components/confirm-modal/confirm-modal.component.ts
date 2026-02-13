@@ -3,6 +3,7 @@ import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'lib-adapt-confirm-modal',
+  standalone: false,
   templateUrl: './confirm-modal.component.html',
   styleUrl: './confirm-modal.component.scss',
 })

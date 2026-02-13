@@ -1,7 +1,5 @@
-<section
-  class="report-container grid-container position-relative gap-4 display-flex flex-column" 
-  [class.z-100]="!showFilterPanel && !dataModalOpen" [class.z-200]="showFilterPanel || dataModalOpen"
-  *ngIf="$report | async as rpt">
+<section *ngIf="$report | async as rpt" class="report-container grid-container position-relative gap-4 display-flex flex-column"
+         [class.z-100]="!showFilterPanel && !dataModalOpen" [class.z-200]="showFilterPanel || dataModalOpen">
   <div class="report-header width-full display-flex usa-prose flex-column">
     <lib-adapt-h-element level="h1" ngClass="margin-0 maxw-tablet-lg usa-prose">{{
       rpt.template.title
@@ -35,7 +33,7 @@
             id="shareReportBtn"
             type="button"
             class="usa-button flex-column padding-2 usa-button--unstyled">
-            <i class="fal fa-share" aria-hidden="true"></i>
+            <i class="fal fa-share" aria-hidden="true" role="img" alt=""></i>
             {{$reportContent()?.actions?.share}}
           </button>
 
@@ -45,7 +43,7 @@
             type="button"
             class="usa-button flex-column usa-button--unstyled"
             *ngIf="availableFilters && showFilterButton">
-            <i class="fal fa-filter" aria-hidden="true"></i>
+            <i class="fal fa-filter" aria-hidden="true" role="img" alt=""></i>
             {{$reportContent()?.actions?.filter}}
           </button>
         </div>
@@ -134,19 +132,12 @@
         </div>
       </ng-template>
 
-      <adapt-right-side-panel
-        [title]="'Filter'"
-        [description]="'Make your filtering selections and hit apply.'"
-        #filterPanel>
+      <adapt-right-side-panel #filterPanel [title]="'Filter'" [description]="'Make your filtering selections and hit apply.'">
         <ng-container body>
           <form [formGroup]="filterFormGroup" class="display-flex flex-column margin-top-1 gap-3">
             <ng-container *ngFor="let filter of data.template.filters | keyvalue : originalOrder">
               <ng-container *ngIf="showFilter(data.template, $any(filter.value))">
-                <ng-container
-                  *ngTemplateOutlet="
-                    filterTemplate;
-                    context: { $implicit: filter, form: filterFormGroup }
-                  "></ng-container>
+                <ng-container *ngTemplateOutlet="filterTemplate; context: { $implicit: filter, form: filterFormGroup }"></ng-container>
               </ng-container>
             </ng-container>
           </form>
@@ -172,7 +163,7 @@
       <ng-container *ngIf="!data.error && loading">
         <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="true">
           <div class="display-flex flex-column flex-align-center gap-1">
-            <img src="assets/gif/dna.gif" alt aria-hidden="true" />
+            <img src="assets/gif/dna.gif" alt="" aria-hidden="true" />
             <strong class="usa-prose">We are working on your report. This should only take a moment.</strong>
           </div>
         </div>
@@ -233,7 +224,6 @@
       *ngIf="section | reportCondition : filters : page.context : reportTabIndex as sectionResult">
       <ng-container *ngIf="sectionResult.section as section">
         <ng-container [ngSwitch]="section.type">
-    
           <lib-adapt-quick-summary
             *ngSwitchCase="'quickSummary'"
             [report]="_report"
@@ -316,7 +306,7 @@
           title="Copy report share link"
           aria-label="Copy report share link"
           class="usa-button usa-button--unstyled">
-          <i aria-hidden="true" class="fal fa-copy"></i>
+          <i aria-hidden="true" class="fal fa-copy" role="img" alt=""></i>
         </button>
       </div>
     </ng-container>

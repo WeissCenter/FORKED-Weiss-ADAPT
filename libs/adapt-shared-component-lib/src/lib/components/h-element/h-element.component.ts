@@ -5,6 +5,7 @@ import { EditableDirective } from '../../directive';
 
 @Component({
   selector: 'lib-adapt-h-element',
+  standalone: false,
   templateUrl: './h-element.component.html',
   styleUrls: ['./h-element.component.scss'],
 })

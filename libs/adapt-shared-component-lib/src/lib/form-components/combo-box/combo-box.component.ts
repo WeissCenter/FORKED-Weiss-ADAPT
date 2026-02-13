@@ -19,6 +19,7 @@ let comboBox: any;
 
 @Component({
   selector: 'lib-adapt-combo-box',
+  standalone: false,
   templateUrl: './combo-box.component.html',
   styleUrls: ['./combo-box.component.scss'],
 })
@@ -100,7 +101,6 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
         }
       });
     })
-    
   }
 
   compareByID(itemOne: any, itemTwo: any) {
@@ -119,23 +119,23 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
     //   if (this.options) {
     //     this.options.changes.subscribe(() => this.writeValue(this.value));
     //   }
-  
+
     //   if (this.comboBoxContainer && comboBox) {
     //     comboBox.init(this.comboBoxContainer.nativeElement);
-  
+
     //     if (this.disabled || this.readonly) {
     //       comboBox.disable(this.parent!.nativeElement);
     //     }
-  
+
     //     if (this.disableClear)
     //       this.comboBoxContainer.nativeElement
     //         .getElementsByClassName('usa-combo-box__clear-input__wrapper')
     //         .item(0)
     //         ?.setAttribute('hidden', 'true');
-  
+
     //     this.parent?.nativeElement.addEventListener('focusout', (event) => {
     //       if (!event.isTrusted) return;
-  
+
     //       this.markAsTouched();
     //     });
     //   }
@@ -158,7 +158,6 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
   }
 
   writeValue(obj: any): void {
-   
     setTimeout(() => {
 
       if(this.delayedSet)   this.value = obj;
@@ -170,14 +169,13 @@ export class ComboBoxComponent implements AfterViewInit, OnDestroy, ControlValue
 
         comboBoxEl.dispatchEvent(event);
         this.updateDisabledState();
-      
       }
     }, 100);
 
     if(!this.delayedSet)  this.value = obj;
 
-  
- 
+
+
   }
 
   registerOnChange(fn: any): void {

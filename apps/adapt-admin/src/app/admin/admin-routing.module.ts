@@ -14,6 +14,7 @@ import { AccessibilitySettingsComponent } from './pages/settings/accessibility-s
 import { DataSourcesSettingsComponent } from './pages/settings/data-sources-settings/data-sources-settings.component';
 import { BrandingSettingsComponent } from './pages/settings/branding-settings/branding-settings.component';
 import { FooterLinksSettingsComponent } from './pages/settings/footer-links-settings/footer-links-settings.component';
+import { FooterLinksSettingsGuard } from './pages/settings/footer-links-settings/footer-links-settings.guard';
 import { UserSettingsComponent } from './pages/settings/user-settings/user-settings.component';
 import { SecuritySettingsComponent } from './pages/settings/security-settings/security-settings.component';
 import { DataSuppressionSettingsComponent } from './pages/settings/data-suppression-settings/data-suppression-settings.component';
@@ -149,14 +150,7 @@ const routes: Routes = [
             component: FooterLinksSettingsComponent,
             data: { breadcrumbLabel: 'Footer Links' },
             canActivate: [roleGuard('Tool Settings', 'Write')],
-            canDeactivate: [
-              (
-                component: ReportComponent,
-                currentRoute: ActivatedRouteSnapshot,
-                currentState: RouterStateSnapshot,
-                nextState: RouterStateSnapshot
-              ) => component.canDeactivate(true, nextState),
-            ],
+            canDeactivate: [FooterLinksSettingsGuard],
           },
           {
             path: 'user-management',

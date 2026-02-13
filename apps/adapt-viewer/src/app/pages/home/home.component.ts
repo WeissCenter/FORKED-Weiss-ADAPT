@@ -1,15 +1,14 @@
 import { ChangeDetectionStrategy, Component, computed, effect, OnInit, signal, Signal } from '@angular/core';
 
-import { ViewerContentText, HomePageContentText, QuestionContentText } from '../../models/content-text.model';
+import { QuestionContentText } from '../../models/content-text.model';
 import { ViewerPagesContentService } from '../../services/content/viewer-pages-content.service';
 import { AdaptDataService } from '../../services/adapt-data.service';
-import { firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LanguageService } from '@adapt/adapt-shared-component-lib';
-import { IReport } from '@adapt/types';
+import { IReportModel } from '@adapt/types';
 
 @Component({
   selector: 'adapt-viewer-home',
+  standalone: false,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush, 
@@ -33,25 +32,29 @@ export class HomeComponent implements OnInit {
     });
   });
 
-  reports$ = this.data.reports.pipe(
-    map((reports) => reports.slice(0, 5))
-  );
+  reportsLoadedComplete: boolean = false;
+  listOfAllReports: IReportModel[] = [];
+  // reports$ = this.adaptDataService.reports.pipe(
+  //   map((reports) => reports.slice(0, 5))
+  // );
 
-  ready = computed(() => 
+  ready = computed(() =>
     this.$content() !== null && this.$content() !== undefined &&
     this.$selFreqAskedQuestions() !== null && this.$selFreqAskedQuestions() !== undefined
   );
 
   constructor(
     public viewerPagesContentService: ViewerPagesContentService,
-    private data: AdaptDataService,
+    private adaptDataService: AdaptDataService,
     private route: ActivatedRoute,
-    private language: LanguageService,
     private router: Router
   ) {
+
+    this.subscribeToReportsListener();
+
     this.route.params.subscribe((params) => {
       if ('slug' in params) {
-        this.data.loadSharedReport(params['slug'] as string).subscribe((result) => {
+        this.adaptDataService.loadSharedReport(params['slug'] as string).subscribe((result) => {
           this.router.navigate(['reports', result.reportSlug], {
             state: { filters: result.filters, page: result.tabIndex },
           });
@@ -59,6 +62,8 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+  /*
 
   comparisonContent = {
     title: 'Comparison mode',
@@ -72,6 +77,7 @@ export class HomeComponent implements OnInit {
       required: 'All fields are required.',
     },
   };
+
 
   comparisonOptions = [
     {
@@ -91,6 +97,8 @@ export class HomeComponent implements OnInit {
       value: 'rogers',
     },
   ];
+
+   */
 
   comparisonData = [
     {
@@ -458,4 +466,28 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  private subscribeToReportsListener() {
+    //this.logger.debug('Inside subscribeToReportsListener');
+
+    this.setReportsLoadingStatus(false);
+
+    this.adaptDataService.getReportsListener().subscribe((reports) => {
+      //this.logger.debug('Getting notification of updated reports from service', reports?.length);
+
+      this.listOfAllReports = reports.slice(0, 5);
+
+      console.log('listOfAllReports', this.listOfAllReports);
+
+      this.setReportsLoadingStatus(true);
+
+    });
+  }
+
+  private setReportsLoadingStatus(reportsLoadedStatus: boolean) {
+    //this.logger.debug('Inside setReportsLoadingStatus: ', reportsLoadedStatus);
+    //setTimeout(() => {
+    this.reportsLoadedComplete = reportsLoadedStatus;
+    // }, 1); // Adjust this delay as needed
+  }
 }

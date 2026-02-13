@@ -5,6 +5,7 @@ import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'lib-adapt-alert',
+  standalone: false,
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
 })
@@ -14,7 +15,6 @@ export class AlertComponent {
   public alerts$: Observable<Alert>;
 
   constructor(@Inject(AlertService) private alert: AlertService) {
-    
     this.alerts$ = this.alert.alertQueue
       .pipe(concatMap((v) => concat(of(v), this.delayed$)))
       .pipe(filter((v) => v != null))

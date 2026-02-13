@@ -17,6 +17,7 @@ import { fromEvent, skip, Subscription, take, throttle, throttleTime } from 'rxj
 import { NGXLogger } from 'ngx-logger';
 @Component({
   selector: 'adapt-in-page-navigation',
+  standalone: false,
   templateUrl: './in-page-navigation.component.html',
   styleUrls: ['./in-page-navigation.component.scss'],
 })
@@ -97,20 +98,28 @@ export class InPageNavigationComponent implements AfterViewInit {
   }
 
   private scrollAndUpdateClass(targetElement: HTMLElement, clickedItem: HTMLElement) {
-    // Start the scroll
-    const scrollPromise = targetElement.scrollIntoView({ behavior: 'instant' });
+    // Allow the element to receive programmatic focus
+    targetElement.setAttribute('tabindex', '-1');
+
+    // Scroll into view
+    targetElement.scrollIntoView({ behavior: 'instant' });
+
+    // Move focus to the target element for accessibility
+    targetElement.focus({ preventScroll: true });
+
+    // Clean up tabindex on blur to avoid polluting tab order
+    targetElement.addEventListener('blur', () => {
+      targetElement.removeAttribute('tabindex');
+    }, { once: true });
 
     // Use NgZone.runOutsideAngular to avoid triggering change detection
     this.ngZone.runOutsideAngular(() => {
-      // Wait for scrolling to finish and then some extra time for USWDS to update
-      Promise.resolve(scrollPromise).then(() => {
-        setTimeout(() => {
-          // Run the class update inside the Angular zone to ensure change detection
-          this.ngZone.run(() => {
-            this.updateCurrentItem(clickedItem);
-          });
-        }, 100); // Adjust this delay as needed
-      });
+      setTimeout(() => {
+        // Run the class update inside the Angular zone to ensure change detection
+        this.ngZone.run(() => {
+          this.updateCurrentItem(clickedItem);
+        });
+      }, 100); // Adjust this delay as needed
     });
   }
 

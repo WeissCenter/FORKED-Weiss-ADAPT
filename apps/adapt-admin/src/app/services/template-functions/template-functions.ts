@@ -19,12 +19,7 @@ export const context = async function (this: any, field: string, ...args: any[])
 
 export const glossary = function (this: any, key: string, field: 'label' | 'definition') {
   const glossary = this.glossaryService as GlossaryService;
-
-  if (!glossary?.hasTerm(key)) {
-    return key;
-  }
-
-  return (glossary.getTerm(key) as IGlossaryTerm)[field] || key;
+  return (glossary.getGlossaryTerm(key) as IGlossaryTerm)[field];
 };
 
 export const top_disabilities_percentages = async function (

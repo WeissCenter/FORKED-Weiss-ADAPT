@@ -16,6 +16,7 @@ import { TabComponent } from '../tab/tab.component';
 
 @Component({
   selector: 'adapt-tab-view',
+  standalone: false,
   templateUrl: './tab-view.component.html',
   styleUrls: ['./tab-view.component.scss'],
 })

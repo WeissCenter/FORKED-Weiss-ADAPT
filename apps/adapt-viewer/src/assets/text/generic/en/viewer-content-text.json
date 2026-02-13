@@ -142,7 +142,8 @@
         "suppressed": "Suppressed",
         "filtered": "Filtered",
         "close": "Close",
-        "total_label": "Total"
+        "total_label": "Total",
+        "report-filter-no-data": "Data is not collected for this category in your State."
       }
     },
     "error": {

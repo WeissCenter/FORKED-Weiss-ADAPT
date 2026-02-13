@@ -3,6 +3,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl, Valida
 
 @Component({
   selector: 'lib-adapt-text-input',
+  standalone: false,
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.scss'],
 })

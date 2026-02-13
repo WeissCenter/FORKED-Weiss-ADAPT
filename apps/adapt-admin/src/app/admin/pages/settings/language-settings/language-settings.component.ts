@@ -11,6 +11,7 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'adapt-language-settings',
+  standalone: false,
   templateUrl: './language-settings.component.html',
   styleUrl: './language-settings.component.scss',
 })

@@ -5,7 +5,7 @@
   class="adapt-side-panel position-fixed overflow-auto top-0 {{direction}}-0 height-viewport width-full border-base-lighter  maxw-mobile display-flex flex-column gap-05 z-200 bg-base-lightest shadow-2"
   role="dialog"
   aria-modal="true"
-  cdkTrapFocus="{{show}}"
+  [cdkTrapFocus]="show"
   [ngClass]="{'border-left-1px radius-left-lg': direction === 'right', 'border-right-1px radius-right-lg': direction === 'left'}"
   aria-labelledby="adaptSidePanelTitle">
   <div class="display-flex margin-y-1 padding-x-2 flex-align-start gap-2 flex-justify">
@@ -16,7 +16,7 @@
       id="adaptSidePanelCloseButton"
       (click)="close()">
       {{ selectorClose }}
-      <i class="fas fa-times" aria-hidden="true"></i>
+      <i class="fas fa-times" aria-hidden="true" role="img" alt=""></i>
     </button>
   </div>
   <p class="padding-x-2">{{ description }}</p>

@@ -13,7 +13,7 @@
 
         <a href="https://weisscenter.gitbook.io/weisscenter/user-guide/quickstart/homepage" target="_blank"
           aria-label="Learn More (opens in a new tab)" style="font-size: 0.8rem;margin-top: 8px;">
-          <span aria-hidden="true">{{pageContent.learn_more_link}} <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
+          <span aria-hidden="true">{{pageContent.learn_more_link}} <i aria-hidden="true" class="far fa-external-link margin-left-05" role="img" alt=""></i></span>
         </a>
 
       </div>
@@ -39,7 +39,7 @@
                   class="usa-link text-no-underline flex-align-center display-flex gap-05"
                   [routerLink]="['data-view', activity.id]">
                   <div class="usa-icon-list__icon text-primary">
-                    <i class="fal fa-chart-pie" aria-hidden="true"></i>
+                    <i class="fal fa-chart-pie" aria-hidden="true" role="img" alt=""></i>
                   </div>
                   <div class="usa-icon-list__content text-no-underline">
                     {{ activity.item.name }}
@@ -51,7 +51,7 @@
                   class="usa-link text-no-underline flex-align-center display-flex gap-05"
                   [routerLink]="['data-source', activity.id]">
                   <div class="usa-icon-list__icon text-primary">
-                    <i class="fal fa-database" aria-hidden="true"></i>
+                    <i class="fal fa-database" aria-hidden="true" role="img" alt=""></i>
                   </div>
                   <div class="usa-icon-list__content">
                     {{ activity.item.name }}
@@ -63,7 +63,7 @@
                   class="usa-link text-no-underline flex-align-center display-flex gap-05"
                   [routerLink]="['reports', activity.id]">
                   <div class="usa-icon-list__icon text-primary">
-                    <i class="fal fa-chart-line" aria-hidden="true"></i>
+                    <i class="fal fa-chart-line" aria-hidden="true" role="img" alt=""></i>
                   </div>
                   <div class="usa-icon-list__content">
                     {{ activity.item.name }}
@@ -86,7 +86,7 @@
             <button
               class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
               (click)="reportModal && reportModal.open()">
-              <i class="fal fa-plus" role="img" aria-hidden="true"></i>
+              <i class="fal fa-plus" role="img" aria-hidden="true" alt=""></i>
               {{ pageSections[0].sub_sections![1].items![0] }}
             </button>
           </li>
@@ -94,7 +94,7 @@
             <button
               class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
               (click)="dataViewModal && dataViewModal.open()">
-              <i class="fal fa-plus" role="img" aria-hidden="true"></i>
+              <i class="fal fa-plus" role="img" aria-hidden="true" alt=""></i>
               {{ pageSections[0].sub_sections![1].items![1] }}
             </button>
           </li>
@@ -126,14 +126,14 @@
         </div>
         <div class="display-flex gap-2 flex-wrap margin-top-2 width-full">
           <a class="usa-button usa-button--outline" [routerLink]="['reports']" aria-label="View all reports">
-            <i class="fal fa-folder-open"></i>
+            <i class="fal fa-folder-open" role="img" aria-hidden="true" alt=""></i>
             View all
           </a>
           <button
             *adaptAccessControl="'Reports'; behavior: 'hide'; action: 'Write'"
             class="usa-button usa-button--outline"
             (click)="reportModal && reportModal.open()">
-            <i class="fal fa-plus"></i>
+            <i class="fal fa-plus" role="img" aria-hidden="true" alt=""></i>
             Create new report
           </button>
         </div>
@@ -144,7 +144,7 @@
               <p class="usa-prose" i18n>Loading reports...</p>
             </div>
           </div> -->
-        <ng-container *ngIf="reports | loading : 'Reports have loaded' | async as reportsLoaded">
+        <ng-container *ngIf="$reports | loading : 'Reports have loaded' | async as reportsLoaded">
           <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="reportsLoaded.loading">
             <div class="display-flex flex-align-center gap-1">
               <div class="loader"></div>
@@ -182,20 +182,20 @@
             class="usa-button usa-button--outline"
             [routerLink]="['data-management']"
             aria-label="View all data views">
-            <i class="fal fa-folder-open"></i>
+            <i class="fal fa-folder-open" role="img" aria-hidden="true" alt=""></i>
             View all
           </a>
           <button
             *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'"
             class="usa-button usa-button--outline"
             (click)="dataViewModal && dataViewModal.open()">
-            <i aria-hidden="true" class="fal fa-plus"></i>
+            <i aria-hidden="true" class="fal fa-plus" role="img" alt=""></i>
             Create new data view
           </button>
         </div>
 
         <div class="display-flex flex-column margin-top-1 gap-1 width-full">
-          <ng-container *ngIf="dataViews | loading : 'Data views have loaded' | async as viewsLoaded">
+          <ng-container *ngIf="$dataViews | loading : 'Data views have loaded' | async as viewsLoaded">
             <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="viewsLoaded.loading">
               <div class="display-flex flex-align-center gap-1">
                 <div class="loader"></div>
@@ -207,7 +207,7 @@
               <ng-container *ngIf="viewsLoaded.value.length; else noViews">
                 <span class="visually-hidden" aria-live="polite" id="views-load-notifier">Data views have loaded</span>
                 <adapt-list-item-data
-                  [$reports]="reports"
+                  [$reports]="$reports"
                   [dataViewModal]="dataViewModal"
                   [reportModal]="reportModal"
                   *ngFor="let view of viewsLoaded.value | limitTo : 5"

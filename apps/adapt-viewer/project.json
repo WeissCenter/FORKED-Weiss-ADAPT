@@ -35,6 +35,11 @@
         ],
         "styles": [
           "apps/adapt-viewer/src/styles.scss",
+          "libs/shared-assets/fontawesome/css/all.css",
+          "libs/shared-styles/aem-uswds/_us-aem-wds.min.css",
+          "libs/shared-styles/aem-uswds/uswds+adapt.min.css",
+          "libs/shared-styles/variables/_generated.scss",
+          "libs/shared-styles/theme.scss",
           "node_modules/@angular/cdk/_index.scss",
           "node_modules/@angular/cdk/a11y-prebuilt.css",
           "node_modules/weiss-accessibility-center/dist/assets/index.scss"
@@ -123,16 +128,19 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "adapt-viewer:build:production"
+          "buildTarget": "adapt-viewer:build:production"
+        },
+        "uat": {
+          "buildTarget": "adapt-viewer:build:uat"
         },
         "qa": {
-          "browserTarget": "adapt-viewer:build:qa"
+          "buildTarget": "adapt-viewer:build:qa"
         },
         "development": {
-          "browserTarget": "adapt-viewer:build:development"
+          "buildTarget": "adapt-viewer:build:development"
         },
         "local": {
-          "browserTarget": "adapt-viewer:build:local"
+          "buildTarget": "adapt-viewer:build:local"
         }
       },
       "defaultConfiguration": "local"
@@ -181,7 +189,28 @@
       },
       "configurations": {
         "production": {
-          "outputHashing": "media"
+          "outputHashing": "media",
+          "buildOptimizer": true,
+          "optimization": true,
+          "sourceMap": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-viewer/src/environments/environment.ts",
+              "with": "apps/adapt-viewer/src/environments/environment.production.ts"
+            }
+          ]
+        },
+        "uat": {
+          "outputHashing": "media",
+          "buildOptimizer": true,
+          "optimization": true,
+          "sourceMap": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/adapt-viewer/src/environments/environment.ts",
+              "with": "apps/adapt-viewer/src/environments/environment.uat.ts"
+            }
+          ]
         },
         "qa": {
           "buildOptimizer": false,

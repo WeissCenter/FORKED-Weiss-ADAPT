@@ -39,6 +39,10 @@
         <lib-adapt-tag *ngIf="report.reportingLevel" [status]="report.reportingLevel">
           {{ report.reportingLevel }}
         </lib-adapt-tag>
+<!--        {{report.version + ', status: ' + report.status}}-->
+        <lib-adapt-tag *ngIf="(report.version === 'draft') && (report.status && report.status.toLowerCase() !== 'unpublished')" [status]="report.status">
+          {{ report.status | titlecase }}
+        </lib-adapt-tag>
       </div>
 
       <!-- <div class="display-flex flex-column gap-1">

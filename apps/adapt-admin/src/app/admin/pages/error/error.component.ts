@@ -5,6 +5,7 @@ import { map, startWith, switchMap } from 'rxjs';
 
 @Component({
   selector: 'adapt-error',
+  standalone: false,
   templateUrl: './error.component.html',
   styleUrl: './error.component.scss',
 })

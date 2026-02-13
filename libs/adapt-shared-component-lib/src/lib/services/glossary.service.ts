@@ -1,6 +1,7 @@
 import { AdaptSettings, IGlossaryTerm, LanguageCode, Response } from '@adapt/types';
 import { HttpClient } from '@angular/common/http';
-import { computed, effect, Inject, Injectable, Optional, signal } from '@angular/core';
+import { computed, effect, Inject, Injectable, Optional, signal, resource } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, exhaustMap, filter, firstValueFrom, map, Observable, take, tap } from 'rxjs';
 import { API_URL, SettingsService } from '../../index';
 
@@ -8,67 +9,62 @@ import { API_URL, SettingsService } from '../../index';
   providedIn: 'root',
 })
 export class GlossaryService {
-  private $glossary = signal<{[lang: string]: { [key: string]: IGlossaryTerm }}>({});
+  // private $glossary = signal<{ [lang: string]: { [key: string]: IGlossaryTerm } }>({});
+  api: string;
+  private glossaryResource = resource({
+    request: () => ({
+      settings: this.settings.getSettingsSignal(),
+    }),
+    loader: async ({ request, abortSignal }) => {
+      const { settings } = request;
+      const langs = settings().supportedLanguages || ['en'];
+      const glossarySet: { [lang: string]: { [key: string]: IGlossaryTerm } } = {};
+      for (const lang of langs) {
+        glossarySet[lang] = await this.getGlossaryFromApi(this.api, lang);
+      }
+      return glossarySet;
+    },
+  });
+
+  public glossary$ = toObservable(this.glossaryResource.value).pipe(filter((glossary): glossary is { [lang: string]: { [key: string]: IGlossaryTerm } } => glossary !== undefined));
 
   constructor(private http: HttpClient, @Inject(API_URL) api: string, private settings: SettingsService) {
-    effect(() => {
-      const settingsSignal = this.settings.getSettingsSignal();
-      const langs = settingsSignal().supportedLanguages;
-      if (!langs || langs.length === 0) return;
-
-      this.getGlossaryLanguagesFromApi(api, langs).then((results) => {
-        this.$glossary.set(results);
-      });
-    }, { allowSignalWrites: true });
-  }
-
-  private async getGlossaryLanguagesFromApi(api: string, languages: LanguageCode[]) {
-    const results: { [lang: string]: { [key: string]: IGlossaryTerm } } = {};
-    const responses = await Promise.allSettled(
-      languages.map((lang) => {
-        return this.getGlossaryFromApi(api, lang)
-      })
-    );
-    responses.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
-        results[languages[index]] = result.value;
-      } else {
-        console.error('Error loading glossary for language', languages[index], result.reason);
-      }
-    });
-    return results;
+    this.api = api;
   }
 
   private async getGlossaryFromApi(api: string, lang: LanguageCode) {
-    const response = await firstValueFrom(this.http
-      .get<Response<any>>(`${api}/settings/glossary`.replace(/([^:]\/)\/+/g, "$1"), { params: { lang } }))
+    const response = await firstValueFrom(this.http.get<Response<any>>(`${api}/settings/glossary`.replace(/([^:]\/)\/+/g, '$1'), { params: { lang } }));
     return response.data.terms as { [key: string]: IGlossaryTerm };
   }
 
-  public hasTerm(key: string, lang = 'en') {
-    return this.currValue[lang] && key in this.currValue[lang];
+  public getGlossaryTerm(key: string, lang: LanguageCode = 'en', fileSpec?: string): IGlossaryTerm {
+    const glossary = this.glossaryResource.value();
+    return this.glossaryLookup(glossary, key, lang, fileSpec);
   }
 
-  public getTermSafe(key: string, def?: string, lang: LanguageCode = 'en'): IGlossaryTerm {
-    if (!this.hasTerm(key, lang)) {
-      return { label: def || key, definition: '' };
+  public getGlossaryTermSignal(key: string, lang: LanguageCode = 'en', fileSpec?: string) {
+    return computed(() => {
+      const glossary = this.glossaryResource.value();
+      return this.glossaryLookup(glossary, key, lang, fileSpec);
+    });
+  }
+
+  public getGlossaryTerm$(key: string, lang: LanguageCode = 'en', fileSpec?: string): Observable<IGlossaryTerm> {
+    return this.glossary$.pipe(map((glossary) => this.glossaryLookup(glossary, key, lang, fileSpec)));
+  }
+
+  private glossaryLookup(glossary: { [lang: string]: { [key: string]: IGlossaryTerm } } | undefined, key: string, lang: LanguageCode = 'en', fileSpec?: string) {
+    if (!glossary) {
+      return { label: key, definition: key };
     }
-    return this.currValue[lang][key] as IGlossaryTerm;
-  }
 
-  public getTerm(key: string, lang: LanguageCode = 'en'): IGlossaryTerm | undefined {
-    return this.currValue[lang][key] as IGlossaryTerm;
-  }
-
-  public getFileSpecTerm(fileSpec: string, key: string, lang: LanguageCode = 'en'): IGlossaryTerm | undefined {
-    const lookupKey = `${fileSpec}-${key}`;
-    if (this.hasTerm(lookupKey, lang)) {
-      return this.currValue[lang][lookupKey] as IGlossaryTerm;
+    const fileSpecLookupKey = `${fileSpec?.toLowerCase()}-${key}`;
+    if (fileSpec && glossary[lang] && fileSpecLookupKey in glossary[lang]) {
+      return glossary[lang][fileSpecLookupKey] as IGlossaryTerm;
+    } else if (glossary[lang] && key in glossary[lang]) {
+      return glossary[lang][key] as IGlossaryTerm;
+    } else {
+      return { label: key, definition: key };
     }
-    return this.getTerm(key, lang);
-  }
-
-  private get currValue() {
-    return this.$glossary();
   }
 }

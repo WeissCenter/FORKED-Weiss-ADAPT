@@ -1,4 +1,4 @@
-import { DataSource, DataSourceConnectionInfo, IDataSource, PageMode } from '@adapt/types';
+import { DataSource, DataSourceConnectionInfo, DataViewModel, IDataSource, IReportModel, PageMode } from '@adapt/types';
 import { Component, computed, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { StepsIndicatorComponent } from '../steps-indicator/steps-indicator.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -6,7 +6,7 @@ import { FullPageModalComponent } from '../full-page-modal/full-page-modal.compo
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
 import { ModalComponent } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/components/modal/modal.component';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { getFormErrors } from '../../../util';
 import { Router } from '@angular/router';
 import { Idle } from '@ng-idle/core';
@@ -19,9 +19,12 @@ import {
   PageSectionContentText,
   PageContentText,
 } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
 
 @Component({
   selector: 'adapt-data-source-modal',
+  standalone: false,
   templateUrl: './data-source-modal.component.html',
   styleUrls: ['./data-source-modal.component.scss'],
 })
@@ -80,8 +83,11 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
     }
   }
 
-  public dataViews = this.data.getDataViews();
-  public reports = this.data.getReports();
+  public $dataViews: Observable<DataViewModel[]>;
+  public $reports: Observable<IReportModel[]>;
+
+  //public dataViews = this.data.getDataViews();
+  //public reports = this.data.getReports();
 
   $pageContent = this.pagesContentService.getPageContentSignal('data-sources', 'en');
   $pageSections = computed(() => this.$pageContent()?.sections || [])
@@ -90,12 +96,18 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
     private fb: FormBuilder,
     private idle: Idle,
     private user: UserService,
-    private data: AdaptDataService,
+    private adaptDataService: AdaptDataService,
     private alert: AlertService,
     private location: LocationStrategy,
     private router: Router,
-    public pagesContentService: PagesContentService
+    public pagesContentService: PagesContentService,
+    private adaptDataViewService: AdaptDataViewService,
+    private adaptReportService: AdaptReportService,
   ) {
+
+    this.$dataViews = this.adaptDataViewService.getDataViews(); //  this.adaptDataService.$dataViews;
+    this.$reports = this.adaptReportService.getReportsListener();
+
     this.dataSourceForm = this.fb.group({
       type: this.fb.control('mssql', [Validators.required]),
       name: this.fb.control('', [Validators.required]),
@@ -178,15 +190,11 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
     this.opened = true;
     this.mode = mode;
 
-  
-
     if (dataSource) {
       this.currentDataSource = dataSource;
 
       if (!dirty) {
-
         this.data.getDataSource(dataSource!.dataSourceID!, true).subscribe((result) => {
-
           this.dataSourceForm.patchValue({
             name: dataSource?.name,
             description: dataSource?.description,
@@ -197,10 +205,7 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
             username: (result as DataSourceConnectionInfo).username,
             password: '',
           });
-
-        })
-   
-
+        });
       }
 
       if (this.mode === PageMode.EDIT) {
@@ -216,7 +221,7 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
   }
 
   private loadConnectionData(dataSource: DataSource | (DataSource & DataSourceConnectionInfo), dirty: boolean) {
-    this.data.getDataSource(dataSource.dataSourceID as string, true).subscribe({
+    this.adaptDataService.getDataSource(dataSource.dataSourceID as string, true).subscribe({
       next: (result) => {
         const connectionInfo = result as DataSourceConnectionInfo;
         const dataSource = result as DataSource;
@@ -345,15 +350,15 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
     try{
 
       if (this.mode === PageMode.EDIT && this.currentDataSource) {
-        const editedDataSource = await this.data.editDataSourcePromise(
+        const editedDataSource = await this.adaptDataService.editDataSourcePromise(
           this.currentDataSource.dataSourceID as string,
           body
         );
-  
-        this.alert.add({type: 'success', title: 'Edit save success', body: 'Data Source edits were saved'})
+
+        this.alert.add({ type: 'success', title: 'Edit save success', body: 'Data Source edits were saved' });
         this.save.emit(editedDataSource);
       } else if (this.mode === PageMode.CREATE) {
-        const newDataSource = await this.data.createDataSourcePromise(body);
+        const newDataSource = await this.adaptDataService.createDataSourcePromise(body);
         this.save.emit(newDataSource);
         this.alert.add({type: 'success', title: 'Data source created successfully', body: 'Data Source was successfully created'})
       }
@@ -417,7 +422,7 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
 
   public testConnection() {
     this.connectionTestState = ConnectionTestState.READY;
-    this.data
+    this.adaptDataService
       .testDBConnection({
         url: this.address.value,
         type: this.type?.value,

@@ -27,6 +27,7 @@ interface ChartDataItem {
 
 @Component({
   selector: 'lib-adapt-data-rep-grouped',
+  standalone: false,
   templateUrl: './data-rep-grouped.component.html',
   styleUrls: ['./data-rep-grouped.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -167,8 +168,7 @@ export class DataRepGroupedComponent implements OnInit {
           // items.reduce((acc: any, cur: { [x: string]: any }) => acc + cur[this.raw.chart.yAxisValue], 0)) *
           this.$selectedTotal()) *
         100;
-
-      const plainLanguage = this.glossary.getTermSafe(item[this.raw.chart.groupBy]).label;
+      const plainLanguage = this.glossary.getGlossaryTermSignal(item[this.raw.chart.groupBy], 'en', this.raw?.fileSpec)().label;
       if (this.suppressed && (isNaN(percentageResult) || percentageResult === 0)) {
         return `${plainLanguage} (${this.content?.actions?.['suppressed'] || 'Suppressed'})`;
       }
@@ -254,9 +254,7 @@ export class DataRepGroupedComponent implements OnInit {
     // Build a plain language sentence detailing which items have no data to show when suppression is off, but items still have no data
     // Get items with no data
     // Get the plain language label for each item
-    const plainLanguageItems = this.$noDataItems().map(
-      (item) => this.glossary.getTermSafe(item[this.raw.chart.groupBy], undefined, this.lang as LanguageCode).label
-    );
+    const plainLanguageItems = this.$noDataItems().map((item) => this.glossary.getGlossaryTermSignal(item[this.raw.chart.groupBy], this.lang as LanguageCode, this.raw?.fileSpec)().label);
     if (plainLanguageItems.length > 2) {
       // Join all items with commas, but the last item with 'and'
       const allButLast = plainLanguageItems.slice(0, -1).join(', ');

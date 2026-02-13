@@ -1,3 +1,6 @@
+
+// old setup
+/*
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
 import { appConfig } from './app.config';
@@ -7,3 +10,61 @@ const serverConfig: ApplicationConfig = {
 };
 
 export const config = mergeApplicationConfig(appConfig, serverConfig);
+
+
+
+ */
+
+
+
+
+
+// new setup
+import { provideServerRouting } from '@angular/ssr';
+import { serverRoutes } from './app.routes.server';
+import { ApplicationConfig, mergeApplicationConfig } from '@angular/core';
+import { provideServerRendering } from '@angular/platform-server';
+import { appConfig } from '@adapt-apps/adapt-admin/src/app/app.config';
+
+/**
+ * Server-side configuration (Angular 19 SSR)
+ * Combines browser config with server-specific providers.
+ */
+const serverConfig: ApplicationConfig = {
+  providers: [
+    provideServerRendering(),           // enables SSR (transfer state, hydration, etc.)
+    provideServerRouting(serverRoutes), // provides server routing for prerender/serve
+  ]
+};
+
+export const config = mergeApplicationConfig(appConfig, serverConfig);
+
+
+
+// future setup
+/*
+import { ApplicationConfig, inject, mergeApplicationConfig, RESPONSE_INIT, InjectionToken } from '@angular/core';
+import { provideServerRendering } from '@angular/platform-server';
+import { provideServerRoutesConfig } from '@angular/ssr';
+//import { SERVER_RESPONSE } from '@frontends/domain';
+import { appConfig } from './app.config';
+import { serverRoutes } from './app.routes.server';
+
+export const SERVER_RESPONSE = new InjectionToken<ResponseInit>('SERVER_RESPONSE');
+
+const serverConfig: ApplicationConfig = {
+  providers: [
+    provideServerRendering(),
+    provideServerRoutesConfig(serverRoutes),
+    {
+      provide: SERVER_RESPONSE,
+      useFactory: () => {
+        return inject(RESPONSE_INIT, { optional: true });
+      },
+    },
+  ],
+};
+
+export const config = mergeApplicationConfig(appConfig, serverConfig);
+
+ */

@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'lib-adapt-page-alert',
+  standalone: false,
   templateUrl: './page-alert.component.html',
   styleUrl: './page-alert.component.scss',
 })

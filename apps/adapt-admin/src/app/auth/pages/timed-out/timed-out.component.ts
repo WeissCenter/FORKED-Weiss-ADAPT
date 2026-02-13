@@ -7,6 +7,7 @@ import { AuthModule } from '../../auth.module';
 
 @Component({
   selector: 'adapt-timed-out',
+  standalone: false,
   templateUrl: './timed-out.component.html',
   styleUrl: './timed-out.component.scss',
 })

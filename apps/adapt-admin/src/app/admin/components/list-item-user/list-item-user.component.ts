@@ -8,6 +8,7 @@ import { ToggleSwitchComponent } from 'libs/adapt-shared-component-lib/src/lib/f
 
 @Component({
   selector: 'adapt-list-item-user',
+  standalone: false,
   templateUrl: './list-item-user.component.html',
   styleUrl: './list-item-user.component.scss',
 })

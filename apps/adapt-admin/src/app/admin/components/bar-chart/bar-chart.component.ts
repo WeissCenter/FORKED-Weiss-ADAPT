@@ -15,6 +15,7 @@ import { BehaviorSubject, Observable, Subject, debounceTime, map } from 'rxjs';
 
 @Component({
   selector: 'adapt-bar-chart',
+  standalone: false,
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
 })

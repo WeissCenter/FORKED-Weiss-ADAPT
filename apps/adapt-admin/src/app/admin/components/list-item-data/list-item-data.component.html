@@ -3,13 +3,12 @@
     <ng-container [ngSwitch]="listType">
       <ng-container *ngSwitchCase="'views'">
         <lib-adapt-h-element [ngClass]="'usa-prose margin-0'" [level]="headingLvl">
-          <a
-            class="text-primary hover:primary-dark flex-align-center text-semibold text-no-underline cursor-pointer display-inline-flex width-auto"
-            (click)="dataViewModal.open(view, true)"
-            (keydown.enter)="dataViewModal.open(view, true)"
-            (keydown.space)="handleSpaceInput($event)"
-            >{{ view.name }}</a
-          >
+          <button
+            class="usa-button usa-button--unstyled cursor-pointer display-inline-flex width-auto"
+            (click)="dataViewModal.open(view, true)" (keydown.enter)="dataViewModal.open(view, true)"
+            (keydown.space)="handleSpaceInput($event)">
+            <span class="font-md line-height-2 text-primary hover:primary-dark flex-align-center text-semibold text-no-underline">{{ view.name }}</span>
+          </button>
         </lib-adapt-h-element>
         <!-- <ng-template #viewTitle>
             <a tabindex="0" class="text-primary cursor-pointer hover:primary-dark text-semibold text-no-underline display-inline-flex width-auto"
@@ -70,11 +69,8 @@
       <ng-container *ngSwitchCase="'sources'">
         <div class="visible-wrapper display-flex flex-column gap-1">
           <h3 class="usa-prose margin-0">
-            <a
-              (click)="dataSourceModal.open(view, PageMode.VIEW)"
-              class="text-semibold text-primary cursor-pointer display-inline-flex width-auto"
-              >{{ view.name }}</a
-            >
+            <a (click)="dataSourceModal.open(view, PageMode.VIEW)"
+              class="text-semibold text-primary cursor-pointer display-inline-flex width-auto">{{ view.name }}</a>
           </h3>
           <p *ngIf="view?.description?.length">{{ view.description }}</p>
           <div class="display-flex flex-column width-full gap-1">
@@ -96,13 +92,8 @@
     </ng-container>
   </div>
   <div collapsed-content>
-    <adapt-impact-analysis
-      (learnMore)="onLearnMore(view)"
-      [inAccordion]="true"
-      [name]="view.name"
-      [reports]="$reports"
-      [dataViews]="$dataViews"
-      [type]="listType === 'views' ? 'DataView' : 'DataSource'"
+    <adapt-impact-analysis (learnMore)="onLearnMore(view)" [inAccordion]="true" [name]="view.name" [reports]="$reports"
+      [dataViews]="$dataViews" [type]="listType === 'views' ? 'DataView' : 'DataSource'"
       [id]="view.dataViewID || view.dataSourceID"></adapt-impact-analysis>
   </div>
   <div action-content>
@@ -111,28 +102,18 @@
         <div class="display-flex flex-wrap gap-1 width-full">
           <button type="button" class="usa-button" (click)="dataViewModal.open(view, true)">View</button>
 
-          <button
-            *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'"
-            type="button"
-            class="usa-button"
+          <button *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'" type="button" class="usa-button"
             (click)="dataViewModal.open(view, false)">
             Edit
           </button>
-          <button
-            *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'"
-            [hidden]="view.status !== 'AVAILABLE'"
-            type="button"
-            class="usa-button usa-button--outline shadow-none"
+          <button *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'"
+            [hidden]="view.status !== 'AVAILABLE'" type="button" class="usa-button usa-button--outline shadow-none"
             (click)="reportModal && reportModal.open(view)">
             Create Report
           </button>
-          <button
-            *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'"
-            type="button"
-            [hidden]="view.status !== 'AVAILABLE'"
-            [id]="'reload_data_' + view.dataViewID + '_btn'"
-            class="usa-button usa-button--outline shadow-none"
-            (click)="dataViewModal.open(view, false, 1)">
+          <button *adaptAccessControl="'Data Views'; behavior: 'hide'; action: 'Write'" type="button"
+            [hidden]="view.status !== 'AVAILABLE'" [id]="'reload_data_' + view.dataViewID + '_btn'"
+            class="usa-button usa-button--outline shadow-none" (click)="dataViewModal.open(view, false, 1)">
             Reload Data
           </button>
           <!-- <button type="button" class="usa-button usa-button--outline shadow-none" adaptPreviewCategory="removeViewBtn"
@@ -144,23 +125,14 @@
 
       <ng-container *ngSwitchCase="'sources'">
         <div class="display-flex gap-4 flex-wrap width-full">
-          <button
-            *adaptAccessControl="'Data Sources'"
-            permissionObject="Data Sources"
-            noPermissionsBehavior="disable"
-            permissionAction="Write"
-            (click)="dataSourceModal.open(view, PageMode.EDIT)"
-            type="button"
-            [id]="'edit_' + view.dataSourceID + '_btn'"
-            class="usa-button shadow-none">
+          <button *adaptAccessControl="'Data Sources'" permissionObject="Data Sources" noPermissionsBehavior="disable"
+            permissionAction="Write" (click)="dataSourceModal.open(view, PageMode.EDIT)" type="button"
+            [id]="'edit_' + view.dataSourceID + '_btn'" class="usa-button shadow-none">
             Edit
           </button>
           <!-- <button type="button" [routerLink]="['..', 'data-source', item.dataSourceID]" class="usa-button usa-button--outline shadow-none">View</button> -->
-          <button
-            type="button"
-            (click)="dataSourceModal.open(view, PageMode.VIEW)"
-            [id]="'view_' + view.dataSourceID + '_btn'"
-            class="usa-button usa-button--outline shadow-none">
+          <button type="button" (click)="dataSourceModal.open(view, PageMode.VIEW)"
+            [id]="'view_' + view.dataSourceID + '_btn'" class="usa-button usa-button--outline shadow-none">
             View
           </button>
         </div>

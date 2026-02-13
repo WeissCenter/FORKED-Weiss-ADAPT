@@ -9,6 +9,7 @@ import { RoleService } from '../../../auth/services/role/role.service';
 
 @Component({
   selector: 'adapt-sidebar',
+  standalone: false,
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })

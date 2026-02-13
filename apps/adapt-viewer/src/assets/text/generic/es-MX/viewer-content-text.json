@@ -142,7 +142,8 @@
         "suppressed": "suprimido",
         "filtered": "Filtrado",
         "close": "Cerrar",
-        "total_label": "Total"
+        "total_label": "Total",
+        "report-filter-no-data": "En su estado no se recopilan datos para esta categoría."
       }
     },
     "error": {

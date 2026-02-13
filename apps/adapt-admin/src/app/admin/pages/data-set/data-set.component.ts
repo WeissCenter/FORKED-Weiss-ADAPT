@@ -20,9 +20,11 @@ import { AlertService } from '../../../../../../../libs/adapt-shared-component-l
 import { getFormErrors, uniqueNameValidator } from '../../../util';
 import { UserService } from '../../../auth/services/user/user.service';
 import { RoleService } from '../../../auth/services/role/role.service';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
 
 @Component({
   selector: 'adapt-data-set',
+  standalone: false,
   templateUrl: './data-set.component.html',
   styleUrls: ['./data-set.component.scss'],
 })
@@ -119,6 +121,7 @@ export class DataSetComponent implements OnDestroy {
   constructor(
     private fb: FormBuilder,
     private data: AdaptDataService,
+    private adaptDataViewService: AdaptDataViewService,
     private route: ActivatedRoute,
     public role: RoleService,
     private alert: AlertService,
@@ -620,9 +623,7 @@ export class DataSetComponent implements OnDestroy {
     if (!this.dataSetID) {
       return;
     }
-    this.data
-      .doDataPull(this.dataSetID.value)
-      .pipe(
+    this.adaptDataViewService.doDataPull(this.dataSetID.value).pipe(
         catchError((err) => {
           this.alert.add({
             type: 'error',

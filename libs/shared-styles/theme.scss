@@ -113,11 +113,9 @@ router-outlet {
   display: none;
 }
 
-.loading-wrapper {
-  &[aria-busy='false'] {
+.loading-wrapper[aria-busy='false'] {
     display: none;
   }
-}
 
 /* HTML: <div class="loader"></div> */
 .loader {

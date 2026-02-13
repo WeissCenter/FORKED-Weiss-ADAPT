@@ -19,6 +19,7 @@ import { MultiSelectContentText } from '@adapt-apps/adapt-admin/src/app/admin/mo
 
 @Component({
   selector: 'lib-adapt-multi-select',
+  standalone: false,
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.scss'],
   providers: [

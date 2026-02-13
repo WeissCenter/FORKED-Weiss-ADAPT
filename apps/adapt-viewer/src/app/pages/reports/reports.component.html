@@ -1,5 +1,5 @@
 <section *ngIf="$content()" class="reports-container grid-container gap-4 display-flex flex-column">
-  <header role="banner" class="reports-banner width-full display-flex usa-prose flex-column">
+  <header class="reports-banner width-full display-flex usa-prose flex-column">
     <!-- TODO: This heading/description needs to dynamically change when the view is updated. Options are Draft Reports/Finalized Reports -->
     <h1 class="margin-0">{{$content()?.pages.reports?.header}}</h1>
     <p class="measure-4 usa-prose margin-bottom-0">{{$content()?.pages.reports?.body}}</p>
@@ -54,7 +54,7 @@
             class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
             <i
               class="fal {{ publishedSortDirection === 'asc' ? 'fa-sort-amount-up-alt' : 'fa-sort-amount-down-alt' }}"
-              aria-hidden="true"></i>
+              aria-hidden="true" role="img" alt=""></i>
             {{$content()?.shared.listControls.sort}}
           </button>
 
@@ -66,7 +66,7 @@
             class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
             <i
               class="fal {{ alphaSortDirection === 'asc' ? 'fa-sort-alpha-up' : 'fa-sort-alpha-down' }}"
-              aria-hidden="true"></i>
+              aria-hidden="true" role="img" alt=""></i>
             Sort
           </button> -->
 
@@ -75,7 +75,7 @@
               id="filterPanelButton"
               type="button"
               class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
-              <i class="fal fa-filter" aria-hidden="true"></i>
+              <i class="fal fa-filter" aria-hidden="true" role="img" alt=""></i>
               Filter
             </button> -->
         </div>

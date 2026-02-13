@@ -2,7 +2,7 @@
   <label class="usa-label margin-y-0" [ngStyle]="labelStyle" [for]="fieldID"
     ><strong>{{ label }}</strong> <span *ngIf="required" class="text-red text-heavy">*</span>
   </label>
-  <p class="usa-hint margin-top-05" *ngIf="[hint] && hint !== ''" id="file-input-specific-hint">{{ hint }}</p>
+  <p class="usa-hint margin-top-05" *ngIf="hint && hint !== ''" id="file-input-specific-hint">{{ hint }}</p>
   <input
     #input
     (change)="onChange(value)"

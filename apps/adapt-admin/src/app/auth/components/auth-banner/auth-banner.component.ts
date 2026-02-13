@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'adapt-auth-banner',
+  standalone: false,
   templateUrl: './auth-banner.component.html',
   styleUrl: './auth-banner.component.scss',
 })

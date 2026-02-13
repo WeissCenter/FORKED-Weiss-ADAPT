@@ -1,10 +1,11 @@
-import { ApplicationConfig, makeEnvironmentProviders } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, makeEnvironmentProviders } from '@angular/core';
 import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideClientHydration, withNoHttpTransferCache } from '@angular/platform-browser';
 import { provideAPIURL, provideContentServiceConfig } from '@adapt/adapt-shared-component-lib';
 import { environment } from '../environments/environment';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 //import { provideContentServiceConfig } from '@adapt/adapt-shared-component-lib';
 //import { environment } from '../environments/environment';
 
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     provideHttpClient(withFetch()),
+    importProvidersFrom(LoggerModule.forRoot({ level: NgxLoggerLevel.OFF, enableSourceMaps: false })),
   ],
 };

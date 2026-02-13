@@ -8,6 +8,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { HomeComponent } from './pages/home/home.component';
 import { BrandingHeaderComponent } from './components/branding-header/branding-header.component';
 import { WeissAccessibilityCenterModule } from 'weiss-accessibility-center';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { ResourcesComponent } from './pages/resources/resources.component';
 import { RouterModule } from '@angular/router';
 import { environment } from '../environments/environment';
@@ -37,7 +38,15 @@ import { ErrorComponent } from './pages/error/error.component';
     TopBannerComponent,
     WeissAccessibilityCenterModule,
   ],
-  imports: [CommonModule, WeissAccessibilityCenterModule, LibModule, ReactiveFormsModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    WeissAccessibilityCenterModule,
+    LoggerModule.forRoot({ level: NgxLoggerLevel.OFF, enableSourceMaps: false }),
+    LibModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+  ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

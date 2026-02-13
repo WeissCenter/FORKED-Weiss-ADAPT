@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ContentChildren,
   EventEmitter,
@@ -14,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'lib-adapt-secondary-navigation',
+  standalone: false,
   templateUrl: './secondary-navigation.component.html',
   styleUrl: './secondary-navigation.component.scss',
 })
@@ -23,6 +25,8 @@ export class SecondaryNavigationComponent implements AfterViewInit, OnDestroy {
   @Input() id = crypto.randomUUID();
   @Input() preselectFirst = true;
   private subscriptions: Subscription[] = [];
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   public anySelected() {
     for (const tab of this.tabs) {
@@ -37,6 +41,9 @@ export class SecondaryNavigationComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (this.preselectFirst && !this.anySelected()) {
       this.tabs.first.preSelected = true;
+      // Trigger change detection after modifying child component state
+      // to avoid ExpressionChangedAfterItHasBeenCheckedError
+      this.cdr.detectChanges();
     }
   }
 

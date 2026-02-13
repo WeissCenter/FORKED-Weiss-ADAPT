@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'adapt-right-side-panel',
+  standalone: false,
   templateUrl: './right-side-panel.component.html',
   styleUrls: ['./right-side-panel.component.scss'],
 })

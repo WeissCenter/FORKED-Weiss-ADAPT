@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AdaptDataService } from '../../../services/adapt-data.service';
 import { AlertService } from '../../../../../../../libs/adapt-shared-component-lib/src/lib/services/alert.service';
-import { IReport } from '@adapt/types';
+import { IReportModel } from '@adapt/types';
 
 @Component({
   selector: 'adapt-list-item-report',
+  standalone: false,
   templateUrl: './list-item-report.component.html',
   styleUrls: ['./list-item-report.component.scss'],
 })
@@ -22,7 +23,7 @@ export class ListItemReportComponent {
 
   constructor(private data: AdaptDataService, private alert: AlertService) {}
 
-  public publishReport(report: IReport) {
+  public publishReport(report: IReportModel) {
     this.publish.emit(report);
   }
 }
