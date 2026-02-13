@@ -35,6 +35,11 @@
         ],
         "styles": [
           "apps/adapt-viewer/src/styles.scss",
+          "libs/shared-assets/fontawesome/css/all.css",
+          "libs/shared-styles/aem-uswds/_us-aem-wds.min.css",
+          "libs/shared-styles/aem-uswds/uswds+adapt.min.css",
+          "libs/shared-styles/variables/_generated.scss",
+          "libs/shared-styles/theme.scss",
           "node_modules/@angular/cdk/_index.scss",
           "node_modules/@angular/cdk/a11y-prebuilt.css",
           "node_modules/weiss-accessibility-center/dist/assets/index.scss"

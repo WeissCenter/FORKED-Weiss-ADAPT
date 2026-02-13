@@ -75,11 +75,6 @@
             "name": "Protección de la privacidad de los estudiantes - Centro de Asistencia Técnica de Privacidad (PTAC)",
             "description": "El Centro de Asistencia Técnica de Privacidad (PTAC) es un recurso único para que las partes interesadas de la educación aprendan sobre privacidad, confidencialidad y prácticas de seguridad relacionadas con los sistemas de datos a nivel de los estudiantes y otros usos de los datos de los estudiantes.",
             "link": "https://studentprivacy.ed.gov/"
-          },
-            {
-            "name": "Oficina de Educación Especial de Arkansas",
-            "description": "La División de Educación Primaria y Secundaria de Arkansas, Oficina de Educación Especial, se asocia con escuelas y agencias para garantizar que los estudiantes con discapacidades (de 3 a 21 años) reciban una educación gratuita y apropiada, y apoya a las escuelas a través de capacitación, supervisión de datos, financiamiento y resolución de disputas para mejorar los resultados.",
-            "link": "https://dese.ade.arkansas.gov/Offices/special-education"
           }
         ]
       },
@@ -142,7 +137,8 @@
         "suppressed": "suprimido",
         "filtered": "Filtrado",
         "close": "Cerrar",
-        "total_label": "Total"
+        "total_label": "Total",
+        "report-filter-no-data": "En su estado no se recopilan datos para esta categoría."
       }
     },
     "error": {

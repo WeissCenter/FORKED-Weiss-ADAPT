@@ -14,7 +14,7 @@
 
       <li role="option" *ngFor="let filter of filters; index as index">
         @let selected = $currentFilterIdx() === index;
-        @let sectionHeading = filter?.value?.metadata?.['sectionName'] || filter.key | glossary: 'label': lang | async;
+        @let sectionHeading = filter?.value?.metadata?.['sectionName'] || (filter.key | glossary: 'label': lang | async);
         @let filterOptions = filter?.value?.metadata?.['filterOptions'];
         @let optionExpanded = (selected && expanded);
 
@@ -33,7 +33,7 @@
 
           {{ sectionHeading | stripQuotes }}
 
-          <i aria-hidden="true" class="fas" [ngClass]="{ 'fa-chevron-down': !optionExpanded, 'fa-chevron-up': optionExpanded }"></i>
+          <i aria-hidden="true" class="fas" role="img" alt="" [ngClass]="{ 'fa-chevron-down': !optionExpanded, 'fa-chevron-up': optionExpanded }"></i>
 
         </button>
 
@@ -56,7 +56,7 @@
             <!-- <p class="font-xs line-height-3 margin-bottom-1 margin-top-05"
             [hidden]="dataRepSettings.showGlossary === true ? undefined : true"
             [attr.aria-expanded]="dataRepSettings.showGlossary" [id]="id + '-quickfilter-item-definition-' + index">
-            <span [innerHTML]="item | glossary : 'definition' : lang | async"></span>
+            <span [innerHTML]="item | glossary : 'definition' : lang"></span>
           </p> -->
           </li>
 
@@ -67,12 +67,12 @@
             *ngFor="let item of filterOptions || filter.value.filters; let idx = index">
             <button class="usa-button usa-button--unstyled text-no-underline flex-align-center display-flex"
               [ngClass]="{ 'text-bold': item === $header() }" (click)="applyQuickFilter((item))">
-              {{ ((item | glossary: 'label': lang : $fileSpec()) | async) | stripQuotes }}
+              {{ (item | glossary: 'label': lang : $fileSpec() | async) | stripQuotes }}
             </button>
             <p class="font-xs line-height-3 margin-bottom-1 margin-top-05"
               [hidden]="dataRepSettings.showGlossary === true ? undefined : true"
               [attr.aria-expanded]="dataRepSettings.showGlossary" [id]="id + '-quickfilter-item-definition-' + index">
-              <span [innerHTML]="(item | glossary : 'definition' : lang : $fileSpec()) | async"></span>
+              <span [innerHTML]="item | glossary : 'definition' : lang : $fileSpec() | async"></span>
             </p>
           </li>
 
@@ -86,7 +86,7 @@
   <article class="data-rep-wrapper flex-2" [attr.aria-labelledby]="id + '-title'"
     [attr.aria-describedby]="id + '-insight' + id + '-total'">
     <lib-adapt-h-element class="title" [level]="mapHeadingLvl(headingLvl)">{{
-      ($header() | glossary: 'label': lang : $fileSpec()) | async
+      $header() | glossary: 'label': lang : $fileSpec() | async
       }} {{ filterOrSuppress }}</lib-adapt-h-element>
     <p class="insight" [innerHTML]="$insight()"></p>
 
@@ -100,7 +100,7 @@
               <i class="far" [ngClass]="{
                   'fa-toggle-off': !dataRepSettings.showPlainLanguage,
                   'fa-toggle-on': dataRepSettings.showPlainLanguage
-                }" aria-hidden="true"></i>
+                }" aria-hidden="true" role="img" alt=""></i>
               {{content.actions!['explain']}}
             </button>
           </li>
@@ -110,13 +110,13 @@
               <i class="far" [ngClass]="{
                   'fa-toggle-off': !dataRepSettings.showGlossary,
                   'fa-toggle-on': dataRepSettings.showGlossary
-                }" aria-hidden="true"></i>
+                }" aria-hidden="true" role="img" alt=""></i>
               {{content.actions!['glossary']}}
             </button>
           </li>
           <li>
             <button #dataModalSwitch [id]="id + '-data-modal-button'" (click)="openDataModal()">
-              <i class="far fa-table" aria-hidden="true"></i>
+              <i class="far fa-table" aria-hidden="true" role="img" alt=""></i>
               {{content.actions!['data']}}
             </button>
           </li>
@@ -139,11 +139,11 @@
           <li tabindex="0" *ngIf="item[raw.chart.yAxisValue] >= 0" [id]="id + '-series-item-' + index">
             <span class="content">
               <lib-adapt-h-element class="label" [id]="id + '-series-item-label-' + index"
-                [level]="mapHeadingLvl(headingLvl2)">{{ (item[raw.chart.xAxisLabel] | glossary: 'label': lang : $fileSpec()) | async
+                [level]="mapHeadingLvl(headingLvl2)">{{ item[raw.chart.xAxisLabel] | glossary: 'label': lang : $fileSpec() | async
                 }}</lib-adapt-h-element>
               <p class="definition" [hidden]="dataRepSettings.showGlossary === true ? undefined : true"
                 [attr.aria-expanded]="dataRepSettings.showGlossary" [id]="id + '-series-item-definition-' + index">
-                <span [innerHTML]="(item[raw.chart.xAxisLabel] | glossary : 'definition' : lang : $fileSpec()) | async"></span>
+                <span [innerHTML]="item[raw.chart.xAxisLabel] | glossary : 'definition' : lang : $fileSpec() | async"></span>
               </p>
             </span>
             <div class="bar-wrapper">
@@ -239,7 +239,7 @@
         filterOrSuppress }}</h2>
       <button [id]="id + '-close-modal-button'" #dataModalCloseBtn class="close-modal" (click)="closeModal()">
         Close
-        <i class="fas fa-times" aria-hidden="true"></i>
+        <i class="fas fa-times" aria-hidden="true" role="img" alt=""></i>
       </button>
     </div>
     <p class="description" [innerHTML]="$insight()"></p>
@@ -263,7 +263,7 @@
       <tbody>
 
         <tr tabindex="0" class="flex-row" *ngFor="let item of $data() ">
-          <th scope="row" class="td label">{{ (item[raw.chart.xAxisLabel] | glossary: 'label' : lang : $fileSpec()) | async }}</th>
+          <th scope="row" class="td label">{{ item[raw.chart.xAxisLabel] | glossary: 'label' : lang : $fileSpec() | async }}</th>
           <td class="td percentage">
             <ng-container *ngIf="suppressed; else notSuppressedPct">
               {{ item?.percentage > 0 ? item?.percentage.toLocaleString(

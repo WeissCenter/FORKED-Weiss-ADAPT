@@ -1,4 +1,3 @@
-
 <section *ngIf="!outlet.isActivated" class="reports-container grid-container gap-4 display-flex flex-column">
   <header *ngIf="pageContent" role="banner" class="reports-banner width-full display-flex usa-prose flex-column">
     <!-- Reports List -->
@@ -6,19 +5,22 @@
     <p class="measure-4 usa-prose margin-bottom-0">{{ pageContent.description }}</p>
 
     <a href="https://weisscenter.gitbook.io/weisscenter/user-guide/reports" target="_blank"
-       aria-label="Learn More (opens in a new tab)" style="font-size: 0.8rem;margin-top: 8px;">
-      <span aria-hidden="true">{{pageContent.learn_more_link}} <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
+      aria-label="Learn More (opens in a new tab)" style="font-size: 0.8rem;margin-top: 8px;">
+      <span aria-hidden="true">{{pageContent.learn_more_link}} <i aria-hidden="true"
+          class="far fa-external-link margin-left-05" role="img" alt=""></i></span>
     </a>
   </header>
 
-  <div *ngIf="pageContent?.tabs" role="tablist"
-    aria-label="Reporting Controls"
+  <div *ngIf="pageContent?.tabs" role="tablist" aria-label="Reporting Controls"
     class="reports-controls display-flex gap-4">
     <!-- TODO: Hardcoding the tabs for the demo on 11/13/23; needs to be updated to switch between "draft reports" and "finalized reports" with a corresponding active class for the tab that is active -->
 
     <!-- All Reports tab -->
-    <div class="tab-item" *ngIf="{ isAll: reportFiltersForm.controls['version'].value.length === 0 || reportFiltersForm.controls['version'].value.length > 1 } as data" [attr.aria-selected]="data.isAll">
-      <button routerLink="." role="tab" aria-controls="reports" class="usa-button usa-button--outline shadow-none" [queryParams]="{ status: '' }" [ngClass]="{ 'border-bottom-05': data.isAll }">
+    <div class="tab-item"
+      *ngIf="{ isAll: reportFiltersForm.controls['version'].value.length === 0 || reportFiltersForm.controls['version'].value.length > 1 } as data"
+      [attr.aria-selected]="data.isAll">
+      <button routerLink="." role="tab" aria-controls="reports" class="usa-button usa-button--outline shadow-none"
+        [queryParams]="{ status: '' }" [ngClass]="{ 'border-bottom-05': data.isAll }">
         <!-- All Reports -->
         {{ (pageContent?.tabs)![0] }}
         <!--        All<span class="display-none tablet:display-inline"> reports</span>-->
@@ -26,9 +28,12 @@
     </div>
 
     <!-- Draft Reports tab -->
-    <div class="tab-item" *ngIf="{ isDraft: reportFiltersForm.controls['version'].value.length === 1 && reportFiltersForm.controls['version'].value.includes('draft') } as data" [attr.aria-selected]="data.isDraft">
+    <div class="tab-item"
+      *ngIf="{ isDraft: reportFiltersForm.controls['version'].value.length === 1 && reportFiltersForm.controls['version'].value.includes('draft') } as data"
+      [attr.aria-selected]="data.isDraft">
 
-      <button routerLink="." role="tab" aria-controls="reports" class="usa-button usa-button--outline shadow-none"[queryParams]="{ status: 'draft' }" [ngClass]="{ 'border-bottom-05': data.isDraft }">
+      <button routerLink="." role="tab" aria-controls="reports" class="usa-button usa-button--outline shadow-none"
+        [queryParams]="{ status: 'draft' }" [ngClass]="{ 'border-bottom-05': data.isDraft }">
         <!-- Draft Reports -->
         {{ (pageContent?.tabs)![1] }}
         <!--        Draft<span class="display-none tablet:display-inline"> reports</span>-->
@@ -36,9 +41,12 @@
     </div>
 
     <!-- Finalized Reports tab -->
-    <div class="tab-item" *ngIf="{ isFinalized: reportFiltersForm.controls['version'].value.length === 1 && reportFiltersForm.controls['version'].value.includes('finalized') } as data" [attr.aria-selected]="data.isFinalized">
+    <div class="tab-item"
+      *ngIf="{ isFinalized: reportFiltersForm.controls['version'].value.length === 1 && reportFiltersForm.controls['version'].value.includes('finalized') } as data"
+      [attr.aria-selected]="data.isFinalized">
 
-      <button routerLink="." aria-controls="reports" class="usa-button usa-button--outline shadow-none" [queryParams]="{ status: 'finalized' }" [attr.aria-selected]="data.isFinalized"
+      <button routerLink="." aria-controls="reports" class="usa-button usa-button--outline shadow-none"
+        [queryParams]="{ status: 'finalized' }" [attr.aria-selected]="data.isFinalized"
         [ngClass]="{ 'border-bottom-05': data.isFinalized }" [id]="'view_finalized_reports_btn'">
         <!-- Finalized Reports -->
 
@@ -50,23 +58,21 @@
     <!-- TODO: Needs to be moved into filter panel -->
   </div>
 
-  <section role="tabpanel" id="reports" [attr.aria-label]="(reportFiltersForm.controls['version'].value[0] | titlecase) + ' Reports'" class="reports-table display-flex flex-column gap-1 width-full">
+  <section role="tabpanel" id="reports"
+    [attr.aria-label]="(reportFiltersForm.controls['version'].value[0] | titlecase) + ' Reports'"
+    class="reports-table display-flex flex-column gap-1 width-full">
 
-<!--    completed: {{reportsLoadedComplete}} -->
-    <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="!reportsLoadedComplete">
-      <div class="display-flex flex-align-center gap-1">
-        <div class="loader"></div>
-        <p class="usa-prose" i18n>Loading reports...</p>
-      </div>
-    </div>
+    <!--    completed: {{reportsLoadedComplete}} -->
+    <ng-container>
 
-    <ng-container *ngIf="reportsLoadedComplete">
+      <div
+        class="data-management-table-header display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full margin-bottom-3 gap-2">
 
-      <div class="data-management-table-header display-flex flex-column tablet:flex-row flex-justify flex-align-start tablet:flex-align-center width-full margin-bottom-3 gap-2">
-
-        <h2 class="font-family-body font-sm line-height-5 text-normal" id="showing" *ngIf="listOfFilteredReports | paginate : page : pageSize as items" aria-live="polite">
+        <h2 class="font-family-body font-sm line-height-5 text-normal" id="showing"
+          *ngIf="listOfFilteredReports | paginate : page : pageSize as items" aria-live="polite">
           Showing up to
-          <select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()" aria-labelledby="showing" class="usa-select margin-x-1 width-auto display-inline" name="options" id="options">
+          <select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()" aria-labelledby="showing"
+            class="usa-select margin-x-1 width-auto display-inline" name="options" id="options">
             <option [value]="5">5</option>
             <option [value]="10">10</option>
             <option [value]="25">25</option>
@@ -76,27 +82,26 @@
         </h2>
 
         <div class="display-flex gap-2 flex-wrap flex-align-center">
-          <button (click)="doSort('updated')" (keydown.enter)="doSort('updated')" id="sortButton" type="button" class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
-            <i class="fal {{ updatedSortDirection === 'asc' ? 'fa-sort-amount-up-alt' : 'fa-sort-amount-down-alt' }}" aria-hidden="true"></i>
-            Sort
-          </button>
-
-          <button (click)="doSort('alpha')" (keydown.enter)="doSort('alpha')" id="sortButton" type="button" class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
-            <i class="fal {{ alphaSortDirection === 'asc' ? 'fa-sort-alpha-up' : 'fa-sort-alpha-down' }}" aria-hidden="true"></i>
-            Sort
-          </button>
-
-          <button
-            (click)="toggleFilterPanel()"
-            id="filterPanelButton"
-            type="button"
+          <button (click)="doSort('updated')" (keydown.enter)="doSort('updated')" id="sortButton" type="button"
             class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
-            <i class="fal fa-filter" aria-hidden="true"></i>
+            <i class="fal {{ updatedSortDirection === 'asc' ? 'fa-sort-amount-up-alt' : 'fa-sort-amount-down-alt' }}"
+              aria-hidden="true" role="img" alt=""></i>
+            Sort
+          </button>
+
+          <button (click)="doSort('alpha')" (keydown.enter)="doSort('alpha')" id="sortButton" type="button"
+            class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
+            <i class="fal {{ alphaSortDirection === 'asc' ? 'fa-sort-alpha-up' : 'fa-sort-alpha-down' }}"
+              aria-hidden="true" role="img" alt=""></i>
+            Sort
+          </button>
+
+          <button (click)="toggleFilterPanel()" id="filterPanelButton" type="button"
+            class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
+            <i class="fal fa-filter" aria-hidden="true" role="img" alt=""></i>
             Filter
           </button>
-          <button
-            class="usa-button width-auto align-self-start"
-            (click)="openModal()"
+          <button class="usa-button width-auto align-self-start" (click)="openModal()"
             *adaptAccessControl="'Reports'; behavior: 'hide'; action: 'Write'">
             Create
           </button>
@@ -105,15 +110,22 @@
 
       <!-- apply pagination to the list of reports using the ngx-pagination paginate pipe -->
       <ng-container *ngIf="listOfFilteredReports | paginate : page : pageSize as reports">
-        <span *ngIf="reports.length" class="visually-hidden" aria-live="polite" id="report-load-notifier">Reports have loaded</span>
+        <span *ngIf="reports.length" class="visually-hidden" aria-live="polite" id="report-load-notifier">Reports have
+          loaded</span>
         <adapt-list-item-report *ngFor="let report of reports"
-                                (publish)="selectedReport = $event;  publishConfirmationModal.open()" (unPublish)="startUnPublish(report)"
-                                [report]="report" headingLvl="h3" [onLandingPage]="true">
+          (publish)="selectedReport = $event;  publishConfirmationModal.open()" (unPublish)="startUnPublish(report)"
+          [report]="report" headingLvl="h3" [onLandingPage]="true">
         </adapt-list-item-report>
 
       </ng-container>
     </ng-container>
 
+    <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="!reportsLoadedComplete">
+      <div class="display-flex flex-align-center gap-1">
+        <div class="loader"></div>
+        <p class="usa-prose" i18n>Loading reports...</p>
+      </div>
+    </div>
     <div class="reports-table-pagination padding-top-2">
       <lib-adapt-pagination [page]="page" [maxPages]="maxPages"></lib-adapt-pagination>
     </div>
@@ -126,20 +138,13 @@
 
       <div class="display-flex flex-column">
         <lib-adapt-multi-select [labelStyle]="{ 'margin-top': '0' }" label="Status" selectID="report-status"
-          formControlName="version"
-          [items]="reportStatuses"
-          itemLabel="label"
+          formControlName="version" [items]="reportStatuses" itemLabel="label"
           itemAccessor="value"></lib-adapt-multi-select>
       </div>
 
       <div class="display-flex flex-column">
-        <lib-adapt-multi-select
-          [labelStyle]="{ 'margin-top': '0' }"
-          label="Audience"
-          selectID="report-audience"
-          formControlName="visibility"
-          [items]="reportAudience"
-          itemLabel="label"
+        <lib-adapt-multi-select [labelStyle]="{ 'margin-top': '0' }" label="Audience" selectID="report-audience"
+          formControlName="visibility" [items]="reportAudience" itemLabel="label"
           itemAccessor="value"></lib-adapt-multi-select>
       </div>
 
@@ -150,7 +155,8 @@
     <p class="usa-prose margin-y-0 font-sm line-height-2">Hit apply to save your changes.</p>
     <div class="display-flex gap-2">
       <button type="button" class="usa-button" (click)="toggleFilterPanel(); applyFilters(true)">Apply</button>
-      <button type="button" (click)="reportFiltersForm.reset(); applyFilters(true)" class="usa-button usa-button--unstyled">
+      <button type="button" (click)="reportFiltersForm.reset(); applyFilters(true)"
+        class="usa-button usa-button--unstyled">
         Reset
       </button>
       <button type="button" class="usa-button usa-button--unstyled" (click)="toggleFilterPanel()">Cancel</button>

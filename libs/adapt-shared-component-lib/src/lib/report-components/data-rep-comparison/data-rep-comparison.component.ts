@@ -148,7 +148,9 @@ export class DataRepComparisonComponent implements OnInit {
       this.comparisonItem1Raw,
       value.total,
       this.plainLanguageMaxCount,
-      this.lang
+      this.lang,
+      this.suppressed,
+      `(${this.content?.actions?.['suppressed']})`
     );
 
     this.comparisonItem1Data = value.data;
@@ -161,7 +163,9 @@ export class DataRepComparisonComponent implements OnInit {
       this.comparisonItem2Raw,
       value2.total,
       this.plainLanguageMaxCount,
-      this.lang
+      this.lang,
+      this.suppressed,
+      `(${this.content?.actions?.['suppressed']})`
     );
 
     this.comparisonItem2Data = this.dataRepService.reorderArrayToMatch(

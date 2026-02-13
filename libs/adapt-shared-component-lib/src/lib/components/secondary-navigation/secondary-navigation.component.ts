@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ContentChildren,
   EventEmitter,
@@ -25,6 +26,8 @@ export class SecondaryNavigationComponent implements AfterViewInit, OnDestroy {
   @Input() preselectFirst = true;
   private subscriptions: Subscription[] = [];
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   public anySelected() {
     for (const tab of this.tabs) {
       if (tab.selected) {
@@ -38,6 +41,9 @@ export class SecondaryNavigationComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (this.preselectFirst && !this.anySelected()) {
       this.tabs.first.preSelected = true;
+      // Trigger change detection after modifying child component state
+      // to avoid ExpressionChangedAfterItHasBeenCheckedError
+      this.cdr.detectChanges();
     }
   }
 

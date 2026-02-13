@@ -12,6 +12,7 @@ export * from './lib/services/settings.service';
 export * from './lib/pipes';
 export * from './lib/components/secondary-navigation/secondary-navigation.component';
 export * from './lib/services/language.service'
+export * from './lib/util/focus-management.util';
 
 export function provideAPIURL(api: string) {
     return makeEnvironmentProviders([

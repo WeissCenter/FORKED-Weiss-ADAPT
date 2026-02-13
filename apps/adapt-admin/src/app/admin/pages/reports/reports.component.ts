@@ -1,14 +1,5 @@
 import { DataViewModel, IReportModel, ReportFilterCriteriaModel, ReportVersion } from '@adapt/types';
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  effect,
-  OnDestroy,
-  OnInit, Signal,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, effect, OnDestroy, OnInit, Signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subscription, map, switchMap, of, BehaviorSubject } from 'rxjs';
 import { RoleService } from '../../../auth/services/role/role.service';
@@ -25,8 +16,6 @@ import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/ada
 import { NGXLogger } from 'ngx-logger';
 import { PageContentText } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 
-
-
 @Component({
   selector: 'adapt-reports',
   standalone: false,
@@ -37,7 +26,7 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
   ReportStatus = ReportVersion;
 
   Math = Math;
-    public selectedReport?: IReportModel;
+  public selectedReport?: IReportModel;
 
   @ViewChild(ReportModalComponent) reportModal?: ReportModalComponent;
   @ViewChild('unPublishModal') unPublishModal?: ModalComponent;
@@ -66,8 +55,8 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
   listOfAllReports: IReportModel[] = [];
   listOfFilteredReports: IReportModel[] = [];
   reportFilterCriteria: ReportFilterCriteriaModel;
-  reportsLoadedComplete: boolean = false;
-  filterChanged: boolean = false;
+  reportsLoadedComplete = false;
+  filterChanged = false;
 
   public updatedSortDirection: 'asc' | 'desc' = 'desc';
   public alphaSortDirection: 'asc' | 'desc' = 'desc';
@@ -106,9 +95,9 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
 
   public unPublishJustificationForm: FormGroup;
   // Input signal
-  $pageContentSignal: Signal<PageContentText|null>;
-  pageContent: PageContentText|null;
-  pageContentLoaded: boolean = false;
+  $pageContentSignal: Signal<PageContentText | null>;
+  pageContent: PageContentText | null;
+  pageContentLoaded = false;
 
   constructor(
     private logger: NGXLogger,
@@ -161,14 +150,11 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
       this.$reportsBehaviorSubject.next(this.listOfAllReports);
 
       // We need to check to see if we need to pull the latest data views from the server
-      if (this.adaptReportService.isPolling()){
+      if (this.adaptReportService.isPolling()) {
         this.logger.debug('Polling is ongoing');
-      }
-      else {
+      } else {
         this.adaptReportService.startPollingReportStatuses(); // force a refresh of the data views
       }
-
-
     });
   }
 
@@ -179,32 +165,27 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
 
     // after we got a signal that the pageContent was loaded
     effect(() => {
-
       this.logger.debug('$pageContentSignal retrieved');
       this.pageContent = this.$pageContentSignal();
 
       this.logger.debug('pageContent: ', this.pageContent);
 
-      if (this.pageContent){
-
+      if (this.pageContent) {
         this.logger.debug('Have page content');
 
-        if (!this.pageContent.title){
+        if (!this.pageContent.title) {
           this.logger.error('Invalid page title');
         }
 
         this.pageContentLoaded = true;
-      }
-      else {
+      } else {
         this.logger.debug('NO page content');
         this.pageContentLoaded = false;
       }
-
     });
-
   }
 
-  private initializeFilterPanel(){
+  private initializeFilterPanel() {
     this.logger.debug('Inside ReportsComponent initializeFilterPanel');
 
     this.subscription = this.filterPanelService.currentFilterPanelState.subscribe((state) => {
@@ -258,11 +239,10 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
     this.reportFilterCriteria = {
       visibility: visibility,
       search: search,
-      version: version
-    }
+      version: version,
+    };
 
     this.logger.debug('reportFilterCriteria: ', this.reportFilterCriteria);
-
   }
 
   ngAfterViewInit(): void {
@@ -284,7 +264,7 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
     this.setReportsLoadingStatus(false);
 
     this.adaptReportService.getReportsListener().subscribe((reports) => {
-      this.logger.debug('Getting notification of updated reports from service',reports?.length);
+      this.logger.debug('Getting notification of updated reports from service', reports?.length);
 
       this.listOfAllReports = reports;
 
@@ -296,15 +276,12 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
     // we do this because we need to trigger a new fiter and update when the route query parameters change in
     // the method initializeRouteChangeListener() as well as in the getReportsListener() above
     this.$reportsBehaviorSubject.asObservable().subscribe({
-
       next: (latestReports) => {
-
         this.logger.debug('latestReports: ', latestReports?.length);
         this.filterAndSortReports();
-
       },
       error: () => {
-        this.alert.add({type: 'error', title: 'Reports listener Failed', body: 'Reports listener failed.' });
+        this.alert.add({ type: 'error', title: 'Reports listener Failed', body: 'Reports listener failed.' });
       },
     });
 
@@ -322,32 +299,25 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
     this.logger.debug('Inside filterAndSortReports, reportFilterCriteria: ', this.reportFilterCriteria);
 
     if (this.listOfAllReports?.length > 0) {
-
-      let visibility: any
+      let visibility: any;
       let search: any;
       let version: any;
 
-      if (this.reportFilterCriteria){
+      if (this.reportFilterCriteria) {
         visibility = this.reportFilterCriteria.visibility;
         search = this.reportFilterCriteria.search;
         version = this.reportFilterCriteria.version;
-      }
-      else {
+      } else {
         this.logger.debug('No filter criteria found');
       }
 
       // Filter reports based on the status and visibility
       const filtered = this.listOfAllReports.filter((item: IReportModel) => {
-
         const versionMatch = this.handleFilterParam(version, item.version);
         const visibilityMatch = this.handleFilterParam(visibility, item.visibility);
-        const searchMatch =  !search?.length ||
-          item.name.toLowerCase().includes(search) ||
-          item.version.toLowerCase().includes(search) ||
-          item.author.toLowerCase().includes(search);
+        const searchMatch = !search?.length || item.name.toLowerCase().includes(search) || item.version.toLowerCase().includes(search) || item.author.toLowerCase().includes(search);
 
         return versionMatch && searchMatch && visibilityMatch;
-
       }) as IReportModel[];
 
       // filtered.sort((a, b) =>
@@ -376,9 +346,7 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
           }
         };
 
-        const sortResult = this.activeSort === 'updated' ?
-          sort(updatedA, updatedB, 'number', this.updatedSortDirection) :
-          sort(alphaA, alphaB, 'string', this.alphaSortDirection);
+        const sortResult = this.activeSort === 'updated' ? sort(updatedA, updatedB, 'number', this.updatedSortDirection) : sort(alphaA, alphaB, 'string', this.alphaSortDirection);
 
         return sortResult;
       });
@@ -396,30 +364,26 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
       // Update maxPages for pagination
       this.maxPages = Math.max(1, Math.ceil(this.listOfFilteredReports.length / this.pageSize));
       this.totalItems = this.listOfFilteredReports.length;
-
       this.setReportsLoadingStatus(true);
-
       return filtered;
-    }
-    else {
+    } else {
       this.logger.debug('nothing to filter');
       return [];
     }
-
   }
 
   private setReportsLoadingStatus(reportsLoadedStatus: boolean) {
     this.logger.debug('Inside setReportsLoadingStatus: ', reportsLoadedStatus);
     //setTimeout(() => {
-      this.reportsLoadedComplete = reportsLoadedStatus;
-   // }, 1); // Adjust this delay as needed
+    this.reportsLoadedComplete = reportsLoadedStatus;
+    // }, 1); // Adjust this delay as needed
   }
 
   toggleFilterPanel(close = false) {
     this.logger.debug('Toggle filter panel');
 
     this.showFilterPanel = !this.showFilterPanel;
-    if (close){
+    if (close) {
       this.showFilterPanel = false;
     }
 
@@ -448,7 +412,7 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
       queryParamsHandling: 'merge',
     });
 
-    if (announce){
+    if (announce) {
       this.filterStatusMessage = 'Filters have been applied.';
     }
   }
@@ -566,26 +530,25 @@ export class ReportsComponent implements OnInit, AfterViewChecked, OnDestroy, Af
     if (!this.selectedReport) return;
 
     this.unPublishModal?.close();
-    this.adaptReportService.unPublishReport(this.selectedReport, this.unPublishJustificationForm.get('justification')?.value)
-      .subscribe({
-        next: () => {
-          this.alert.add({
-            type: 'success',
-            title: 'Report Un-Publish Success',
-            body: 'Report has been un-published.',
-          });
-          this.router.navigate(['..', this.selectedReport!.reportID], {
-            relativeTo: this.route,
-            queryParams: { version: 'draft' },
-          });
-        },
-        error: () => {
-          this.alert.add({
-            type: 'error',
-            title: 'Report Un-Publish Failed',
-            body: 'Failed to Un-Publish report, please try again later.',
-          });
-        },
-      });
+    this.adaptReportService.unPublishReport(this.selectedReport, this.unPublishJustificationForm.get('justification')?.value).subscribe({
+      next: () => {
+        this.alert.add({
+          type: 'success',
+          title: 'Report Un-Publish Success',
+          body: 'Report has been un-published.',
+        });
+        this.router.navigate(['..', this.selectedReport!.reportID], {
+          relativeTo: this.route,
+          queryParams: { version: 'draft' },
+        });
+      },
+      error: () => {
+        this.alert.add({
+          type: 'error',
+          title: 'Report Un-Publish Failed',
+          body: 'Failed to Un-Publish report, please try again later.',
+        });
+      },
+    });
   }
 }

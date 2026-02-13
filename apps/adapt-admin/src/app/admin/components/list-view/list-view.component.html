@@ -26,11 +26,11 @@
         (click)="doSort()"
         type="button"
         class="usa-button flex-column usa-button--outline shadow-none width-auto align-self-start">
-        <i class="fal {{ icon() }}" aria-hidden="true"></i>
+        <i class="fal {{ icon() }}" aria-hidden="true" role="img" alt=""></i>
         {{ listViewContent ? listViewContent.actions[0] : 'Sort' }}
       </button>
       <button type="button" *ngIf="currentList === 'views'" (click)="toggleFilterPanel()" id="filterPanelButton" class="usa-button usa-button--outline shadow-none width-auto align-self-start flex-column">
-        <i class="fal fa-filter" aria-hidden="true"></i>
+        <i class="fal fa-filter" aria-hidden="true" role="img" alt=""></i>
         {{ listViewContent ? listViewContent.actions[1] : 'Filter' }}
       </button>
       <button

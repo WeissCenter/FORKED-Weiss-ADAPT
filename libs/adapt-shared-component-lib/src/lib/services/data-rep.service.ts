@@ -256,7 +256,7 @@ export class DataRepService {
     });
   }
 
-  public generatePlainLanguage(data: any, total: number, maxCount: number, lang: string) {
+  public generatePlainLanguage(data: any, total: number, maxCount: number, lang: string, suppressed: boolean, suppressedText = 'Suppressed') {
     const sumValue = data.chart.yAxisValue === data.chart.groupBy ? data.chart.xAxisValue : data.chart.yAxisValue;
 
     // TODO: replace with elegant solution to the data-rep vs data-rep-comparison component
@@ -267,11 +267,12 @@ export class DataRepService {
     }
 
     // Sort the data by the 'sumValue' in descending order to get the top items
-    data.chart.data.sort(
-      (a: { [x: string]: number }, b: { [x: string]: number }) => b[data.chart.yAxisValue] - a[data.chart.yAxisValue]
-    );
+    data.chart.data.sort((a: { [x: string]: number }, b: { [x: string]: number }) => b[data.chart.yAxisValue] - a[data.chart.yAxisValue]);
     // Slice the array to include only the top items as per plainLanguageMaxCount
     const topItems = data.chart.data.slice(0, maxCount);
+
+    // get the fileSpec associated with the data in the case of fileSpec specific glossaryTerm
+    const fileSpec = this.getFileSpecFromBarChartContent(data);
 
     // Convert each item into a plain language string
     const plainLanguageItems = topItems.map((item: { [x: string]: string }) => {
@@ -283,15 +284,13 @@ export class DataRepService {
             0
           )) *
         100;
-
+      
       const percentage = isNaN(percentageResult) ? '0.00' : percentageResult.toFixed(2);
 
       // console.log(this.glossary.getTermSafe(item[this.raw.chart.xAxisValue], undefined, this.lang as LanguageCode))
 
       // Format the string with the label and the percentage
-      return `${
-        this.glossary.getTermSafe(item[data.chart.xAxisValue], undefined, lang as LanguageCode).label
-      } (${percentage}%)`;
+      return `${this.glossary.getGlossaryTerm(item[data.chart.xAxisValue], lang as LanguageCode, fileSpec).label} (${percentage}%)`;
     });
 
     const explainTemplate = data?.explainTemplate as string;
@@ -302,7 +301,9 @@ export class DataRepService {
       sumValue,
       data.chart.data,
       explainTemplate,
-      plainLanguageItems
+      plainLanguageItems,
+      suppressed,
+      suppressedText
     );
   }
 
@@ -313,10 +314,11 @@ export class DataRepService {
     const noDataItemCount = noDataItems.length;
     let noDataSummary = '';
     // Get the plain language label for each item
-    const plainLanguageItems = noDataItems.map(
-      (item: { [x: string]: string }) =>
-        this.glossary.getTermSafe(item[data.chart.xAxisValue], undefined, lang as LanguageCode).label
-    );
+
+    // attempt to get the filespec associated with the data in the case of fileSpec specific glossaryTerm
+    const fileSpec = this.getFileSpecFromBarChartContent(data);
+
+    const plainLanguageItems = noDataItems.map((item: { [x: string]: string }) => this.glossary.getGlossaryTerm(item[data.chart.xAxisValue], lang as LanguageCode, fileSpec).label);
     if (plainLanguageItems.length > 2) {
       // Join all items with commas, but the last item with 'and'
       const allButLast = plainLanguageItems.slice(0, -1).join(', ');
@@ -324,7 +326,7 @@ export class DataRepService {
       noDataSummary += `${allButLast}, and ${lastItem}`;
     } else if (plainLanguageItems.length === 2) {
       // No comma, just 'and'
-      noDataSummary += `${plainLanguageItems[0]} or ${plainLanguageItems[1]}`;
+      noDataSummary += `${plainLanguageItems[0]} and ${plainLanguageItems[1]}`;
     } else if (plainLanguageItems.length === 1) {
       // If there's only one item, just add it
       noDataSummary += `${plainLanguageItems[0]}`;
@@ -335,5 +337,21 @@ export class DataRepService {
       count: noDataItemCount,
       summary: noDataSummary,
     };
+  }
+
+  public getFileSpecFromBarChartContent(content: any): string | undefined {
+    // attempt to get the filespec associated with the data in the case of fileSpec specific glossaryTerm
+    let fileSpec = undefined;
+    if (content && content.fileSpec) {
+      fileSpec = content.fileSpec;
+    } else if (content && content.chart.dataRetrievalOperations && content.chart.dataRetrievalOperations.length === 1 && content.chart.dataRetrievalOperations[0].arguments) {
+      // find the filespec inside of arguments where field is ReportCode
+      const reportCodeValue = content.chart.dataRetrievalOperations[0].arguments.find((arg: any) => arg.field === 'ReportCode')?.value;
+      const formattedReportCodeValue = Array.isArray(reportCodeValue) ? reportCodeValue[0] : reportCodeValue;
+      fileSpec = formattedReportCodeValue;
+    } else {
+      console.warn('No fileSpec or ReportCode found in content');
+    }
+    return fileSpec;
   }
 }

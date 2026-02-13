@@ -11,20 +11,32 @@ import { RouteBreadcrumbType } from 'libs/adapt-shared-component-lib/src/lib/com
 
 
 export const appRoutes: Route[] = [
-  // {
-  //   path: '',
-  //   title: 'ADAPT Viewer - Home',
-  //   data: { breadcrumbLabel: 'Home' },
-  //   component: HomeComponent,
-  // },
+  { path: '', title: 'ADAPT Viewer - Home', component: HomeComponent, data: { breadcrumbLabel: null } },
+  { path: 'share/:slug', title: 'ADAPT Admin - Home', component: HomeComponent, data: { breadcrumbLabel: null } },
+  { path: 'reports',
+    data: { breadcrumbLabel: 'reports', breadcrumbType: RouteBreadcrumbType.CONTENT  },
+    children: [
+      { path: '', component: ReportsComponent },
+      { path: ':slug', component: ReportComponent },
+    ],
+  },
+  { path: 'resources',
+    title: 'ADAPT Viewer - Resources',
+    component: ResourcesComponent,
+    data: { breadcrumbLabel: 'resources', breadcrumbType: RouteBreadcrumbType.CONTENT  },
+  },
+  { path: '404', component: ErrorComponent },
+  { path: '**', redirectTo: '404' }
 
+
+  /*
   {
     path: '',
     data: { breadcrumbLabel: null },
     //component: AppComponent,
     children: [
       { path: '', title: 'ADAPT Viewer - Home', component: HomeComponent },
-      { path: 'share/:slug', title: 'ADAPT Admin - Home', component: HomeComponent },
+     { path: 'share/:slug', title: 'ADAPT Admin - Home', component: HomeComponent },
       {
         path: 'reports',
         data: { breadcrumbLabel: 'reports', breadcrumbType: RouteBreadcrumbType.CONTENT  },
@@ -43,8 +55,10 @@ export const appRoutes: Route[] = [
         path: '404', component: ErrorComponent
       },
       {
-        path: '**', redirectTo: '404' 
+        path: '**', redirectTo: '404'
       }
     ],
   },
+
+   */
 ];

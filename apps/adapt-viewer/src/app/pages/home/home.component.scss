@@ -22,7 +22,7 @@
 }
 
 .questions-layout {
-  flex-direction: row;
+  // flex-direction: row;
   flex-wrap: wrap;
   > * {
     flex-basis: calc(50% - var(--usa-spacing-1));
