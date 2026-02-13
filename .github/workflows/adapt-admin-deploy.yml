@@ -20,6 +20,7 @@ env:
   AWS_REGION: ${{ vars.AWS_REGION }}
   AWS_S3_BUCKET: ${{ vars.AWS_S3_BUCKET }}
   ANGULAR_ENVIRONMENT: ${{ vars.ANGULAR_ENVIRONMENT }}
+  DEPLOYMENT_BUILD_RELEASE_NO: ${{ vars.DEPLOYMENT_BUILD_RELEASE_NO }}
 
 jobs:
   deploy-angular:
@@ -34,16 +35,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Set current timestamp environment variable for RELEASE_DATE
+        run: echo "RELEASE_DATE=$(TZ=America/New_York date +'%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV  # "RELEASE_DATE=$(date +'%Y-%m-%d %H:%M:%S')" Or "RELEASE_DATE=$(TZ=America/New_York date +'%Y-%m-%d %H:%M:%S %Z')"
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner on ${{ env.RELEASE_DATE }}."
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
       - name: Install dependencies (${{ github.ref_name }})
         run: npm i --force
       - name: Build Angular Application
-        run: npx nx build adapt-admin --configuration ${{ env.ANGULAR_ENVIRONMENT }}
+        run: NX_APP_RELEASE='${{ env.DEPLOYMENT_BUILD_RELEASE_NO }}' NX_APP_RELEASE_DATE='${{ env.RELEASE_DATE }}' npx nx build adapt-admin --configuration ${{ env.ANGULAR_ENVIRONMENT }}
       - name: List files in the dist
         run: |
           ls ${{ github.workspace }}/dist

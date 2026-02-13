@@ -42,7 +42,7 @@
                   <div class="flex-1 display-flex gap-2 flex-align-end">
                     <lib-adapt-text-input class="flex-1" formControlName="icon"
                       [label]="pageContent?.sections![0].questions![4].label"></lib-adapt-text-input>
-                    <i *ngIf="item.value.icon" class="margin-bottom-105" aria-hidden="true" role="img"
+                    <i *ngIf="item.value.icon" class="margin-bottom-105" aria-hidden="true" role="img" alt=""
                       [ngClass]="item.value.icon"></i>
                   </div>
 
@@ -63,7 +63,7 @@
                     <div class="display-flex flex-column gap-1">
                       <label class="combo-box-label usa-label margin-y-0 sr-only" for="target-options-{{ i }}">{{
                         pageContent?.sections![0].questions![3].label }}</label>
-                      <select class="usa-select margin-0" formControlName="target" id="target-options-{{ i }}">
+                      <select class="usa-select margin-0 width-full" formControlName="target" id="target-options-{{ i }}">
                         <option *ngFor="let option of targetOptions" [value]="option.value">
                           {{ option.label }}
                         </option>

@@ -1,7 +1,6 @@
-import { Component, Host, Input } from '@angular/core';
+import { Component, Host, Input, OnInit } from '@angular/core';
 import { SecondaryNavigationComponent } from '../secondary-navigation/secondary-navigation.component';
 import { ActivatedRoute } from '@angular/router';
-//import { ChangeDetectorRef, AfterContentChecked} from '@angular/core';
 
 @Component({
   selector: 'lib-adapt-secondary-navigation-item',
@@ -9,8 +8,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './secondary-navigation-item.component.html',
   styleUrl: './secondary-navigation-item.component.scss',
 })
-export class SecondaryNavigationItemComponent {
-  //implements AfterContentChecked
+export class SecondaryNavigationItemComponent implements OnInit {
   @Input() name = 'Navigation Item';
   @Input() queryParams?: Record<string, string>;
 
@@ -21,30 +19,30 @@ export class SecondaryNavigationItemComponent {
   constructor(
     @Host() public navigation: SecondaryNavigationComponent,
     private route: ActivatedRoute
-  ) //private cdRef: ChangeDetectorRef
-  {
+  ) {
     this.isSelected = this.selected;
+  }
+
+  ngOnInit(): void {
+    // Check if query params exist on init and clear preSelected accordingly
+    // This avoids mutating state during change detection in the getter
+    const snapshotValues = Object.values(this.route.snapshot.queryParams);
+    if (this.queryParams && snapshotValues.length > 0) {
+      this.preSelected = false;
+    }
   }
 
   public get selected() {
     const snapshotValues = Object.values(this.route.snapshot.queryParams);
 
-
-
     if (this.queryParams && snapshotValues.length > 0) {
-      this.preSelected = false;
-      const selected = snapshotValues.every((param) => Object.values(this.queryParams as Record<string, string>).includes(param));
-
+      // Don't mutate state here - it's handled in ngOnInit
+      const selected = snapshotValues.every((param) =>
+        Object.values(this.queryParams as Record<string, string>).includes(param)
+      );
       return selected;
     }
 
-    //this.cdRef.detectChanges();
-    return false || this.preSelected;
+    return this.preSelected;
   }
-
-  // ngAfterContentChecked() {
-  //
-  //   this.cdRef.detectChanges();
-  //
-  // }
 }

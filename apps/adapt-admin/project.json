@@ -45,8 +45,13 @@
           "path": "apps/adapt-admin/webpack.config.js"
         },
         "styles": [
-          "apps/adapt-admin/src/styles.scss",
           "libs/shared-assets/fontawesome/css/all.css",
+          "libs/shared-styles/aem-uswds/_us-aem-wds.min.css",
+          "libs/shared-styles/aem-uswds/uswds+adapt.min.css",
+          "libs/shared-styles/variables/_generated.scss",
+          "libs/shared-styles/theme.scss",
+          "apps/adapt-admin/src/styles.scss",
+
           "node_modules/@angular/cdk/_index.scss",
           "node_modules/@angular/cdk/a11y-prebuilt.css",
           "node_modules/weiss-accessibility-center/dist/assets/index.scss"
@@ -120,19 +125,19 @@
       "executor": "@nx/angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "adapt-admin:build:production"
+          "buildTarget": "adapt-admin:build:production"
         },
         "qa": {
-          "browserTarget": "adapt-admin:build:qa"
+          "buildTarget": "adapt-admin:build:qa"
         },
         "en": {
-          "browserTarget": "adapt-admin:build:en"
+          "buildTarget": "adapt-admin:build:en"
         },
         "development": {
-          "browserTarget": "adapt-admin:build:development"
+          "buildTarget": "adapt-admin:build:development"
         },
         "local": {
-          "browserTarget": "adapt-admin:build:local"
+          "buildTarget": "adapt-admin:build:local"
         }
       },
       "defaultConfiguration": "local"
@@ -140,7 +145,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "adapt-admin:build",
+        "buildTarget": "adapt-admin:build",
         "outputPath": "apps/adapt-admin/src/locale"
       }
     },

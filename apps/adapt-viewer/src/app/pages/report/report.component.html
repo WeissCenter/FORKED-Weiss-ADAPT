@@ -33,7 +33,7 @@
             id="shareReportBtn"
             type="button"
             class="usa-button flex-column padding-2 usa-button--unstyled">
-            <i class="fal fa-share" aria-hidden="true"></i>
+            <i class="fal fa-share" aria-hidden="true" role="img" alt=""></i>
             {{$reportContent()?.actions?.share}}
           </button>
 
@@ -43,7 +43,7 @@
             type="button"
             class="usa-button flex-column usa-button--unstyled"
             *ngIf="availableFilters && showFilterButton">
-            <i class="fal fa-filter" aria-hidden="true"></i>
+            <i class="fal fa-filter" aria-hidden="true" role="img" alt=""></i>
             {{$reportContent()?.actions?.filter}}
           </button>
         </div>
@@ -163,7 +163,7 @@
       <ng-container *ngIf="!data.error && loading">
         <div class="loading-wrapper" aria-live="polite" [attr.aria-busy]="true">
           <div class="display-flex flex-column flex-align-center gap-1">
-            <img src="assets/gif/dna.gif" alt aria-hidden="true" />
+            <img src="assets/gif/dna.gif" alt="" aria-hidden="true" />
             <strong class="usa-prose">We are working on your report. This should only take a moment.</strong>
           </div>
         </div>
@@ -307,7 +307,7 @@
           title="Copy report share link"
           aria-label="Copy report share link"
           class="usa-button usa-button--unstyled">
-          <i aria-hidden="true" class="fal fa-copy"></i>
+          <i aria-hidden="true" class="fal fa-copy" role="img" alt=""></i>
         </button>
       </div>
     </ng-container>

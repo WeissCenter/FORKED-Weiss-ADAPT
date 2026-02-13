@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { GlossaryService } from '../services/glossary.service';
-import { IGlossaryTerm, LanguageCode } from '@adapt/types';
+import { LanguageCode } from '@adapt/types';
+import { Observable, map } from 'rxjs';
 
 @Pipe({
   name: 'glossary',
@@ -9,20 +10,9 @@ import { IGlossaryTerm, LanguageCode } from '@adapt/types';
 export class GlossaryPipe implements PipeTransform {
   constructor(private glossary: GlossaryService) {}
 
-  transform(key: string, field: 'label' | 'definition' = 'label', lang: string = 'en', fileSpec?: string) {
-    let term: IGlossaryTerm | undefined;
-    if (fileSpec) {
-      term = this.glossary.getFileSpecTerm(fileSpec.toLowerCase(), key, (lang as LanguageCode));
-    } else {
-      term = this.glossary.getTerm(key, (lang as LanguageCode));
-    }
-    // return term ? term[field] : key;
-    return new Promise<string>((resolve) => {
-      if (term) {
-        resolve(term[field]);
-      } else {
-        resolve(key);
-      }
-    });
+  transform(key: string, field: 'label' | 'definition' = 'label', lang: string = 'en', fileSpec?: string): Observable<string> {
+    return this.glossary.getGlossaryTerm$(key, lang as LanguageCode, fileSpec).pipe(
+      map((term) => term ? term[field] : key)
+    );
   }
 }

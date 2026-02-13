@@ -4,7 +4,7 @@
       <a (click)="changePage(page - 1)" routerLink="." [queryParams]="{ page: page - 1 }"
         [queryParamsHandling]="'merge'" href="javascript:void(0);"
         class="usa-pagination__link usa-pagination__previous-page" aria-label="Previous page"><svg class="usa-icon"
-          aria-hidden="true" role="img">
+          aria-hidden="true" role="img" alt="">
           <use xlink:href="/assets/sprite.svg#navigate_before"></use>
         </svg>
         <span class="usa-pagination__link-text">{{ previous }}</span></a>
@@ -53,7 +53,7 @@
       <a (click)="changePage(page + 1)" routerLink="." [queryParams]="{ page: page + 1 }"
         [queryParamsHandling]="'merge'" class="usa-pagination__link usa-pagination__next-page"
         aria-label="Next page"><span class="usa-pagination__link-text">{{ next }}</span><svg class="usa-icon"
-          aria-hidden="true" role="img">
+          aria-hidden="true" role="img" alt="">
           <use xlink:href="/assets/sprite.svg#navigate_next"></use>
         </svg></a>
     </li>
