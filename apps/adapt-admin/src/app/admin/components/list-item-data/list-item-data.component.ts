@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DataViewModalComponent } from '../../components/data-view-modal/data-view-modal.component';
-import { DataSource, DataView, PageMode } from '@adapt/types';
+import { DataSource, DataViewModel, PageMode } from '@adapt/types';
 import { DataSourceModalComponent } from '../data-source-modal/data-source-modal.component';
 import { ReportModalComponent } from '../report-modal/report-modal.component';
 
 @Component({
   selector: 'adapt-list-item-data',
+  standalone: false,
   templateUrl: './list-item-data.component.html',
   styleUrls: ['./list-item-data.component.scss'],
 })
@@ -26,14 +27,14 @@ export class ListItemDataComponent {
     this.dataViewModal.open(this.view);
   }
 
-  public onLearnMore(item: DataView | DataSource) {
+  public onLearnMore(item: DataViewModel | DataSource) {
     switch (this.listType) {
       case 'sources': {
         this.dataSourceModal.open(item as DataSource, PageMode.VIEW);
         break;
       }
       case 'views': {
-        this.dataViewModal.open(item as DataView, true, 2);
+        this.dataViewModal.open(item as DataViewModel, true, 2);
         break;
       }
     }

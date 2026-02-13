@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'stripQuotes'
+  name: 'stripQuotes',
+  standalone: false,
 })
 export class StripQuotesPipe implements PipeTransform {
   transform(value: string | null | undefined): string {

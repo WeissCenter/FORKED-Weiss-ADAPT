@@ -9,13 +9,13 @@
       class="usa-button gap-0 flex-column usa-button--outline shadow-none" id="expand-menu-button" (click)="toggleNav()"
       i18n>
       <ng-container *ngIf="nav_collapsed">
-        <i aria-hidden="true" class="fal fa-bars"></i>
+        <i aria-hidden="true" class="fal fa-bars" role="img" alt=""></i>
         <span class="font-3xs"><span class="display-none tablet:display-inline">{{$sidebar()?.open}}
           </span>{{$sidebar()?.menu}}</span>
       </ng-container>
 
       <ng-container *ngIf="!nav_collapsed">
-        <i aria-hidden="true" class="fal fa-arrow-from-right"></i>
+        <i aria-hidden="true" class="fal fa-arrow-from-right" role="img" alt=""></i>
         <span class="font-3xs"><span class="display-none tablet:display-inline">{{$sidebar()?.collapse}}
           </span>{{$sidebar()?.menu}}</span>
       </ng-container>
@@ -23,7 +23,7 @@
 
     <div class="sidebar-header">
       <div class="display-flex width-full padding-1 gap-1 flex-align-center flex-justify-center">
-        <img *ngIf="!logoIsSvg" [src]="logoURL" class="logo" aria-hidden="true" />
+        <img *ngIf="!logoIsSvg" [src]="logoURL" class="logo" aria-hidden="true" alt="" />
         <lib-adapt-inline-svg [src]="logoURL" [attr.aria-hidden]="true"
           svgClass="maxw-6 display-none desktop:display-flex" *ngIf="logoIsSvg"></lib-adapt-inline-svg>
       </div>
@@ -32,39 +32,39 @@
     <nav aria-label="primary" class="margin-top-1">
       <ul #navList role="menubar" aria-orientation="vertical" class="usa-icon-list display-flex flex-column gap-05">
         <li role="none">
-          <a aria-describedby="home" role="menuitem" routerLink="/" (click)="closeMenuOnNavigation()"
+          <a role="menuitem" routerLink="/" (click)="closeMenuOnNavigation()"
             routerLinkActive="active-nav hover:bg-primary-dark" [routerLinkActiveOptions]="{ exact: true }"
             class="usa-icon-list__item site-nav">
-            <i aria-hidden="true" class="fal fa-home"></i>
+            <i aria-hidden="true" class="fal fa-home" role="img" alt=""></i>
             <span id="home"> {{$sidebar()?.home}} </span>
           </a>
         </li>
         <li role="none">
-          <a aria-describedby="reports" role="menuitem" routerLink="reports" (click)="closeMenuOnNavigation()"
+          <a role="menuitem" routerLink="reports" (click)="closeMenuOnNavigation()"
             routerLinkActive="active-nav hover:bg-primary-dark " [routerLinkActiveOptions]="{ exact: true }"
             class="usa-icon-list__item site-nav">
-            <i aria-hidden="true" class="fal fa-chart-line"></i>
+            <i aria-hidden="true" class="fal fa-chart-line" role="img" alt=""></i>
             <span> {{$sidebar()?.reports}} </span>
           </a>
         </li>
         <li role="none">
-          <a aria-describedby="resources" role="menuitem" routerLink="resources" (click)="closeMenuOnNavigation()"
+          <a role="menuitem" routerLink="resources" (click)="closeMenuOnNavigation()"
             routerLinkActive="active-nav hover:bg-primary-dark" [routerLinkActiveOptions]="{ exact: true }"
             id="resourcesBtn" class="usa-icon-list__item site-nav">
-            <i aria-hidden="true" class="fal fa-file"></i>
+            <i aria-hidden="true" class="fal fa-file" role="img" alt=""></i>
             <span> {{$sidebar()?.resources}} </span>
           </a>
         </li>
         <li role="none">
           <button role="menuitem" (click)="langPanel.open()" class="usa-icon-list__item site-nav width-full">
-            <i aria-hidden="true" class="fal fa-language"></i>
+            <i aria-hidden="true" class="fal fa-language" role="img" alt=""></i>
 
             <span> {{$sidebar()?.languageAccess}} </span>
           </button>
         </li>
         <li role="none">
           <button role="menuitem" weissA11yToggle class="usa-icon-list__item site-nav width-full">
-            <i aria-hidden="true" class="fal fa-universal-access"></i>
+            <i aria-hidden="true" class="fal fa-universal-access" role="img" alt=""></i>
 
             <span> {{$sidebar()?.accessibility}} </span>
           </button>

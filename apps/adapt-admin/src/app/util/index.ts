@@ -1,9 +1,9 @@
 import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { Observable, debounceTime, distinctUntilChanged, first, map, of, switchMap } from 'rxjs';
-import { AdaptDataService } from '../services/adapt-data.service';
 import { PageMode } from '@adapt/types';
-import * as xlsx from 'xlsx';
-export function uniqueNameValidator(type: string, data: AdaptDataService, pageMode = PageMode.CREATE, field='name') {
+import { AdaptDataService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data.service';
+
+export function uniqueNameValidator(type: string, adaptDataService: AdaptDataService, pageMode = PageMode.CREATE, field='name') {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     if (pageMode === PageMode.VIEW || (pageMode === PageMode.EDIT && !control.dirty)) {
       return of(null);
@@ -12,7 +12,7 @@ export function uniqueNameValidator(type: string, data: AdaptDataService, pageMo
       debounceTime(400),
       distinctUntilChanged(),
       switchMap((val) =>
-        data.isUnique(type, val, field).pipe(
+        adaptDataService.isNameUnique(type, val, field).pipe(
           debounceTime(400),
           map((result: boolean) => (!result ? { uniqueName: true } : null))
         )

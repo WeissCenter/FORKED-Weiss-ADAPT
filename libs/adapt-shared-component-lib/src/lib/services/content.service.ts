@@ -14,7 +14,6 @@ export class ContentService {
   private $contentLanguages = computed(() => {
     return [...new Set([this.language.$language(), ...this.$requestedLanguages()])];
   });
-  
   constructor(private http: HttpClient, private language: LanguageService, @Inject('appDomain') private appDomain: string, @Inject('contentRoot') private contentRoot: string, @Inject('contentFileName') private contentFileName: string) {
     effect(() => {
       for (const lang of this.$contentLanguages()) {
@@ -24,7 +23,9 @@ export class ContentService {
           this.requestContent(appDomain, contentRoot, contentFileName, lang);
         }
       }
-    }, { allowSignalWrites: true });
+    },
+    //{ allowSignalWrites: true } // not needed in angular 19
+    );
 
   }
 

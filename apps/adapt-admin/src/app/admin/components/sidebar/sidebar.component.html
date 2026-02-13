@@ -5,19 +5,19 @@
       class="usa-button gap-0 flex-column usa-button--outline shadow-none" id="expand-menu-button" (click)="toggleNav()"
       i18n>
       <ng-container *ngIf="nav_collapsed">
-        <i aria-hidden="true" class="fal fa-bars"></i>
+        <i aria-hidden="true" class="fal fa-bars" role="img" alt=""></i>
         <span class="font-3xs"><span class="display-none tablet:display-inline">Open </span>Menu</span>
       </ng-container>
 
       <ng-container *ngIf="!nav_collapsed">
-        <i aria-hidden="true" class="fal fa-arrow-from-right"></i>
+        <i aria-hidden="true" class="fal fa-arrow-from-right" role="img" alt=""></i>
         <span class="font-3xs"><span class="display-none tablet:display-inline">Collapse </span>Menu</span>
       </ng-container>
     </button>
 
     <div class="sidebar-header">
       <div class="display-flex width-full padding-1 gap-1 flex-align-center flex-justify-center">
-        <img *ngIf="!logoIsSvg" [src]="logoURL" class="logo" aria-hidden="true" />
+        <img *ngIf="!logoIsSvg" [src]="logoURL" class="logo" aria-hidden="true" alt="" />
         <lib-adapt-inline-svg [src]="logoURL" [attr.aria-hidden]="true"
           svgClass="maxw-6 display-none desktop:display-flex" *ngIf="logoIsSvg"></lib-adapt-inline-svg>
       </div>
@@ -26,24 +26,24 @@
     <nav aria-label="primary" class="margin-top-1">
       <ul #navList role="menubar" aria-orientation="vertical" class="usa-icon-list display-flex flex-column gap-05">
         <li role="none">
-          <a aria-describedby="home" role="menuitem" routerLink="/admin" (click)="closeMenuOnNavigation()"
+          <a role="menuitem" routerLink="/admin" (click)="closeMenuOnNavigation()"
             [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-nav hover:bg-primary-dark"
             class="usa-icon-list__item site-nav">
-            <i aria-hidden="true" class="fal fa-home"></i>
+            <i aria-hidden="true" class="fal fa-home" role="img" alt=""></i>
             <span id="home"> Home </span>
           </a>
         </li>
         <li role="none">
           <a role="menuitem" routerLink="data-management" (click)="closeMenuOnNavigation()"
             routerLinkActive="active-nav hover:bg-primary-dark " class="usa-icon-list__item site-nav">
-            <i aria-hidden="true" class="fal fa-database"></i>
+            <i aria-hidden="true" class="fal fa-database" role="img" alt=""></i>
             <span> Data </span>
           </a>
         </li>
         <li role="none">
           <a role="menuitem" routerLink="reports" (click)="closeMenuOnNavigation()"
             routerLinkActive="active-nav hover:bg-primary-dark " class="usa-icon-list__item site-nav">
-            <i aria-hidden="true" class="fal fa-chart-line"></i>
+            <i aria-hidden="true" class="fal fa-chart-line" role="img" alt=""></i>
             <span> Reports </span>
           </a>
         </li>
@@ -64,13 +64,13 @@
         <li role="none" *ngIf="this.role.hasPermission('Tool Settings', 'Read')">
           <a routerLink="settings" role="menuitem" routerLinkActive="active-nav hover:bg-primary-dark" id="settingsBtn"
             class="usa-icon-list__item site-nav">
-            <i aria-hidden="true" class="fal fa-cog"></i>
+            <i aria-hidden="true" class="fal fa-cog" role="img" alt=""></i>
             <span> Settings </span>
           </a>
         </li>
         <li role="none">
           <button role="menuitem" weissA11yToggle="ADAPT-a11y-center" class="usa-icon-list__item site-nav width-full">
-            <i aria-hidden="true" class="fal fa-universal-access"></i>
+            <i aria-hidden="true" class="fal fa-universal-access" role="img" alt=""></i>
 
             <span> Accessibility </span>
           </button>
@@ -80,15 +80,15 @@
           <a role="menuitem" rel="noopener noreferrer" href="https://github.com/WeissCenter/Weiss-ADAPT/issues"
             target="_blank" aria-label="Give Feedback (opens in a new tab)"
             class="usa-icon-list__item site-nav width-full">
-            <i aria-hidden="true" class="fal fa-comment-alt-exclamation"></i>
+            <i aria-hidden="true" class="fal fa-comment-alt-exclamation" role="img" alt=""></i>
             <span aria-hidden="true">
-              Give Feedback <i aria-hidden="true" class="far fa-external-link margin-left-05"></i></span>
+              Give Feedback <i aria-hidden="true" class="far fa-external-link margin-left-05" role="img" alt=""></i></span>
           </a>
         </li>
         <li role="none">
           <a role="menuitem" (keypress)="startSignout($event)" (click)="startSignout($event)" tabindex="0"
             class="usa-icon-list__item site-nav">
-            <i aria-hidden="true" class="fal fa-sign-out"></i>
+            <i aria-hidden="true" class="fal fa-sign-out" role="img" alt=""></i>
             <span> Sign Out </span>
           </a>
         </li>

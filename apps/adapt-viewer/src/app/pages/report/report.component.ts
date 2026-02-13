@@ -3,7 +3,7 @@ import {
   IFilter,
   ICondition,
   ViewerTemplate,
-  IReport,
+  IReportModel,
   SelectFilter,
   RadialFilter,
   IFilterGroup,
@@ -50,6 +50,7 @@ interface ReportFilter {
 
 @Component({
   selector: 'adapt-viewer-report',
+  standalone: false,
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
 })
@@ -60,7 +61,7 @@ export class ReportComponent {
   public reportTabIndex = 0;
   public shareURL?: Observable<string>;
 
-  public _report: IReport;
+  public _report: IReportModel;
   public _template: ViewerTemplate;
 
   $reportContent = this.content.$reportContent;
@@ -281,8 +282,14 @@ export class ReportComponent {
     if (close) this.showFilterPanel = false;
     if (this.showFilterPanel) {
       this.existingFilters = this.buildExistingFilters();
-      this.filterStateMessage = 'Filter panel opened.';
-    } else this.filterStateMessage = 'Filter panel closed.';
+      setTimeout(() => {
+        this.filterStateMessage = 'Filter panel opened.';
+      }, 0);
+    } else {
+      setTimeout(() => {
+        this.filterStateMessage = 'Filter panel closed.';
+      }, 0);
+    }
     this.filterPanelService.changeFilterPanelState(this.showFilterPanel);
   }
 
@@ -347,14 +354,18 @@ export class ReportComponent {
     this.loading = true;
     this.showResetFilters = false;
     this.toggleFilterPanel(true);
-    this.filterStateMessage = 'Previous filters applied.';
+    setTimeout(() => {
+      this.filterStateMessage = 'Previous filters applied.';
+    }, 0);
     this.filterFormGroup.reset(this.previousFilters);
     this.onFilter.next(this.filterFormGroup.value);
   }
 
   applyFilterChanges(reset = false) {
     this.loading = true;
-    this.filterStateMessage = 'Filters changed.';
+    setTimeout(() => {
+      this.filterStateMessage = 'Filters changed.';
+    }, 0);
     this.toggleFilterPanel(true);
     this.previousFilters = { ...this.buildExistingFilters() };
 

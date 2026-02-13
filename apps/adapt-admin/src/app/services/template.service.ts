@@ -18,7 +18,7 @@ import {
   TemplateError,
   TemplateErrorCode,
   DataSet,
-  DataView,
+  DataViewModel,
   TemplateFunction,
   HeaderBlock,
   CommentBlock,
@@ -29,6 +29,10 @@ import { AdaptDataService } from './adapt-data.service';
 import { BUILT_IN_FUNCTIONS } from './template-functions/template-functions';
 import { firstValueFrom, tap } from 'rxjs';
 import { GlossaryService } from '@adapt/adapt-shared-component-lib';
+import { NGXLogger } from 'ngx-logger';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+
+
 
 
 
@@ -39,11 +43,14 @@ export class TemplateService {
   private readonly DATA_VIEW_SELECTOR = "dataView";
   private templateFunctions: { [funcName: string]: (...args: any[]) => Promise<string> | string } = {};
 
-  constructor(
-    private http: HttpClient,
-    private dataService: AdaptDataService,
-    private glossary: GlossaryService
+  constructor(private logger: NGXLogger,
+              private http: HttpClient,
+              private adaptDataService: AdaptDataService,
+              private adaptDataViewService: AdaptDataViewService,
+              private glossary: GlossaryService
   ) {
+    this.logger.info('TemplateService constructor');
+
     BUILT_IN_FUNCTIONS.forEach(({ name, func }) => this.registerTemplateFunction(name, func));
   }
 
@@ -65,7 +72,7 @@ export class TemplateService {
 
     const field = select[1];
 
-    const dataView = (await firstValueFrom(this.dataService.$dataViews)).find(item => item.dataViewID === context.dataViewID);
+    const dataView = (await firstValueFrom(this.adaptDataViewService.getDataViews())).find(item => item.dataViewID === context.dataViewID);
 
     if(!dataView){
       throw new Error(`Data view ${context.dataViewID} not found`);
@@ -91,7 +98,7 @@ export class TemplateService {
     }
 
 
-  } 
+  }
 
   public async parseString(string: StringTemplate | string, context: TemplateContext) {
     if (typeof string === 'string') {
@@ -102,7 +109,7 @@ export class TemplateService {
     const combinedContext = {
       ...context,
       ...this.templateFunctions,
-      dataService: this.dataService,
+      dataService: this.adaptDataService,
       glossaryService: this.glossary,
     };
 
@@ -124,7 +131,6 @@ export class TemplateService {
           const promise = this.handleDataViewSelect(code, context);
 
           promiseMap[code] = promise
-          
           return '';
         }
 
@@ -148,7 +154,6 @@ export class TemplateService {
       });
     }
 
-    
     await Promise.all(extraPromises);
     const mapPromises = Object.entries(promiseMap).map(async ([key, promise]) => ({ key, promise: await promise }));
     const awaitedMapPromises = await Promise.all(mapPromises);
@@ -331,7 +336,7 @@ export class TemplateService {
 
   public async renderTemplateWithMultipleViews(
     template: ITemplate,
-    dataView: DataView,
+    dataView: DataViewModel,
     filters: any = {},
     suppress = false,
     pageIndex = -1
@@ -557,7 +562,7 @@ export class TemplateService {
       content.dataRetrievalOperations[0].arguments.push(...newArgs);
     }
 
-    const data = await this.dataService
+    const data = await this.adaptDataService
       .getDataFromDataViewPromise(
         ctx.dataViewID,
         ctx.fileSpec,
@@ -711,7 +716,7 @@ export class TemplateService {
       operations.push(content.chart.total);
     }
 
-    const dataServiceResult = await this.dataService
+    const dataServiceResult = await this.adaptDataService
       .getDataFromDataViewPromise(
         ctx.dataViewID,
         ctx.fileSpec,
@@ -800,7 +805,6 @@ export class TemplateService {
 
 
 
-  
 
 
 }

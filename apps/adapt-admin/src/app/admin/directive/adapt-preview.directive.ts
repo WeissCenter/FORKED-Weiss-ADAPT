@@ -10,6 +10,7 @@ import { ModalService } from '../services/modal.service';
 
 @Directive({
   selector: '[adaptPreview]',
+  standalone: false,
 })
 export class AdaptPreviewDirective implements OnInit {
   @Input() modalTitle = 'Upcoming feature';

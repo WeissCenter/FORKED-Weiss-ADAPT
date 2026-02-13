@@ -5,13 +5,14 @@ import { map } from 'rxjs';
 
 @Component({
   selector: 'adapt-viewer-error',
+  standalone: false,
   templateUrl: './error.component.html',
   styleUrl: './error.component.scss',
 })
 export class ErrorComponent {
 
   $errorContent = this.pages.$errorContent;
-  
+
   constructor(public pages: ViewerPagesContentService){
 
   }

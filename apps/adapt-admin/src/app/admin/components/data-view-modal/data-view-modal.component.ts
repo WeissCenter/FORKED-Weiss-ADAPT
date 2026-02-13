@@ -29,20 +29,11 @@ import {
   take,
   tap,
 } from 'rxjs';
-import {
-  DataSetQueueStatus,
-  DataSource,
-  DataView,
-  IDataCollectionTemplate,
-  IReport,
-  NewDataViewInput,
-  PageMode,
-  sleep,
-} from '@adapt/types';
+import { DataCollectionFieldDefinition, DataSetQueueStatus, DataSource, DataViewModel, IDataCollectionTemplate, IReportModel, NewDataViewInput, PageMode, sleep } from '@adapt/types';
 import { StepsIndicatorComponent } from '../steps-indicator/steps-indicator.component';
 import { uniqueNameValidator } from '../../../util';
 import { AdaptDataService } from '../../../services/adapt-data.service';
-import { FileValidation, validate } from '@adapt/validation';
+import { ValidationError, ValidationTemplate, validate } from '@adapt/validation';
 import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 
@@ -59,9 +50,13 @@ import {
   SectionQuestionContentText,
 } from '@adapt-apps/adapt-admin/src/app/admin/models/admin-content-text.model';
 import { NGXLogger } from 'ngx-logger';
+import { AdaptDataViewService } from '@adapt-apps/adapt-admin/src/app/services/adapt-data-view.service';
+import { AdaptReportService } from '@adapt-apps/adapt-admin/src/app/services/adapt-report.service';
+import { ValidationService } from '../../../services/validation.service';
 
 @Component({
   selector: 'adapt-data-view-modal',
+  standalone: false,
   templateUrl: './data-view-modal.component.html',
   styleUrls: ['./data-view-modal.component.scss'],
 })
@@ -79,7 +74,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
   @ViewChild(StepsIndicatorComponent) stepsIndicator!: StepsIndicatorComponent;
 
-  @Output() closed = new EventEmitter<DataView | undefined>();
+  @Output() closed = new EventEmitter<DataViewModel | undefined>();
 
   public baseDataViewForm: FormGroup;
 
@@ -90,14 +85,14 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
   public opened = false;
 
-  public duplicate?: DataView;
+  public duplicate?: DataViewModel;
   public duplicateTemplate?: IDataCollectionTemplate;
 
-  public currentDataView?: DataView;
+  public currentDataView?: DataViewModel;
 
-  public dataViews: Observable<DataView[]>;
+  public dataViews: Observable<DataViewModel[]>;
   public dataSources: Observable<DataSource[]>;
-  public reports: Observable<IReport[]>;
+  public reports: Observable<IReportModel[]>;
 
   public mode = PageMode.CREATE;
 
@@ -165,7 +160,8 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   //$pageSectionsSignal: Signal<PageSectionContentText[]|undefined>;  //  = computed(() => this.$pageContentSignal()?.sections);
   pageContent: PageContentText|null;
   pageSections:PageSectionContentText[]|undefined;
-  pageContentLoaded: boolean = false;
+  pageContentLoaded = false;
+
 
 
   @HostListener('window:beforeunload')
@@ -178,7 +174,10 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   constructor(
     private logger: NGXLogger,
     private fb: FormBuilder,
-    private data: AdaptDataService,
+    private adaptDataService: AdaptDataService,
+    private adaptValidationService: ValidationService,
+    private adaptDataViewService: AdaptDataViewService,
+    private adaptReportService: AdaptReportService,
     private location: LocationStrategy,
     private alert: AlertService,
     private idle: Idle,
@@ -195,7 +194,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   ngOnInit() {
     this.logger.debug('Inside data-view-modal component ngOnInit');
 
-    this.typeOptions = this.data.getTemplates('DataCollection').pipe(map((result => result.map((temp: any) => ({label: temp.name,  value: temp.id.replace("ID#", "")})))))
+    this.typeOptions = this.adaptDataService.getTemplates('DataCollection').pipe(map((result => result.map((temp: any) => ({label: temp.name,  value: temp.id.replace("ID#", "")})))))
 
     this.createDataViewForm();
 
@@ -203,9 +202,9 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
       if (event.type === 'popstate') this.internalClose();
     });
 
-    this.dataSources = this.data.getDataSources();
-    this.dataViews = this.data.getDataViews();
-    this.reports = this.data.getReports();
+    this.dataSources = this.adaptDataService.getDataSources();
+    this.dataViews = this.adaptDataViewService.getDataViews();
+    this.reports = this.adaptReportService.getReportsListener();
 
     this.initializeFormValueChangeListeners();
   }
@@ -223,7 +222,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
       description: this.fb.control('', [Validators.required]),
     });
 
-    this.name.setAsyncValidators([uniqueNameValidator('DataView', this.data, this.mode)]);
+    this.name.setAsyncValidators([uniqueNameValidator('DataView', this.adaptDataService, this.mode)]);
     this.name.disable({ emitEvent: false });
     this.description.disable({ emitEvent: false });
     this.database.disable({ emitEvent: false });
@@ -265,8 +264,10 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
      */
     const duplicateCheckSub = this.typeFields.valueChanges.pipe(switchMap((value) =>
-          this.dataViews.pipe(
-            switchMap((views) => {
+
+          this.dataViews.pipe(switchMap((views) => {
+
+              //this.logger.debug('typeFields.valueChanges: typeFields: ', this.typeFields); //, views: ', views);
               const dataView = views.find((view) => {
                 const fields = Object.keys(value);
 
@@ -287,7 +288,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
                 return of([undefined, undefined]);
               }
 
-              return this.data
+              return this.adaptDataService
                 .getDataCollectionTemplate(dataView.data.id)
                 .pipe(map((template) => [dataView, template]));
             })
@@ -351,6 +352,8 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
         this.pageSections = this.pageContent.sections;
 
+        //this.logger.debug('pageSections: ', this.pageSections);
+
         if (!this.pageContent.title){
           this.logger.error('Invalid page title');
         }
@@ -381,6 +384,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     //   this.logger.debug('pageSections: ', this.pageSections);
     // });
   }
+
   public async onFileChange(index: number, file: File | null) {
     this.fileUploadPercentage[index] = 0;
 
@@ -412,7 +416,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
     const fileID = this.currentTemplate?.files[index].id ?? crypto.randomUUID();
 
-    const presignedURL = await this.data.getDataViewUploadURLPromise({
+    const presignedURL = await this.adaptDataViewService.getDataViewUploadURLPromise({
       dataViewID: this.currentDataView!.dataViewID,
       fileID,
       filename: file.name,
@@ -424,7 +428,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
         this.saved = false;
         this.saving = true;
 
-        const editSub = this.data.editDataView(this.currentDataView!, 'implicit file change upload').subscribe({
+        const editSub = this.adaptDataViewService.editDataView(this.currentDataView!, 'implicit file change upload').subscribe({
           next: async () => {
             this.saved = true;
             this.saving = false;
@@ -455,12 +459,14 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     // create the data view?
     const defaultInput: NewDataViewInput = this.getSaveInput();
 
-    this.currentDataView = await firstValueFrom(this.data.createDataView(defaultInput));
+    this.currentDataView = await firstValueFrom(this.adaptDataViewService.createDataView(defaultInput));
     this.saving = false;
     this.saved = true;
   }
 
   private getSaveInput() {
+    this.logger.debug('Inside data-view-modal getSaveInput');
+
     const defaultInput: NewDataViewInput = {
       name: this.name.value || (this.currentTemplate?.name ?? ''),
       description: this.description.value || (this.currentTemplate?.dataViewDescription ?? ''),
@@ -477,8 +483,8 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
       for (const [index, field] of Object.keys(this.typeFields.controls).entries()) {
 
         const typeField = this.typeFields.get(field);
-
-        const templateField = this.currentTemplate.fields[index].options.find(option => option.value === typeField?.value)
+        this.logger.debug('Inside data-view-modal getSaveInput, typeField: ', typeField);
+        const templateField = this.currentTemplate.fields[index].options.find(option => option.value === typeField?.value);
 
         defaultInput.data.fields.push({ id: field, label: templateField.label ?? '', value: typeField?.value });
       }
@@ -495,7 +501,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   private handleServerFileValidation(index: number) {
     if (this.fileControlStates[index] === FileControlState.EMPTY) return;
 
-    return this.data
+    return this.adaptValidationService
       .validateFile(this.currentDataView!.dataViewID, this.currentDataView!.data.files[index].id)
       .pipe(
         repeat({ delay: 2000 }),
@@ -503,17 +509,33 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
         take(1)
       )
       .subscribe({
-        next: () => {
-          this.fileControlStates[index] = FileControlState.VALID;
+        next: (val) => {
+          // no content means valid file
+          if (val.status === 204) {
+            this.fileControlStates[index] = FileControlState.VALID;
+            return;
+          }
+
+          // validation errors
+          if (val.status === 200 && val.body?.data) {
+            this.files.controls[index].setErrors({ validateFiles: val.body.data });
+            return;
+          }
+
+          console.warn('Unexpected validation response from server: ', val);
+          this.files.controls[index].setErrors({ apiError: 'Unexpected validation response from server' });
         },
         error: ({ error: { err } }: HttpErrorResponse) => {
-          this.files.controls[index].setErrors({ validateFiles: err });
+          // console.log('Validation errors from server: ', err);
+          this.files.controls[index].setErrors({ apiError: err });
         },
       });
   }
 
   private handleFileUploadAndEvents(presignedURL: string, file: File, index: number) {
-    return this.data.uploadFile(presignedURL, file).pipe(
+    this.logger.debug('Inside data-view-modal handleFileUploadAndEvents, presignedURL:', presignedURL);
+
+    return this.adaptDataService.uploadFile(presignedURL, file).pipe(
       map((event) => this.getEventMessage(event)),
       tap((message) => (this.fileUploadPercentage[index] = message)),
       last()
@@ -533,7 +555,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     }
 
     //dev-AdaptTemplates
-    this.currentTemplate = await firstValueFrom(this.data.getTemplate('DataCollection', value));
+    this.currentTemplate = await firstValueFrom(this.adaptDataService.getTemplate('DataCollection', value));
 
     this.logger.debug('currentTemplate: ', this.currentTemplate);
 
@@ -549,13 +571,16 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     this.description.setValue(this.currentTemplate?.dataViewDescription);
 
     for (const field of this.currentTemplate!.fields) {
+      this.logger.debug('add type field control: ', field);
+
       const control = this.fb.control(field.default);
+
+      this.logger.debug('add control value: ' + control.value);
 
       if (field.required) {
         control.addValidators(Validators.required);
       }
 
-      this.logger.debug('add type field control: ', field.id);
       this.typeFields.addControl(field.id, control, { emitEvent: false });
     }
 
@@ -599,6 +624,9 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   private handleCurrentStepNext(delta = 0) {
+
+    this.logger.debug('Inside handleCurrentStepNext, currentStep: ', this.currentStep, ', delta: ', delta);
+
     switch (this.currentStep) {
       case 0 + delta: {
         // LOAD is next
@@ -625,22 +653,67 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   private setName() {
-    this.name.setValue(this.currentTemplate?.name);
-    for (const value of Object.values(this.typeFields.value)) {
-      if (!(value as string)?.length) continue;
-      this.name.setValue(this.name.value + ` - ${value}`);
-    }
+    this.logger.debug('Inside data-view-modal setName to: ', this.currentTemplate?.name);
+
+    let newName = this.currentTemplate?.name;
+
+    Object.keys(this.typeFields.controls).forEach(fieldId => {
+      const control = this.typeFields.get(fieldId); // Get the AbstractControl instance
+
+      // if no value skip control
+      if (!(control && control.value as string)?.length){
+        this.logger.debug('Skip control value and use options for field: ', fieldId);
+      }
+      else {
+
+        const fieldDefinition = this.currentTemplate?.fields.find(f => f.id === fieldId);
+        if (fieldDefinition?.options){
+          const valueOptionLabel = this.getFieldOptionLabel(fieldDefinition, control.value);
+          this.logger.debug('Add valueOptionLabel to name fieldId['+fieldId+']: ', valueOptionLabel);
+
+          newName = newName + ` - ${valueOptionLabel}`;
+        }
+        else {
+          this.logger.debug('Add value to name fieldId['+fieldId+']: ', control.value);
+
+          newName = newName + ` - ${control.value}`;
+        }
+
+      }
+
+    });
 
 
+    // for (const value of Object.values(this.typeFields.value)) {
+    //
+    //   if (!(value as string)?.length){
+    //     continue;
+    //   }
+    //   this.logger.debug('Add to name: ', value);
+    //
+    //   this.name.setValue(this.name.value + ` - ${value}`);
+    // }
 
-    this.name.setValue(
-      this.name.value +
-        ` - ${this.pageContent?.actions?.[this.source.value] ?? this.sourceValueNameMap[this.source.value]} - ${new Date().toLocaleDateString(undefined, {
-          month: '2-digit',
-          day: '2-digit',
-          year: 'numeric',
-        })}`
-    );
+    // now add a date to the name
+    const dateStamp = ` - ${this.pageContent?.actions?.[this.source.value] ?? this.sourceValueNameMap[this.source.value]} - ${new Date().toLocaleDateString(undefined, {
+                          month: '2-digit',
+                          day: '2-digit',
+                          year: 'numeric',
+                        })}`;
+
+    this.logger.debug('Add dateStamp to name: ', dateStamp);
+    newName = newName + dateStamp;
+
+    // this.name.setValue(
+    //   this.name.value +
+    //     ` - ${this.pageContent?.actions?.[this.source.value] ?? this.sourceValueNameMap[this.source.value]} - ${new Date().toLocaleDateString(undefined, {
+    //       month: '2-digit',
+    //       day: '2-digit',
+    //       year: 'numeric',
+    //     })}`
+    // );
+
+    this.name.setValue(newName);
   }
 
   public previous() {
@@ -672,6 +745,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   public showFileAccordion(index: number) {
+
     const fileTemplate = this.currentTemplate?.files[index];
 
     if (!fileTemplate?.conditions?.length) {
@@ -710,6 +784,9 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
   }
 
   public async doSave(close = false, confirmed = false, startDataPull = false) {
+
+    this.logger.debug('Inside data-view-modal component doSave');
+
     if (!confirmed && this.mode === PageMode.EDIT && Object.keys(this.changes).length > 0) {
       this.confirmModal.open();
       return;
@@ -728,7 +805,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
       this.currentDataView!.name = this.name.value;
       this.currentDataView!.description = this.description.value;
 
-      this.currentDataView = await this.data.editDataViewPromise(
+      this.currentDataView = await this.adaptDataViewService.editDataViewPromise(
         this.currentDataView!,
         `${this.reason.value} : ${this.justification.value}`
       );
@@ -741,24 +818,16 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
     const name = this.name.value;
 
-    this.data
-      .doDataPull(this.currentDataView!.dataViewID)
-      .pipe(
+    this.adaptDataViewService.doDataPull(this.currentDataView!.dataViewID).pipe(
         catchError((err) => {
-          this.alert.add({
-            type: 'error',
-            title: 'Data View Save Failed',
-            body: `Data View Save for ${name} failed: ${err}`,
-          });
+          this.alert.add({type: 'error', title: 'Data View Save Failed', body: `Data View Save for ${name} failed: ${err}`});
           return err;
         })
       )
       .subscribe(() => {
-        this.alert.add({
-          type: 'success',
-          title: 'Data View Save Complete',
-          body: `Data View ${name} has been saved successfully. You will receive a notification when data view is ready for use.`,
-        });
+        this.alert.add({type: 'success', title: 'Data View Save Complete',
+                        body: `Data View ${name} has been saved successfully. You will receive a notification when data view is ready for use.`
+                       });
       });
 
     }
@@ -773,18 +842,21 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
   public async internalClose(cancel = false, globalClose = false) {
     this.logger.debug('Inside data-view-modal component internalClose');
+
     if (this.baseDataViewForm.dirty && !globalClose) {
       return this.confirmCloseModal.open();
     } else {
       this.modal.close();
     }
 
-    if (cancel && this.currentDataView) await firstValueFrom(this.data.deleteDataView(this.currentDataView.dataViewID));
+    if (cancel && this.currentDataView) await firstValueFrom(this.adaptDataViewService.deleteDataView(this.currentDataView.dataViewID));
 
     this.reset();
   }
 
   public reset() {
+    this.logger.debug('Inside data-view-modal component reset');
+
     this.currentPreviewIndex = -1;
     this.currentStep = 0;
     this.saving = false;
@@ -808,7 +880,7 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     this.confirmModal.close();
     this.changes = {};
     this.instanceSubscriptions.forEach((sub) => sub.unsubscribe());
-    this.name.setAsyncValidators([uniqueNameValidator('DataView', this.data, this.mode)]);
+    this.name.setAsyncValidators([uniqueNameValidator('DataView', this.adaptDataService, this.mode)]);
 
     //   this.ngOnDestroy()
   }
@@ -826,8 +898,9 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
   reportingYear: string;
 
-  public async open(dataView?: DataView, viewMode = false, pageIndex = 0, dataSource = '') {
-    this.logger.debug('Inside data-view-modal component open');
+  public async open(dataView?: DataViewModel, viewMode = false, pageIndex = 0, dataSource = '') {
+    this.logger.debug('Inside data-view-modal component open, dataView: ', dataView, ', viewMode: ', viewMode, ', pageIndex: ', pageIndex, ', dataSource: ', dataSource);
+
     if (!this.modal) return;
 
 
@@ -836,9 +909,12 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     if (dataView) {
       this.mode = viewMode ? PageMode.VIEW : PageMode.EDIT;
 
-      this.name.setAsyncValidators([uniqueNameValidator('DataView', this.data, this.mode)]);
+      this.name.setAsyncValidators([uniqueNameValidator('DataView', this.adaptDataService, this.mode)]);
 
       this.currentDataView = dataView;
+
+      //this.logger.debug('currentDataView: ', this.currentDataView);
+      //this.logger.debug('currentTemplate: ', this.currentTemplate);
 
       // Set reporting year as bespoke value to fit properly in expected template
       if (this.currentDataView.data.fields) {
@@ -880,7 +956,9 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     // this.currentStep = pageIndex;
 
     this.modal.open();
-    this.stepsIndicator.setStep(pageIndex);
+    if (this.stepsIndicator) {
+      this.stepsIndicator.setStep(pageIndex);
+    }
     this.reloadData = pageIndex === 1;
 
 
@@ -911,12 +989,12 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
 
     this.currentPreviewIndex = index;
 
-    this.currentPreview = this.data.previewData(this.currentDataView!.dataViewID) as Observable<any[]>;
+    this.currentPreview = this.adaptDataService.previewData(this.currentDataView!.dataViewID) as Observable<any[]>;
 
     this.previewModal.open();
   }
 
-  private validateFile(index: number, validationCache: Map<string, Promise<FileValidation>> = new Map()) {
+  private validateFile(index: number) {
     return async (control: AbstractControl): Promise<any> => {
       // return null
 
@@ -933,29 +1011,79 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
       }
 
       const fileSpec = this.currentTemplate?.files[index].validation;
-
       if (!fileSpec) {
         return null;
       }
 
-      if (!validationCache.has(fileSpec)) {
-        validationCache.set(fileSpec, firstValueFrom(this.data.getValidationJSON(fileSpec)));
-      }
+      const validationTemplate = await this.adaptValidationService.getValidationTemplate(fileSpec);
 
-      const validationJson = (await validationCache.get(fileSpec)) as FileValidation;
-
-      const validationErrors: any = (await this.fileValidate(file, validationJson)) as any[];
-
-      if (validationErrors?.length) {
-        return { validateFiles: validationErrors };
-      }
-
-      return null;
+      const validationErrors = await this.fileValidate(file, validationTemplate);
+      return validationErrors != null && validationErrors.length > 0 ? { validateFiles: validationErrors } : null;
     };
   }
 
   public getDetailLabel(content: SectionQuestionContentText[] = [], id?: string) {
     return content.find(question => question.id === id)?.label;
+  }
+
+  public getFieldValue(fieldDefinition:  DataCollectionFieldDefinition): any {
+
+    const fieldId: string = fieldDefinition?.id;
+    const fieldValue = this.typeFields.get(fieldId)?.value;
+
+    //this.logger.debug('getFieldValue, fieldId: ', fieldId, ', fieldValue: ', fieldValue, fieldDefinition);
+
+    /*
+          {
+          "options": [
+              {
+                  "value": "2025",
+                  "label": "2024-2025"
+              },
+              {
+                  "value": "2024",
+                  "label": "2023-2024"
+              }
+          ],
+          "shortLabel": "School year",
+          "id": "reportingYear",
+          "label": "For what fiscal year?",
+          "type": "select",
+          "required": true
+      }
+     */
+
+    const valueOptionLabel = this.getFieldOptionLabel(fieldDefinition, fieldValue);
+
+    return valueOptionLabel ? valueOptionLabel: fieldValue;
+  }
+
+  public getFieldOptionLabelForField(fieldId: string, fieldValue: any): string {
+    //this.logger.debug('Inside getFieldOptionLabelForField, fieldId['+fieldId+']: ', fieldValue, this.currentTemplate);
+
+    // now look up the options for the given field, if any
+    const fieldDefinition: DataCollectionFieldDefinition | undefined = this.currentTemplate?.fields.find(f => f.id === fieldId);
+
+    if (fieldDefinition){
+      const valueOptionLabel = this.getFieldOptionLabel(fieldDefinition, fieldValue);
+      return valueOptionLabel ? valueOptionLabel: fieldValue;
+    }
+
+    return fieldValue;
+  }
+
+  private getFieldOptionLabel(fieldDefinition: DataCollectionFieldDefinition, fieldValue: any): string {
+    //this.logger.debug('Inside getFieldOptionLabel, fieldDefinition: ', fieldDefinition);
+
+    if (fieldDefinition.options ) {
+
+      const valueOptionLabel = fieldDefinition.options.find(o => o.value === fieldValue)?.label;
+
+      if (valueOptionLabel){
+        return valueOptionLabel;
+      }
+    }
+    return '';
   }
 
   private getEventMessage(event: HttpEvent<any>) {
@@ -972,13 +1100,13 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
     return 0;
   }
 
-  private fileValidate(file: File, validationJson: FileValidation) {
+  private fileValidate(file: File, validationTemplate: ValidationTemplate) {
     if (this.mode !== PageMode.CREATE) return null;
     const fileReader = new FileReader();
     fileReader.readAsText(file);
 
-    return new Promise((resolve, reject) => {
-      fileReader.onload = (e: any) => {
+    return new Promise<ValidationError[]>((resolve, reject) => {
+      fileReader.onload = async (e: any) => {
         const bufferArray = e?.target.result;
 
         let toValidate: string | xlsx.WorkBook = '';
@@ -988,11 +1116,17 @@ export class DataViewModalComponent implements OnInit, OnDestroy, AfterContentCh
         } else if (file.name.endsWith('.csv')) {
           toValidate = xlsx.read(bufferArray, { type: 'string' });
         }
-
-        const errors = validate(toValidate, validationJson, this.typeFields.getRawValue());
-
+        const errors = await validate(toValidate, validationTemplate, this.typeFields.getRawValue());
         if (errors.length) {
-          return resolve(errors);
+          this.logger.error('File validation errors: ', errors);
+          // deduplicate the error types
+          const uniqueErrors: ValidationError[] = [];
+          for (const err of errors) {
+            if (!uniqueErrors.find((e) => e.error === err.error)) {
+              uniqueErrors.push(err);
+            }
+          }
+          return resolve(uniqueErrors);
         }
 
         resolve([]);

@@ -31,9 +31,9 @@
         </p>
         <form (ngSubmit)="onSave()" [formGroup]="footerLinksForm"
           class="footer-links-settings-logo-form display-flex flex-column gap-2">
-          <ul formArrayName="links" class="usa-list usa-list--unstyled display-flex flex-column gap-2">
-            <li *ngFor="let item of links.controls; let i = index">
-              <div
+          <div formArrayName="links" class="width-full display-flex flex-column gap-2">
+
+              <div *ngFor="let item of links.controls; let i = index"
                 class="footer-link-controls display-flex flex-column gap-2 border-1px border-base-light padding-x-105 padding-y-105 bg-base-lightest radius-lg"
                 [formGroup]="$any(item)">
                 <div class="footer-links-control-row display-flex width-full gap-2">
@@ -42,7 +42,7 @@
                   <div class="flex-1 display-flex gap-2 flex-align-end">
                     <lib-adapt-text-input class="flex-1" formControlName="icon"
                       [label]="pageContent?.sections![0].questions![4].label"></lib-adapt-text-input>
-                    <i *ngIf="item.value.icon" class="margin-bottom-105" aria-hidden="true" role="img"
+                    <i *ngIf="item.value.icon" class="margin-bottom-105" aria-hidden="true" role="img" alt=""
                       [ngClass]="item.value.icon"></i>
                   </div>
 
@@ -63,7 +63,7 @@
                     <div class="display-flex flex-column gap-1">
                       <label class="combo-box-label usa-label margin-y-0 sr-only" for="target-options-{{ i }}">{{
                         pageContent?.sections![0].questions![3].label }}</label>
-                      <select class="usa-select margin-0" formControlName="target" id="target-options-{{ i }}">
+                      <select class="usa-select margin-0 width-full" formControlName="target" id="target-options-{{ i }}">
                         <option *ngFor="let option of targetOptions" [value]="option.value">
                           {{ option.label }}
                         </option>
@@ -77,13 +77,13 @@
                   {{pageContent!.actions!['remove_button'] ? pageContent!.actions!['remove_button'] : 'Remove'}}
                 </button>
               </div>
-            </li>
-            <button (click)="addLink()" class="usa-button usa-button--outline flex-align-self-start">
+            <div aria-live="polite" class="sr-only" [innerText]="liveMessage"></div>
+            <button #addBtn (click)="addLink()" type="button" class="usa-button usa-button--outline flex-align-self-start">
               {{pageContent!.actions!['add_button'] ? pageContent!.actions!['add_button'] : 'Add Footer Link'}}
             </button>
-          </ul>
+          </div>
 
-          <button class="usa-button flex-align-self-start">{{pageContent!.actions!['save_button'] ?
+          <button class="usa-button flex-align-self-start" type="submit">{{pageContent!.actions!['save_button'] ?
             pageContent!.actions!['save_button'] : 'Save'}}</button>
         </form>
       </div>
@@ -91,4 +91,4 @@
   </section>
 </div>
 
-<lib-adapt-confirm-modal (confirm)="confirmed = true"></lib-adapt-confirm-modal>
+<lib-adapt-confirm-modal (confirm)="confirmModalClicked(true)" (cancel)="confirmModalClicked(false)"></lib-adapt-confirm-modal>

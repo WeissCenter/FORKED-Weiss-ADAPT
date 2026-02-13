@@ -5,6 +5,7 @@ import { SettingsService } from '@adapt/adapt-shared-component-lib';
 
 @Component({
   selector: 'adapt-viewer-footer',
+  standalone: false,
   templateUrl: './viewer-footer.component.html',
   styleUrls: ['./viewer-footer.component.scss'],
 })

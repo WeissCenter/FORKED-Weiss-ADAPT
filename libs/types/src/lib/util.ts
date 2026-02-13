@@ -222,7 +222,7 @@ export function handleDynamicVariables(code: string, sumValue: string, xAxisValu
       return filteredTotal;
     } else if (type === 'percentage') {
       const percentage = (filteredTotal / total) * 100 || 0;
-      if (suppressed && total === 0) {
+      if (suppressed && percentage === 0) {
         return suppressedText;
       }
       return total == 0 ? `0%` : `${percentage.toFixed(2)}%`;

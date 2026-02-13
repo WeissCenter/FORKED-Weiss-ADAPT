@@ -14,6 +14,7 @@ import {
 
 @Component({
   selector: 'adapt-login',
+  standalone: false,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })

@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'lib-adapt-list-select',
+  standalone: false,
   templateUrl: './list-select.component.html',
   styleUrls: ['./list-select.component.scss'],
 })

@@ -15,6 +15,7 @@ import { LanguageCode } from '@adapt/types';
 
 @Component({
   selector: 'adapt-viewer-sidebar',
+  standalone: false,
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
@@ -35,7 +36,7 @@ export class ViewerSidebarComponent implements AfterViewInit {
     return this.sidePanelOpen;
   }
 
-  // 
+  //
 
   // magnifying glass logo
   public collapsedLogo = 'assets/shared/logos/static/sidebar-bottom-logo__collapsed.svg';
@@ -68,7 +69,7 @@ export class ViewerSidebarComponent implements AfterViewInit {
     private center: WeissAccessibilityCenterService,
     public settings: SettingsService,
     public language: LanguageService,
-    @Inject(DOCUMENT) private document: Document 
+    @Inject(DOCUMENT) private document: Document
   ) {
 
     this.router.events.subscribe((event) => {

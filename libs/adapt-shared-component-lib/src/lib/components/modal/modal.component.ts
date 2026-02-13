@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-adapt-modal',
+  standalone: false,
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -61,6 +62,5 @@ export class ModalComponent implements OnDestroy {
     }catch(err){
 
     }
-  
   }
 }

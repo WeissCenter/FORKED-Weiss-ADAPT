@@ -10,9 +10,11 @@ import {
   QueryList,
 } from '@angular/core';
 import { StepsIndicatorStepComponent } from '../steps-indicator-step/steps-indicator-step.component';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'adapt-steps-indicator',
+  standalone: false,
   templateUrl: './steps-indicator.component.html',
   styleUrls: ['./steps-indicator.component.scss'],
 })
@@ -22,7 +24,8 @@ export class StepsIndicatorComponent implements AfterViewInit {
   @Input() step = 0;
   @Output() stepChange = new EventEmitter<number>();
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private logger: NGXLogger,
+              private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.focusCurrentStepInput();
@@ -71,11 +74,13 @@ export class StepsIndicatorComponent implements AfterViewInit {
   }
 
   public next() {
+    this.logger.debug('Inside step-indicator next, step: ', this.step);
     if (this.step + 1 > this.steps.length - 1) {
       return;
     }
     this.step++;
     this.stepChange.emit(this.step);
+    this.logger.debug('go next to step: ', this.step);
     this.focusCurrentStepInput();
   }
 

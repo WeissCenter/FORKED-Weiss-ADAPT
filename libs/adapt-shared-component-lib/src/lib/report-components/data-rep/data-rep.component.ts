@@ -14,6 +14,7 @@ import { xlsx_delete_row } from '../../util';
 
 @Component({
   selector: 'lib-adapt-data-rep',
+  standalone: false,
   templateUrl: './data-rep.component.html',
   styleUrls: ['./data-rep.component.scss'],
 })
@@ -63,7 +64,9 @@ export class DataRepComponent implements OnInit, OnChanges {
   glossaryIdsString = '';
   dataRepSettings!: DataRepSettings;
 
-  $fileSpec = computed(() => this.raw.fileSpec);
+  $fileSpec = computed(() => {
+    return this.dataRepService.getFileSpecFromBarChartContent(this.raw);
+  });
 
   @Output() dataModalStateChange = new EventEmitter<boolean>();
 
@@ -132,9 +135,7 @@ export class DataRepComponent implements OnInit, OnChanges {
     const noDataItems = this.data.filter((item) => item[this.raw.chart.yAxisValue] <= 0);
 
     // Get the plain language label for each item
-    const plainLanguageItems = noDataItems.map(
-      (item) => this.glossary.getTermSafe(item[this.raw.chart.xAxisValue], undefined, this.lang as LanguageCode).label
-    );
+    const plainLanguageItems = noDataItems.map((item) => this.glossary.getGlossaryTerm(item[this.raw.chart.xAxisValue], this.lang as LanguageCode, this.raw?.fileSpec).label);
     if (plainLanguageItems.length > 2) {
       // Join all items with commas, but the last item with 'and'
       const allButLast = plainLanguageItems.slice(0, -1).join(', ');
@@ -211,9 +212,7 @@ export class DataRepComponent implements OnInit, OnChanges {
       // console.log(this.glossary.getTermSafe(item[this.raw.chart.xAxisValue], undefined, this.lang as LanguageCode))
 
       // Format the string with the label and the percentage
-      return `${
-        this.glossary.getTermSafe(item[this.raw.chart.xAxisValue], undefined, this.lang as LanguageCode).label
-      } (${percentage}%)`;
+      return `${this.glossary.getGlossaryTerm(item[this.raw.chart.xAxisValue], this.lang as LanguageCode, this.raw?.fileSpec).label} (${percentage}%)`;
     });
 
     const explainTemplate = this.raw?.explainTemplate as string;
@@ -351,7 +350,9 @@ export class DataRepComponent implements OnInit, OnChanges {
         this.raw,
         this.total,
         this.plainLanguageMaxCount,
-        this.lang
+        this.lang,
+        this.suppressed,
+        `(${this.content?.actions?.['suppressed']})`
       );
       this.showGlossaryBtn = this.dataRepService.checkForDefinitions(this.data);
       this.noDataSummary = this.dataRepService.generatePlainLanguageForZeroTotalItems(this.raw, this.lang);
@@ -376,13 +377,12 @@ export class DataRepComponent implements OnInit, OnChanges {
         const totalSelectDataIsArray = Array.isArray(totalSelect.data);
         const allDataValuesAreZero = totalSelectDataIsArray && totalSelect.data.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
         const totalSelectDataIsEmpty = totalSelectDataIsArray && totalSelect.data.length <= 0;
-
-        totalSelectHasNoData = totalSelectDataIsEmpty || allDataValuesAreZero;
+        totalSelectHasNoData = totalSelectDataIsEmpty && allDataValuesAreZero;
       } else if ('value' in totalSelect) {
         const totalSelectValueIsArray = Array.isArray(totalSelect.value);
         const totalSelectValueIsZero = totalSelectValueIsArray && totalSelect.value.every((i: any) => i[this.raw.chart.yAxisValue] <= 0);
         const totalSelectValueIsEmpty = totalSelectValueIsArray && totalSelect.value.length <= 0;
-        totalSelectHasNoData = totalSelectValueIsEmpty || totalSelectValueIsZero;
+        totalSelectHasNoData = totalSelectValueIsEmpty && totalSelectValueIsZero;
       }
 
       this.noData = totalSelectTotalIsZero && totalSelectHasNoData;

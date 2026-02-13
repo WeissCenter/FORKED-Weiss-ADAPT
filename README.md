@@ -36,22 +36,24 @@ The key features of ADAPT Admin include:
 - Accessibility settings – allow users to tailor their experience by adjusting the text size, color contrast, and content density. This component is compatible with screen readers, braille displays, and other assistive devices.
 
 ## Roadmap
-
-ADAPT plan to add the following features in future releases:
-
-- Additional IDEA 616 and 618 Parts B and C data collections in the future:
+The current release of ADAPT includes the following reports:
   - 618 Part B
-    - Assessment (2025 Q3)
-    - Personnel (2025 Q3)
-    - Discipline (2025 Q3)
-    - Exiting (2025 Q3)
-    - Dispute resolution (2026 Q3)
-    - MOE Reduction and CEIS (2026 Q4)
+    - Child Count
+    - Assessment 
+    - Personnel
+    - Discipline 
+    - Exiting 
   - 618 Part C
-    - Dispute resolution (2026 Q3)
-    - Exiting (2026 Q3)
-  - 616 Part B and C – SPP/APR (2025 Q4)
-- Language options for ADAPT Viewer (2025 Q2)
+    - Child Count
+    - Exiting
+
+Current reports in development include:
+  - 618 Part B
+    - Dispute resolution
+    - MOE Reduction and CEIS
+  - 618 Part C
+    - Dispute resolution
+  - 616 Part B and C – SPP/APR
 
 ## Getting Started
 

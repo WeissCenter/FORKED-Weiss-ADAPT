@@ -21,8 +21,8 @@
             class="font-xs display-flex flex-align-center text-no-underline text-center"
             [target]="footerLink.target === 'sameTab' ? '' : '_blank'"
             [href]="footerLink.url"
-            >{{ footerLink.label }}
-            <i *ngIf="footerLink.icon" aria-hidden="true" class="margin-left-05" [ngClass]="footerLink.icon"></i>
+            ><span *ngIf="footerLink.external" class="visually-hidden">External link to </span>{{ footerLink.label }}
+            <i *ngIf="footerLink.icon" aria-hidden="true" role="img" alt="" class="margin-left-05" [ngClass]="footerLink.icon"></i>
           </a>
         </li>
       </ul>
@@ -31,15 +31,13 @@
   </ng-container>
   <div class="display-flex flex-justify-center flex-column">
     <p class="font-2xs text-ink line-height-2 text-center">Technology by</p>
-    <a
-      target="_blank"
-      class="display-flex flex-justify-center flex-align-end"
+
+    <a *ngIf="appReleaseLoaded" target="_blank"
+      class="display-flex flex-justify-center flex-align-end usa-tooltip"
+      data-position="top" title="Release No: {{appReleaseNo}} & Date: {{appReleaseDate}} | Backend ReleaseNo: {{backendReleaseNo}} & Date: {{backendReleaseDate}}"
       aria-label="External link to AEM's homepage"
       href="https://www.aemcorp.com/">
-      <lib-adapt-inline-svg
-        alt="Logo for AEM"
-        src="assets/shared/logos/static/footer-logo__right.svg"
-        svgClass="display-flex logo height-4"></lib-adapt-inline-svg>
+      <lib-adapt-inline-svg alt="Logo for AEM" src="assets/shared/logos/static/footer-logo__right.svg" svgClass="display-flex logo height-4"></lib-adapt-inline-svg>
     </a>
   </div>
 </footer>

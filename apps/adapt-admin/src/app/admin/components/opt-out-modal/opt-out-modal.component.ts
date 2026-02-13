@@ -11,6 +11,7 @@ import {
 
 @Component({
   selector: 'adapt-opt-out-modal',
+  standalone: false,
   templateUrl: './opt-out-modal.component.html',
   styleUrls: ['./opt-out-modal.component.scss'],
 })

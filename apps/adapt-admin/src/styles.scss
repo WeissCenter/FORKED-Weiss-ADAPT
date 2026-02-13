@@ -1,4 +1,7 @@
-@import '@angular/cdk';
+//Angular's approach to styling for accessibility (a11y) primarily leverages the @angular/cdk/a11y package, which is part
+// of the Angular Component Dev Kit (CDK). This package provides a set of tools, including Sass mixins,
+// to help developers create accessible styles.
+@use '@angular/cdk'; //@import '@angular/cdk';
 
 // @include cdk-a11y();
 
@@ -7,15 +10,15 @@
 }
 
 //@import '../src/assets/fontawesome/css/all.css';
-@import 'libs/shared-assets/fontawesome/css/all.css';
+//@import 'libs/shared-assets/fontawesome/css/all.css';
 
 //@import '../src/app/styles/_us-aem-wds.min.css';
-@import 'libs/shared-styles/aem-uswds/_us-aem-wds.min.css';
+//@import 'libs/shared-styles/aem-uswds/_us-aem-wds.min.css';
 // @import "../src/app/styles/utilities/normalize";
 //@import '../src/app/styles/variables/generated';
-@import 'libs/shared-styles/variables/generated';
+//@import 'libs/shared-styles/variables/generated';
 
-@import 'libs/shared-styles/theme';
+//@import 'libs/shared-styles/theme';
 
 a {
   min-width: 44px !important;

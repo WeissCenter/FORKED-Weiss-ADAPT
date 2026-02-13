@@ -11,6 +11,7 @@ import {
 
 @Component({
   selector: 'adapt-steps-indicator-step',
+  standalone: false,
   templateUrl: './steps-indicator-step.component.html',
   styleUrls: ['./steps-indicator-step.component.scss'],
 })

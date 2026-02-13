@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, EventEmitter, Input, OnIn
 import { CommonModule } from '@angular/common';
 import { Observable, combineLatest, concat, map, of, switchMap, tap, zip } from 'rxjs';
 import { AdaptDataService } from '../../../services/adapt-data.service';
-import { DataSet, DataSource, DataView, IReport } from '@adapt/types';
+import { DataSet, DataSource, DataViewModel, IReportModel } from '@adapt/types';
 import { PagesContentService } from '../../../auth/services/content/pages-content.service';
 import { ImpactAnalysisContentText } from '../../models/admin-content-text.model';
 
 @Component({
   selector: 'adapt-impact-analysis',
+  standalone: false,
   templateUrl: './impact-analysis.component.html',
   styleUrls: ['./impact-analysis.component.scss'],
 })
@@ -31,8 +32,8 @@ export class ImpactAnalysisComponent implements OnInit {
   public totalItems = 0;
   public page = 1;
 
-  @Input() dataViews?: Observable<DataView[]>;
-  @Input() reports?: Observable<IReport[]>;
+  @Input() dataViews?: Observable<DataViewModel[]>;
+  @Input() reports?: Observable<IReportModel[]>;
   @Input() inAccordion = false;
 
   public items?: Observable<any[]>;
@@ -65,7 +66,7 @@ export class ImpactAnalysisComponent implements OnInit {
         if (!this.reports) return;
 
         this.items = this.getImpactAnalysisForViewId(this.id).pipe(
-          tap((reports: IReport[]) => {
+          tap((reports: IReportModel[]) => {
             this.reportCount = reports.length;
             this.totalItems = reports.length;
             this.maxPages = Math.ceil(this.totalItems / this.pageSize);
@@ -92,10 +93,10 @@ export class ImpactAnalysisComponent implements OnInit {
 
   public getImpactAnalysisForViewId(dataViewID: string) {
     if (!this.reports) return of([]);
-    return this.reports.pipe(map((reports: IReport[]) => reports.filter((report) => report.dataView === dataViewID)));
+    return this.reports.pipe(map((reports: IReportModel[]) => reports.filter((report) => report.dataView === dataViewID)));
   }
 
-  public getImpactAnalysisForView(view: DataView) {
+  public getImpactAnalysisForView(view: DataViewModel) {
     return this.reports!.pipe(
       map((reports) => ({ view, reports: reports.filter((report) => report.dataView === view.dataViewID) }))
     );

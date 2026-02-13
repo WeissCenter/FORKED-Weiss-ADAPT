@@ -1,0 +1,45 @@
+// Button styling for in-page navigation
+// Resets button styles to match USWDS link appearance
+.usa-in-page-nav__link {
+  &:is(button) {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-size: var(--usa-font-size-xs);
+    font-family: var(--usa-font-ui);
+    line-height: var(--usa-line-height-3);
+    color: inherit;
+    padding: var(--usa-spacing-05) var(--usa-spacing-1) var(--usa-spacing-05) var(--usa-spacing-205);
+  }
+}
+
+// FAQ section layout - sidebar navigation with main content
+.faq-section-layout {
+  flex-direction: column;
+
+  @media (min-width: 640px) {
+    flex-direction: row-reverse;
+  }
+}
+
+// Layout for the FAQ section with sidebar navigation
+.usa-in-page-nav {
+
+    --usa-in-page-nav-header-font-size: var(--usa-font-size-xs);
+
+  // Make the navigation sticky on tablet and above
+  @media (min-width: 640px) {
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+}
+
+// Ensure the FAQ content wrapper takes remaining space
+.faq-content-wrapper {
+  @media (min-width: 640px) {
+    flex: 1;
+    min-width: 0;
+  }
+}

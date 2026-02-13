@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'fieldLengthSort',
+  standalone: false,
 })
 export class FieldLengthSortPipe implements PipeTransform {
   transform(array: any[], field: string, direction: 'asc' | 'desc' = 'asc'): any[] {

@@ -20,6 +20,7 @@ const { comboBox } = USWDS;
 
 @Component({
   selector: 'adapt-create-dataset',
+  standalone: false,
   templateUrl: './create-dataset.component.html',
   styleUrls: ['./create-dataset.component.scss'],
 })

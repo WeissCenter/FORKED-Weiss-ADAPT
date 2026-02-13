@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'lib-adapt-expandable-list-item',
+  standalone: false,
   templateUrl: './expandable-list-item.component.html',
   styleUrls: ['./expandable-list-item.component.scss'],
 })

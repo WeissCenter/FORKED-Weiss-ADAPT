@@ -23,6 +23,7 @@
       "name": "home",
       "title": "Página de inicio",
       "description": "Descripción de la página de inicio",
+      "learn_more_link": "Aprender Más",
       "sections": [
         {
           "title": "¿Qué puedes hacer aquí?",
@@ -35,7 +36,10 @@
             {
               "title": "Acciones comunes",
               "description": "Aquí hay una lista de las acciones comunes que puede realizar, lo que facilita el acceso rápido y la administración de sus tareas rutinarias.",
-              "items": ["Crear nuevo informe", "Crear nueva vista de datos"]
+              "items": [
+                "Crear nuevo informe",
+                "Crear nueva vista de datos"
+              ]
             }
           ]
         },
@@ -46,12 +50,16 @@
             {
               "title": "Ver informes",
               "description": "Vea los informes actualizados más recientemente aquí. Para ver la lista completa de informes con opciones de filtrado, puede seleccionar el botón Ver todo a continuación. Si desea crear un nuevo informe, puede seleccionar el botón Crear nuevo informe a continuación.",
-              "items": ["Crear nuevo informe"]
+              "items": [
+                "Crear nuevo informe"
+              ]
             },
             {
               "title": "Vistas de datos",
               "description": "Vea las vistas de datos actualizadas más recientemente aquí. Para ver la lista completa de vistas de datos con opciones de filtrado, puede seleccionar el botón Ver todo a continuación. Si desea crear una nueva vista de datos, puede seleccionar el botón Crear nueva vista de datos a continuación.",
-              "items": ["Crear nueva vista de datos"]
+              "items": [
+                "Crear nueva vista de datos"
+              ]
             }
           ]
         }
@@ -61,6 +69,7 @@
       "name": "data",
       "title": "Vistas de datos",
       "description": "Administre sus vistas de datos aquí para la creación de informes. Puede crear nuevas vistas de datos a partir de sus orígenes de datos conectados o cargando un archivo. También puede editar las vistas de datos existentes expandiendo una vista de datos o seleccionando el título de una vista de datos.",
+      "learn_more_link": "Aprender Más",
       "sections": [
         {
           "name": "Define",
@@ -135,7 +144,7 @@
             },
             "error": {
               "message": "Algo salió mal",
-              "details": "Estos datos son necesarios para cargar."
+              "details": "Se requieren datos para cargar. Inténtelo de nuevo o, si necesita ayuda adicional, comuníquese con el administrador de su sistema."
             },
             "required": {
               "message": "Este archivo es necesario para la carga."
@@ -164,7 +173,7 @@
               "label": "Vista de datos"
             },
             {
-              "label": "Año de presentación de informes"
+              "label": "Año fiscal"
             },
             {
               "label": "Método de recopilación de datos"
@@ -211,7 +220,13 @@
       "name": "reports",
       "title": "Lista de informes",
       "description": "Cree informes utilizando las vistas de datos y plantillas de informe seleccionadas o edite los informes existentes. Al crear un informe, puede optar por crear informes internos para uso privado o informes externos que se puedan finalizar y publicar para acceso público.",
-      "tabs": ["Todos los informes", "Borradores de informes", "Informes Finalizados", "Informes archivados"],
+      "learn_more_link": "Aprender Más",
+      "tabs": [
+        "Todos los informes",
+        "Borradores de informes",
+        "Informes Finalizados",
+        "Informes archivados"
+      ],
       "sections": [
         {
           "name": "Define",
@@ -328,6 +343,7 @@
       "name": "settings",
       "title": "Configuración",
       "description": "Adapte aspectos clave de su aplicación para satisfacer sus necesidades específicas. Puede crear y administrar fácilmente sus orígenes de datos, configurar sus reglas de supresión de datos, controlar la administración de usuarios y mucho más.",
+      "learn_more_link": "Aprender Más",
       "sections": [
         {
           "title": "Categorías",
@@ -514,12 +530,13 @@
     {
       "name": "footer-links",
       "title": "Enlaces de pie de página",
-      "description": "Para personalizar qué enlaces aparecen en tu pie de página, haz clic en el botón Editar y podrás crear y actualizar los enlaces de pie de página. Puede asignar un nombre al vínculo con el campo Etiqueta de enlace y agregar una dirección URL en el campo URL del vínculo. También puede seleccionar si se trata de un enlace externo seleccionando la casilla y luego puede especificar cómo se debe abrir el enlace (por ejemplo, una nueva pestaña o la misma pestaña). También puede asignar un icono al enlace copiando un icono de https://fontawesome.com/v5/search y pegándolo en el campo Icono de enlace. Si necesita agregar campos adicionales, puede seleccionar el botón Agregar vínculos de pie de página o puede guardar los cambios seleccionando el botón Guardar.",
+      "description": "Para personalizar qué enlaces aparecen en su pie de página, seleccione el botón Editar y podrá crear y actualizar los enlaces de pie de página.",
       "sections": [
         {
           "name": "links",
           "header": "Enlaces",
           "description": "Configure los enlaces de pie de página.",
+            "instructions": "Puede asignar un nombre al enlace con el campo Etiqueta de enlace y agregar una URL en el campo URL del enlace. También puede indicar si es un enlace externo seleccionando la casilla y luego especificar cómo debe abrirse el enlace (por ejemplo, nueva pestaña o misma pestaña). También puede asignar un icono al enlace copiando una clase de icono de <a href=\"https://fontawesome.com/v5/search\" target=\"_blank\">https://fontawesome.com/v5/search<span class=\"sr-only\">se abre en una nueva pestaña</span></a> y pegándola en el campo Icono de enlace. Si necesita agregar campos adicionales, puede seleccionar el botón Agregar enlace de pie de página, o puede guardar sus cambios seleccionando el botón Guardar.<br><br>Si no incluye tanto una etiqueta como una URL, el enlace no se mostrará en el pie de página.",
           "questions": [
             {
               "label": "Etiqueta de enlace"
@@ -527,14 +544,20 @@
             {
               "label": "URL del enlace"
             },
-            {
-              "label": "Enlace externo"
+          {
+              "label": "Este es un enlace externo"
             },
             {
-              "label": "Acción"
+              "label": "Acción de pestaña de enlace externo"
             },
             {
               "label": "Icono de enlace"
+            },
+            {
+              "label": "Mostrar en el sitio de administración"
+            },
+            {
+              "label": "Mostrar en el sitio del visor público"
             }
           ]
         }
@@ -766,6 +789,10 @@
     }
   },
   "adaptListView": {
-    "actions": ["Ordenar", "Filtro", "Crear"]
+    "actions": [
+      "Ordenar",
+      "Filtro",
+      "Crear"
+    ]
   }
 }
