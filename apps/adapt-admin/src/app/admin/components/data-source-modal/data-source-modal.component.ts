@@ -194,7 +194,7 @@ export class DataSourceModalComponent implements OnDestroy, OnInit {
       this.currentDataSource = dataSource;
 
       if (!dirty) {
-        this.data.getDataSource(dataSource!.dataSourceID!, true).subscribe((result) => {
+        this.adaptDataService.getDataSource(dataSource!.dataSourceID!, true).subscribe((result) => {
           this.dataSourceForm.patchValue({
             name: dataSource?.name,
             description: dataSource?.description,
