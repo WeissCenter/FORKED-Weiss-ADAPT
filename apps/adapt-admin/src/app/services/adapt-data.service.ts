@@ -65,17 +65,13 @@ export class AdaptDataService {
     map((items) => this.reduceOperations(items))
   );
 
-  constructor(
-    private http: HttpClient,
-    private user: UserService,
-    private settings: SettingsService
-  ) {
-    // this.getDataFromDataSet$.pipe(switchMap(response => {
-    //   return forkJoin(response.map((item: any) => from(this._tryCacheData(item.operations, item.dataSetID))))
-    // }))
-    // .subscribe((c: any) => this.getDataFromDataSetResultsSubject.next(c));
+  constructor(private logger: NGXLogger,
+              private http: HttpClient,
+              private user: UserService,
+              private settings: SettingsService) {
 
-    // init data stores
+    this.logger.debug('Inside AdaptDataService service constructor');
+
 
     this.user.isLoggedIn$.pipe(filter((val) => val),take(1)).subscribe(() => {
 
@@ -147,9 +143,17 @@ export class AdaptDataService {
     return this.http.request(req);
   }
 
-  public isUnique(type: string, name: string, field = 'name') {
-    return this.http
-      .post<APIResponse<boolean>>(`${environment.API_URL}unique`, { type, name, field })
+  /**
+   * This is linked to the lambda function: isUniqueHandler: isUnique.ts
+   * It checks if a report or data view or data set name is unique so that we do not create duplicate report names
+   * @param type: Report, DataView, DataSet
+   * @param name
+   * @param field: name or slug
+   */
+  public isNameUnique(type: string, name: string, field = "name") {
+    this.logger.debug('Inside isNameUnique, type: ', type, ', field: ', field, ', name: ', name);
+
+    return this.http.post<APIResponse<boolean>>(`${environment.API_URL}unique`, { type, name, field })
       .pipe(map((result) => result.data));
   }
 
@@ -194,23 +198,8 @@ export class AdaptDataService {
     return this.http.post<APIResponse<any>>(`${environment.API_URL}notifications`, { id, subscription });
   }
 
-  public doDataPull(dataSetID: string) {
-    return this.http.post<APIResponse<any>>(`${environment.API_URL}dataview/${dataSetID}/pull`, '');
-  }
-
-  public createReport(report: CreateReportInput) {
-    return this.http
-      .post<APIResponse<string>>(`${environment.API_URL}report`, report)
-      .pipe(map((result) => result.data));
-  }
-
-  public editReport(report: { reportID: string; languages: { [lang: string]: IReport } }) {
-    return this.http
-      .put<APIResponse<IReport>>(`${environment.API_URL}report/${report.reportID}`, report)
-      .pipe(map((result) => result.data));
-  }
-
-  public translateReportText(report: string, body: { title: string; description: string }, lang?: string) {
+  public translateReportText(report: string, body: {title: string, description: string}, lang?: string) {
+    this.logger.debug('Inside translateReportText, report: ', report);
     let params = new HttpParams();
 
     if(lang){
@@ -225,30 +214,6 @@ export class AdaptDataService {
   public createDataSet(body: NewDataSetInput) {
     this.logger.debug('Inside createDataSet, body: ', body);
     return this.http.post<APIResponse<DataSet>>(`${environment.API_URL}dataset`, body);
-  }
-
-  public createDataView(body: NewDataViewInput) {
-    return this.http
-      .post<APIResponse<DataView>>(`${environment.API_URL}dataview`, body)
-      .pipe(map((result) => result.data));
-  }
-
-  public editDataView(body: DataView, justification?: string) {
-    return this.http
-      .put<
-        APIResponse<DataView>
-      >(`${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`, body)
-      .pipe(map((result) => result.data));
-  }
-
-  public editDataViewPromise(body: DataView, justification?: string) {
-    return firstValueFrom(
-      this.http
-        .put<
-          APIResponse<DataView>
-        >(`${environment.API_URL}dataview/${body.dataViewID}${justification ? '?justification=' + justification : ''}`, body)
-        .pipe(map((result) => result.data))
-    );
   }
 
   public queryDataSource(dataSourceID: string, body?: QueryDataSourceInput) {
@@ -296,21 +261,6 @@ export class AdaptDataService {
   public getDataSet(dataSetID: string) {
     return this.http
       .get<APIResponse<DataSet>>(`${environment.API_URL}dataset/${dataSetID}`)
-      .pipe(map((result) => result.data));
-  }
-
-  public getReportData(id: string, version = 'draft', filters = {}, suppressed = false, lang = 'en', pageId?: string) {
-    let params = new HttpParams();
-
-    params = params.append('version', version);
-
-    params = params.append('suppressed', suppressed);
-    params = params.append('lang', lang);
-    if (pageId !== undefined) {
-      params = params.append('pageId', pageId);
-    }
-    return this.http
-      .post<APIResponse<any>>(`${environment.API_URL}report/${id}/data`, filters, { params })
       .pipe(map((result) => result.data));
   }
 
@@ -435,22 +385,6 @@ export class AdaptDataService {
     return this.http
       .get<APIResponse<any[]>>(`${environment.API_URL}dataview/${dataViewID}/preview`)
       .pipe(map((res) => res.data));
-  }
-
-  public getReport(id: string, version = 'draft', lang?: string): Observable<IReport | IReport[] | undefined> {
-    let params = new HttpParams().append('version', version);
-
-    if (lang) {
-      params = params.append('lang', lang);
-    }
-
-    return this.http
-      .get<APIResponse<IReport>>(`${environment.API_URL}report/${id}`, { params })
-      .pipe(map((result) => result.data));
-  }
-
-  public getReports(): Observable<IReport[]> {
-    return this.$reports;
   }
 
   public getValidationJSON(name: string, isURL = false) {
